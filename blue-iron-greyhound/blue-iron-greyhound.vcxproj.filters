@@ -1,0 +1,171 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Source Files\Game">
+      <UniqueIdentifier>{42f05ca1-04a5-49c6-8e8f-cae5a0a806c4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Camera Component">
+      <UniqueIdentifier>{e1d46a45-10fa-43e0-807e-7b8e83a62fc9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Source Files\Rendering System">
+      <UniqueIdentifier>{ce392000-16b4-46c5-9f32-4c17ec680776}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Movement System">
+      <UniqueIdentifier>{b4d31123-7bea-48fa-baa8-31a25490b6f8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\CollisionSystem">
+      <UniqueIdentifier>{7a9d1846-42fb-4a28-827e-0ef0561bceca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Collidables">
+      <UniqueIdentifier>{3e8eed51-656e-4798-b682-a25d096375a6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\CompSysTestClasses">
+      <UniqueIdentifier>{9b498d4e-5b46-4212-b4a1-2f124caa7c5e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Utilities">
+      <UniqueIdentifier>{b35e5da8-4f7f-4469-a51b-563369dd4b9a}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="openglRenderer.h">
+      <Filter>Source Files\Rendering System</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderingSystem.h">
+      <Filter>Source Files\Rendering System</Filter>
+    </ClInclude>
+    <ClInclude Include="TestComponent.h">
+      <Filter>Source Files\CompSysTestClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="InteractiveTestComponent.h">
+      <Filter>Source Files\CompSysTestClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="AssimpLoader.h">
+      <Filter>Source Files\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="OpenglUtils.h">
+      <Filter>Source Files\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="MeshComponent.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SDLGLTextureLoader.h">
+      <Filter>Source Files\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="CameraComponent.h">
+      <Filter>Source Files\Camera Component</Filter>
+    </ClInclude>
+    <ClInclude Include="InputSystem.h">
+      <Filter>Source Files\Movement System</Filter>
+    </ClInclude>
+    <ClInclude Include="MovementComponent.h">
+      <Filter>Source Files\Movement System</Filter>
+    </ClInclude>
+    <ClInclude Include="SDLInputSystem.h">
+      <Filter>Source Files\Movement System</Filter>
+    </ClInclude>
+    <ClInclude Include="RigidBodyComponent.h">
+      <Filter>Source Files\Collidables</Filter>
+    </ClInclude>
+    <ClInclude Include="Sphere.h">
+      <Filter>Source Files\Collidables</Filter>
+    </ClInclude>
+    <ClInclude Include="AABB.h">
+      <Filter>Source Files\Collidables</Filter>
+    </ClInclude>
+    <ClInclude Include="boundingVolume.h">
+      <Filter>Source Files\Collidables</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionSystem.h">
+      <Filter>Source Files\CollisionSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="Collisions.h">
+      <Filter>Source Files\CollisionSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="Component.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Object.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="System.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Component.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TestComponent.cpp">
+      <Filter>Source Files\CompSysTestClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="InteractiveTestComponent.cpp">
+      <Filter>Source Files\CompSysTestClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="openglRenderer.cpp">
+      <Filter>Source Files\Rendering System</Filter>
+    </ClCompile>
+    <ClCompile Include="AssimpLoader.cpp">
+      <Filter>Source Files\Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="OpenglUtils.cpp">
+      <Filter>Source Files\Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="MeshComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SDLGLTextureLoader.cpp">
+      <Filter>Source Files\Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="CameraComponent.cpp">
+      <Filter>Source Files\Camera Component</Filter>
+    </ClCompile>
+    <ClCompile Include="MovementComponent.cpp">
+      <Filter>Source Files\Movement System</Filter>
+    </ClCompile>
+    <ClCompile Include="SDLInputSystem.cpp">
+      <Filter>Source Files\Movement System</Filter>
+    </ClCompile>
+    <ClCompile Include="RigidBodyComponent.cpp">
+      <Filter>Source Files\Collidables</Filter>
+    </ClCompile>
+    <ClCompile Include="Collisions.cpp">
+      <Filter>Source Files\CollisionSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="CollisionSystem.cpp">
+      <Filter>Source Files\CollisionSystem</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="textured.frag">
+      <Filter>Source Files\Resource Files</Filter>
+    </None>
+    <None Include="minimal.frag">
+      <Filter>Source Files\Resource Files</Filter>
+    </None>
+    <None Include="minimal.vert">
+      <Filter>Source Files\Resource Files</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="textured.vert">
+      <Filter>Source Files\Resource Files</Filter>
+    </Xml>
+  </ItemGroup>
+</Project>
