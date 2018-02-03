@@ -101,6 +101,9 @@
     <ClInclude Include="System.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="OBB.h">
+      <Filter>Source Files\Collidables</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Component.cpp">
@@ -150,6 +153,9 @@
     </ClCompile>
     <ClCompile Include="CollisionSystem.cpp">
       <Filter>Source Files\CollisionSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="OBB.cpp">
+      <Filter>Source Files\Collidables</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

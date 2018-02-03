@@ -24,8 +24,12 @@
 #include "RigidBodyComponent.h"
 #include "CollisionSystem.h"
 
-
-
+//temp
+///
+#include "OBB.h"
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
+///
 
 //timer
 #include <ctime>
@@ -358,6 +362,20 @@ int main(int argc, char *argv[])
 
 
 	objectList.push_back(AlienPlanet2);
+
+	//Oriented bounding box testing
+	///////////////////////////////
+
+
+	OBB* oob = new OBB(glm::vec3(-1, -1, -1), glm::vec3(1, 1, 1));
+	oob->calculateVertices();
+	oob->setGlobalPosition(glm::vec3(-5.0f, 0.0f, 60.0f));
+	oob->update(glm::vec3(-5.0f, 0.0f, 60.0f));
+	oob->setRotation(0.0f, glm::vec3(0,1,0));
+
+	oob->printDetails();
+
+	////////////////////////////////
 	
 	bool running = true;
 
