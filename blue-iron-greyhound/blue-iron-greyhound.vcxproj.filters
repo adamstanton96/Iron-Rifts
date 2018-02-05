@@ -104,6 +104,9 @@
     <ClInclude Include="OBB.h">
       <Filter>Source Files\Collidables</Filter>
     </ClInclude>
+    <ClInclude Include="OBB_Collision_Test.h">
+      <Filter>Source Files\Collidables</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Component.cpp">

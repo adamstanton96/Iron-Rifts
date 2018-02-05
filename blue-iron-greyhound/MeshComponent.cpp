@@ -45,8 +45,8 @@ void MeshComponent::setRenderer(RenderingSystem* rendersystem)
 
 void MeshComponent::setMinMax(vector<glm::vec3> minmax)
 {
-	getUser()->setMin(minmax[0]);
-	getUser()->setMax(minmax[1]);
+	//getUser()->setMin(minmax[0]);
+	//getUser()->setMax(minmax[1]);
 
 	//getUser()->getComponent<RigidBodyComponent>()->setboundingVolume(minmax[0], minmax[1]);
 

@@ -43,12 +43,17 @@ void RigidBodyComponent::setboundingVolume(glm::vec3 p1, glm::vec3 p2)
 {
 	glm::vec3 pos = getUser()->getPosition();
 
-	if (bodyType == "AABB")
+	if (boundingType == "AABB")
 	{
 		createAABB(p1, p2);
 		boundingVolume->update(pos);
 	}
-	else if (bodyType == "SPHERE")
+	else if (boundingType == "OBB")
+	{
+		createOBB(p1, p2);
+		boundingVolume->update(pos);
+	}
+	else if (boundingType == "SPHERE")
 	{
 		createSphere(p1, glm::distance(p1, p2));
 		boundingVolume->update(pos);
@@ -75,6 +80,20 @@ void RigidBodyComponent::createAABB(glm::vec3 min, glm::vec3 max)
 	isInitialised = true;
 }
 
+void RigidBodyComponent::createOBB(glm::vec3 min, glm::vec3 max)
+{
+	glm::vec3 rotAxis = getUser()->getRenderRotate();
+	float degrees = getUser()->getRenderRotateDeg();
+	glm::vec3 worldSpacePosition = getUser()->getPosition();
+
+
+
+	boundingType = "OBB";
+	boundingVolume = new OBB(min, max, rotAxis, degrees, worldSpacePosition);
+	isInitialised = true;
+}
+
+
 
 void RigidBodyComponent::createSphere(glm::vec3 center, float radius)
 {
@@ -96,6 +115,11 @@ void RigidBodyComponent::setBodyType(string bodytype)
 	{
 		collisionSystem->addStaticBody(this);
 	}
+}
+
+void RigidBodyComponent::setBoundingType(string boundtype)
+{
+	boundingType = boundtype;
 }
 
 string RigidBodyComponent::getBodyType()

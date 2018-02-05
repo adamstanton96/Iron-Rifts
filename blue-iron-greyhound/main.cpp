@@ -80,6 +80,7 @@ int main(int argc, char *argv[])
 	Player->addComponent(rigidBody);
 	rigidBody->setCollisionSystem(collisionsystem);
 	rigidBody->setBodyType("DYNAMIC");
+	rigidBody->setBoundingType("OBB");
 	
 
 	MeshComponent* meshComponent = new MeshComponent("sphere");
@@ -94,6 +95,30 @@ int main(int argc, char *argv[])
 	Player->addComponent(moveComponent);
 
 	objectList.push_back(Player);
+
+	////////////////////////////////////////////////////
+
+	//road barrier 2
+	GameObject *barrier2 = new GameObject("old building");
+	barrier2->setTranslation(glm::vec3(0.0f, -5.0f, 90.0f));
+	barrier2->setScaling(glm::vec3(0.5f, 0.5f, 0.5f));
+	barrier2->setRenderRotateVec(glm::vec3(0, 1, 0));
+	barrier2->setRenderRotateDeg(0);
+
+	RigidBodyComponent* rigidBody3 = new RigidBodyComponent("Rigid Body");
+	barrier2->addComponent(rigidBody3);
+	rigidBody3->setCollisionSystem(collisionsystem);
+	rigidBody3->setBodyType("STATIC");
+	rigidBody3->setBoundingType("OBB");
+
+	MeshComponent* barriermesh2 = new MeshComponent("test");
+	barrier2->addComponent(barriermesh2);
+	barriermesh2->setRenderer(renderer);
+	barriermesh2->loadObject("../../assets/BARRIERE.obj");
+	barriermesh2->loadTexture("../../assets/roadbarrier/BARRIERE.bmp");
+
+	objectList.push_back(barrier2);
+	///////////////////////////////////////////////////////////////////
 
 
 	//Ground Plane
@@ -317,7 +342,7 @@ int main(int argc, char *argv[])
 	objectList.push_back(barrier);
 
 	//road barrier 2
-	GameObject *barrier2 = new GameObject("old building");
+	/*GameObject *barrier2 = new GameObject("old building");
 	barrier2->setTranslation(glm::vec3(0.0f, -5.0f, 90.0f));
 	barrier2->setScaling(glm::vec3(0.5f, 0.5f, 0.5f));
 	barrier2->setRenderRotateVec(glm::vec3(NULL, NULL, NULL));
@@ -332,7 +357,7 @@ int main(int argc, char *argv[])
 	barriermesh2->loadTexture("../../assets/roadbarrier/BARRIERE.bmp");
 
 	objectList.push_back(barrier2);
-
+*/
 
 	//planet in the sky
 
@@ -363,19 +388,6 @@ int main(int argc, char *argv[])
 
 	objectList.push_back(AlienPlanet2);
 
-	//Oriented bounding box testing
-	///////////////////////////////
-
-
-	OBB* oob = new OBB(glm::vec3(-1, -1, -1), glm::vec3(1, 1, 1));
-	oob->calculateVertices();
-	oob->setGlobalPosition(glm::vec3(-5.0f, 0.0f, 60.0f));
-	oob->update(glm::vec3(-5.0f, 0.0f, 60.0f));
-	oob->setRotation(0.0f, glm::vec3(0,1,0));
-
-	oob->printDetails();
-
-	////////////////////////////////
 	
 	bool running = true;
 

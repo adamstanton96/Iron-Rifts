@@ -40,6 +40,42 @@ void CollisionSystem::collisionCheck(RigidBodyComponent* rigidbody)
 					}
 		}
 	}
+	else if (rigidbody->getBoundingType() == "OBB")
+	{
+		OBB* bound = (OBB*)rigidbody->getBoundingVolume();
+
+		//test against all static bodies
+		for (unsigned int i = 0; i < staticBodies.size(); i++)
+		{
+			if (staticBodies[i]->getBoundingType() == "AABB")
+				if (OBBtoAABB(bound, (AABB*)staticBodies[i]->getBoundingVolume()))
+				{
+					collisionReaction(rigidbody);
+				}
+
+			if (staticBodies[i]->getBoundingType() == "OBB")
+				if (OBBtoOBB(bound, (OBB*)staticBodies[i]->getBoundingVolume()))
+				{
+					collisionReaction(rigidbody);
+				}
+		}
+
+		//test against all other dynamic bodies bodies
+		for (unsigned int i = 0; i < dynamicBodies.size(); i++)
+		{
+			if (dynamicBodies[i]->getBoundingType() == "AABB")
+				if (OBBtoAABB(bound, (AABB*)dynamicBodies[i]->getBoundingVolume()))
+				{
+					collisionReaction(rigidbody);
+				}
+
+			if (dynamicBodies[i]->getBoundingType() == "OBB")
+				if (OBBtoOBB(bound, (OBB*)dynamicBodies[i]->getBoundingVolume()))
+				{
+					collisionReaction(rigidbody);
+				}
+		}
+	}
 	else
 	{
 		std::cout << "CollisionSystem/collisionCheck: Unsupported or invalid boundingtype" << std::endl;
@@ -63,9 +99,27 @@ void CollisionSystem::collisionReaction(RigidBodyComponent* rigidbody)
 
 	rigidbody->getUser()->setTranslation(currentPosition + translationVector * glm::vec3(-2));
 
-	
+
 }
 
+void CollisionSystem::displacementReaction(RigidBodyComponent* rigidbody, glm::vec3 displacementVector)
+{
+	glm::vec3 currentPosition = rigidbody->getUser()->getTranslation();
+
+	rigidbody->getUser()->setTranslation(currentPosition + displacementVector);
+
+}
+
+
+
+
+
+bool CollisionSystem::OBBtoOBB(OBB* box1, OBB* box2)
+{
+
+
+	return false;
+}
 
 
 bool CollisionSystem::AABBtoAABB(AABB* box1, AABB* box2)
@@ -87,6 +141,15 @@ bool CollisionSystem::AABBtoAABB(AABB* box1, AABB* box2)
 	else
 		return true;
 
+}
+
+
+
+bool CollisionSystem::OBBtoAABB(OBB* box1, AABB* box2)
+{
+
+
+	return false;
 }
 
 
