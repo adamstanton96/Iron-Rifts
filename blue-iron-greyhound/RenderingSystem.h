@@ -1,7 +1,7 @@
 #ifndef RenderingSystem_H
 #define RenderingSystem_H
 
-#include "Component.h"
+#include "System.h"
 class MeshComponent;
 class Camera;
 

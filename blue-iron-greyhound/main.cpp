@@ -68,6 +68,10 @@ int main(int argc, char *argv[])
 	objectFactory->addSystem(renderer);
 	objectFactory->addSystem(inputSystem);
 	objectFactory->addSystem(collisionsystem);
+
+	objectFactory->init();
+
+	objectList.push_back(objectFactory->createObject("Player", glm::vec3(-5.0f, 0.0f, 60.0f), 0.0f));
 	
 	/*
 	//First Object - Acting as player (camera component / movement component)
@@ -394,7 +398,7 @@ int main(int argc, char *argv[])
 		}
 	
 		//Get Inputs - Temporary for free roam camera
-		Player->input(dt);
+		//Player->input(dt);
 
 		renderer->swapBuffers();
 

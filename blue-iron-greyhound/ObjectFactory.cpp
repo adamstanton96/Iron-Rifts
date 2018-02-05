@@ -33,6 +33,7 @@ void ObjectFactory::init()
 	Camera *cameraComponent = new Camera(glm::vec3(-2.0f, 10.0f, 30.0f), glm::vec3(0.0f, 1.0f, -1.0f), glm::vec3(0.0f, 1.0f, -1.0f), 0.0);
 	//Camera *cameraComponent = new Camera(glm::vec3(-2.0f, 2.0f, 30.0f), glm::vec3(0.0f, 1.0f, -1.0f), glm::vec3(0.0f, 1.0f, -1.0f), 0.0);
 	cameraComponent->init();
+	getSystem<RenderingSystem>()->camera = cameraComponent;
 
 	//First Object - Acting as player (camera component / movement component)
 	GameObject *Player = new GameObject("player");
@@ -73,6 +74,8 @@ void ObjectFactory::addSystem(System * system)
 GameObject * ObjectFactory::createObject(std::string input, glm::vec3 position, float rotation)
 {
 	GameObject * newObject = objectMap[input];
+	newObject->setPosition(position);
+	newObject->setRotation(rotation);
 	return newObject;
 }
 

@@ -45,12 +45,12 @@ T *ObjectFactory::getSystem()
 	while (!found) {
 
 		//Checks if we have found Component
-		if (system = dynamic_cast<T*>(componentList[i]))
+		if (system = dynamic_cast<T*>(systemList[i]))
 			found = true;
 
 		i++;
 		//Reached the end
-		if (i == componentList.size())
+		if (i == systemList.size())
 			found = true;
 	}
 	return system;
