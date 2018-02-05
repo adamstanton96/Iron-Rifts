@@ -13,6 +13,7 @@
 #include "SDL.h"
 #include <glm/glm.hpp>
 
+#include "ObjectFactory.h"
 
 #include "OpenglRenderer.h"
 #include "GameObject.h"
@@ -23,7 +24,7 @@
 
 #include "RigidBodyComponent.h"
 #include "CollisionSystem.h"
-#include "ObjectFactory.h"
+
 
 
 
@@ -40,25 +41,17 @@ double dt;
 
 int main(int argc, char *argv[])
 {
-	std::vector<GameObject*> objectList;
-
-	ObjectFactory *objectFactory = new ObjectFactory();
-
-	objectFactory->createObject("Player", glm::vec3(0,0,0), 0);
-
-
-	/*
 	//camera set up
 
-	Camera *cameraComponent = new Camera(glm::vec3(-2.0f, 10.0f, 30.0f), glm::vec3(0.0f, 1.0f, -1.0f), glm::vec3(0.0f, 1.0f, -1.0f), 0.0);
+	//Camera *cameraComponent = new Camera(glm::vec3(-2.0f, 10.0f, 30.0f), glm::vec3(0.0f, 1.0f, -1.0f), glm::vec3(0.0f, 1.0f, -1.0f), 0.0);
 
 	//Camera *cameraComponent = new Camera(glm::vec3(-2.0f, 2.0f, 30.0f), glm::vec3(0.0f, 1.0f, -1.0f), glm::vec3(0.0f, 1.0f, -1.0f), 0.0);
 
-	cameraComponent->init();
+	//cameraComponent->init();
 
 	//render set up
 	RenderingSystem* renderer = new openglRenderer();
-	renderer->camera = cameraComponent;
+	//renderer->camera = cameraComponent;
 
 	//Input System
 	InputSystem *inputSystem = new SDLInputSystem();
@@ -70,7 +63,13 @@ int main(int argc, char *argv[])
 	//Temporarily hold all objects so that main isn't so awkward
 	std::vector<GameObject*> objectList;
 	
+	ObjectFactory *objectFactory = new ObjectFactory();
 
+	objectFactory->addSystem(renderer);
+	objectFactory->addSystem(inputSystem);
+	objectFactory->addSystem(collisionsystem);
+	
+	/*
 	//First Object - Acting as player (camera component / movement component)
 	GameObject *Player = new GameObject("player");
 	Player->setTranslation(glm::vec3(-5.0f, 0.0f, 60.0f));
@@ -99,6 +98,7 @@ int main(int argc, char *argv[])
 
 	objectList.push_back(Player);
 
+	Player->getComponent<Camera>()
 
 	//Ground Plane
 	GameObject *GroundPlane = new GameObject("Collada");
@@ -366,9 +366,7 @@ int main(int argc, char *argv[])
 
 
 	objectList.push_back(AlienPlanet2);
-	
 	*/
-
 	bool running = true;
 
 	SDL_Event sdlEvent;

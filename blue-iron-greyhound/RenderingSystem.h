@@ -7,7 +7,7 @@ class Camera;
 
 
 
-class RenderingSystem : public Component
+class RenderingSystem : public System
 {
 public:
 	RenderingSystem() {}

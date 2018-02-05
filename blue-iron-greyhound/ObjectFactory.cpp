@@ -31,25 +31,8 @@ void ObjectFactory::init()
 	//camera set up
 
 	Camera *cameraComponent = new Camera(glm::vec3(-2.0f, 10.0f, 30.0f), glm::vec3(0.0f, 1.0f, -1.0f), glm::vec3(0.0f, 1.0f, -1.0f), 0.0);
-
 	//Camera *cameraComponent = new Camera(glm::vec3(-2.0f, 2.0f, 30.0f), glm::vec3(0.0f, 1.0f, -1.0f), glm::vec3(0.0f, 1.0f, -1.0f), 0.0);
-
 	cameraComponent->init();
-
-	//render set up
-	RenderingSystem* renderer = new openglRenderer();
-	renderer->camera = cameraComponent;
-
-	//Input System
-	InputSystem *inputSystem = new SDLInputSystem();
-	inputSystem->init();
-
-	//New collision System
-	CollisionSystem* collisionsystem = new CollisionSystem();
-
-	//Temporarily hold all objects so that main isn't so awkward
-	std::vector<GameObject*> objectList;
-
 
 	//First Object - Acting as player (camera component / movement component)
 	GameObject *Player = new GameObject("player");
@@ -59,20 +42,18 @@ void ObjectFactory::init()
 	Player->setRenderRotateVec(glm::vec3(0, -1, 0));
 	Player->setRenderRotateDeg(0);
 
-
 	RigidBodyComponent* rigidBody = new RigidBodyComponent("Rigid Body");
 	Player->addComponent(rigidBody);
-	rigidBody->setCollisionSystem(collisionsystem);
+	rigidBody->setCollisionSystem(getSystem<CollisionSystem>());
 	rigidBody->setBodyType("DYNAMIC");
-
 
 	MeshComponent* meshComponent = new MeshComponent("sphere");
 	Player->addComponent(meshComponent);
-	meshComponent->setRenderer(renderer);
+	meshComponent->setRenderer(getSystem<RenderingSystem>());
 	meshComponent->loadObject("../../assets/AlienPlanet2.dae");
 	meshComponent->loadTexture("../../assets/tex/scifiFloor.bmp");
 	MovementComponent *moveComponent = new MovementComponent("moveComponent");
-	moveComponent->setInput(inputSystem);
+	moveComponent->setInput(getSystem<InputSystem>());
 
 	Player->addComponent(cameraComponent);
 	Player->addComponent(moveComponent);
@@ -82,6 +63,11 @@ void ObjectFactory::init()
 
 
 	objectMap.insert(objects("Player", Player));
+}
+
+void ObjectFactory::addSystem(System * system)
+{
+	systemList.push_back(system);
 }
 
 GameObject * ObjectFactory::createObject(std::string input, glm::vec3 position, float rotation)
