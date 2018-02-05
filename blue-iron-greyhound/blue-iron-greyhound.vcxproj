@@ -75,7 +75,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>..\..\dev\assimp-3.1.1-win-binaries\include;..\..\Dev\SDL2-2.0.5\include;..\..\Dev\glm-0.9.8.5;..\..\Dev\glew-2.0.0\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\dev\assimp-3.1.1-win-binaries\include;..\..\Dev\SDL2-2.0.5\include;..\..\Dev\glm-0.9.8.5;..\..\Dev\glew-2.0.0\include</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>
       </PreprocessorDefinitions>
     </ClCompile>
@@ -157,6 +157,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MeshComponent.cpp" />
     <ClCompile Include="MovementComponent.cpp" />
+    <ClCompile Include="ObjectFactory.cpp" />
     <ClCompile Include="openglRenderer.cpp" />
     <ClCompile Include="OpenglUtils.cpp" />
     <ClCompile Include="RigidBodyComponent.cpp" />
@@ -167,6 +168,7 @@
   <ItemGroup>
     <None Include="minimal.frag" />
     <None Include="minimal.vert" />
+    <None Include="ObjectFactory.h" />
     <None Include="textured.frag" />
     <Xml Include="textured.vert">
       <FileType>Document</FileType>

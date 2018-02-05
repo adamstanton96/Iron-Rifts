@@ -23,7 +23,7 @@
 
 #include "RigidBodyComponent.h"
 #include "CollisionSystem.h"
-
+#include "ObjectFactory.h"
 
 
 
@@ -40,6 +40,14 @@ double dt;
 
 int main(int argc, char *argv[])
 {
+	std::vector<GameObject*> objectList;
+
+	ObjectFactory *objectFactory = new ObjectFactory();
+
+	objectFactory->createObject("Player", glm::vec3(0,0,0), 0);
+
+
+	/*
 	//camera set up
 
 	Camera *cameraComponent = new Camera(glm::vec3(-2.0f, 10.0f, 30.0f), glm::vec3(0.0f, 1.0f, -1.0f), glm::vec3(0.0f, 1.0f, -1.0f), 0.0);
@@ -359,6 +367,8 @@ int main(int argc, char *argv[])
 
 	objectList.push_back(AlienPlanet2);
 	
+	*/
+
 	bool running = true;
 
 	SDL_Event sdlEvent;

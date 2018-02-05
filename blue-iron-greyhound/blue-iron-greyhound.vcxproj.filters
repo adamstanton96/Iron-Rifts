@@ -151,6 +151,9 @@
     <ClCompile Include="CollisionSystem.cpp">
       <Filter>Source Files\CollisionSystem</Filter>
     </ClCompile>
+    <ClCompile Include="ObjectFactory.cpp">
+      <Filter>Source Files\Utilities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="textured.frag">
@@ -161,6 +164,9 @@
     </None>
     <None Include="minimal.vert">
       <Filter>Source Files\Resource Files</Filter>
+    </None>
+    <None Include="ObjectFactory.h">
+      <Filter>Source Files\Utilities</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
