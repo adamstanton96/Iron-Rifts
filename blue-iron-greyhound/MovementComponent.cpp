@@ -56,7 +56,7 @@ void MovementComponent::update()
 	//Update the user's position by the movement vector...
 	//std::cout << moveVector.x << " ::: " << moveVector.y << " ::: " << moveVector.z << std::endl; //DEBUG LINE
 	//std::cout << this->user->getPosition().x << "/" << this->user->getPosition().y << "/" << this->user->getPosition().z << std::endl; //DEBUG LINE
-	//this->user->setPosition(userPos + moveVector);
+	this->user->setPosition(userPos + moveVector);
 }
 
 void MovementComponent::moveForward() { moveForward(0.5f); }

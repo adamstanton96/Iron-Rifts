@@ -64,6 +64,24 @@ void ObjectFactory::init()
 
 
 	objectMap.insert(objects("Player", Player));
+
+
+	//Ground Plane
+	GameObject *GroundPlane = new GameObject("Collada");
+	GroundPlane->setTranslation(glm::vec3(0.0f, -5.0f, -30.0f));
+	GroundPlane->setScaling(glm::vec3(60, 0.1f, 60));
+	GroundPlane->setRenderRotateVec(glm::vec3(NULL, NULL, NULL));
+	RigidBodyComponent* rigidBody4 = new RigidBodyComponent("Rigid Body");
+	GroundPlane->addComponent(rigidBody4);
+	rigidBody4->setCollisionSystem(getSystem<CollisionSystem>());
+	rigidBody4->setBodyType("STATIC");
+	MeshComponent* secondMesh = new MeshComponent("cube");
+	GroundPlane->addComponent(secondMesh);
+	secondMesh->setRenderer(getSystem<RenderingSystem>());
+	secondMesh->loadObject("../../assets/cube_with_2UVs.DAE");
+	secondMesh->loadTexture("../../assets/tex/rockyground.bmp");
+
+	objectMap.insert(objects("Ground", GroundPlane));
 }
 
 void ObjectFactory::addSystem(System * system)

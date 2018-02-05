@@ -72,6 +72,11 @@ int main(int argc, char *argv[])
 	objectFactory->init();
 
 	objectList.push_back(objectFactory->createObject("Player", glm::vec3(-5.0f, 0.0f, 60.0f), 0.0f));
+	objectList.push_back(objectFactory->createObject("Ground", glm::vec3(25.0f, -5.0f, 60.0f), 0.0f));
+	objectList.push_back(objectFactory->createObject("Ground", glm::vec3(-5.0f, -5.0f, 60.0f), 0.0f));
+	objectList.push_back(objectFactory->createObject("Ground", glm::vec3(-5.0f, -10.0f, 40.0f), 0.0f));
+
+
 	
 	/*
 	//First Object - Acting as player (camera component / movement component)
