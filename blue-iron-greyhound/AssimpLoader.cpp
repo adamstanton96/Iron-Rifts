@@ -47,7 +47,7 @@ namespace AssimpLoader
 		
 
 		const aiMesh* mesh;
-		cout << "Number of meshes: " << scene->mNumMeshes << endl;
+		//cout << "Number of meshes: " << scene->mNumMeshes << endl;
 
 
 		//Temporary containers for object data
@@ -119,7 +119,7 @@ namespace AssimpLoader
 				}
 			}
 
-			cout << texCount << endl;
+			//cout << texCount << endl;
 			int ID = OpenglUtils::createMesh((GLuint)verts.size(), (GLfloat*)verts.data(), (GLfloat*)colours.data(), (GLfloat*)norms.data(), (GLfloat*)texCoords.data(), (GLuint)texCoords.size(), (GLuint)indices.size(), (GLuint*)indices.data());
 			meshIDs.push_back(ID);
 			indexCount.push_back(indices.size());

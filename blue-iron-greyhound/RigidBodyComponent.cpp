@@ -83,7 +83,7 @@ void RigidBodyComponent::createAABB(glm::vec3 min, glm::vec3 max)
 void RigidBodyComponent::createOBB(glm::vec3 min, glm::vec3 max)
 {
 	glm::vec3 rotAxis = getUser()->getRenderRotate();
-	float degrees = getUser()->getRenderRotateDeg();
+	float degrees = -getUser()->getRenderRotateDeg();
 	glm::vec3 worldSpacePosition = getUser()->getPosition();
 
 

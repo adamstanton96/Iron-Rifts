@@ -49,6 +49,16 @@ void OBB::updateVertices()
 	{	
 		worldVertices[i] = glm::vec4(objVertices[i], 0) * rotation;
 		worldVertices[i] = worldVertices[i] + position;
+
+		if (worldVertices[i].x < worldSpaceMin.x)  worldSpaceMin.x = worldVertices[i].x;
+		if (worldVertices[i].y < worldSpaceMin.y)  worldSpaceMin.y = worldVertices[i].y;
+		if (worldVertices[i].z < worldSpaceMin.z)  worldSpaceMin.z = worldVertices[i].z;
+
+		if (worldVertices[i].x > worldSpaceMax.x)  worldSpaceMax.x = worldVertices[i].x;
+		if (worldVertices[i].y > worldSpaceMax.y)  worldSpaceMax.y = worldVertices[i].y;
+		if (worldVertices[i].z > worldSpaceMax.z)  worldSpaceMax.z = worldVertices[i].z;
+
+	
 	}
 
 }
@@ -82,17 +92,17 @@ void OBB::setGlobalPosition(glm::vec3 pos)
 
 void OBB::SATtest(glm::vec3 axis)
 {
-	std::vector<float> projectPoints;
+	//std::vector<float> projectPoints;
 
-	projectPoints = collisionTest->SatTest(worldVertices, testBox->worldVertices, axis);
+	////projectPoints = collisionTest->SatTest(worldVertices, testBox->worldVertices, axis);
 
-	std::cout << "Axis: " << axis.x << ", " << axis.y << ", " << axis.z;// << std::endl << std::endl;
+	//std::cout << "Axis: " << axis.x << ", " << axis.y << ", " << axis.z;// << std::endl << std::endl;
 
-	std::cout << "	minProj1: " << projectPoints[0];
-	std::cout << "	maxProj1: " << projectPoints[1];
+	//std::cout << "	minProj1: " << projectPoints[0];
+	//std::cout << "	maxProj1: " << projectPoints[1];
 
-	std::cout << "	minProj2: " << projectPoints[2];
-	std::cout << "	maxProj2: " << projectPoints[3] << std::endl << std::endl;
+	//std::cout << "	minProj2: " << projectPoints[2];
+	//std::cout << "	maxProj2: " << projectPoints[3] << std::endl << std::endl;
 }
 
 void OBB::calculateSeperatingEdges()
@@ -161,6 +171,16 @@ void OBB::setRotation(float degrees, glm::vec3 roatationAxis)
 
 	worldSpaceMin = glm::vec3(rotatedMin) + position;
 	worldSpaceMax = glm::vec3(rotatedMax) + position;
+
+	/*if (worldSpaceMin.x > worldSpaceMax.x)
+	{
+		worldSpaceMax.x = worldSpaceMin.x;
+	}
+	if (worldSpaceMin.y > worldSpaceMax.y)
+	{
+			worldSpaceMax.y = worldSpaceMin.y;
+	}*/
+
 
 }
 

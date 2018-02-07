@@ -135,7 +135,6 @@
     <ClInclude Include="InputSystem.h" />
     <ClInclude Include="MovementComponent.h" />
     <ClInclude Include="OBB.h" />
-    <ClInclude Include="OBB_Collision_Test.h" />
     <ClInclude Include="RigidBodyComponent.h" />
     <ClInclude Include="SDLGLTextureLoader.h" />
     <ClInclude Include="InteractiveTestComponent.h" />

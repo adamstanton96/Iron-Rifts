@@ -8,7 +8,7 @@
 //#include "OpenglUtils.h"
 #include <vector>
 
-#include "OBB_Collision_Test.h"
+
 
 
 #define DEG_TO_RADIAN 0.017453293
@@ -63,7 +63,7 @@ public:
 
 	std::vector<glm::vec3> worldVertices;
 
-	OBB_Collision_Test* collisionTest;
+
 private:
 
 

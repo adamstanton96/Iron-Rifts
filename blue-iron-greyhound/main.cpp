@@ -69,7 +69,7 @@ int main(int argc, char *argv[])
 
 	//First Object - Acting as player (camera component / movement component)
 	GameObject *Player = new GameObject("player");
-	Player->setTranslation(glm::vec3(-5.0f, 0.0f, 60.0f));
+	Player->setTranslation(glm::vec3(5.0f, 0.0f, 60.0f));
 	Player->setScaling(glm::vec3(1.0f, 1.0f, 1.0f));
 	Player->setCameraRotation(0.0);
 	Player->setRenderRotateVec(glm::vec3(0, -1, 0));
@@ -100,8 +100,8 @@ int main(int argc, char *argv[])
 
 	//road barrier 2
 	GameObject *barrier2 = new GameObject("old building");
-	barrier2->setTranslation(glm::vec3(0.0f, -5.0f, 90.0f));
-	barrier2->setScaling(glm::vec3(0.5f, 0.5f, 0.5f));
+	barrier2->setTranslation(glm::vec3(10.0f, 5.0f, 90.0f));
+	barrier2->setScaling(glm::vec3(1.0f, 1.0f, 1.0f));
 	barrier2->setRenderRotateVec(glm::vec3(0, 1, 0));
 	barrier2->setRenderRotateDeg(0);
 
@@ -118,6 +118,29 @@ int main(int argc, char *argv[])
 	barriermesh2->loadTexture("../../assets/roadbarrier/BARRIERE.bmp");
 
 	objectList.push_back(barrier2);
+	///////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////
+
+	////road barrier 2
+	//GameObject *barrierTester = new GameObject("old building");
+	//barrierTester->setTranslation(glm::vec3(10.0f, 5.0f, 90.0f));
+	//barrierTester->setScaling(glm::vec3(1.0f, 1.0f, 1.0f));
+	//barrierTester->setRenderRotateVec(glm::vec3(0, 1, 0));
+	//barrierTester->setRenderRotateDeg(0);
+
+	//RigidBodyComponent* rigidBody30 = new RigidBodyComponent("Rigid Body");
+	//barrierTester->addComponent(rigidBody30);
+	//rigidBody30->setCollisionSystem(collisionsystem);
+	//rigidBody30->setBodyType("STATIC");
+	//rigidBody30->setBoundingType("OBB");
+
+	//MeshComponent* barriermesh00 = new MeshComponent("test");
+	//barrierTester->addComponent(barriermesh00);
+	//barriermesh00->setRenderer(renderer);
+	//barriermesh00->loadObject("../../assets/BARRIERE.obj");
+	//barriermesh00->loadTexture("../../assets/roadbarrier/BARRIERE.bmp");
+
+	//objectList.push_back(barrierTester);
 	///////////////////////////////////////////////////////////////////
 
 

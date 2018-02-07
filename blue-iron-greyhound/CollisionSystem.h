@@ -25,7 +25,7 @@ public:
 	void addDynamicBody(RigidBodyComponent* rigidbody);
 
 	bool AABBtoAABB(AABB*, AABB*);
-	bool OBBtoOBB(OBB* box1, OBB* box2);
+	bool OBBtoOBB(OBB* box1, OBB* box2, RigidBodyComponent* rigidbody);
 	bool OBBtoAABB(OBB* box1, AABB* box2);
 	
 
