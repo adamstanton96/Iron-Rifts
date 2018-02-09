@@ -40,6 +40,43 @@ void CollisionSystem::collisionCheck(RigidBodyComponent* rigidbody)
 					}
 		}
 	}
+	else if (rigidbody->getBoundingType() == "OBB")
+	{
+		OBB* bound = (OBB*)rigidbody->getBoundingVolume();
+
+		//test against all static bodies
+		for (unsigned int i = 0; i < staticBodies.size(); i++)
+		{
+			if (staticBodies[i]->getBoundingType() == "AABB")
+				if (OBBtoAABB(bound, (AABB*)staticBodies[i]->getBoundingVolume()))
+				{
+					collisionReaction(rigidbody);
+				}
+
+			if (staticBodies[i]->getBoundingType() == "OBB")
+				if (OBBtoOBB(bound, (OBB*)staticBodies[i]->getBoundingVolume(), rigidbody))
+				{
+					collisionReaction(rigidbody);
+				}
+		}
+
+		//test against all other dynamic bodies bodies
+		for (unsigned int i = 0; i < dynamicBodies.size(); i++)
+		{
+			if (dynamicBodies[i] != rigidbody)
+			if (dynamicBodies[i]->getBoundingType() == "AABB")
+				if (OBBtoAABB(bound, (AABB*)dynamicBodies[i]->getBoundingVolume()))
+				{
+					collisionReaction(rigidbody);
+				}
+			if (dynamicBodies[i] != rigidbody)
+			if (dynamicBodies[i]->getBoundingType() == "OBB")
+				if (OBBtoOBB(bound, (OBB*)dynamicBodies[i]->getBoundingVolume(), rigidbody))
+				{
+					collisionReaction(rigidbody);
+				}
+		}
+	}
 	else
 	{
 		std::cout << "CollisionSystem/collisionCheck: Unsupported or invalid boundingtype" << std::endl;
@@ -63,8 +100,217 @@ void CollisionSystem::collisionReaction(RigidBodyComponent* rigidbody)
 
 	rigidbody->getUser()->setTranslation(currentPosition + translationVector * glm::vec3(-2));
 
-	
+
 }
+
+void CollisionSystem::displacementReaction(RigidBodyComponent* rigidbody, glm::vec3 displacementVector)
+{
+	glm::vec3 currentPosition = rigidbody->getUser()->getTranslation();
+
+	rigidbody->getUser()->setTranslation(currentPosition + displacementVector);
+
+}
+
+
+
+
+
+
+
+
+
+
+
+bool CollisionSystem::OBBtoOBB(OBB* box1, OBB* box2 , RigidBodyComponent* rigidbody)
+{
+
+	// 1) Project each vertice of each shape onto the given axis of seperation (1 of 6... or 3?)
+	// 2) Take the min and max projected point of each shape       
+	// 3) If any of these projected min and maxs do not overlap then exit, no intersection found
+	
+	
+	float minProj1;
+	float maxProj1;
+
+	float minProj2;
+	float maxProj2;
+
+		std::vector<glm::vec3> vertices1 = box1->worldVertices;
+		std::vector<glm::vec3> vertices2 = box2->worldVertices;
+
+		std::vector<glm::vec3> faces = box2->faceNormals;
+
+		glm::vec3 axis;
+
+		int i;
+		glm::vec3 displacementVector;
+
+		glm::vec3 transVec1;
+		glm::vec3 transVec2;
+		glm::vec3 transVec3;
+		
+
+		bool xOverlap = false;
+		bool yOverlap = false;
+		bool zOverlap = false;
+
+	
+
+		for (i = 3; i < 6; i++)
+		{
+			minProj1 = 1000;
+			maxProj1 = -1000;
+
+			minProj2 = 1000;
+			maxProj2 = -1000;
+
+
+			axis = faces[i];
+
+			// Project all vertice of A and B onto axis and store the min and max of these values
+			for (int j = 0; j < vertices1.size(); j++)
+			{
+				float dotproduct1 = glm::dot(vertices1[j], axis);
+
+				if (dotproduct1 < minProj1) minProj1 = dotproduct1;
+				if (dotproduct1 > maxProj1) maxProj1 = dotproduct1;
+
+			}
+
+			for (int j = 0; j < vertices2.size(); j++)
+			{
+				float dotproduct2 = glm::dot(vertices2[j], axis);
+
+				if (dotproduct2 < minProj2) minProj2 = dotproduct2;
+				if (dotproduct2 > maxProj2) maxProj2 = dotproduct2;
+			}
+
+
+
+			//Axis 1
+			if (i == 3)
+			{
+				
+				if (maxProj1 > minProj2 && minProj1 < minProj2)
+				{
+					transVec2 = (maxProj1 - minProj2) * -axis;
+					zOverlap = true;
+				}
+
+				if (minProj1 < maxProj2 && maxProj1 > maxProj2)
+				{
+					transVec2 = (maxProj2 - minProj1) * axis;
+					zOverlap = true;
+				}
+
+				if (minProj2 < minProj1 && maxProj1 < maxProj2)
+				{
+					transVec2 = (maxProj2 - minProj1) * axis;
+					zOverlap = true;
+				}
+			}
+
+
+
+			// Axis 2
+			if (i == 4)
+			{
+
+				if (maxProj1 > minProj2 && minProj1 < minProj2)
+				{
+					transVec1 = (maxProj1 - minProj2) * -axis;
+					xOverlap = true;
+				}
+
+				if (minProj1 < maxProj2 && maxProj1 > maxProj2)
+				{
+					transVec1 = (maxProj2 - minProj1) * axis;
+					xOverlap = true;
+				}
+
+				if (minProj2 < minProj1 && maxProj1 < maxProj2)
+				{	
+					transVec1 = (maxProj2 - minProj1) * axis;
+					xOverlap = true;	
+				}
+
+			}
+
+		
+			//Axis 3 
+			if (i == 5)
+			{
+				if (maxProj1 > minProj2 && minProj1 < minProj2)
+				{
+					yOverlap = true;
+				}
+
+				if (minProj1 < maxProj2 && maxProj1 > maxProj2)
+				{
+					yOverlap = true;
+				}
+
+				if (minProj2 < minProj1 && maxProj1 < maxProj2)
+				{
+					yOverlap = true;
+				}
+
+			}
+			
+
+
+
+		}
+
+
+
+		if ((xOverlap && zOverlap && yOverlap) == true)
+		{
+			// The smallest translation vector is the one we want to use
+			if (glm::length(transVec1) < glm::length(transVec2))
+			{
+				displacementVector = transVec1;
+			}
+			else
+			{
+				displacementVector = transVec2;
+			}
+			
+
+			///std::cout << "Vector 1: ";
+			///std::cout << "(" << transVec1.x << ", " << transVec1.y << ", " << transVec1.z << ")" << std::endl;
+
+			///std::cout << "Vector 2: ";
+			///std::cout << "(" << transVec2.x << ", " << transVec2.y << ", " << transVec2.z << ")" << std::endl;*/
+
+
+			
+			//We dont want any Y axis displacement at this point
+			displacementVector.y = 0;
+
+			displacementReaction(rigidbody, displacementVector);
+		}
+		
+	
+
+	return false;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -87,6 +333,15 @@ bool CollisionSystem::AABBtoAABB(AABB* box1, AABB* box2)
 	else
 		return true;
 
+}
+
+
+
+bool CollisionSystem::OBBtoAABB(OBB* box1, AABB* box2)
+{
+
+
+	return false;
 }
 
 

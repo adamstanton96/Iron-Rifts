@@ -25,8 +25,12 @@ public:
 	void addDynamicBody(RigidBodyComponent* rigidbody);
 
 	bool AABBtoAABB(AABB*, AABB*);
+	bool OBBtoOBB(OBB* box1, OBB* box2, RigidBodyComponent* rigidbody);
+	bool OBBtoAABB(OBB* box1, AABB* box2);
+	
 
 	void collisionReaction(RigidBodyComponent* rigidbody);
+	void displacementReaction(RigidBodyComponent* rigidbody, glm::vec3 displacementVector);
 
 private:
 	std::vector<RigidBodyComponent*> staticBodies;

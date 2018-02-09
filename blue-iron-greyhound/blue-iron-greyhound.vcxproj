@@ -90,10 +90,11 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>C:\Dev\glew-2.0.0\include;C:\Dev\glm-0.9.8.3\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\dev\assimp-3.1.1-win-binaries\include;..\..\Dev\SDL2-2.0.5\include;..\..\Dev\glm-0.9.8.5;..\..\Dev\glew-2.0.0\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>C:\Dev\glew-2.0.0\lib\Release\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\..\Dev\assimp-3.1.1-win-binaries\lib32;..\..\Dev\SDL2-2.0.5\lib\x86;..\..\Dev\glew-2.0.0\lib\Release\Win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;glew32.lib;opengl32.lib;assimp.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -127,12 +128,12 @@
     <ClInclude Include="AssimpLoader.h" />
     <ClInclude Include="boundingVolume.h" />
     <ClInclude Include="CameraComponent.h" />
-    <ClInclude Include="Collisions.h" />
     <ClInclude Include="CollisionSystem.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="InputSystem.h" />
     <ClInclude Include="MovementComponent.h" />
+    <ClInclude Include="OBB.h" />
     <ClInclude Include="RigidBodyComponent.h" />
     <ClInclude Include="SDLGLTextureLoader.h" />
     <ClInclude Include="InteractiveTestComponent.h" />
@@ -149,7 +150,6 @@
   <ItemGroup>
     <ClCompile Include="AssimpLoader.cpp" />
     <ClCompile Include="CameraComponent.cpp" />
-    <ClCompile Include="Collisions.cpp" />
     <ClCompile Include="CollisionSystem.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="GameObject.cpp" />
@@ -157,6 +157,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MeshComponent.cpp" />
     <ClCompile Include="MovementComponent.cpp" />
+    <ClCompile Include="OBB.cpp" />
     <ClCompile Include="openglRenderer.cpp" />
     <ClCompile Include="OpenglUtils.cpp" />
     <ClCompile Include="RigidBodyComponent.cpp" />
