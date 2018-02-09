@@ -90,28 +90,11 @@ void OBB::setGlobalPosition(glm::vec3 pos)
 	position = pos;
 }
 
-void OBB::SATtest(glm::vec3 axis)
-{
-	//std::vector<float> projectPoints;
 
-	////projectPoints = collisionTest->SatTest(worldVertices, testBox->worldVertices, axis);
-
-	//std::cout << "Axis: " << axis.x << ", " << axis.y << ", " << axis.z;// << std::endl << std::endl;
-
-	//std::cout << "	minProj1: " << projectPoints[0];
-	//std::cout << "	maxProj1: " << projectPoints[1];
-
-	//std::cout << "	minProj2: " << projectPoints[2];
-	//std::cout << "	maxProj2: " << projectPoints[3] << std::endl << std::endl;
-}
-
-void OBB::calculateSeperatingEdges()
-{
-
-}
 
 void OBB::calculateSurfaceNormals() 
 {
+	//If vector not yet initialized
 	if (faceNormals.size() < 1)
 	{
 		//"min" normals (3)
@@ -140,16 +123,10 @@ void OBB::calculateSurfaceNormals()
 	
 
 
-	//std::cout << "Face Normals:   " << std::endl;
-	std::cout << faceNormals.size() << std::endl;
+	//Normalise all dem normals
 	for (int i = 0; i < faceNormals.size(); i++)
 	{
-		//Do They Need Normalized?
 		faceNormals[i] = glm::normalize(faceNormals[i]);
-
-		//std::cout << "X: " << faceNormals[i].x;
-		//std::cout << " Y: " << faceNormals[i].y;
-		//std::cout << " Z: " << faceNormals[i].z << std::endl;
 	}
 
 	
@@ -171,16 +148,6 @@ void OBB::setRotation(float degrees, glm::vec3 roatationAxis)
 
 	worldSpaceMin = glm::vec3(rotatedMin) + position;
 	worldSpaceMax = glm::vec3(rotatedMax) + position;
-
-	/*if (worldSpaceMin.x > worldSpaceMax.x)
-	{
-		worldSpaceMax.x = worldSpaceMin.x;
-	}
-	if (worldSpaceMin.y > worldSpaceMax.y)
-	{
-			worldSpaceMax.y = worldSpaceMin.y;
-	}*/
-
 
 }
 

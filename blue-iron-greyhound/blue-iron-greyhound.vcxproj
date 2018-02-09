@@ -128,7 +128,6 @@
     <ClInclude Include="AssimpLoader.h" />
     <ClInclude Include="boundingVolume.h" />
     <ClInclude Include="CameraComponent.h" />
-    <ClInclude Include="Collisions.h" />
     <ClInclude Include="CollisionSystem.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="GameObject.h" />
@@ -151,7 +150,6 @@
   <ItemGroup>
     <ClCompile Include="AssimpLoader.cpp" />
     <ClCompile Include="CameraComponent.cpp" />
-    <ClCompile Include="Collisions.cpp" />
     <ClCompile Include="CollisionSystem.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="GameObject.cpp" />

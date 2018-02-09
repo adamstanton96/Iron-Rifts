@@ -127,7 +127,7 @@ bool CollisionSystem::OBBtoOBB(OBB* box1, OBB* box2 , RigidBodyComponent* rigidb
 	// 1) Project each vertice of each shape onto the given axis of seperation (1 of 6... or 3?)
 	// 2) Take the min and max projected point of each shape       
 	// 3) If any of these projected min and maxs do not overlap then exit, no intersection found
-	//std::vector<float> SatTest(std::vector<glm::vec3> pointset1, std::vector<glm::vec3> pointset2, glm::vec3 axis)
+	
 	
 	float minProj1;
 	float maxProj1;
@@ -143,12 +143,18 @@ bool CollisionSystem::OBBtoOBB(OBB* box1, OBB* box2 , RigidBodyComponent* rigidb
 		glm::vec3 axis;
 
 		int i;
-		glm::vec3 Vec;
-		bool xOverlap;
-		bool zOverlap;
+		glm::vec3 displacementVector;
 
-		xOverlap = false;
-		zOverlap = false;
+		glm::vec3 transVec1;
+		glm::vec3 transVec2;
+		glm::vec3 transVec3;
+		
+
+		bool xOverlap = false;
+		bool yOverlap = false;
+		bool zOverlap = false;
+
+	
 
 		for (i = 3; i < 6; i++)
 		{
@@ -161,10 +167,7 @@ bool CollisionSystem::OBBtoOBB(OBB* box1, OBB* box2 , RigidBodyComponent* rigidb
 
 			axis = faces[i];
 
-			std::cout << "Axis: " << i << std::endl;
-			std::cout << "(" << axis.x << ", " << axis.y << ", " << axis.z << ")" << std::endl;
-
-
+			// Project all vertice of A and B onto axis and store the min and max of these values
 			for (int j = 0; j < vertices1.size(); j++)
 			{
 				float dotproduct1 = glm::dot(vertices1[j], axis);
@@ -183,126 +186,111 @@ bool CollisionSystem::OBBtoOBB(OBB* box1, OBB* box2 , RigidBodyComponent* rigidb
 			}
 
 
-			/*std::cout << "Projection" << " "<< i << ": " << std::endl;
-			std::cout << "MinProj1: " << minProj1;
-			std::cout << "		MaxProj1: " << maxProj1 << std::endl;
 
-			std::cout << "minProj2: " << minProj2;
-			std::cout << "		maxProj2: " << maxProj2 << std::endl;*/
-
-			//::cout << "Axis Vector: ";
-			//std::cout << "(" << axis.x << ", " << axis.y << ", " << axis.z << ")" << std::endl;
-
-		
-			//z axis
+			//Axis 1
 			if (i == 3)
 			{
-				std::cout << "Axis Vector: ";
-				std::cout << "(" << axis.x << ", " << axis.y << ", " << axis.z << ")" << std::endl;
+				
 				if (maxProj1 > minProj2 && minProj1 < minProj2)
 				{
-					Vec.z = ((maxProj1 - minProj2) * -1);// *axis.z;
-
-					//Vec = -axis * (maxProj1 - minProj2);
-
+					transVec2 = (maxProj1 - minProj2) * -axis;
 					zOverlap = true;
-					//std::cout << "Z overlap: ";
 				}
 
 				if (minProj1 < maxProj2 && maxProj1 > maxProj2)
 				{
+					transVec2 = (maxProj2 - minProj1) * axis;
 					zOverlap = true;
-					Vec.z = (maxProj2 - minProj1);// *axis.z;
-
-					//Vec = axis * (maxProj2 - minProj1);
-					//std::cout << "Z overlap: ";
 				}
+
 				if (minProj2 < minProj1 && maxProj1 < maxProj2)
 				{
+					transVec2 = (maxProj2 - minProj1) * axis;
 					zOverlap = true;
-					Vec.z = (maxProj2 - minProj1);// *axis.z;
-					//Vec = axis * (maxProj2 - minProj1);
-					//std::cout << "Z overlap: ";
 				}
 			}
 
 
-			//x axis
+
+			// Axis 2
 			if (i == 4)
 			{
-				//std::cout << "Displacement Vector: ";
 
 				if (maxProj1 > minProj2 && minProj1 < minProj2)
 				{
+					transVec1 = (maxProj1 - minProj2) * -axis;
 					xOverlap = true;
-					Vec.x = ((maxProj1 - minProj2) * -1);// *axis.x;
-					//Vec = -axis * (maxProj1 - minProj2);
-					//std::cout << "X overlap: ";
 				}
 
 				if (minProj1 < maxProj2 && maxProj1 > maxProj2)
 				{
+					transVec1 = (maxProj2 - minProj1) * axis;
 					xOverlap = true;
-					Vec.x = (maxProj2 - minProj1);// *axis.x;
-					//Vec = axis * (maxProj2 - minProj1);
-					//std::cout << "X overlap: ";
 				}
 
-				//encolsed completed in this plane
 				if (minProj2 < minProj1 && maxProj1 < maxProj2)
-				{
-					xOverlap = true;
-					Vec.x = (maxProj2 - minProj1);// *axis.x;
-					//Vec = axis * (maxProj2 - minProj1);
-					//std::cout << "Z overlap: ";
+				{	
+					transVec1 = (maxProj2 - minProj1) * axis;
+					xOverlap = true;	
 				}
 
 			}
+
+		
+			//Axis 3 
+			if (i == 5)
+			{
+				if (maxProj1 > minProj2 && minProj1 < minProj2)
+				{
+					yOverlap = true;
+				}
+
+				if (minProj1 < maxProj2 && maxProj1 > maxProj2)
+				{
+					yOverlap = true;
+				}
+
+				if (minProj2 < minProj1 && maxProj1 < maxProj2)
+				{
+					yOverlap = true;
+				}
+
+			}
+			
+
 
 
 		}
 
-			//y axis
-			//if (i == 5)
-				//Vec.y = maxProj1 - minProj2;
-
-			//if (i == 3)
-			//if (maxProj1 < minProj2 || minProj1 > maxProj2)
-			//	return false;
-			
-	
 
 
-		if ((xOverlap && zOverlap) == true)
+		if ((xOverlap && zOverlap && yOverlap) == true)
 		{
-			if (Vec.x < Vec.z)
+			// The smallest translation vector is the one we want to use
+			if (glm::length(transVec1) < glm::length(transVec2))
 			{
-				Vec.z = 0;
-				Vec.y = 0;
+				displacementVector = transVec1;
 			}
 			else
 			{
-				Vec.x = 0;
-				Vec.y = 0;
+				displacementVector = transVec2;
 			}
+			
 
-			std::cout << "Displacement Vector: ";
-			std::cout << "(" << Vec.x << ", " << Vec.y << ", " << Vec.z << ")" << std::endl;
+			///std::cout << "Vector 1: ";
+			///std::cout << "(" << transVec1.x << ", " << transVec1.y << ", " << transVec1.z << ")" << std::endl;
 
-			displacementReaction(rigidbody, Vec);
+			///std::cout << "Vector 2: ";
+			///std::cout << "(" << transVec2.x << ", " << transVec2.y << ", " << transVec2.z << ")" << std::endl;*/
+
+
+			
+			//We dont want any Y axis displacement at this point
+			displacementVector.y = 0;
+
+			displacementReaction(rigidbody, displacementVector);
 		}
 		
-
-	/*	std::vector<float> projectedPoints;
-
-		projectedPoints.push_back(minProj1);
-		projectedPoints.push_back(maxProj1);
-		projectedPoints.push_back(minProj2);
-		projectedPoints.push_back(maxProj2);*/
-
-		
-		//return projectedPoints;
-
 	
 
 	return false;

@@ -100,10 +100,10 @@ int main(int argc, char *argv[])
 
 	//road barrier 2
 	GameObject *barrier2 = new GameObject("old building");
-	barrier2->setTranslation(glm::vec3(10.0f, 5.0f, 90.0f));
-	barrier2->setScaling(glm::vec3(1.0f, 1.0f, 1.0f));
+	barrier2->setTranslation(glm::vec3(10.0f, -5.0f, 90.0f));
+	barrier2->setScaling(glm::vec3(0.5f, 0.5f, 0.5f));
 	barrier2->setRenderRotateVec(glm::vec3(0, 1, 0));
-	barrier2->setRenderRotateDeg(0);
+	barrier2->setRenderRotateDeg(90);
 
 	RigidBodyComponent* rigidBody3 = new RigidBodyComponent("Rigid Body");
 	barrier2->addComponent(rigidBody3);
@@ -121,26 +121,27 @@ int main(int argc, char *argv[])
 	///////////////////////////////////////////////////////////////////
 	////////////////////////////////////////////////////
 
-	////road barrier 2
-	//GameObject *barrierTester = new GameObject("old building");
-	//barrierTester->setTranslation(glm::vec3(10.0f, 5.0f, 90.0f));
-	//barrierTester->setScaling(glm::vec3(1.0f, 1.0f, 1.0f));
-	//barrierTester->setRenderRotateVec(glm::vec3(0, 1, 0));
-	//barrierTester->setRenderRotateDeg(0);
+	//road barrier 1
+	GameObject *barrier = new GameObject("old building");
+	barrier->setTranslation(glm::vec3(-20.0f, -5.0f, 90.0f));
+	barrier->setScaling(glm::vec3(0.5f, 0.5f, 0.5f));
+	barrier->setRenderRotateVec(glm::vec3(1, 0, 0));
+	barrier->setRenderRotateDeg(0);
 
-	//RigidBodyComponent* rigidBody30 = new RigidBodyComponent("Rigid Body");
-	//barrierTester->addComponent(rigidBody30);
-	//rigidBody30->setCollisionSystem(collisionsystem);
-	//rigidBody30->setBodyType("STATIC");
-	//rigidBody30->setBoundingType("OBB");
+	RigidBodyComponent* rigidBody2 = new RigidBodyComponent("Rigid Body");
+	barrier->addComponent(rigidBody2);
+	rigidBody2->setCollisionSystem(collisionsystem);
+	rigidBody2->setBodyType("STATIC");
+	rigidBody2->setBoundingType("OBB");
 
-	//MeshComponent* barriermesh00 = new MeshComponent("test");
-	//barrierTester->addComponent(barriermesh00);
-	//barriermesh00->setRenderer(renderer);
-	//barriermesh00->loadObject("../../assets/BARRIERE.obj");
-	//barriermesh00->loadTexture("../../assets/roadbarrier/BARRIERE.bmp");
+	MeshComponent* barriermesh = new MeshComponent("test");
+	barrier->addComponent(barriermesh);
+	barriermesh->setRenderer(renderer);
+	barriermesh->loadObject("../../assets/BARRIERE.obj");
+	barriermesh->loadTexture("../../assets/roadbarrier/BARRIERE.bmp");
 
-	//objectList.push_back(barrierTester);
+	objectList.push_back(barrier);
+
 	///////////////////////////////////////////////////////////////////
 
 
@@ -347,22 +348,22 @@ int main(int argc, char *argv[])
 	
 	objectList.push_back(trashPile);
 
-	//road barrier 1
-	GameObject *barrier = new GameObject("old building");
-	barrier->setTranslation(glm::vec3(-20.0f, -5.0f, 90.0f));
-	barrier->setScaling(glm::vec3(0.5f, 0.5f, 0.5f));
-	barrier->setRenderRotateVec(glm::vec3(NULL, -NULL, NULL));
-	RigidBodyComponent* rigidBody2 = new RigidBodyComponent("Rigid Body");
-	barrier->addComponent(rigidBody2);
-	rigidBody2->setCollisionSystem(collisionsystem);
-	rigidBody2->setBodyType("STATIC");
-	MeshComponent* barriermesh = new MeshComponent("test");
-	barrier->addComponent(barriermesh);
-	barriermesh->setRenderer(renderer);
-	barriermesh->loadObject("../../assets/BARRIERE.obj");
-	barriermesh->loadTexture("../../assets/roadbarrier/BARRIERE.bmp");
-	
-	objectList.push_back(barrier);
+	////road barrier 1
+	//GameObject *barrier = new GameObject("old building");
+	//barrier->setTranslation(glm::vec3(-20.0f, -5.0f, 90.0f));
+	//barrier->setScaling(glm::vec3(0.5f, 0.5f, 0.5f));
+	//barrier->setRenderRotateVec(glm::vec3(NULL, -NULL, NULL));
+	//RigidBodyComponent* rigidBody2 = new RigidBodyComponent("Rigid Body");
+	//barrier->addComponent(rigidBody2);
+	//rigidBody2->setCollisionSystem(collisionsystem);
+	//rigidBody2->setBodyType("STATIC");
+	//MeshComponent* barriermesh = new MeshComponent("test");
+	//barrier->addComponent(barriermesh);
+	//barriermesh->setRenderer(renderer);
+	//barriermesh->loadObject("../../assets/BARRIERE.obj");
+	//barriermesh->loadTexture("../../assets/roadbarrier/BARRIERE.bmp");
+	//
+	//objectList.push_back(barrier);
 
 	//road barrier 2
 	/*GameObject *barrier2 = new GameObject("old building");

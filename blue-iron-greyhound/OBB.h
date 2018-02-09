@@ -27,10 +27,6 @@ public:
 
 	// Finds the boxes 8 vertices based on the given min and max of the box (in object space)
 	void calculateVertices();		
-
-	void calculateSeperatingEdges();
-
-	void SATtest(glm::vec3 axis);
 	
 	void setminmax(glm::vec3 min, glm::vec3 max);
 	void setGlobalPosition(glm::vec3 pos);
