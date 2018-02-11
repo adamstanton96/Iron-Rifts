@@ -142,7 +142,7 @@ bool CollisionSystem::OBBtoOBB(OBB* box1, OBB* box2 , RigidBodyComponent* rigidb
 
 		glm::vec3 axis;
 
-		int i;
+		int axi;
 		glm::vec3 displacementVector;
 
 		glm::vec3 transVec1;
@@ -156,7 +156,7 @@ bool CollisionSystem::OBBtoOBB(OBB* box1, OBB* box2 , RigidBodyComponent* rigidb
 
 	
 
-		for (i = 3; i < 6; i++)
+		for (axi = 3; axi < 6; axi++)
 		{
 			minProj1 = 1000;
 			maxProj1 = -1000;
@@ -165,7 +165,7 @@ bool CollisionSystem::OBBtoOBB(OBB* box1, OBB* box2 , RigidBodyComponent* rigidb
 			maxProj2 = -1000;
 
 
-			axis = faces[i];
+			axis = faces[axi];
 
 			// Project all vertice of A and B onto axis and store the min and max of these values
 			for (int j = 0; j < vertices1.size(); j++)
@@ -187,8 +187,9 @@ bool CollisionSystem::OBBtoOBB(OBB* box1, OBB* box2 , RigidBodyComponent* rigidb
 
 
 
+			// Test all projections for overlap and flag that axis as having overlap
 			//Axis 1
-			if (i == 3)
+			if (axi == 3)
 			{
 				
 				if (maxProj1 > minProj2 && minProj1 < minProj2)
@@ -213,7 +214,7 @@ bool CollisionSystem::OBBtoOBB(OBB* box1, OBB* box2 , RigidBodyComponent* rigidb
 
 
 			// Axis 2
-			if (i == 4)
+			if (axi == 4)
 			{
 
 				if (maxProj1 > minProj2 && minProj1 < minProj2)
@@ -238,20 +239,23 @@ bool CollisionSystem::OBBtoOBB(OBB* box1, OBB* box2 , RigidBodyComponent* rigidb
 
 		
 			//Axis 3 
-			if (i == 5)
+			if (axi == 5)
 			{
 				if (maxProj1 > minProj2 && minProj1 < minProj2)
 				{
+					transVec3 = (maxProj1 - minProj2) * -axis;
 					yOverlap = true;
 				}
 
 				if (minProj1 < maxProj2 && maxProj1 > maxProj2)
 				{
+					transVec3 = (maxProj2 - minProj1) * axis;
 					yOverlap = true;
 				}
 
 				if (minProj2 < minProj1 && maxProj1 < maxProj2)
 				{
+					transVec3 = (maxProj2 - minProj1) * axis;
 					yOverlap = true;
 				}
 
@@ -263,30 +267,28 @@ bool CollisionSystem::OBBtoOBB(OBB* box1, OBB* box2 , RigidBodyComponent* rigidb
 		}
 
 
-
+		//Overlap on axi' mean a collision
 		if ((xOverlap && zOverlap && yOverlap) == true)
 		{
-			// The smallest translation vector is the one we want to use
-			if (glm::length(transVec1) < glm::length(transVec2))
+		
+			if (glm::length(transVec1) < (glm::length(transVec2) && (glm::length(transVec3))))
 			{
 				displacementVector = transVec1;
 			}
-			else
+			else if (glm::length(transVec2) < (glm::length(transVec3) && (glm::length(transVec1))))
 			{
 				displacementVector = transVec2;
 			}
-			
+			else if (glm::length(transVec3) < (glm::length(transVec2) && (glm::length(transVec1))))
+			{
+				displacementVector = transVec3;
+			}
 
 			///std::cout << "Vector 1: ";
 			///std::cout << "(" << transVec1.x << ", " << transVec1.y << ", " << transVec1.z << ")" << std::endl;
 
 			///std::cout << "Vector 2: ";
 			///std::cout << "(" << transVec2.x << ", " << transVec2.y << ", " << transVec2.z << ")" << std::endl;*/
-
-
-			
-			//We dont want any Y axis displacement at this point
-			displacementVector.y = 0;
 
 			displacementReaction(rigidbody, displacementVector);
 		}

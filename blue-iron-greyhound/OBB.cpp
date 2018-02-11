@@ -16,8 +16,6 @@ OBB::OBB(glm::vec3 min, glm::vec3 max,glm::vec3 rotAxis, float degrees, glm::vec
 	rotationAxis = rotAxis;
 	this->degrees = degrees;
 
-	printDetails();
-	
 }
 
 

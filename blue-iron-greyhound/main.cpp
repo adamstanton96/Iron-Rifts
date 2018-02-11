@@ -103,7 +103,7 @@ int main(int argc, char *argv[])
 	barrier2->setTranslation(glm::vec3(10.0f, -5.0f, 90.0f));
 	barrier2->setScaling(glm::vec3(0.5f, 0.5f, 0.5f));
 	barrier2->setRenderRotateVec(glm::vec3(0, 1, 0));
-	barrier2->setRenderRotateDeg(90);
+	barrier2->setRenderRotateDeg(45);
 
 	RigidBodyComponent* rigidBody3 = new RigidBodyComponent("Rigid Body");
 	barrier2->addComponent(rigidBody3);
