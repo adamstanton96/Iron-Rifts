@@ -50,6 +50,7 @@ private:
 	SDL_GLContext glContext;										//Context Handle
 
 	GLuint shaderProgram;
+	GLuint shaderProgramAnimated;
 
 	// Camera/View data
 	GLfloat r;

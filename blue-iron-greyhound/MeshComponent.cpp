@@ -6,7 +6,7 @@ class RigidBodyComponent;
 
 MeshComponent::MeshComponent(std::string name)
 {
-
+	isAnimated = false;
 }
 
 void MeshComponent::init()
@@ -45,10 +45,6 @@ void MeshComponent::setRenderer(RenderingSystem* rendersystem)
 
 void MeshComponent::setMinMax(vector<glm::vec3> minmax)
 {
-	//getUser()->setMin(minmax[0]);
-	//getUser()->setMax(minmax[1]);
-
-	//getUser()->getComponent<RigidBodyComponent>()->setboundingVolume(minmax[0], minmax[1]);
 
 	RigidBodyComponent* body = getUser()->getComponent<RigidBodyComponent>();
 	glm::vec3 scale = getUser()->getScaling();
@@ -99,10 +95,6 @@ void MeshComponent::setScaling(glm::vec3 scale)
 	scaling = scale;
 }
 
-int MeshComponent::getTexcoordCount()
-{
-	return texCoordCount;
-}
 
 glm::vec3 MeshComponent::getTranslation()
 {
@@ -118,22 +110,5 @@ glm::vec3 MeshComponent::getScaling()
 {
 	return scaling;
 }
-
-int MeshComponent::getMeshID()
-{
-	return meshID;
-}
-
-int MeshComponent::getMeshIndexCount()
-{
-	return meshIndexCount;
-}
-
-int MeshComponent::getTextureID()
-{
-	return textureID;
-}
-
-
 
 

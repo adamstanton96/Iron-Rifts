@@ -101,6 +101,7 @@
     <ClInclude Include="OBB.h">
       <Filter>Source Files\Collidables</Filter>
     </ClInclude>
+    <ClInclude Include="AnimatedMeshComponent.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Component.cpp">

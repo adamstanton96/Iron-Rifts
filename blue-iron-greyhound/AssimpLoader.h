@@ -11,7 +11,10 @@ using namespace std;
 namespace AssimpLoader
 {
 	void loadObjectData(const std::string& file, vector<int>& meshIDs, vector<int> &indexCount, vector<glm::vec3>& maxmin);
-	
+	void loadObjectDataAnimations(const std::string& file, vector<int>& meshIDs, vector<int>& indexCount, vector<glm::vec3>& maxmin);
+
+
+	//void loadBoneData(const std::string& file);
 }
 
 
