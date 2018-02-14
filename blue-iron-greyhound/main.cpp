@@ -19,6 +19,7 @@
 #include "CameraComponent.h"
 #include "MovementComponent.h"
 #include "SDLInputSystem.h"
+#include "AnimatedMeshComponent.h"
 
 
 #include "RigidBodyComponent.h"
@@ -46,7 +47,7 @@ int main(int argc, char *argv[])
 {
 	//camera set up
 
-	Camera *cameraComponent = new Camera(glm::vec3(-2.0f, 10.0f, 30.0f), glm::vec3(0.0f, 1.0f, -1.0f), glm::vec3(0.0f, 1.0f, -1.0f), 0.0);
+	Camera *cameraComponent = new Camera(glm::vec3(-2.0f, 10.0f, 30.0f), glm::vec3(0.0f, 1.0f, -1.0f), glm::vec3(0.0f, 1.0f, 0.0f), 0.0);
 
 	//Camera *cameraComponent = new Camera(glm::vec3(-2.0f, 2.0f, 30.0f), glm::vec3(0.0f, 1.0f, -1.0f), glm::vec3(0.0f, 1.0f, -1.0f), 0.0);
 
@@ -82,7 +83,6 @@ int main(int argc, char *argv[])
 	rigidBody->setBodyType("DYNAMIC");
 	rigidBody->setBoundingType("OBB");
 	
-
 	MeshComponent* meshComponent = new MeshComponent("sphere");
 	Player->addComponent(meshComponent);
 	meshComponent->setRenderer(renderer);
@@ -98,12 +98,12 @@ int main(int argc, char *argv[])
 
 	////////////////////////////////////////////////////
 
-	//road barrier 2
+	//spider robot for animation tests
 	GameObject *barrier2 = new GameObject("old building");
-	barrier2->setTranslation(glm::vec3(10.0f, -5.0f, 90.0f));
-	barrier2->setScaling(glm::vec3(0.5f, 0.5f, 0.5f));
-	barrier2->setRenderRotateVec(glm::vec3(0, 1, 0));
-	barrier2->setRenderRotateDeg(45);
+	barrier2->setTranslation(glm::vec3(10.0f, 0.0f, 90.0f));
+	barrier2->setScaling(glm::vec3(4, 4, 4));
+	barrier2->setRenderRotateVec(glm::vec3(1, 0, 0));
+	barrier2->setRenderRotateDeg(-90);
 
 	RigidBodyComponent* rigidBody3 = new RigidBodyComponent("Rigid Body");
 	barrier2->addComponent(rigidBody3);
@@ -111,11 +111,14 @@ int main(int argc, char *argv[])
 	rigidBody3->setBodyType("STATIC");
 	rigidBody3->setBoundingType("OBB");
 
-	MeshComponent* barriermesh2 = new MeshComponent("test");
+	AnimatedMeshComponent* barriermesh2 = new AnimatedMeshComponent("test");
 	barrier2->addComponent(barriermesh2);
 	barriermesh2->setRenderer(renderer);
-	barriermesh2->loadObject("../../assets/BARRIERE.obj");
-	barriermesh2->loadTexture("../../assets/roadbarrier/BARRIERE.bmp");
+	barriermesh2->loadObject("../../assets/RobotAnimated.dae");
+	barriermesh2->loadTexture("../../assets/RobotAnimated.bmp");
+	//
+	barriermesh2->loadBoneData();
+	//
 
 	objectList.push_back(barrier2);
 	///////////////////////////////////////////////////////////////////
@@ -126,7 +129,7 @@ int main(int argc, char *argv[])
 	barrier->setTranslation(glm::vec3(-20.0f, -5.0f, 90.0f));
 	barrier->setScaling(glm::vec3(0.5f, 0.5f, 0.5f));
 	barrier->setRenderRotateVec(glm::vec3(1, 0, 0));
-	barrier->setRenderRotateDeg(0);
+	barrier->setRenderRotateDeg(45);
 
 	RigidBodyComponent* rigidBody2 = new RigidBodyComponent("Rigid Body");
 	barrier->addComponent(rigidBody2);
@@ -149,7 +152,7 @@ int main(int argc, char *argv[])
 	GameObject *GroundPlane = new GameObject("Collada");
 	GroundPlane->setTranslation(glm::vec3(0.0f, -5.0f, -30.0f));
 	GroundPlane->setScaling(glm::vec3(60, 0.1f, 60));
-	GroundPlane->setRenderRotateVec(glm::vec3(NULL, NULL, NULL));
+	GroundPlane->setRenderRotateVec(glm::vec3(0, 0, 0));
 	RigidBodyComponent* rigidBody4 = new RigidBodyComponent("Rigid Body");
 	GroundPlane->addComponent(rigidBody4);
 	rigidBody4->setCollisionSystem(collisionsystem);
@@ -157,7 +160,7 @@ int main(int argc, char *argv[])
 	MeshComponent* secondMesh = new MeshComponent("cube");
 	GroundPlane->addComponent(secondMesh);
 	secondMesh->setRenderer(renderer);
-	secondMesh->loadObject("../../assets/cube_with_2UVs.DAE");
+	secondMesh->loadObject("../../assets/cube_with_2UVs.dae");
 	secondMesh->loadTexture("../../assets/tex/rockyground.bmp");
 	
 	objectList.push_back(GroundPlane);
@@ -282,6 +285,11 @@ int main(int argc, char *argv[])
 	buildingObject->setScaling(glm::vec3(3.0f, 3.0f, 3.0f));
 	buildingObject->setRenderRotateVec(glm::vec3(-1.0f, 0.0f, 0.0f));
 	buildingObject->setRenderRotateDeg(90);
+	RigidBodyComponent* rigidBodybuilding = new RigidBodyComponent("Rigid Body");
+	buildingObject->addComponent(rigidBodybuilding);
+	rigidBodybuilding->setCollisionSystem(collisionsystem);
+	rigidBodybuilding->setBodyType("STATIC");
+	rigidBodybuilding->setBoundingType("OBB");
 	MeshComponent* buildingMesh = new MeshComponent("test");
 	buildingObject->addComponent(buildingMesh);
 	buildingMesh->setRenderer(renderer);
@@ -316,6 +324,7 @@ int main(int argc, char *argv[])
 	watchTower->addComponent(rigidBody1);
 	rigidBody1->setCollisionSystem(collisionsystem);
 	rigidBody1->setBodyType("STATIC");
+	rigidBody1->setBoundingType("OBB");
 	MeshComponent* watchTowerMesh = new MeshComponent("test");
 	watchTower->addComponent(watchTowerMesh);
 	watchTowerMesh->setRenderer(renderer);

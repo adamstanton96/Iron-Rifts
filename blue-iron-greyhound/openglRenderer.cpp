@@ -54,6 +54,8 @@ void openglRenderer::init()
 
 	shaderProgram = OpenglUtils::initShaders("minimal.vert", "minimal.frag");
 
+	shaderProgramAnimated = OpenglUtils::initAnimationShaders("minimal.vert", "minimal.frag");
+
 	lightPos = glm::vec4(0.0f, 5.0f, 0.0f, 0.0f);
 
 
@@ -121,12 +123,27 @@ void openglRenderer::draw(MeshComponent* mesh)
 	vector<int> textures = mesh->getTextures();
 
 	int texturesize = textures.size();
+	int currShader;
 
 	for (int i = 0; i < meshes.size(); i++)
 	{
+
 		//Draw code
-		glUseProgram(shaderProgram);
-		OpenglUtils::setUniformMatrix4fv(shaderProgram, "projection", glm::value_ptr(projection));
+		if (mesh->isAnimated)
+		{			
+			currShader = shaderProgramAnimated;
+			glUseProgram(shaderProgramAnimated);
+		}
+
+		else
+		{
+			currShader = shaderProgram;
+			glUseProgram(shaderProgram);
+		}
+		//glUseProgram(shaderProgram);
+			
+
+		OpenglUtils::setUniformMatrix4fv(currShader, "projection", glm::value_ptr(projection));
 
 		if(i >= texturesize)
 			glBindTexture(GL_TEXTURE_2D, textures[texturesize - 1]);
@@ -144,7 +161,7 @@ void openglRenderer::draw(MeshComponent* mesh)
 
 		mvStack.top() = glm::scale(mvStack.top(), mesh->getScaling());
 
-		OpenglUtils::setUniformMatrix4fv(shaderProgram, "modelview", glm::value_ptr(mvStack.top()));
+		OpenglUtils::setUniformMatrix4fv(currShader, "modelview", glm::value_ptr(mvStack.top()));
 		//OpenglUtils::setMaterial(shaderProgram, mesh->getMaterial);												//Not using materials yet
 		OpenglUtils::drawIndexedMesh(meshes[i], indexCounts[i], GL_TRIANGLES);
 		mvStack.pop();
@@ -172,12 +189,28 @@ void openglRenderer::loadObject(MeshComponent* mesh, const char * filename)
 	vector<int> indexCounts;
 	vector<glm::vec3> minmax;
 	
-	//Load objects into temporary containers
-	AssimpLoader::loadObjectData(filename, meshIDs, indexCounts, minmax);
 
-	mesh->setMeshes(meshIDs);
-	mesh->setIndexCounts(indexCounts);
-	mesh->setMinMax(minmax);
+	if (mesh->isAnimated)
+	{
+		AssimpLoader::loadObjectDataAnimations(filename, meshIDs, indexCounts, minmax);
+
+		mesh->setMeshes(meshIDs);
+		mesh->setIndexCounts(indexCounts);
+		mesh->setMinMax(minmax);
+	}
+	else
+	{
+		//Load objects into temporary containers
+		AssimpLoader::loadObjectData(filename, meshIDs, indexCounts, minmax);
+
+		mesh->setMeshes(meshIDs);
+		mesh->setIndexCounts(indexCounts);
+		mesh->setMinMax(minmax);
+	}
+	
+
+
+
 
 }
 
