@@ -420,8 +420,9 @@ int main(int argc, char *argv[])
 
 
 	IrrKlangAudioSystem * audioSystem = new IrrKlangAudioSystem("audioSystem");
+	audioSystem->init();
 
-	audioSystem->playAudio("../../assets/audio/ophelia.mp3");
+	audioSystem->playAudio("../../assets/audio/bell.wav");
 
 
 
