@@ -3,7 +3,7 @@
 void IrrKlangAudioSystem::init()
 {
 	//Initialise the audio engine:
-	audioEngine = irrklang::createIrrKlangDevice();
+	audioEngine = irrklang::createIrrKlangDevice(irrklang::ESOD_AUTO_DETECT, irrklang::ESEO_DEFAULT_OPTIONS, 0);
 
 	if (!audioEngine) //If the engine failed to startup:
 	{
