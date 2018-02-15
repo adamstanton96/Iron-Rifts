@@ -151,6 +151,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AssimpLoader.cpp" />
+    <ClCompile Include="bone.cpp" />
     <ClCompile Include="CameraComponent.cpp" />
     <ClCompile Include="CollisionSystem.cpp" />
     <ClCompile Include="Component.cpp" />

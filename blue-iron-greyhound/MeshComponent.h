@@ -58,10 +58,11 @@ public:
 		isAnimated = true;
 	}
 
-	void setUpAnimationData(std::vector<aiNode*> nodes, std::vector<aiNodeAnim*> animNodes)
+	void setUpAnimationData(std::vector<aiNode*> nodes, std::vector<aiNodeAnim*> animNodes, std::vector<bone*> bones)
 	{
 		animationData->setAiNodes(nodes);
 		animationData->setAnimNodes(animNodes);
+		animationData->addBones(bones);
 	}
 
 protected:

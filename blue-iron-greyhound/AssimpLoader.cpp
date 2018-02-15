@@ -5,9 +5,13 @@ using namespace std;
 #include <glm/glm.hpp>
 
 
+
 namespace AssimpLoader
 {
 	
+
+	
+
 
 	void recursiveNodeProcess(aiNode* node, vector<aiNode*>& ai_nodes)
 	{
@@ -169,12 +173,12 @@ namespace AssimpLoader
 
 	//Extracts all the data we need and puts into into our parameters
 	//includes data for animations
-	void loadObjectDataAnimations(const std::string& file, vector<int>& meshIDs, vector<int>& indexCount, vector<glm::vec3>& maxmin, vector<aiNode*>& ai_nodes, vector<aiNodeAnim*>& ai_nodes_anim)
+	void loadObjectDataAnimations(const std::string& file, vector<int>& meshIDs, vector<int>& indexCount, vector<glm::vec3>& maxmin, vector<aiNode*>& ai_nodes, vector<aiNodeAnim*>& ai_nodes_anim, std::vector<bone*>& bones)
 	{
 
-		
 		// Create an instance of the Importer class for loading the object data
 		Assimp::Importer importer;
+
 
 		//loads our file into a scene object so its all accessible.
 		const aiScene* scene = importer.ReadFile(file,
@@ -214,7 +218,12 @@ namespace AssimpLoader
 		int texCount = 0;
 
 
+		//pull out the scenes aiNodes
+		aiNode* m_rootNode = scene->mRootNode;
+		recursiveNodeProcess(m_rootNode, ai_nodes);
 
+		//Pull out the scenes mAnimation
+		AnimNodeProcess(scene, ai_nodes_anim);
 	
 
 
@@ -238,6 +247,37 @@ namespace AssimpLoader
 		for (int i = 0; i < mesh->mNumBones; i++)
 		{
 				aiBone* currBone = mesh->mBones[i];
+
+				///////////////////////////////////
+				std::string b_name = scene->mMeshes[j]->mBones[i]->mName.data;
+				glm::mat4 b_mat = glm::transpose(AiToGLMMat4(scene->mMeshes[j]->mBones[i]->mOffsetMatrix));
+
+				
+
+				bone* boneObject = new bone(j, i, b_name, b_mat);
+				bones.push_back(boneObject);
+
+				
+
+				//fill bone data into new bone object and then push into &bone
+				boneObject->node = FindAiNode(b_name, ai_nodes);
+				boneObject->animNode = FindAiNodeAnim(b_name, ai_nodes_anim);
+
+
+				if (boneObject->animNode == nullptr)
+					std::cout << "No Animations were found for " + b_name << std::endl;
+	
+				
+
+				
+				
+
+			
+				////////////////////
+		
+				
+				
+
 
 				for (int j = 0; j < currBone->mNumWeights; j++)
 				{
@@ -337,18 +377,128 @@ namespace AssimpLoader
 		maxmin.push_back(max);
 
 
-		//Parse the scene nodes
-		aiNode* m_rootNode = scene->mRootNode;
-		recursiveNodeProcess(m_rootNode, ai_nodes);
+		for (int i = 0; i < bones.size(); i++)
+		{
+			std::string b_name = bones.at(i)->name;
+			std::string parent_name = FindAiNode(b_name, ai_nodes)->mParent->mName.data;
 
-		//Pull out the scenes mAnimation
-		AnimNodeProcess(scene, ai_nodes_anim);
+			bone* p_bone = FindBone(parent_name, bones);
 
+			bones.at(i)->parent_bone = p_bone;
+
+			if (p_bone == nullptr)
+				std::cout << "Parent Bone for " << b_name << " does not exist (is nullptr)" << std::endl;
+		}
+
+		
 	}
 
 	
-}//Namspace AssimpLoader
 
+	/*void recursiveProcess(aiNode* m_rootNode, const aiScene* scene)
+	{
+		for (int i = 0; i < m_rootNode->mNumMeshes; i++)
+		{
+			aiMesh* mesh = scene->mMeshes[i];
+
+		}
+
+		for (int i = 0; i < m_rootNode->mNumChildren; i++)
+			recursiveProcess(m_rootNode->mChildren[i], scene);
+	}*/
+
+	
+
+	 aiMatrix4x4 GLMMat4ToAi(glm::mat4 mat)
+	{
+		return aiMatrix4x4(mat[0][0], mat[0][1], mat[0][2], mat[0][3],
+			mat[1][0], mat[1][1], mat[1][2], mat[1][3],
+			mat[2][0], mat[2][1], mat[2][2], mat[2][3],
+			mat[3][0], mat[3][1], mat[3][2], mat[3][3]);
+	}
+
+	 glm::mat4 AiToGLMMat4(aiMatrix4x4& in_mat)
+	{
+		glm::mat4 tmp;
+		tmp[0][0] = in_mat.a1;
+		tmp[1][0] = in_mat.b1;
+		tmp[2][0] = in_mat.c1;
+		tmp[3][0] = in_mat.d1;
+
+		tmp[0][1] = in_mat.a2;
+		tmp[1][1] = in_mat.b2;
+		tmp[2][1] = in_mat.c2;
+		tmp[3][1] = in_mat.d2;
+
+		tmp[0][2] = in_mat.a3;
+		tmp[1][2] = in_mat.b3;
+		tmp[2][2] = in_mat.c3;
+		tmp[3][2] = in_mat.d3;
+
+		tmp[0][3] = in_mat.a4;
+		tmp[1][3] = in_mat.b4;
+		tmp[2][3] = in_mat.c4;
+		tmp[3][3] = in_mat.d4;
+		return tmp;
+	}
+
+
+
+
+
+	 //Search and return a bone by name
+	 bone* FindBone(std::string name, std::vector<bone*>& bones)
+	 {
+		 for (int i = 0; i < bones.size(); i++)
+		 {
+			 if (bones.at(i)->name == name)
+				 return bones.at(i);
+		 }
+
+		 return nullptr;
+	 }
+
+	 //Search and return a node by name
+	 aiNode* FindAiNode(std::string name, vector<aiNode*>& ai_nodes)
+	 {
+		 for (int i = 0; i < ai_nodes.size(); i++)
+		 {
+			 if (ai_nodes[i]->mName.data == name)
+			 {
+
+				 return ai_nodes.at(i);
+			 }
+
+		 }
+		 return nullptr;
+
+
+	 }
+
+
+	 aiNodeAnim* FindAiNodeAnim(std::string name, vector<aiNodeAnim*>& ai_nodes_anim)
+	 {
+		 for (int i = 0; i < ai_nodes_anim.size(); i++)
+		 {
+			 if (ai_nodes_anim.at(i)->mNodeName.data == name)
+				 return ai_nodes_anim.at(i);
+		 }
+		 return nullptr;
+	 }
+
+	 //return index of bone in our bones vector
+	 int FindBoneIDByName(std::string name, std::vector<bone*>& bones)
+	 {
+		 for (int i = 0; i < bones.size(); i++)
+		 {
+			 if (bones.at(i)->name == name)
+				 return i;
+		 }
+		 return -1;
+	 }
+
+
+}//Namspace AssimpLoader
 
 
 

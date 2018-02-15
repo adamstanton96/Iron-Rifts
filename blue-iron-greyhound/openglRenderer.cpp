@@ -182,7 +182,7 @@ void openglRenderer::loadTexture(MeshComponent* mesh, char * filename)
 //Uses assimp to all the object data we need for creating a mesh VBO
 void openglRenderer::loadObject(MeshComponent* mesh, const char * filename)
 {
-
+	
 	vector<int> meshIDs;
 	vector<int> indexCounts;
 	vector<glm::vec3> minmax;
@@ -190,23 +190,22 @@ void openglRenderer::loadObject(MeshComponent* mesh, const char * filename)
 	//Animated related data
 	vector<aiNode*> ai_nodes;
 	vector<aiNodeAnim*> ai_nodes_anim;
+	std::vector<bone*> bones;
 	
 
 	if (mesh->isAnimated)
 	{
-		AssimpLoader::loadObjectDataAnimations(filename, meshIDs, indexCounts, minmax, ai_nodes, ai_nodes_anim);
+		AssimpLoader::loadObjectDataAnimations(filename, meshIDs, indexCounts, minmax, ai_nodes, ai_nodes_anim, bones);
 
 		mesh->setMeshes(meshIDs);
 		mesh->setIndexCounts(indexCounts);
 		mesh->setMinMax(minmax);
 
-		mesh->setUpAnimationData(ai_nodes, ai_nodes_anim);
-
-		
+		mesh->setUpAnimationData(ai_nodes, ai_nodes_anim, bones);	
 	}
 	else
 	{
-		//Load objects into temporary containers
+		
 		AssimpLoader::loadObjectData(filename, meshIDs, indexCounts, minmax);
 
 		mesh->setMeshes(meshIDs);

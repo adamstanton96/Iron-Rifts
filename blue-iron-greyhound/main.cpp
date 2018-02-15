@@ -101,7 +101,7 @@ int main(int argc, char *argv[])
 	//spider robot for animation tests
 	GameObject *barrier2 = new GameObject("old building");
 	barrier2->setTranslation(glm::vec3(20.0f, 0.0f, 90.0f));
-	barrier2->setScaling(glm::vec3(0.05f, 0.05f, 0.05f));
+	barrier2->setScaling(glm::vec3(4, 4, 4));
 	barrier2->setRenderRotateVec(glm::vec3(1, 0, 0));
 	barrier2->setRenderRotateDeg(-90);
 
@@ -115,35 +115,35 @@ int main(int argc, char *argv[])
 	barrier2->addComponent(barriermesh2);
 	barriermesh2->setRenderer(renderer);
 	barriermesh2->toggleAnimationAbilities();
-	barriermesh2->loadObject("../../assets/AnimatedPistol.dae");
+	barriermesh2->loadObject("../../assets/RobotAnimated.dae");
 	barriermesh2->loadTexture("../../assets/RobotAnimated.bmp");
 
 	objectList.push_back(barrier2);
 	///////////////////////////////////////////////////////////////////
 	////////////////////////////////////////////////////
 
-	//road barrier 1
-	GameObject *barrier = new GameObject("old building");
-	barrier->setTranslation(glm::vec3(-20.0f, 0.0f, 90.0f));
-	barrier->setScaling(glm::vec3(0.5, 0.5, 0.5));
-	barrier->setRenderRotateVec(glm::vec3(1, 0, 0));
-	barrier->setRenderRotateDeg(-90);
+	////road barrier 1
+	//GameObject *barrier = new GameObject("old building");
+	//barrier->setTranslation(glm::vec3(-20.0f, 0.0f, 90.0f));
+	//barrier->setScaling(glm::vec3(0.5, 0.5, 0.5));
+	//barrier->setRenderRotateVec(glm::vec3(1, 0, 0));
+	//barrier->setRenderRotateDeg(-90);
 
-	RigidBodyComponent* rigidBody2 = new RigidBodyComponent("Rigid Body");
-	barrier->addComponent(rigidBody2);
-	rigidBody2->setCollisionSystem(collisionsystem);
-	rigidBody2->setBodyType("STATIC");
-	rigidBody2->setBoundingType("OBB");
+	//RigidBodyComponent* rigidBody2 = new RigidBodyComponent("Rigid Body");
+	//barrier->addComponent(rigidBody2);
+	//rigidBody2->setCollisionSystem(collisionsystem);
+	//rigidBody2->setBodyType("STATIC");
+	//rigidBody2->setBoundingType("OBB");
 
-	MeshComponent* barriermesh = new MeshComponent("test");
-	//AnimatedMeshComponent* barriermesh = new AnimatedMeshComponent("test");
-	barrier->addComponent(barriermesh);
-	barriermesh->toggleAnimationAbilities();
-	barriermesh->setRenderer(renderer);
-	barriermesh->loadObject("../../assets/Dragon 2.5_dae.dae");
-	barriermesh->loadTexture("../../assets/roadbarrier/BARRIERE.bmp");
+	//MeshComponent* barriermesh = new MeshComponent("test");
+	////AnimatedMeshComponent* barriermesh = new AnimatedMeshComponent("test");
+	//barrier->addComponent(barriermesh);
+	//barriermesh->toggleAnimationAbilities();
+	//barriermesh->setRenderer(renderer);
+	//barriermesh->loadObject("../../assets/Dragon 2.5_dae.dae");
+	//barriermesh->loadTexture("../../assets/roadbarrier/BARRIERE.bmp");
 
-	objectList.push_back(barrier);
+	//objectList.push_back(barrier);
 
 	///////////////////////////////////////////////////////////////////
 

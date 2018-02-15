@@ -160,6 +160,9 @@
     <ClCompile Include="MeshComponent.cpp">
       <Filter>Source Files\Mesh Components</Filter>
     </ClCompile>
+    <ClCompile Include="bone.cpp">
+      <Filter>Source Files\Mesh Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="textured.frag">
