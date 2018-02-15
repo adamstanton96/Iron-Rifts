@@ -19,7 +19,7 @@
 #include "CameraComponent.h"
 #include "MovementComponent.h"
 #include "SDLInputSystem.h"
-
+#include "IrrKlangAudioSystem.h"
 
 #include "RigidBodyComponent.h"
 #include "CollisionSystem.h"
@@ -411,6 +411,19 @@ int main(int argc, char *argv[])
 
 
 	objectList.push_back(AlienPlanet2);
+
+
+
+
+
+
+
+
+	IrrKlangAudioSystem * audioSystem = new IrrKlangAudioSystem("audioSystem");
+
+	audioSystem->playAudio("../../assets/audio/bell.wav");
+
+
 
 	
 	bool running = true;
