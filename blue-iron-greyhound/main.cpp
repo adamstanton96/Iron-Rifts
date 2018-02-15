@@ -100,8 +100,8 @@ int main(int argc, char *argv[])
 
 	//spider robot for animation tests
 	GameObject *barrier2 = new GameObject("old building");
-	barrier2->setTranslation(glm::vec3(10.0f, 0.0f, 90.0f));
-	barrier2->setScaling(glm::vec3(4, 4, 4));
+	barrier2->setTranslation(glm::vec3(20.0f, 0.0f, 90.0f));
+	barrier2->setScaling(glm::vec3(0.05f, 0.05f, 0.05f));
 	barrier2->setRenderRotateVec(glm::vec3(1, 0, 0));
 	barrier2->setRenderRotateDeg(-90);
 
@@ -111,14 +111,12 @@ int main(int argc, char *argv[])
 	rigidBody3->setBodyType("STATIC");
 	rigidBody3->setBoundingType("OBB");
 
-	AnimatedMeshComponent* barriermesh2 = new AnimatedMeshComponent("test");
+	MeshComponent* barriermesh2 = new MeshComponent("test");
 	barrier2->addComponent(barriermesh2);
 	barriermesh2->setRenderer(renderer);
-	barriermesh2->loadObject("../../assets/RobotAnimated.dae");
+	barriermesh2->toggleAnimationAbilities();
+	barriermesh2->loadObject("../../assets/AnimatedPistol.dae");
 	barriermesh2->loadTexture("../../assets/RobotAnimated.bmp");
-	//
-	barriermesh2->loadBoneData();
-	//
 
 	objectList.push_back(barrier2);
 	///////////////////////////////////////////////////////////////////
@@ -126,10 +124,10 @@ int main(int argc, char *argv[])
 
 	//road barrier 1
 	GameObject *barrier = new GameObject("old building");
-	barrier->setTranslation(glm::vec3(-20.0f, -5.0f, 90.0f));
-	barrier->setScaling(glm::vec3(0.5f, 0.5f, 0.5f));
+	barrier->setTranslation(glm::vec3(-20.0f, 0.0f, 90.0f));
+	barrier->setScaling(glm::vec3(0.5, 0.5, 0.5));
 	barrier->setRenderRotateVec(glm::vec3(1, 0, 0));
-	barrier->setRenderRotateDeg(45);
+	barrier->setRenderRotateDeg(-90);
 
 	RigidBodyComponent* rigidBody2 = new RigidBodyComponent("Rigid Body");
 	barrier->addComponent(rigidBody2);
@@ -138,9 +136,11 @@ int main(int argc, char *argv[])
 	rigidBody2->setBoundingType("OBB");
 
 	MeshComponent* barriermesh = new MeshComponent("test");
+	//AnimatedMeshComponent* barriermesh = new AnimatedMeshComponent("test");
 	barrier->addComponent(barriermesh);
+	barriermesh->toggleAnimationAbilities();
 	barriermesh->setRenderer(renderer);
-	barriermesh->loadObject("../../assets/BARRIERE.obj");
+	barriermesh->loadObject("../../assets/Dragon 2.5_dae.dae");
 	barriermesh->loadTexture("../../assets/roadbarrier/BARRIERE.bmp");
 
 	objectList.push_back(barrier);
@@ -395,31 +395,31 @@ int main(int argc, char *argv[])
 	//planet in the sky
 
 
-	GameObject *AlienPlanet = new GameObject("old building");
-	AlienPlanet->setTranslation(glm::vec3(-200, 200, -300));
-	AlienPlanet->setScaling(glm::vec3(50, 50, 50));
-	AlienPlanet->setRenderRotateVec(glm::vec3(NULL, NULL, NULL));
-	MeshComponent* AlienPlanetMesh = new MeshComponent("test");
-	AlienPlanet->addComponent(AlienPlanetMesh);
-	AlienPlanetMesh->setRenderer(renderer);
-	AlienPlanetMesh->loadObject("../../assets/AlienPlanet2.dae");
-	AlienPlanetMesh->loadTexture("../../assets/tex/AlienPlanet.bmp");
+	//GameObject *AlienPlanet = new GameObject("old building");
+	//AlienPlanet->setTranslation(glm::vec3(-200, 200, -300));
+	//AlienPlanet->setScaling(glm::vec3(50, 50, 50));
+	//AlienPlanet->setRenderRotateVec(glm::vec3(NULL, NULL, NULL));
+	//MeshComponent* AlienPlanetMesh = new MeshComponent("test");
+	//AlienPlanet->addComponent(AlienPlanetMesh);
+	//AlienPlanetMesh->setRenderer(renderer);
+	//AlienPlanetMesh->loadObject("../../assets/AlienPlanet2.dae");
+	//AlienPlanetMesh->loadTexture("../../assets/tex/AlienPlanet.bmp");
 
-	objectList.push_back(AlienPlanet);
+	//objectList.push_back(AlienPlanet);
 
-	//Not showing needs a change of texture
-	GameObject *AlienPlanet2 = new GameObject("old building");
-	AlienPlanet2->setTranslation(glm::vec3(200, 200, -300));
-	AlienPlanet2->setScaling(glm::vec3(50, 50, 50));
-	AlienPlanet2->setRenderRotateVec(glm::vec3(NULL, NULL, NULL));
-	MeshComponent* AlienPlanetMesh2= new MeshComponent("test");
-	AlienPlanet2->addComponent(AlienPlanetMesh2);
-	AlienPlanetMesh2->setRenderer(renderer);
-	AlienPlanetMesh2->loadObject("../../assets/AlienPlanet2.dae");
-	AlienPlanetMesh2->loadTexture("../../assets/tex/mercury.bmp");
+	////Not showing needs a change of texture
+	//GameObject *AlienPlanet2 = new GameObject("old building");
+	//AlienPlanet2->setTranslation(glm::vec3(200, 200, -300));
+	//AlienPlanet2->setScaling(glm::vec3(50, 50, 50));
+	//AlienPlanet2->setRenderRotateVec(glm::vec3(NULL, NULL, NULL));
+	//MeshComponent* AlienPlanetMesh2= new MeshComponent("test");
+	//AlienPlanet2->addComponent(AlienPlanetMesh2);
+	//AlienPlanetMesh2->setRenderer(renderer);
+	//AlienPlanetMesh2->loadObject("../../assets/AlienPlanet2.dae");
+	//AlienPlanetMesh2->loadTexture("../../assets/tex/mercury.bmp");
 
 
-	objectList.push_back(AlienPlanet2);
+	//objectList.push_back(AlienPlanet2);
 
 	
 	bool running = true;

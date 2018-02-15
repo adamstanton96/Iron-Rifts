@@ -16,6 +16,10 @@ char * texAnimVert =
 	"in  vec3 in_Normal;												\n"
 	"in  vec4 in_boneIDs;												\n"
 	"in  vec4 in_boneWeights;											\n"
+	"out vec4 id;														\n"
+	"out vec4 weight;													\n"
+	"//uniform vec4 boneIDs;											\n"
+	"//uniform vec4 boneWeights;										\n"
 	"//out vec4 ex_Color;												\n"
 	"out vec3 ex_N;														\n"
 	"out vec3 ex_V;														\n"
@@ -33,6 +37,8 @@ char * texAnimVert =
 	"    ex_D = distance(vertexPosition, lightPosition);				\n"
 	"																	\n"
 	"	ex_V = normalize(-vertexPosition).xyz;							\n"
+	"  weight = in_boneWeights;														\n"
+	"	id = in_boneIDs;												\n"
 	"																	\n"
 	"	mat3 normalmatrix = transpose(inverse(mat3(modelview)));		\n"
 	"	ex_N = normalize(normalmatrix * in_Normal);						\n"
@@ -60,6 +66,9 @@ char * texAnimFrag =
 	"in vec3 ex_V;												\n"
 	"in vec3 ex_L;												\n"
 	"in float ex_D;												\n"
+	"											\n"
+	"in vec4 weight;												\n"
+	"in vec4 id;												\n"
 	"															\n"
 	"uniform float attConst;									\n"
 	"uniform float attLinear;									\n"
@@ -111,10 +120,18 @@ char * texAnimFrag =
 	"	vec4 litColour = vec4(tmp_Color.rgb *attenuation, tmp_Color.a);							\n"
 	"	vec4 amb = min(ambientI,vec4(1.0f));													\n"
 	"																							\n"
-	"	//out_Color = (diffuseI + specularI) + ambientI*texture(textureUnit0, ex_TexCoord),vec4(1.0f); \n"
+	"																							\n"
+	"																							\n"
+	"	vec4 weightsColor = vec4(weight.xyz,1.0);																			\n"
+	"																							\n"
 	"	// Fragment colour																		\n"
-	"	out_Color= (diffuseI + specularI +ambientI)*texture(textureUnit0, ex_TexCoord);			\n"
-	"	//out_Color = texture(textureUnit0, ex_TexCoord);;					\n"
+	"	if(texture(textureUnit0, ex_TexCoord).a > 0.1)											\n"
+	"	{																						\n"
+	"	//out_Color= (diffuseI + specularI +ambientI)*texture(textureUnit0, ex_TexCoord);			\n"
+	"   out_Color= 	weightsColor;	\n"
+	"	}																						\n"
+	"	else																					\n"
+	"	discard;																				\n"
 	"}																							\n"
 };
 
@@ -361,9 +378,10 @@ namespace OpenglUtils
 		glLinkProgram(p);
 		glUseProgram(p);
 
-		
-		//delete[] vs; // dont forget to free allocated memory
-		//delete[] fs; // we allocated this in the loadFile function...
+		///memset(&vs[0], 0, sizeof(vs));
+		///memset(&fs[0], 0, sizeof(fs));
+		///delete vs; // dont forget to free allocated memory
+		///delete fs; // we allocated this in the loadFile function...
 
 		return p;
 	}
@@ -431,14 +449,14 @@ namespace OpenglUtils
 		glBindAttribLocation(p, RT3D_BONEIDS, "in_boneIDs");
 		glBindAttribLocation(p, RT3D_BONEWEIGHTS, "in_boneWeights");
 		///////////
-
-
+		
 		glLinkProgram(p);
 		glUseProgram(p);
 
-
-		//delete[] vs; // dont forget to free allocated memory
-		//delete[] fs; // we allocated this in the loadFile function...
+		///memset(&vs[0], 0, sizeof(vs));
+		///memset(&fs[0], 0, sizeof(fs));
+		///delete[] vs; // dont forget to free allocated memory
+		///delete[] fs; // we allocated this in the loadFile function...
 
 		return p;
 	}
@@ -541,7 +559,7 @@ namespace OpenglUtils
 		glGenVertexArrays(1, &VAO);
 		glBindVertexArray(VAO);
 
-		GLuint *pMeshBuffers = new GLuint[5];
+		GLuint *pMeshBuffers = new GLuint[7];
 
 
 		if (vertices == nullptr) {
@@ -594,12 +612,21 @@ namespace OpenglUtils
 		}
 
 
-		//////////////////////////////////////////
-		//// VBO for bone IDs data
+		if (indices != nullptr && indexCount > 0) {
+			glGenBuffers(1, &VBO);
+			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, VBO);
+			glBufferData(GL_ELEMENT_ARRAY_BUFFER, indexCount * sizeof(GLuint), indices, GL_STATIC_DRAW);
+			pMeshBuffers[RT3D_INDEX] = VBO;
+
+		}
+
+
+		//////////////////////////////////////
+		// VBO for bone IDs data
 		if (boneids != nullptr) {
 			glGenBuffers(1, &VBO);
 			glBindBuffer(GL_ARRAY_BUFFER, VBO);
-			glBufferData(GL_ARRAY_BUFFER, (numVerts/3) *4* sizeof(GLuint), boneids, GL_STATIC_DRAW);
+			glBufferData(GL_ARRAY_BUFFER, (numVerts / 3) * 4 * sizeof(GLuint), boneids, GL_STATIC_DRAW);
 			glVertexAttribPointer((GLuint)RT3D_BONEIDS, 4, GL_INT, GL_FALSE, 0, 0);						//tutorial has this at true
 			glEnableVertexAttribArray(RT3D_BONEIDS);
 			pMeshBuffers[RT3D_BONEIDS] = VBO;
@@ -609,20 +636,14 @@ namespace OpenglUtils
 		if (boneWeights != nullptr) {
 			glGenBuffers(1, &VBO);
 			glBindBuffer(GL_ARRAY_BUFFER, VBO);
-			glBufferData(GL_ARRAY_BUFFER, (numVerts/3) * 4 * sizeof(GLfloat), boneWeights, GL_STATIC_DRAW);
+			glBufferData(GL_ARRAY_BUFFER, (numVerts / 3) * 4 * sizeof(GLfloat), boneWeights, GL_STATIC_DRAW);
 			glVertexAttribPointer((GLfloat)RT3D_BONEWEIGHTS, 4, GL_FLOAT, GL_FALSE, 0, 0);					//tutorial has this at true
 			glEnableVertexAttribArray(RT3D_BONEWEIGHTS);
 			pMeshBuffers[RT3D_BONEWEIGHTS] = VBO;
 		}
+
+
 		///////////////////////////////////////////////
-
-
-		if (indices != nullptr && indexCount > 0) {
-			glGenBuffers(1, &VBO);
-			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, VBO);
-			glBufferData(GL_ELEMENT_ARRAY_BUFFER, indexCount * sizeof(GLuint), indices, GL_STATIC_DRAW);
-			pMeshBuffers[RT3D_INDEX] = VBO;
-		}
 		// unbind vertex array
 		glBindVertexArray(0);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);

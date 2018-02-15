@@ -33,6 +33,9 @@
     <Filter Include="Source Files\Utilities">
       <UniqueIdentifier>{b35e5da8-4f7f-4469-a51b-563369dd4b9a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Mesh Components">
+      <UniqueIdentifier>{81eb862a-c19d-47e8-8b3e-71495a91c1d1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="openglRenderer.h">
@@ -52,9 +55,6 @@
     </ClInclude>
     <ClInclude Include="OpenglUtils.h">
       <Filter>Source Files\Utilities</Filter>
-    </ClInclude>
-    <ClInclude Include="MeshComponent.h">
-      <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="SDLGLTextureLoader.h">
       <Filter>Source Files\Utilities</Filter>
@@ -101,7 +101,15 @@
     <ClInclude Include="OBB.h">
       <Filter>Source Files\Collidables</Filter>
     </ClInclude>
-    <ClInclude Include="AnimatedMeshComponent.h" />
+    <ClInclude Include="MeshComponent.h">
+      <Filter>Source Files\Mesh Components</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimatedMeshComponent.h">
+      <Filter>Source Files\Mesh Components</Filter>
+    </ClInclude>
+    <ClInclude Include="bone.h">
+      <Filter>Source Files\Mesh Components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Component.cpp">
@@ -128,9 +136,6 @@
     <ClCompile Include="OpenglUtils.cpp">
       <Filter>Source Files\Utilities</Filter>
     </ClCompile>
-    <ClCompile Include="MeshComponent.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="SDLGLTextureLoader.cpp">
       <Filter>Source Files\Utilities</Filter>
     </ClCompile>
@@ -151,6 +156,9 @@
     </ClCompile>
     <ClCompile Include="OBB.cpp">
       <Filter>Source Files\Collidables</Filter>
+    </ClCompile>
+    <ClCompile Include="MeshComponent.cpp">
+      <Filter>Source Files\Mesh Components</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

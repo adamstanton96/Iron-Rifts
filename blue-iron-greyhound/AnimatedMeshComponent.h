@@ -1,30 +1,39 @@
 #pragma once
+/////////////////////////////////////
+///Credit to "realitymultiplied.wordpress.com"(recursiveNodeProcess,AnimNodeProcess)
+////////////////////////////////////
 #include "MeshComponent.h"
+#include "AssimpLoader.h"
 #include <vector>
 
-class AnimatedMeshComponent : public MeshComponent
+class AnimatedMeshComponent// : public MeshComponent
 {
 public:
 
-	AnimatedMeshComponent(string Name) : MeshComponent(Name)
+	AnimatedMeshComponent(string Name) //: MeshComponent(Name)
 	{
-		isAnimated = true;
+		//isAnimated = true;
 	}
 
+	AnimatedMeshComponent() {}
+	
 
-	void loadBoneData()
+
+
+	void setAiNodes(std::vector<aiNode*> nodes)
 	{
-		//AssimpLoader::loadBoneData("../../assets/RobotAnimated.dae");
+		this->ai_nodes = nodes;
 	}
 
-	void setSkeletalData()
+	void setAnimNodes(std::vector<aiNodeAnim*> animNodes)
 	{
-
+		this->ai_nodes_anim = animNodes;
 	}
 
 
 private:
-
+	std::vector<aiNode*> ai_nodes;
+	std::vector<aiNodeAnim*> ai_nodes_anim;
 
 
 };

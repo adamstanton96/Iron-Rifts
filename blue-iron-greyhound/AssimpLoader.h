@@ -11,10 +11,13 @@ using namespace std;
 namespace AssimpLoader
 {
 	void loadObjectData(const std::string& file, vector<int>& meshIDs, vector<int> &indexCount, vector<glm::vec3>& maxmin);
-	void loadObjectDataAnimations(const std::string& file, vector<int>& meshIDs, vector<int>& indexCount, vector<glm::vec3>& maxmin);
+	void loadObjectDataAnimations(const std::string& file, vector<int>& meshIDs, vector<int>& indexCount, vector<glm::vec3>& maxmin, vector<aiNode*>& ai_nodes, vector<aiNodeAnim*>& ai_nodes_anim);
 
 
-	//void loadBoneData(const std::string& file);
+
+	void recursiveNodeProcess(aiNode* node, vector<aiNode*>& ai_nodes);
+	void AnimNodeProcess(const aiScene* m_scene, vector<aiNodeAnim*>& ai_nodes_anim);
+
 }
 
 

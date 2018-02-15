@@ -5,6 +5,7 @@
 #include <vector>
 #include "Component.h"
 #include "RenderingSystem.h"
+#include "AnimatedMeshComponent.h"
 using namespace std;
 
 
@@ -51,6 +52,18 @@ public:
 
 	bool isAnimated;
 
+	void toggleAnimationAbilities()
+	{
+		animationData = new AnimatedMeshComponent();
+		isAnimated = true;
+	}
+
+	void setUpAnimationData(std::vector<aiNode*> nodes, std::vector<aiNodeAnim*> animNodes)
+	{
+		animationData->setAiNodes(nodes);
+		animationData->setAnimNodes(animNodes);
+	}
+
 protected:
 	//transformation data for renderer
 	glm::vec3 translation;
@@ -62,6 +75,8 @@ protected:
 	vector<int> meshIDs;
 	vector<int> indexCounts;
 	vector<int> textures;	
+
+	AnimatedMeshComponent* animationData;
 
 	
 

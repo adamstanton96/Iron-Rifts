@@ -140,9 +140,7 @@ void openglRenderer::draw(MeshComponent* mesh)
 			currShader = shaderProgram;
 			glUseProgram(shaderProgram);
 		}
-		//glUseProgram(shaderProgram);
-			
-
+		
 		OpenglUtils::setUniformMatrix4fv(currShader, "projection", glm::value_ptr(projection));
 
 		if(i >= texturesize)
@@ -188,15 +186,23 @@ void openglRenderer::loadObject(MeshComponent* mesh, const char * filename)
 	vector<int> meshIDs;
 	vector<int> indexCounts;
 	vector<glm::vec3> minmax;
+
+	//Animated related data
+	vector<aiNode*> ai_nodes;
+	vector<aiNodeAnim*> ai_nodes_anim;
 	
 
 	if (mesh->isAnimated)
 	{
-		AssimpLoader::loadObjectDataAnimations(filename, meshIDs, indexCounts, minmax);
+		AssimpLoader::loadObjectDataAnimations(filename, meshIDs, indexCounts, minmax, ai_nodes, ai_nodes_anim);
 
 		mesh->setMeshes(meshIDs);
 		mesh->setIndexCounts(indexCounts);
 		mesh->setMinMax(minmax);
+
+		mesh->setUpAnimationData(ai_nodes, ai_nodes_anim);
+
+		
 	}
 	else
 	{

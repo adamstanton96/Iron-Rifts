@@ -11,6 +11,7 @@
 
 #include "RenderingSystem.h"
 #include "MeshComponent.h"
+class AnimatedMeshComponent;
 #include "CameraComponent.h"
 
 

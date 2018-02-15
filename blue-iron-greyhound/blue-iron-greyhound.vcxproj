@@ -127,6 +127,7 @@
     <ClInclude Include="AABB.h" />
     <ClInclude Include="AnimatedMeshComponent.h" />
     <ClInclude Include="AssimpLoader.h" />
+    <ClInclude Include="bone.h" />
     <ClInclude Include="boundingVolume.h" />
     <ClInclude Include="CameraComponent.h" />
     <ClInclude Include="CollisionSystem.h" />

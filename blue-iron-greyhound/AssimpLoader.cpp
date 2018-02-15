@@ -9,9 +9,23 @@ namespace AssimpLoader
 {
 	
 
-	
+	void recursiveNodeProcess(aiNode* node, vector<aiNode*>& ai_nodes)
+	{
+		ai_nodes.push_back(node);
+
+		for (int i = 0; i < node->mNumChildren; i++)
+			recursiveNodeProcess(node->mChildren[i], ai_nodes);
+	}
 
 
+	void AnimNodeProcess(const aiScene* m_scene, vector<aiNodeAnim*>& ai_nodes_anim)
+	{
+		if (m_scene->mNumAnimations == 0)
+			return;
+
+		for (int i = 0; i < m_scene->mAnimations[0]->mNumChannels; i++)
+			ai_nodes_anim.push_back(m_scene->mAnimations[0]->mChannels[i]);
+	}
 
 
 
@@ -153,13 +167,9 @@ namespace AssimpLoader
 	
 
 
-
-
-
-
 	//Extracts all the data we need and puts into into our parameters
 	//includes data for animations
-	void loadObjectDataAnimations(const std::string& file, vector<int>& meshIDs, vector<int>& indexCount, vector<glm::vec3>& maxmin)
+	void loadObjectDataAnimations(const std::string& file, vector<int>& meshIDs, vector<int>& indexCount, vector<glm::vec3>& maxmin, vector<aiNode*>& ai_nodes, vector<aiNodeAnim*>& ai_nodes_anim)
 	{
 
 		
@@ -203,6 +213,11 @@ namespace AssimpLoader
 
 		int texCount = 0;
 
+
+
+	
+
+
 		for (unsigned int j = 0; j < scene->mNumMeshes; j++)
 		{
 
@@ -218,36 +233,33 @@ namespace AssimpLoader
 			std::vector<int> boneIDs(size);
 			std::vector<float> boneWeights(size);
 
-			//boneWeights.resize(size);
-			//boneIDs.resize(size);
+		
+			// Pull per vertex bone related data (vertex ID's and Weights)
+		for (int i = 0; i < mesh->mNumBones; i++)
+		{
+				aiBone* currBone = mesh->mBones[i];
 
+				for (int j = 0; j < currBone->mNumWeights; j++)
+				{
+					aiVertexWeight weight = currBone->mWeights[j];
+					
 
+					unsigned int vertexStart = weight.mVertexId * WEIGHTS_PER_VERTEX;
 
-			//for (int i = 0; i < mesh->mNumBones; i++)
-			//{
-			//	aiBone* currBone = mesh->mBones[i];
+					//cout << vertexStart << endl;
 
-			//	for (int j = 0; j < currBone->mNumWeights; j++)
-			//	{
-			//		aiVertexWeight weight = currBone->mWeights[j];
-			//		
+					for (int k = 0; k < WEIGHTS_PER_VERTEX; k++)
+					{
+						if (boneWeights.at(vertexStart + k) == 0)
+						{
+							boneWeights.at(vertexStart + k) = weight.mWeight;
 
-			//		unsigned int vertexStart = weight.mVertexId * WEIGHTS_PER_VERTEX;
-
-			//		cout << vertexStart << endl;
-
-			//		for (int k = 0; k < WEIGHTS_PER_VERTEX; k++)
-			//		{
-			//			if (boneWeights.at(vertexStart + k) == 0)
-			//			{
-			//				boneWeights.at(vertexStart + k) = weight.mWeight;
-
-			//				//i == index of bone
-			//				boneIDs.at(vertexStart + k) = i;
-			//			}
-			//		}
-			//	}
-			//}
+							//i == index of bone
+							boneIDs.at(vertexStart + k) = i;
+						}
+					}
+				}
+		}
 
 
 
@@ -306,8 +318,8 @@ namespace AssimpLoader
 			}
 
 			
-			int ID = OpenglUtils::createMesh((GLuint)verts.size(), (GLfloat*)verts.data(), (GLfloat*)colours.data(), (GLfloat*)norms.data(), (GLfloat*)texCoords.data(), (GLuint)texCoords.size(), (GLuint)indices.size(), (GLuint*)indices.data());
-			//int ID = OpenglUtils::createAnimatedMesh((GLuint*)boneIDs.data(), (GLfloat*)boneWeights.data(), (GLuint)verts.size(), (GLfloat*)verts.data(), (GLfloat*)colours.data(), (GLfloat*)norms.data(), (GLfloat*)texCoords.data(), (GLuint)texCoords.size(), (GLuint)indices.size(), (GLuint*)indices.data());
+			//int ID = OpenglUtils::createMesh((GLuint)verts.size(), (GLfloat*)verts.data(), (GLfloat*)colours.data(), (GLfloat*)norms.data(), (GLfloat*)texCoords.data(), (GLuint)texCoords.size(), (GLuint)indices.size(), (GLuint*)indices.data());
+			int ID = OpenglUtils::createAnimatedMesh((GLuint*)boneIDs.data(), (GLfloat*)boneWeights.data(), (GLuint)verts.size(), (GLfloat*)verts.data(), (GLfloat*)colours.data(), (GLfloat*)norms.data(), (GLfloat*)texCoords.data(), (GLuint)texCoords.size(), (GLuint)indices.size(), (GLuint*)indices.data());
 			meshIDs.push_back(ID);
 			indexCount.push_back(indices.size());
 
@@ -325,9 +337,17 @@ namespace AssimpLoader
 		maxmin.push_back(max);
 
 
+		//Parse the scene nodes
+		aiNode* m_rootNode = scene->mRootNode;
+		recursiveNodeProcess(m_rootNode, ai_nodes);
+
+		//Pull out the scenes mAnimation
+		AnimNodeProcess(scene, ai_nodes_anim);
+
 	}
+
 	
-}
+}//Namspace AssimpLoader
 
 
 
