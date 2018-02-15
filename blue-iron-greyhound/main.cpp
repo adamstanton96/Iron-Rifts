@@ -416,7 +416,7 @@ int main(int argc, char *argv[])
 
 
 
-
+	//Audio Test:
 
 
 	IrrKlangAudioSystem * audioSystem = new IrrKlangAudioSystem("audioSystem");
@@ -424,9 +424,15 @@ int main(int argc, char *argv[])
 
 	audioSystem->playAudio("../../assets/audio/bell.wav");
 
+	audioSystem->playAudio("../../assets/audio/Surreptitious.ogg", true);
 
-
+	//...Audio Test^^^
 	
+
+
+
+
+
 	bool running = true;
 
 	SDL_Event sdlEvent;
