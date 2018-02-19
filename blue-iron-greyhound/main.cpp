@@ -462,7 +462,7 @@ int main(int argc, char *argv[])
 		}
 	
 		//Get Inputs - Temporary for free roam camera
-		Player->input(dt);
+		//Player->input(dt);
 
 		renderer->swapBuffers();
 
