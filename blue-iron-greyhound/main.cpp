@@ -422,7 +422,9 @@ int main(int argc, char *argv[])
 	IrrKlangAudioSystem * audioSystem = new IrrKlangAudioSystem("audioSystem");
 	audioSystem->init();
 
-	audioSystem->playAudio("../../assets/audio/bell.wav", glm::vec3(50.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f));
+	audioSystem->playAudio("../../assets/audio/bell.wav", true, glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f));
+	
+	//audioSystem->playAudio("../../assets/audio/bell.wav");
 
 	//audioSystem->playAudio("../../assets/audio/Surreptitious.ogg", true);
 

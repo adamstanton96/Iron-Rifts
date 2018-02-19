@@ -161,7 +161,7 @@
       <Filter>Source Files\Collidables</Filter>
     </ClCompile>
     <ClCompile Include="IrrKlangAudioSystem.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Audio System</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

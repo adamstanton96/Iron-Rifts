@@ -1,5 +1,5 @@
 #include "IrrKlangAudioSystem.h"
-
+#include <iostream>
 void IrrKlangAudioSystem::init()
 {
 	//Initialise the audio engine:
@@ -13,12 +13,25 @@ void IrrKlangAudioSystem::init()
 
 void IrrKlangAudioSystem::playAudio(char * filePath)
 {
-	audioStream = audioEngine->play2D(filePath, false); //Plays the audio file once.
+	audioStream = audioEngine->play2D(filePath, false, false, true); //Plays the audio file once.
+
+	if (audioStream)
+	{
+		audioStream->drop(); // release the pointer once it is no longer needed.
+		audioStream = 0;
+	}
 }
 
 void IrrKlangAudioSystem::playAudio(char * filePath, bool looped)
 {
-	audioStream = audioEngine->play2D(filePath, looped);
+	audioStream = audioEngine->play2D(filePath, looped, false, true);
+
+	if (audioStream)
+	{
+		audioStream->drop(); // release the pointer once it is no longer needed.
+		audioStream = 0;
+	}
+
 }
 
 void IrrKlangAudioSystem::playAudio(char * filePath, glm::vec3 emmiterPos, glm::vec3 listenerPos)
@@ -32,15 +45,34 @@ void IrrKlangAudioSystem::playAudio(char * filePath, glm::vec3 emmiterPos, glm::
 		float linearVolume = ((100.0f - distance) / 100);
 		//linearVolume = 1.0f;
 	
+		audioStream = audioEngine->play2D(filePath, false, false, true); //Plays the audio file once.
+
 		if (audioStream)
+		{
 			audioStream->setVolume(linearVolume);
-
-		printf(audioStream->getVolume()"/n")
-
-		audioStream = audioEngine->play2D(filePath, false); //Plays the audio file once.
+			audioStream->drop(); // release the pointer once it is no longer needed.
+			audioStream = 0;
+		}
 	}
 }
 
 void IrrKlangAudioSystem::playAudio(char * filePath, bool looped, glm::vec3 emmiterPos, glm::vec3 listenerPos)
 {
+	float distance = sqrt(	((emmiterPos.x - listenerPos.x)*(emmiterPos.x - listenerPos.x)) +
+							((emmiterPos.y - listenerPos.y)*(emmiterPos.y - listenerPos.y)) +
+							((emmiterPos.z - listenerPos.z)*(emmiterPos.z - listenerPos.z))	);
+
+	if (distance <= 100.0f)
+	{
+		float linearVolume = ((100.0f - distance) / 100);
+
+		audioStream = audioEngine->play2D(filePath, looped, false, true); //Plays the audio file once.
+
+		if (audioStream)
+		{
+			audioStream->setVolume(linearVolume);
+			audioStream->drop(); // release the pointer once it is no longer needed.
+			audioStream = 0;
+		}
+	}
 }
