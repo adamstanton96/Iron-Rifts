@@ -21,7 +21,7 @@ void Camera::init()
 
 void Camera::update()
 {
-	glm::vec3 playerPos = getUser()->getTranslation();
+	glm::vec3 playerPos = getUser()->getPosition();
 	this->eye = playerPos;
 	this->eye += offset;
 

@@ -69,7 +69,7 @@ int main(int argc, char *argv[])
 
 	//First Object - Acting as player (camera component / movement component)
 	GameObject *Player = new GameObject("player");
-	Player->setTranslation(glm::vec3(5.0f, 0.0f, 60.0f));
+	Player->setPosition(glm::vec3(5.0f, 0.0f, 60.0f));
 	Player->setScaling(glm::vec3(1.0f, 1.0f, 1.0f));
 	Player->setCameraRotation(0.0);
 	Player->setRenderRotateVec(glm::vec3(0, -1, 0));
@@ -100,7 +100,7 @@ int main(int argc, char *argv[])
 
 	//road barrier 2
 	GameObject *barrier2 = new GameObject("old building");
-	barrier2->setTranslation(glm::vec3(10.0f, -5.0f, 90.0f));
+	barrier2->setPosition(glm::vec3(10.0f, -5.0f, 90.0f));
 	barrier2->setScaling(glm::vec3(0.5f, 0.5f, 0.5f));
 	barrier2->setRenderRotateVec(glm::vec3(0, 1, 0));
 	barrier2->setRenderRotateDeg(45);
@@ -123,7 +123,7 @@ int main(int argc, char *argv[])
 
 	//road barrier 1
 	GameObject *barrier = new GameObject("old building");
-	barrier->setTranslation(glm::vec3(-20.0f, -5.0f, 90.0f));
+	barrier->setPosition(glm::vec3(-20.0f, -5.0f, 90.0f));
 	barrier->setScaling(glm::vec3(0.5f, 0.5f, 0.5f));
 	barrier->setRenderRotateVec(glm::vec3(1, 0, 0));
 	barrier->setRenderRotateDeg(0);
@@ -147,7 +147,7 @@ int main(int argc, char *argv[])
 
 	//Ground Plane
 	GameObject *GroundPlane = new GameObject("Collada");
-	GroundPlane->setTranslation(glm::vec3(0.0f, -5.0f, -30.0f));
+	GroundPlane->setPosition(glm::vec3(0.0f, -5.0f, -30.0f));
 	GroundPlane->setScaling(glm::vec3(60, 0.1f, 60));
 	GroundPlane->setRenderRotateVec(glm::vec3(NULL, NULL, NULL));
 	RigidBodyComponent* rigidBody4 = new RigidBodyComponent("Rigid Body");
@@ -164,7 +164,7 @@ int main(int argc, char *argv[])
 
 	//Ground Plane 2
 	GameObject *GroundPlane2 = new GameObject("Collada");
-	GroundPlane2->setTranslation(glm::vec3(0.0f, -5.0f, 50.0f));
+	GroundPlane2->setPosition(glm::vec3(0.0f, -5.0f, 50.0f));
 	GroundPlane2->setScaling(glm::vec3(60, 0.1f, 60));
 	GroundPlane2->setRenderRotateVec(glm::vec3(NULL, NULL, NULL));
 	RigidBodyComponent* rigidBody5 = new RigidBodyComponent("Rigid Body");
@@ -181,7 +181,7 @@ int main(int argc, char *argv[])
 
 	//Wall 1
 	GameObject *walls = new GameObject("Collada");
-	walls->setTranslation(glm::vec3(0.0f, 10.0f, -25.0f));
+	walls->setPosition(glm::vec3(0.0f, 10.0f, -25.0f));
 	walls->setScaling(glm::vec3(60, 0.5f, 60));
 	walls->setRenderRotateVec(glm::vec3(1, 0, 0));
 	walls->setRenderRotateDeg(90);
@@ -199,7 +199,7 @@ int main(int argc, char *argv[])
 	
 	//Wall 2
 	GameObject *walls2 = new GameObject("Collada");
-	walls2->setTranslation(glm::vec3(-60.0f, -50.0f, -25.0f));
+	walls2->setPosition(glm::vec3(-60.0f, -50.0f, -25.0f));
 	walls2->setScaling(glm::vec3(0.5f, 60, 60));
 	walls2->setRenderRotateVec(glm::vec3(NULL, NULL, NULL));
 	RigidBodyComponent* rigidBody7 = new RigidBodyComponent("Rigid Body");
@@ -216,7 +216,7 @@ int main(int argc, char *argv[])
 
 	//Wall 2
 	GameObject *walls3 = new GameObject("Collada");
-	walls3->setTranslation(glm::vec3(60.0f, -50.0f, -25.0f));
+	walls3->setPosition(glm::vec3(60.0f, -50.0f, -25.0f));
 	walls3->setScaling(glm::vec3(0.5f, 60, 60));
 	walls3->setRenderRotateVec(glm::vec3(NULL, NULL, NULL));
 	RigidBodyComponent* rigidBody8 = new RigidBodyComponent("Rigid Body");
@@ -233,7 +233,7 @@ int main(int argc, char *argv[])
 	
 	// Wall 4
 	GameObject *walls4 = new GameObject("Collada");
-	walls4->setTranslation(glm::vec3(60.0f, -50.0f, 80.0f));
+	walls4->setPosition(glm::vec3(60.0f, -50.0f, 80.0f));
 	walls4->setScaling(glm::vec3(0.5f, 60, 60));
 	walls4->setRenderRotateVec(glm::vec3(NULL, NULL, NULL));
 	RigidBodyComponent* rigidBody9 = new RigidBodyComponent("Rigid Body");
@@ -250,7 +250,7 @@ int main(int argc, char *argv[])
 	
 	//Wall 5
 	GameObject *walls5 = new GameObject("Collada");
-	walls5->setTranslation(glm::vec3(-60.0f, -50.0f, 80.0f));
+	walls5->setPosition(glm::vec3(-60.0f, -50.0f, 80.0f));
 	walls5->setScaling(glm::vec3(0.5f, 60, 60));
 	walls5->setRenderRotateVec(glm::vec3(NULL, NULL, NULL));
 	MeshComponent* wallmesh5 = new MeshComponent("cube");
@@ -263,7 +263,7 @@ int main(int argc, char *argv[])
 
 	//Wall 6
 	GameObject *walls6 = new GameObject("Collada");
-	walls6->setTranslation(glm::vec3(0.0f, 10.0f, 170.0f));
+	walls6->setPosition(glm::vec3(0.0f, 10.0f, 170.0f));
 	walls6->setScaling(glm::vec3(60, 0.5f, 60));
 	walls6->setRenderRotateVec(glm::vec3(1, 0, 0));
 	walls6->setRenderRotateDeg(90);
@@ -278,7 +278,7 @@ int main(int argc, char *argv[])
 
 	//Research Building Object
 	GameObject *buildingObject = new GameObject("old building");
-	buildingObject->setTranslation(glm::vec3(-5.0f, -5.0f, 0.0f));
+	buildingObject->setPosition(glm::vec3(-5.0f, -5.0f, 0.0f));
 	buildingObject->setScaling(glm::vec3(3.0f, 3.0f, 3.0f));
 	buildingObject->setRenderRotateVec(glm::vec3(-1.0f, 0.0f, 0.0f));
 	buildingObject->setRenderRotateDeg(90);
@@ -308,7 +308,7 @@ int main(int argc, char *argv[])
 
 	//watchtower
 	GameObject *watchTower = new GameObject("watch tower");
-	watchTower->setTranslation(glm::vec3(-40.0f, -5.0f, 70.0f));
+	watchTower->setPosition(glm::vec3(-40.0f, -5.0f, 70.0f));
 	watchTower->setScaling(glm::vec3(4.0f, 4.0f, 4.0f));
 	watchTower->setRenderRotateVec(glm::vec3(-1, 0, 0));
 	watchTower->setRenderRotateDeg(90);
@@ -326,7 +326,7 @@ int main(int argc, char *argv[])
 
 	//TRASH PILE
 	GameObject *trashPile = new GameObject("old building");
-	trashPile->setTranslation(glm::vec3(40.0f, -5.0f, 30.0f));
+	trashPile->setPosition(glm::vec3(40.0f, -5.0f, 30.0f));
 	trashPile->setScaling(glm::vec3(0.5f, 0.5f, 0.5f));
 	trashPile->setRenderRotateVec(glm::vec3(0, 0, 0));
 	trashPile->setRenderRotateDeg(90);
@@ -387,7 +387,7 @@ int main(int argc, char *argv[])
 
 
 	GameObject *AlienPlanet = new GameObject("old building");
-	AlienPlanet->setTranslation(glm::vec3(-200, 200, -300));
+	AlienPlanet->setPosition(glm::vec3(-200, 200, -300));
 	AlienPlanet->setScaling(glm::vec3(50, 50, 50));
 	AlienPlanet->setRenderRotateVec(glm::vec3(NULL, NULL, NULL));
 	MeshComponent* AlienPlanetMesh = new MeshComponent("test");
@@ -400,7 +400,7 @@ int main(int argc, char *argv[])
 
 	//Not showing needs a change of texture
 	GameObject *AlienPlanet2 = new GameObject("old building");
-	AlienPlanet2->setTranslation(glm::vec3(200, 200, -300));
+	AlienPlanet2->setPosition(glm::vec3(200, 200, -300));
 	AlienPlanet2->setScaling(glm::vec3(50, 50, 50));
 	AlienPlanet2->setRenderRotateVec(glm::vec3(NULL, NULL, NULL));
 	MeshComponent* AlienPlanetMesh2= new MeshComponent("test");

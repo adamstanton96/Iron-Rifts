@@ -35,8 +35,7 @@ public:
 	void setCameraRotation(float rota) { cameraRotate = rota; } //To camera (Use pointer to input system)
 	float getCameraRotation() { return cameraRotate; }			//
 
-	void setTranslation(glm::vec3 pos) { position = pos; }	// remove (use getposition)
-	glm::vec3 getTranslation() { return position; }			// 
+	//glm::vec3 getPosition() { return position; }			// 
 
 
 
