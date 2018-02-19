@@ -77,8 +77,8 @@ int main(int argc, char *argv[])
 	GameObject *Player = new GameObject("player");
 	Player->setPosition(glm::vec3(5.0f, 0.0f, 60.0f));
 	Player->setScaling(glm::vec3(1.0f, 1.0f, 1.0f));
-	Player->setRenderRotateVec(glm::vec3(0, -1, 0));
-	Player->setRenderRotateDeg(0);
+	Player->setRotationAxis(glm::vec3(0, -1, 0));
+	Player->setRotationDegrees(0);
 
 
 	RigidBodyComponent* rigidBody = new RigidBodyComponent("Rigid Body");
@@ -107,8 +107,8 @@ int main(int argc, char *argv[])
 	GameObject *barrier2 = new GameObject("old building");
 	barrier2->setPosition(glm::vec3(10.0f, -5.0f, 90.0f));
 	barrier2->setScaling(glm::vec3(0.5f, 0.5f, 0.5f));
-	barrier2->setRenderRotateVec(glm::vec3(0, 1, 0));
-	barrier2->setRenderRotateDeg(45);
+	barrier2->setRotationAxis(glm::vec3(0, 1, 0));
+	barrier2->setRotationDegrees(45);
 
 	RigidBodyComponent* rigidBody3 = new RigidBodyComponent("Rigid Body");
 	barrier2->addComponent(rigidBody3);
@@ -130,8 +130,8 @@ int main(int argc, char *argv[])
 	GameObject *barrier = new GameObject("old building");
 	barrier->setPosition(glm::vec3(-20.0f, -5.0f, 90.0f));
 	barrier->setScaling(glm::vec3(0.5f, 0.5f, 0.5f));
-	barrier->setRenderRotateVec(glm::vec3(1, 0, 0));
-	barrier->setRenderRotateDeg(0);
+	barrier->setRotationAxis(glm::vec3(1, 0, 0));
+	barrier->setRotationDegrees(0);
 
 	RigidBodyComponent* rigidBody2 = new RigidBodyComponent("Rigid Body");
 	barrier->addComponent(rigidBody2);
@@ -154,7 +154,7 @@ int main(int argc, char *argv[])
 	GameObject *GroundPlane = new GameObject("Collada");
 	GroundPlane->setPosition(glm::vec3(0.0f, -5.0f, -30.0f));
 	GroundPlane->setScaling(glm::vec3(60, 0.1f, 60));
-	GroundPlane->setRenderRotateVec(glm::vec3(NULL, NULL, NULL));
+	GroundPlane->setRotationAxis(glm::vec3(NULL, NULL, NULL));
 	RigidBodyComponent* rigidBody4 = new RigidBodyComponent("Rigid Body");
 	GroundPlane->addComponent(rigidBody4);
 	rigidBody4->setCollisionSystem(collisionsystem);
@@ -171,7 +171,7 @@ int main(int argc, char *argv[])
 	GameObject *GroundPlane2 = new GameObject("Collada");
 	GroundPlane2->setPosition(glm::vec3(0.0f, -5.0f, 50.0f));
 	GroundPlane2->setScaling(glm::vec3(60, 0.1f, 60));
-	GroundPlane2->setRenderRotateVec(glm::vec3(NULL, NULL, NULL));
+	GroundPlane2->setRotationAxis(glm::vec3(NULL, NULL, NULL));
 	RigidBodyComponent* rigidBody5 = new RigidBodyComponent("Rigid Body");
 	GroundPlane2->addComponent(rigidBody5);
 	rigidBody5->setCollisionSystem(collisionsystem);
@@ -188,8 +188,8 @@ int main(int argc, char *argv[])
 	GameObject *walls = new GameObject("Collada");
 	walls->setPosition(glm::vec3(0.0f, 10.0f, -25.0f));
 	walls->setScaling(glm::vec3(60, 0.5f, 60));
-	walls->setRenderRotateVec(glm::vec3(1, 0, 0));
-	walls->setRenderRotateDeg(90);
+	walls->setRotationAxis(glm::vec3(1, 0, 0));
+	walls->setRotationDegrees(90);
 	RigidBodyComponent* rigidBody6 = new RigidBodyComponent("Rigid Body");
 	walls->addComponent(rigidBody6);
 	rigidBody6->setCollisionSystem(collisionsystem);
@@ -206,7 +206,7 @@ int main(int argc, char *argv[])
 	GameObject *walls2 = new GameObject("Collada");
 	walls2->setPosition(glm::vec3(-60.0f, -50.0f, -25.0f));
 	walls2->setScaling(glm::vec3(0.5f, 60, 60));
-	walls2->setRenderRotateVec(glm::vec3(NULL, NULL, NULL));
+	walls2->setRotationAxis(glm::vec3(NULL, NULL, NULL));
 	RigidBodyComponent* rigidBody7 = new RigidBodyComponent("Rigid Body");
 	walls2->addComponent(rigidBody7);
 	rigidBody7->setCollisionSystem(collisionsystem);
@@ -223,7 +223,7 @@ int main(int argc, char *argv[])
 	GameObject *walls3 = new GameObject("Collada");
 	walls3->setPosition(glm::vec3(60.0f, -50.0f, -25.0f));
 	walls3->setScaling(glm::vec3(0.5f, 60, 60));
-	walls3->setRenderRotateVec(glm::vec3(NULL, NULL, NULL));
+	walls3->setRotationAxis(glm::vec3(NULL, NULL, NULL));
 	RigidBodyComponent* rigidBody8 = new RigidBodyComponent("Rigid Body");
 	walls3->addComponent(rigidBody8);
 	rigidBody8->setCollisionSystem(collisionsystem);
@@ -240,7 +240,7 @@ int main(int argc, char *argv[])
 	GameObject *walls4 = new GameObject("Collada");
 	walls4->setPosition(glm::vec3(60.0f, -50.0f, 80.0f));
 	walls4->setScaling(glm::vec3(0.5f, 60, 60));
-	walls4->setRenderRotateVec(glm::vec3(NULL, NULL, NULL));
+	walls4->setRotationAxis(glm::vec3(NULL, NULL, NULL));
 	RigidBodyComponent* rigidBody9 = new RigidBodyComponent("Rigid Body");
 	walls4->addComponent(rigidBody9);
 	rigidBody9->setCollisionSystem(collisionsystem);
@@ -257,7 +257,7 @@ int main(int argc, char *argv[])
 	GameObject *walls5 = new GameObject("Collada");
 	walls5->setPosition(glm::vec3(-60.0f, -50.0f, 80.0f));
 	walls5->setScaling(glm::vec3(0.5f, 60, 60));
-	walls5->setRenderRotateVec(glm::vec3(NULL, NULL, NULL));
+	walls5->setRotationAxis(glm::vec3(NULL, NULL, NULL));
 	MeshComponent* wallmesh5 = new MeshComponent("cube");
 	walls5->addComponent(wallmesh5);
 	wallmesh5->setRenderer(renderer);
@@ -270,8 +270,8 @@ int main(int argc, char *argv[])
 	GameObject *walls6 = new GameObject("Collada");
 	walls6->setPosition(glm::vec3(0.0f, 10.0f, 170.0f));
 	walls6->setScaling(glm::vec3(60, 0.5f, 60));
-	walls6->setRenderRotateVec(glm::vec3(1, 0, 0));
-	walls6->setRenderRotateDeg(90);
+	walls6->setRotationAxis(glm::vec3(1, 0, 0));
+	walls6->setRotationDegrees(90);
 	MeshComponent* wallmesh6 = new MeshComponent("cube");
 	walls6->addComponent(wallmesh6);
 	wallmesh6->setRenderer(renderer);
@@ -285,8 +285,8 @@ int main(int argc, char *argv[])
 	GameObject *buildingObject = new GameObject("old building");
 	buildingObject->setPosition(glm::vec3(-5.0f, -5.0f, 0.0f));
 	buildingObject->setScaling(glm::vec3(3.0f, 3.0f, 3.0f));
-	buildingObject->setRenderRotateVec(glm::vec3(-1.0f, 0.0f, 0.0f));
-	buildingObject->setRenderRotateDeg(90);
+	buildingObject->setRotationAxis(glm::vec3(-1.0f, 0.0f, 0.0f));
+	buildingObject->setRotationDegrees(90);
 	MeshComponent* buildingMesh = new MeshComponent("test");
 	buildingObject->addComponent(buildingMesh);
 	buildingMesh->setRenderer(renderer);
@@ -315,8 +315,8 @@ int main(int argc, char *argv[])
 	GameObject *watchTower = new GameObject("watch tower");
 	watchTower->setPosition(glm::vec3(-40.0f, -5.0f, 70.0f));
 	watchTower->setScaling(glm::vec3(4.0f, 4.0f, 4.0f));
-	watchTower->setRenderRotateVec(glm::vec3(-1, 0, 0));
-	watchTower->setRenderRotateDeg(90);
+	watchTower->setRotationAxis(glm::vec3(-1, 0, 0));
+	watchTower->setRotationDegrees(90);
 	RigidBodyComponent* rigidBody1 = new RigidBodyComponent("Rigid Body");
 	watchTower->addComponent(rigidBody1);
 	rigidBody1->setCollisionSystem(collisionsystem);
@@ -333,8 +333,8 @@ int main(int argc, char *argv[])
 	GameObject *trashPile = new GameObject("old building");
 	trashPile->setPosition(glm::vec3(40.0f, -5.0f, 30.0f));
 	trashPile->setScaling(glm::vec3(0.5f, 0.5f, 0.5f));
-	trashPile->setRenderRotateVec(glm::vec3(0, 0, 0));
-	trashPile->setRenderRotateDeg(90);
+	trashPile->setRotationAxis(glm::vec3(0, 0, 0));
+	trashPile->setRotationDegrees(90);
 	RigidBodyComponent* rigidBody10 = new RigidBodyComponent("Rigid Body");
 	trashPile->addComponent(rigidBody10);
 	rigidBody10->setCollisionSystem(collisionsystem);
@@ -394,7 +394,7 @@ int main(int argc, char *argv[])
 	GameObject *AlienPlanet = new GameObject("old building");
 	AlienPlanet->setPosition(glm::vec3(-200, 200, -300));
 	AlienPlanet->setScaling(glm::vec3(50, 50, 50));
-	AlienPlanet->setRenderRotateVec(glm::vec3(NULL, NULL, NULL));
+	AlienPlanet->setRotationAxis(glm::vec3(NULL, NULL, NULL));
 	MeshComponent* AlienPlanetMesh = new MeshComponent("test");
 	AlienPlanet->addComponent(AlienPlanetMesh);
 	AlienPlanetMesh->setRenderer(renderer);
@@ -407,7 +407,7 @@ int main(int argc, char *argv[])
 	GameObject *AlienPlanet2 = new GameObject("old building");
 	AlienPlanet2->setPosition(glm::vec3(200, 200, -300));
 	AlienPlanet2->setScaling(glm::vec3(50, 50, 50));
-	AlienPlanet2->setRenderRotateVec(glm::vec3(NULL, NULL, NULL));
+	AlienPlanet2->setRotationAxis(glm::vec3(NULL, NULL, NULL));
 	MeshComponent* AlienPlanetMesh2= new MeshComponent("test");
 	AlienPlanet2->addComponent(AlienPlanetMesh2);
 	AlienPlanetMesh2->setRenderer(renderer);

@@ -22,8 +22,8 @@ void MeshComponent::update()
 
 	scaling = getUser()->getScaling();
 	translation = getUser()->getPosition();
-	rotate = getUser()->getRenderRotate();
-	deg = this->user->getRenderRotateDeg();
+	rotate = getUser()->getRotationAxis();
+	deg = this->user->getRotationDegrees();
 }
 
 

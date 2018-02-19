@@ -87,8 +87,3 @@ void GameObject::setPosition(glm::vec3 iposition)
 	this->position = iposition;
 }
 
-void GameObject::setRotation(float irotation)
-{
-	//this->rotation = irotation;
-}
-
