@@ -12,8 +12,6 @@ GameObject::GameObject(std::string name)
 {
 	Object::name = name;
 	//GameObject::gameObjects.push_back(this);
-	minimum = glm::vec3(0, 0, 0);
-	maximum = glm::vec3(0, 0, 0);
 }
 
 
