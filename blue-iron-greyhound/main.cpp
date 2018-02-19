@@ -44,9 +44,22 @@ double dt;
 
 int main(int argc, char *argv[])
 {
+	//Input System
+	InputSystem *inputSystem = new SDLInputSystem();
+	inputSystem->init();
+
+	//New collision System
+	CollisionSystem* collisionsystem = new CollisionSystem();
+
 	//camera set up
 
-	Camera *cameraComponent = new Camera(glm::vec3(-2.0f, 10.0f, 30.0f), glm::vec3(0.0f, 1.0f, -1.0f), glm::vec3(0.0f, 1.0f, -1.0f), 0.0);
+	Camera *cameraComponent = new Camera("camera");
+	cameraComponent->setEye(glm::vec3(-2.0f, 2.0f, 30.0f));
+	cameraComponent->setAt(glm::vec3(0.0f, 1.0f, -1.0f));
+	cameraComponent->setUp(glm::vec3(0.0f, 1.0f, -1.0f));
+	cameraComponent->setRotation(0.0f);
+	cameraComponent->setInput(inputSystem);
+	//Camera *cameraComponent = new Camera(glm::vec3(-2.0f, 10.0f, 30.0f), glm::vec3(0.0f, 1.0f, -1.0f), glm::vec3(0.0f, 1.0f, -1.0f), 0.0);
 
 	//Camera *cameraComponent = new Camera(glm::vec3(-2.0f, 2.0f, 30.0f), glm::vec3(0.0f, 1.0f, -1.0f), glm::vec3(0.0f, 1.0f, -1.0f), 0.0);
 
@@ -56,13 +69,6 @@ int main(int argc, char *argv[])
 	RenderingSystem* renderer = new openglRenderer();
 	renderer->camera = cameraComponent;
 
-	//Input System
-	InputSystem *inputSystem = new SDLInputSystem();
-	inputSystem->init();
-
-	//New collision System
-	CollisionSystem* collisionsystem = new CollisionSystem();
-
 	//Temporarily hold all objects so that main isn't so awkward
 	std::vector<GameObject*> objectList;
 	
@@ -71,7 +77,6 @@ int main(int argc, char *argv[])
 	GameObject *Player = new GameObject("player");
 	Player->setPosition(glm::vec3(5.0f, 0.0f, 60.0f));
 	Player->setScaling(glm::vec3(1.0f, 1.0f, 1.0f));
-	Player->setCameraRotation(0.0);
 	Player->setRenderRotateVec(glm::vec3(0, -1, 0));
 	Player->setRenderRotateDeg(0);
 
@@ -460,9 +465,6 @@ int main(int argc, char *argv[])
 		{
 			objectList[i]->update();
 		}
-	
-		//Get Inputs - Temporary for free roam camera
-		//Player->input(dt);
 
 		renderer->swapBuffers();
 
