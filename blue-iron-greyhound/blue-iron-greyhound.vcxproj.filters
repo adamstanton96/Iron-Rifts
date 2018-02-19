@@ -33,6 +33,9 @@
     <Filter Include="Source Files\Utilities">
       <UniqueIdentifier>{b35e5da8-4f7f-4469-a51b-563369dd4b9a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Audio System">
+      <UniqueIdentifier>{8d6cd72a-7c07-4f85-bc17-521d31482cfb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="openglRenderer.h">
@@ -101,6 +104,12 @@
     <ClInclude Include="OBB.h">
       <Filter>Source Files\Collidables</Filter>
     </ClInclude>
+    <ClInclude Include="AudioSystem.h">
+      <Filter>Source Files\Audio System</Filter>
+    </ClInclude>
+    <ClInclude Include="IrrKlangAudioSystem.h">
+      <Filter>Source Files\Audio System</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Component.cpp">
@@ -150,6 +159,9 @@
     </ClCompile>
     <ClCompile Include="OBB.cpp">
       <Filter>Source Files\Collidables</Filter>
+    </ClCompile>
+    <ClCompile Include="IrrKlangAudioSystem.cpp">
+      <Filter>Source Files\Audio System</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
