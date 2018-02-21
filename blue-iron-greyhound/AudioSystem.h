@@ -6,6 +6,7 @@
 
 #pragma once
 #include "System.h"
+#include "glm\glm.hpp"
 
 class AudioSystem : public System
 {
