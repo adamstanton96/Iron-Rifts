@@ -15,7 +15,7 @@ void MeshComponent::init()
 }
 
 
-
+//update all orientation values and then draw mesh
 void MeshComponent::update()
 {
 	renderer->draw(this);
@@ -24,25 +24,37 @@ void MeshComponent::update()
 	translation = getUser()->getTranslation();
 	rotate = getUser()->getRenderRotate();
 	deg = this->user->getRenderRotateDeg();
+
+	
 }
 
-
+//sends file name to renderer which will load texture and push it into the texture vector.
+///This design is probably pretty bad. renderer could return the generated texture ID
+/// rather than us sending it a pointer back to this mesh instance.
 void MeshComponent::loadTexture(char * filename)
 {
 	renderer->loadTexture(this, filename);
 }
 
+//Loads an object file. AnimatedMeshComponent inherits from this class and has it's own loadObject() function
 void MeshComponent::loadObject(const char * filename)
 {
-	renderer->loadObject(this, filename);
+		vector<glm::vec3> minmax;
+
+		AssimpLoader::loadObjectData(filename, meshIDs, indexCounts, minmax);
+
+		this->setMinMax(minmax);
+
 }
+
 
 void MeshComponent::setRenderer(RenderingSystem* rendersystem)
 {
 	renderer = rendersystem;
 }
 
-
+//If the user of this mesh has a rigid body we give that rigid body the min and max
+//that LoadObject generated from the model.
 void MeshComponent::setMinMax(vector<glm::vec3> minmax)
 {
 
@@ -57,7 +69,7 @@ void MeshComponent::setMinMax(vector<glm::vec3> minmax)
 }
 
 
-
+//Meshes get/set
 void MeshComponent::setMeshes(vector<int> meshIDs)
 {
 	this->meshIDs = meshIDs;
@@ -68,11 +80,15 @@ vector<int> MeshComponent::getMeshes()
 	return meshIDs;
 }
 
+
+
+//Textures get
 vector<int> MeshComponent::getTextures()
 {
 	return textures;
 }
 
+//Indices get/set
 void MeshComponent::setIndexCounts(vector<int> indexCounts)
 {
 	this->indexCounts = indexCounts;
@@ -84,7 +100,7 @@ vector<int> MeshComponent::getIndexCounts()
 }
 
 
-
+//orientation sets/gets
 void MeshComponent::setTranslation(glm::vec3 tran)
 {
 	translation = tran;

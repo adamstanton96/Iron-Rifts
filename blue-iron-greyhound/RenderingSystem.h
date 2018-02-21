@@ -21,7 +21,7 @@ public:
 
 	virtual void draw(MeshComponent* mesh) = 0;
 	virtual void loadTexture(MeshComponent* meshComponent, char * fileName) = 0;
-	virtual void loadObject(MeshComponent* mesh, const char * filename) = 0;
+	
 
 	Camera* camera;
 private:

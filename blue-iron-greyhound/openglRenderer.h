@@ -32,7 +32,6 @@ public:
 	void update();
 	void draw(MeshComponent* mesh);
 	void loadTexture(MeshComponent* mesh, char * filename);
-	void loadObject(MeshComponent* mesh, const char * filename);
 
 	void createWindow();
 	void setupRenderContext();

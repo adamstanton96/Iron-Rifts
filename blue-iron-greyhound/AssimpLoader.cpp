@@ -5,12 +5,17 @@ using namespace std;
 #include <glm/glm.hpp>
 
 
-
 namespace AssimpLoader
 {
 	
 
 	
+	
+
+
+
+
+
 
 
 	void recursiveNodeProcess(aiNode* node, vector<aiNode*>& ai_nodes)
@@ -158,7 +163,7 @@ namespace AssimpLoader
 			colours.clear(); norms.clear(); texCoords.clear(); verts.clear(); indices.clear();
 
 		}
-		cout << "normal loading" << endl;
+		
 
 		//Pass out min and max
 		maxmin.push_back(min);
@@ -230,36 +235,33 @@ namespace AssimpLoader
 		for (unsigned int j = 0; j < scene->mNumMeshes; j++)
 		{
 
-
+			
 			mesh = scene->mMeshes[j];
 			int numOfFaces = mesh->mNumFaces;
 			int numOfIndices = numOfFaces * 3;
 
-
+			//Initialise bone related variable
 			int WEIGHTS_PER_VERTEX = 4;
-			int size = mesh->mNumVertices*WEIGHTS_PER_VERTEX;
-
-			std::vector<int> boneIDs(size);
-			std::vector<float> boneWeights(size);
+			int numOfBones = mesh->mNumVertices*WEIGHTS_PER_VERTEX;
+			std::vector<int> boneIDs(numOfBones);
+			std::vector<float> boneWeights(numOfBones);
 
 		
-			// Pull per vertex bone related data (vertex ID's and Weights)
+		
 		for (int i = 0; i < mesh->mNumBones; i++)
 		{
 				aiBone* currBone = mesh->mBones[i];
 
-				///////////////////////////////////
+				//pull data to create a new boneobject with (meshID, boneID, name and matrix)
 				std::string b_name = scene->mMeshes[j]->mBones[i]->mName.data;
 				glm::mat4 b_mat = glm::transpose(AiToGLMMat4(scene->mMeshes[j]->mBones[i]->mOffsetMatrix));
-
-				
 
 				bone* boneObject = new bone(j, i, b_name, b_mat);
 				bones.push_back(boneObject);
 
-				
-
-				//fill bone data into new bone object and then push into &bone
+			
+				//Find the corresponding node and animNode to the current bone and store them.
+				//This searches through aiNodes and aiNodeAnims with the bone name.
 				boneObject->node = FindAiNode(b_name, ai_nodes);
 				boneObject->animNode = FindAiNodeAnim(b_name, ai_nodes_anim);
 
@@ -267,26 +269,12 @@ namespace AssimpLoader
 				if (boneObject->animNode == nullptr)
 					std::cout << "No Animations were found for " + b_name << std::endl;
 	
-				
 
-				
-				
-
-			
-				////////////////////
-		
-				
-				
-
-
+				// Pull per vertex bone related data (vertex ID's and Weights) which are used to make the mesh
 				for (int j = 0; j < currBone->mNumWeights; j++)
 				{
 					aiVertexWeight weight = currBone->mWeights[j];
-					
-
 					unsigned int vertexStart = weight.mVertexId * WEIGHTS_PER_VERTEX;
-
-					//cout << vertexStart << endl;
 
 					for (int k = 0; k < WEIGHTS_PER_VERTEX; k++)
 					{
@@ -371,12 +359,13 @@ namespace AssimpLoader
 
 		}
 
-		cout << "animated loading" << endl;
+		
 		//Pass out min and max
 		maxmin.push_back(min);
 		maxmin.push_back(max);
 
 
+		//filling in bone data
 		for (int i = 0; i < bones.size(); i++)
 		{
 			std::string b_name = bones.at(i)->name;

@@ -267,10 +267,10 @@ bool CollisionSystem::OBBtoOBB(OBB* box1, OBB* box2 , RigidBodyComponent* rigidb
 		}
 
 
-		//Overlap on axi' mean a collision
+		//Overlap on all axi' means a collision
 		if ((xOverlap && zOverlap && yOverlap) == true)
 		{
-		
+			//These ifs decide which is the smallest amount of displacement we need  to seperate them
 			if (glm::length(transVec1) < (glm::length(transVec2) && (glm::length(transVec3))))
 			{
 				displacementVector = transVec1;

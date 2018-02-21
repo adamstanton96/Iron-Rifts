@@ -36,6 +36,9 @@
     <Filter Include="Source Files\Mesh Components">
       <UniqueIdentifier>{81eb862a-c19d-47e8-8b3e-71495a91c1d1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Mesh Components\SkeletalAnimation">
+      <UniqueIdentifier>{df74939e-772d-4fa3-8b80-883b557e87ac}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="openglRenderer.h">
@@ -108,7 +111,7 @@
       <Filter>Source Files\Mesh Components</Filter>
     </ClInclude>
     <ClInclude Include="bone.h">
-      <Filter>Source Files\Mesh Components</Filter>
+      <Filter>Source Files\Mesh Components\SkeletalAnimation</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -161,7 +164,7 @@
       <Filter>Source Files\Mesh Components</Filter>
     </ClCompile>
     <ClCompile Include="bone.cpp">
-      <Filter>Source Files\Mesh Components</Filter>
+      <Filter>Source Files\Mesh Components\SkeletalAnimation</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

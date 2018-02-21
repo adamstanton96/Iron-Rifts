@@ -5,7 +5,8 @@
 #include <vector>
 #include "Component.h"
 #include "RenderingSystem.h"
-#include "AnimatedMeshComponent.h"
+//#include "AnimatedMeshComponent.h"
+#include "AssimpLoader.h"
 using namespace std;
 
 
@@ -50,20 +51,23 @@ public:
 
 	RenderingSystem *renderer;
 
+	//Animated related things
 	bool isAnimated;
+
+	
 
 	void toggleAnimationAbilities()
 	{
-		animationData = new AnimatedMeshComponent();
+		//animationData = new AnimatedMeshComponent();
 		isAnimated = true;
 	}
 
-	void setUpAnimationData(std::vector<aiNode*> nodes, std::vector<aiNodeAnim*> animNodes, std::vector<bone*> bones)
-	{
-		animationData->setAiNodes(nodes);
-		animationData->setAnimNodes(animNodes);
-		animationData->addBones(bones);
-	}
+	//void setUpAnimationData(std::vector<aiNode*> nodes, std::vector<aiNodeAnim*> animNodes, std::vector<bone*> bones)
+	//{
+		//animationData->setAiNodes(nodes);
+		//animationData->setAnimNodes(animNodes);
+		//animationData->addBones(bones);
+	//}
 
 protected:
 	//transformation data for renderer
@@ -77,7 +81,7 @@ protected:
 	vector<int> indexCounts;
 	vector<int> textures;	
 
-	AnimatedMeshComponent* animationData;
+	//AnimatedMeshComponent* animationData;
 
 	
 

@@ -7,53 +7,69 @@
 #include <vector>
 #include "bone.h"
 
-class AnimatedMeshComponent// : public MeshComponent
+class AnimatedMeshComponent : public MeshComponent
 {
 public:
 
-	AnimatedMeshComponent(string Name) //: MeshComponent(Name)
+	AnimatedMeshComponent(string Name) 
 	{
-		//isAnimated = true;
+		isAnimated = true;
 	}
 
-	AnimatedMeshComponent() {}
-	
-
-
-	void setAiNodes(std::vector<aiNode*> nodes)
+	AnimatedMeshComponent() 
 	{
-		ai_nodes = nodes;
-	}
-
-	void setAnimNodes(std::vector<aiNodeAnim*> animNodes)
-	{
-		ai_nodes_anim = animNodes;
-
-		// globalInverseTransform = glm::inverse(AssimpLoader::AiToGLMMat4(ai_nodes[0]->mTransformation));
-	}
-
-	void addBones(std::vector<bone*> bone)
-	{
-		//bones.push_back(bone);
-		bones = bone;
-
-		for (int i = 0; i < bones.size(); i++)
-		{
-			std::cout << "Bone " << bones[i]->id << " " << bones[i]->name << std::endl;
-		}
-
-	/*	for (int i = 0; i < ai_nodes.size(); i++)
-		{
-			aiNode* node = ai_nodes[i];
-			std::cout << "Bone " << bones[i]->id << " " << bones[i]->name << std::endl;
-		}*/
 		
 	}
+	
+	void loadObject(const char * filename)
+	{
+		vector<glm::vec3> minmax;
+
+		AssimpLoader::loadObjectDataAnimations(filename, meshIDs, indexCounts, minmax, ai_nodes, ai_nodes_anim, bones);
+
+		setMinMax(minmax);
+	}
 
 
+	//class node
+	//{
+	//public:
+	//	string name;
+	//	glm::mat4 transformation;
+	//	node* parent;
+	//	int numOfChildren;
+	//	std::vector<node*> children;
+	//	int numOfMeshes;
+	//	int MeshIDs;
+	//	//metaData...
+	//private:
+
+
+	//};
+
+	//class animNode
+	//{
+	//public:
+	//	string nodeName;
+	//	int numPositionKeys;
+	//	std::vector<glm::vec3> positionKeys;
+
+	//	int numRotationKeys;
+	//	std::vector<glm::vec3> rotationKeys;
+
+	//	int numScalingKeys;
+	//	std::vector<glm::vec3> scalingKeys;
+	//private:
+
+
+	//};
+
+
+	
 private:
 	std::vector<aiNode*> ai_nodes;
 	std::vector<aiNodeAnim*> ai_nodes_anim;
+
 
 	std::vector<bone*> bones;
 

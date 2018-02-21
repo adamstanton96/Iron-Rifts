@@ -125,10 +125,11 @@ void openglRenderer::draw(MeshComponent* mesh)
 	int texturesize = textures.size();
 	int currShader;
 
+
 	for (int i = 0; i < meshes.size(); i++)
 	{
 
-		//Draw code
+		//pick a shader
 		if (mesh->isAnimated)
 		{			
 			currShader = shaderProgramAnimated;
@@ -141,13 +142,18 @@ void openglRenderer::draw(MeshComponent* mesh)
 			glUseProgram(shaderProgram);
 		}
 		
+
 		OpenglUtils::setUniformMatrix4fv(currShader, "projection", glm::value_ptr(projection));
 
+		//A MeshComponent might not have the same number of meshes-textures.
+		//So if we're at the end of the textures then reuse the last one used.
 		if(i >= texturesize)
 			glBindTexture(GL_TEXTURE_2D, textures[texturesize - 1]);
 		else
 			glBindTexture(GL_TEXTURE_2D, textures[i]);
 	
+
+
 
 		mvStack.push(mvStack.top());
 
@@ -178,47 +184,6 @@ void openglRenderer::loadTexture(MeshComponent* mesh, char * filename)
 {
 	mesh->addTexture(SDLGLTextureLoader::loadBitmap(filename));
 }
-
-//Uses assimp to all the object data we need for creating a mesh VBO
-void openglRenderer::loadObject(MeshComponent* mesh, const char * filename)
-{
-	
-	vector<int> meshIDs;
-	vector<int> indexCounts;
-	vector<glm::vec3> minmax;
-
-	//Animated related data
-	vector<aiNode*> ai_nodes;
-	vector<aiNodeAnim*> ai_nodes_anim;
-	std::vector<bone*> bones;
-	
-
-	if (mesh->isAnimated)
-	{
-		AssimpLoader::loadObjectDataAnimations(filename, meshIDs, indexCounts, minmax, ai_nodes, ai_nodes_anim, bones);
-
-		mesh->setMeshes(meshIDs);
-		mesh->setIndexCounts(indexCounts);
-		mesh->setMinMax(minmax);
-
-		mesh->setUpAnimationData(ai_nodes, ai_nodes_anim, bones);	
-	}
-	else
-	{
-		
-		AssimpLoader::loadObjectData(filename, meshIDs, indexCounts, minmax);
-
-		mesh->setMeshes(meshIDs);
-		mesh->setIndexCounts(indexCounts);
-		mesh->setMinMax(minmax);
-	}
-	
-
-
-
-
-}
-
 
 
 void openglRenderer::setSceneLights()
