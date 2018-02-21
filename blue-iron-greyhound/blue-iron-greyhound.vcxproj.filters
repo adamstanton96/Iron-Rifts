@@ -167,7 +167,7 @@
       <Filter>Source Files\Audio System</Filter>
     </ClCompile>
     <ClCompile Include="AudioTestComponent.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Audio System</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

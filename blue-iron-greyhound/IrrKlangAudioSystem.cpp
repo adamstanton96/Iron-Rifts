@@ -76,3 +76,13 @@ void IrrKlangAudioSystem::playAudio(char * filePath, bool looped, glm::vec3 emmi
 		}
 	}
 }
+
+void IrrKlangAudioSystem::stopAudio()
+{
+	audioEngine->removeAllSoundSources();
+}
+
+void IrrKlangAudioSystem::stopAudio(char * filePath)
+{
+	audioEngine->removeSoundSource(filePath);
+}
