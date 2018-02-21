@@ -58,21 +58,12 @@ int main(int argc, char *argv[])
 	audioSystem->init();
 
 	//camera set up
-
-<<<<<<< HEAD
-	Camera *cameraComponent = new Camera(glm::vec3(-2.0f, 10.0f, 30.0f), glm::vec3(0.0f, 1.0f, -1.0f), glm::vec3(0.0f, 1.0f, 0.0f), 0.0);
-=======
 	Camera *cameraComponent = new Camera("camera");
 	cameraComponent->setEye(glm::vec3(-2.0f, 2.0f, 30.0f));
 	cameraComponent->setAt(glm::vec3(0.0f, 1.0f, -1.0f));
 	cameraComponent->setUp(glm::vec3(0.0f, 1.0f, -1.0f));
 	cameraComponent->setRotation(0.0f);
 	cameraComponent->setInput(inputSystem);
-	//Camera *cameraComponent = new Camera(glm::vec3(-2.0f, 10.0f, 30.0f), glm::vec3(0.0f, 1.0f, -1.0f), glm::vec3(0.0f, 1.0f, -1.0f), 0.0);
->>>>>>> refs/remotes/origin/master
-
-	//Camera *cameraComponent = new Camera(glm::vec3(-2.0f, 2.0f, 30.0f), glm::vec3(0.0f, 1.0f, -1.0f), glm::vec3(0.0f, 1.0f, -1.0f), 0.0);
-
 	cameraComponent->init();
 
 	//render set up
@@ -121,17 +112,12 @@ int main(int argc, char *argv[])
 
 	//spider robot for animation tests
 	GameObject *barrier2 = new GameObject("old building");
-<<<<<<< HEAD
-	barrier2->setTranslation(glm::vec3(20.0f, 0.0f, 90.0f));
 	barrier2->setScaling(glm::vec3(4, 4, 4));
-	barrier2->setRenderRotateVec(glm::vec3(1, 0, 0));
-	barrier2->setRenderRotateDeg(-90);
-=======
 	barrier2->setPosition(glm::vec3(10.0f, -5.0f, 90.0f));
 	barrier2->setScaling(glm::vec3(0.5f, 0.5f, 0.5f));
 	barrier2->setRotationAxis(glm::vec3(0, 1, 0));
 	barrier2->setRotationDegrees(45);
->>>>>>> refs/remotes/origin/master
+
 
 	RigidBodyComponent* rigidBody3 = new RigidBodyComponent("Rigid Body");
 	barrier2->addComponent(rigidBody3);
@@ -152,19 +138,10 @@ int main(int argc, char *argv[])
 
 	//road barrier 1
 	GameObject *barrier = new GameObject("old building");
-<<<<<<< HEAD
-	barrier->setTranslation(glm::vec3(-20.0f, 0.0f, 90.0f));
-	barrier->setScaling(glm::vec3(3, 3, 3));
-	barrier->setScaling(glm::vec3(0.5f, 0.5f, 0.5f));
-	barrier->setRenderRotateVec(glm::vec3(1, 0, 0));
-	barrier->setRenderRotateDeg(-90);
-	barrier->setRenderRotateDeg(45);
-=======
 	barrier->setPosition(glm::vec3(-20.0f, -5.0f, 90.0f));
 	barrier->setScaling(glm::vec3(0.5f, 0.5f, 0.5f));
 	barrier->setRotationAxis(glm::vec3(1, 0, 0));
 	barrier->setRotationDegrees(0);
->>>>>>> refs/remotes/origin/master
 
 	RigidBodyComponent* rigidBody2 = new RigidBodyComponent("Rigid Body");
 	barrier->addComponent(rigidBody2);
@@ -173,9 +150,7 @@ int main(int argc, char *argv[])
 	rigidBody2->setBoundingType("OBB");
 
 	MeshComponent* barriermesh = new MeshComponent("test");
-	//AnimatedMeshComponent* barriermesh = new AnimatedMeshComponent("test");
 	barrier->addComponent(barriermesh);
-	//barriermesh->toggleAnimationAbilities();
 	barriermesh->setRenderer(renderer);
 	barriermesh->loadObject("../../assets/Warbot-Blue.dae");
 	barriermesh->loadTexture("../../assets/tex/scifi.bmp");
@@ -213,11 +188,7 @@ int main(int argc, char *argv[])
 	GameObject *GroundPlane = new GameObject("Collada");
 	GroundPlane->setPosition(glm::vec3(0.0f, -5.0f, -60.0f));
 	GroundPlane->setScaling(glm::vec3(60, 0.1f, 60));
-<<<<<<< HEAD
-	GroundPlane->setRenderRotateVec(glm::vec3(0, 0, 0));
-=======
-	GroundPlane->setRotationAxis(glm::vec3(NULL, NULL, NULL));
->>>>>>> refs/remotes/origin/master
+
 	RigidBodyComponent* rigidBody4 = new RigidBodyComponent("Rigid Body");
 	GroundPlane->addComponent(rigidBody4);
 	rigidBody4->setCollisionSystem(collisionsystem);
@@ -348,18 +319,17 @@ int main(int argc, char *argv[])
 	GameObject *buildingObject = new GameObject("old building");
 	buildingObject->setPosition(glm::vec3(-5.0f, -5.0f, 0.0f));
 	buildingObject->setScaling(glm::vec3(3.0f, 3.0f, 3.0f));
-<<<<<<< HEAD
-	buildingObject->setRenderRotateVec(glm::vec3(-1.0f, 0.0f, 0.0f));
-	buildingObject->setRenderRotateDeg(90);
+
+
 	RigidBodyComponent* rigidBodybuilding = new RigidBodyComponent("Rigid Body");
 	buildingObject->addComponent(rigidBodybuilding);
 	rigidBodybuilding->setCollisionSystem(collisionsystem);
 	rigidBodybuilding->setBodyType("STATIC");
 	rigidBodybuilding->setBoundingType("OBB");
-=======
+
 	buildingObject->setRotationAxis(glm::vec3(-1.0f, 0.0f, 0.0f));
 	buildingObject->setRotationDegrees(90);
->>>>>>> refs/remotes/origin/master
+
 	MeshComponent* buildingMesh = new MeshComponent("test");
 	buildingObject->addComponent(buildingMesh);
 	buildingMesh->setRenderer(renderer);
@@ -464,18 +434,6 @@ int main(int argc, char *argv[])
 
 	//planet in the sky
 
-
-<<<<<<< HEAD
-	//GameObject *AlienPlanet = new GameObject("old building");
-	//AlienPlanet->setTranslation(glm::vec3(-200, 200, -300));
-	//AlienPlanet->setScaling(glm::vec3(50, 50, 50));
-	//AlienPlanet->setRenderRotateVec(glm::vec3(NULL, NULL, NULL));
-	//MeshComponent* AlienPlanetMesh = new MeshComponent("test");
-	//AlienPlanet->addComponent(AlienPlanetMesh);
-	//AlienPlanetMesh->setRenderer(renderer);
-	//AlienPlanetMesh->loadObject("../../assets/AlienPlanet2.dae");
-	//AlienPlanetMesh->loadTexture("../../assets/tex/AlienPlanet.bmp");
-=======
 	GameObject *AlienPlanet = new GameObject("old building");
 	AlienPlanet->setPosition(glm::vec3(-200, 200, -300));
 	AlienPlanet->setScaling(glm::vec3(50, 50, 50));
@@ -485,22 +443,12 @@ int main(int argc, char *argv[])
 	AlienPlanetMesh->setRenderer(renderer);
 	AlienPlanetMesh->loadObject("../../assets/AlienPlanet2.dae");
 	AlienPlanetMesh->loadTexture("../../assets/tex/AlienPlanet.bmp");
->>>>>>> refs/remotes/origin/master
+
 
 	//objectList.push_back(AlienPlanet);
 
-<<<<<<< HEAD
-	////Not showing needs a change of texture
-	//GameObject *AlienPlanet2 = new GameObject("old building");
-	//AlienPlanet2->setTranslation(glm::vec3(200, 200, -300));
-	//AlienPlanet2->setScaling(glm::vec3(50, 50, 50));
-	//AlienPlanet2->setRenderRotateVec(glm::vec3(NULL, NULL, NULL));
-	//MeshComponent* AlienPlanetMesh2= new MeshComponent("test");
-	//AlienPlanet2->addComponent(AlienPlanetMesh2);
-	//AlienPlanetMesh2->setRenderer(renderer);
-	//AlienPlanetMesh2->loadObject("../../assets/AlienPlanet2.dae");
-	//AlienPlanetMesh2->loadTexture("../../assets/tex/mercury.bmp");
-=======
+
+
 	//Not showing needs a change of texture
 	GameObject *AlienPlanet2 = new GameObject("old building");
 	AlienPlanet2->setPosition(glm::vec3(200, 200, -300));
@@ -511,7 +459,7 @@ int main(int argc, char *argv[])
 	AlienPlanetMesh2->setRenderer(renderer);
 	AlienPlanetMesh2->loadObject("../../assets/AlienPlanet2.dae");
 	AlienPlanetMesh2->loadTexture("../../assets/tex/mercury.bmp");
->>>>>>> refs/remotes/origin/master
+
 
 
 	//objectList.push_back(AlienPlanet2);

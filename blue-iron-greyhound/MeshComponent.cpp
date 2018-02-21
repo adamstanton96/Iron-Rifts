@@ -21,19 +21,15 @@ void MeshComponent::update()
 	renderer->draw(this);
 
 	scaling = getUser()->getScaling();
-<<<<<<< HEAD
-	translation = getUser()->getTranslation();
-	rotate = getUser()->getRenderRotate();
-	deg = this->user->getRenderRotateDeg();
-=======
+
 	translation = getUser()->getPosition();
 	rotate = getUser()->getRotationAxis();
 	deg = this->user->getRotationDegrees();
 }
->>>>>>> refs/remotes/origin/master
+
 
 	
-}
+
 
 //sends file name to renderer which will load texture and push it into the texture vector.
 ///This design is probably pretty bad. renderer could return the generated texture ID
