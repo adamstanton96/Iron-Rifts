@@ -17,10 +17,8 @@ void Component::setUser(GameObject * user)
 
 void Component::destroy()
 {
-
 }
 
 void Component::destroyObj(Object * object)
 {
-
 }

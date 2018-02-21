@@ -14,7 +14,7 @@ OpenglUtils::materialStruct material1 = {
 	{ 0.4f, 0.4f, 0.4f, 1.0f },		// ambient
 	{ 0.8f, 0.8f, 0.8f, 1.0f },		// diffuse
 	{ 0.04, 0.04, 0.04, 0.04 },		// specular
-	0.5								// shininess
+	0.5  // shininess
 };
 
 glm::vec4 lightPos(0.0f, 5.0f, 0.0f, 0.0f);
