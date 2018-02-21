@@ -28,7 +28,6 @@ public:
 	~openglRenderer();
 
 	void init();
-	void update();
 	void draw(MeshComponent* mesh);
 	void loadTexture(MeshComponent* mesh, char * filename);
 	void loadObject(MeshComponent* mesh, const char * filename);
@@ -46,6 +45,9 @@ public:
 	void lightControl();
 
 private:
+
+	void cameraUpdate();
+
 	SDL_Window* window;												//Window Handle
 	SDL_GLContext glContext;										//Context Handle
 

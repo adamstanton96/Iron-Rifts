@@ -245,8 +245,11 @@ namespace OpenglUtils
 		const char * vv = vs;
 		const char * ff = fs;
 
-		glShaderSource(v, 1, &vv, &vlen);
-		glShaderSource(f, 1, &ff, &flen);
+		//glShaderSource(v, 1, &vv, &vlen);
+		//glShaderSource(f, 1, &ff, &flen);
+
+		glShaderSource(v, 1, &vv, NULL);
+		glShaderSource(f, 1, &ff, NULL);
 
 		GLint compiled;
 

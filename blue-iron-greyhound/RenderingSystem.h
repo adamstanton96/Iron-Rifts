@@ -1,20 +1,19 @@
 #ifndef RenderingSystem_H
 #define RenderingSystem_H
 
-#include "Component.h"
+#include "System.h"
 class MeshComponent;
 class Camera;
 
 
 
-class RenderingSystem : public Component
+class RenderingSystem : public System
 {
 public:
 	RenderingSystem() {}
 	virtual ~RenderingSystem() {};
 
 	virtual void init() = 0;
-	virtual void update() = 0;
 
 	virtual void swapBuffers() = 0;
 	virtual void clearScreen() = 0;
