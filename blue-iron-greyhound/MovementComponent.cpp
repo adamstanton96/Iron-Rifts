@@ -23,15 +23,13 @@ void MovementComponent::update()
 	moveVector = glm::vec3(0.0f, 0.0f, 0.0f);
 	//Check for input...
 	if (this->input->keyPressed("W"))
-		moveForward();
+		moveForward(0.5f);
 	if (this->input->keyPressed("S"))
-		moveBackwards();
+		moveBackwards(0.5f);
 	if (this->input->keyPressed("A"))
-		moveLeft();
+		moveLeft(0.5f);
 	if (this->input->keyPressed("D"))
-		moveRight();
-
-
+		moveRight(0.5f);
 
 	//Get current mouseposition
 	glm::vec2 mousePosition = this->input->getMousePosition();
@@ -48,40 +46,47 @@ void MovementComponent::update()
 	angleInDegrees_ = glm::degrees(angleInDegrees_);
 
 	//Set players rotation based on where the mouse is!
-	this->user->setRenderRotateDeg(angleInDegrees_);
-	
-
-	
+	this->user->setRotationDegrees(angleInDegrees_);
 
 	//Update the user's position by the movement vector...
-	//std::cout << moveVector.x << " ::: " << moveVector.y << " ::: " << moveVector.z << std::endl; //DEBUG LINE
-	//std::cout << this->user->getPosition().x << "/" << this->user->getPosition().y << "/" << this->user->getPosition().z << std::endl; //DEBUG LINE
-	//this->user->setPosition(userPos + moveVector);
+	this->user->setPosition(userPos + moveVector);
 }
 
 void MovementComponent::moveForward() { moveForward(0.5f); }
 void MovementComponent::moveBackwards() { moveBackwards(0.5f); }
 void MovementComponent::moveRight() { moveRight(0.5f); }
 void MovementComponent::moveLeft() { moveLeft(0.5f); }
+void MovementComponent::moveUp() {}
+void MovementComponent::moveDown(){}
 
 void MovementComponent::moveForward(float distance)
 {
-	moveVector += glm::vec3(0.0f + distance*std::sin(this->user->getRotation()*DEG_TO_RADIAN), 0.0f, 0.0f - (distance)*std::cos(this->user->getRotation()*DEG_TO_RADIAN));
+	moveVector -= glm::vec3(0.0f + distance*std::sin(this->user->getRotationDegrees()*DEG_TO_RADIAN), 0.0f, 0.0f - (distance)*std::cos(this->user->getRotationDegrees()*DEG_TO_RADIAN));
 }
 
 void MovementComponent::moveBackwards(float distance)
 {
-	moveVector -= glm::vec3(0.0f + distance*std::sin(this->user->getRotation()*DEG_TO_RADIAN), 0.0f, 0.0f - distance*std::cos(this->user->getRotation()*DEG_TO_RADIAN));
+	moveVector += glm::vec3(0.0f + distance*std::sin(this->user->getRotationDegrees()*DEG_TO_RADIAN), 0.0f, 0.0f - distance*std::cos(this->user->getRotationDegrees()*DEG_TO_RADIAN));
 }
 
 void MovementComponent::moveRight(float distance)
 {
-	moveVector += glm::vec3(0.0f + distance*std::cos(this->user->getRotation()*DEG_TO_RADIAN), 0.0f, 0.0f + distance*std::sin(this->user->getRotation()*DEG_TO_RADIAN));
+	moveVector -= glm::vec3(0.0f + distance*std::cos(this->user->getRotationDegrees()*DEG_TO_RADIAN), 0.0f, 0.0f + distance*std::sin(this->user->getRotationDegrees()*DEG_TO_RADIAN));
 }
 
 void MovementComponent::moveLeft(float distance)
 {
-	moveVector -= glm::vec3(0.0f + distance*std::cos(this->user->getRotation()*DEG_TO_RADIAN), 0.0f, 0.0f + distance*std::sin(this->user->getRotation()*DEG_TO_RADIAN));
+	moveVector += glm::vec3(0.0f + distance*std::cos(this->user->getRotationDegrees()*DEG_TO_RADIAN), 0.0f, 0.0f + distance*std::sin(this->user->getRotationDegrees()*DEG_TO_RADIAN));
+}
+
+void MovementComponent::moveUp(float distance)
+{
+	moveVector.y += distance;
+}
+
+void MovementComponent::moveDown(float distance)
+{
+	moveVector.y -= distance;
 }
 
 void MovementComponent::setInput(InputSystem * newInput)

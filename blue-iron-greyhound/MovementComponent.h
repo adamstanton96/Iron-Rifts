@@ -24,11 +24,15 @@ public:
 	void moveBackwards();
 	void moveRight();
 	void moveLeft();
+	void moveUp();
+	void moveDown();
 
 	void moveForward(float distance);
 	void moveBackwards(float distance);
 	void moveRight(float distance);
 	void moveLeft(float distance);
+	void moveUp(float distance);
+	void moveDown(float distance);
 
 	void setInput(InputSystem *newInput);
 private:

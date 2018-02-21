@@ -12,7 +12,7 @@ void CollisionSystem::init()
 void CollisionSystem::collisionCheck(RigidBodyComponent* rigidbody)
 {
 	
-	glm::vec3 currentPosition = rigidbody->getUser()->getTranslation();
+	glm::vec3 currentPosition = rigidbody->getUser()->getPosition();
 
 	
 	if (rigidbody->getBoundingType() == "AABB")
@@ -91,23 +91,23 @@ void CollisionSystem::collisionCheck(RigidBodyComponent* rigidbody)
 
 void CollisionSystem::collisionReaction(RigidBodyComponent* rigidbody)
 {
-	glm::vec3 currentPosition = rigidbody->getUser()->getTranslation();
+	glm::vec3 currentPosition = rigidbody->getUser()->getPosition();
 
 
 	glm::vec3 translationVector = (currentPosition - rigidbody->prevPosition) * glm::vec3(-2.5);
 
 	translationVector = (currentPosition - rigidbody->prevPosition);
 
-	rigidbody->getUser()->setTranslation(currentPosition + translationVector * glm::vec3(-2));
+	rigidbody->getUser()->setPosition(currentPosition + translationVector * glm::vec3(-2));
 
 
 }
 
 void CollisionSystem::displacementReaction(RigidBodyComponent* rigidbody, glm::vec3 displacementVector)
 {
-	glm::vec3 currentPosition = rigidbody->getUser()->getTranslation();
+	glm::vec3 currentPosition = rigidbody->getUser()->getPosition();
 
-	rigidbody->getUser()->setTranslation(currentPosition + displacementVector);
+	rigidbody->getUser()->setPosition(currentPosition + displacementVector);
 
 }
 

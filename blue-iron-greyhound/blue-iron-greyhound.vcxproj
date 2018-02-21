@@ -129,6 +129,7 @@
     <ClInclude Include="AssimpLoader.h" />
     <ClInclude Include="bone.h" />
     <ClInclude Include="AudioSystem.h" />
+    <ClInclude Include="AudioTestComponent.h" />
     <ClInclude Include="boundingVolume.h" />
     <ClInclude Include="CameraComponent.h" />
     <ClInclude Include="CollisionSystem.h" />
@@ -154,6 +155,7 @@
   <ItemGroup>
     <ClCompile Include="AssimpLoader.cpp" />
     <ClCompile Include="bone.cpp" />
+    <ClCompile Include="AudioTestComponent.cpp" />
     <ClCompile Include="CameraComponent.cpp" />
     <ClCompile Include="CollisionSystem.cpp" />
     <ClCompile Include="Component.cpp" />

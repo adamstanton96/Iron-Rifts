@@ -91,16 +91,14 @@ void openglRenderer::lightControl()
 
 }
 
-//Camera Updates
-void openglRenderer::update()
+void openglRenderer::cameraUpdate()
 {
-	
 	mvStack.top()*lightPos;
 	setSceneLights();
 
 	//input light control
 	lightControl();
-	
+
 
 	eye = camera->getEye();
 	//r = camera->getRotation();
@@ -114,9 +112,10 @@ void openglRenderer::update()
 
 
 
+
 void openglRenderer::draw(MeshComponent* mesh)
 {
-	update();
+	cameraUpdate();
 	
 	vector<int> meshes = mesh->getMeshes();
 	vector<int> indexCounts = mesh->getIndexCounts();
