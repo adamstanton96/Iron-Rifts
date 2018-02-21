@@ -24,6 +24,7 @@
 #include "RigidBodyComponent.h"
 #include "CollisionSystem.h"
 
+#include "AudioTestComponent.h"
 //temp
 ///
 #include "OBB.h"
@@ -50,6 +51,9 @@ int main(int argc, char *argv[])
 
 	//New collision System
 	CollisionSystem* collisionsystem = new CollisionSystem();
+
+	IrrKlangAudioSystem * audioSystem = new IrrKlangAudioSystem("audioSystem");
+	audioSystem->init();
 
 	//camera set up
 
@@ -91,11 +95,18 @@ int main(int argc, char *argv[])
 	MeshComponent* meshComponent = new MeshComponent("sphere");
 	Player->addComponent(meshComponent);
 	meshComponent->setRenderer(renderer);
-	meshComponent->loadObject("../../assets/AlienPlanet2.dae");
+	meshComponent->loadObject("../../assets/blenderTest.dae");
+	//meshComponent->loadObject("../../assets/AlienPlanet2.dae");
 	meshComponent->loadTexture("../../assets/tex/scifiFloor.bmp");
 	MovementComponent *moveComponent = new MovementComponent("moveComponent");
 	moveComponent->setInput(inputSystem);
 
+
+	AudioTester *audioTester = new AudioTester("audioTester");
+	audioTester->setAudio(audioSystem);
+	audioTester->setInput(inputSystem);
+
+	Player->addComponent(audioTester);
 	Player->addComponent(cameraComponent);
 	Player->addComponent(moveComponent);
 
@@ -149,10 +160,32 @@ int main(int argc, char *argv[])
 
 	///////////////////////////////////////////////////////////////////
 
+	//road barrier 2
+	GameObject *cubenCigar = new GameObject("old building");
+	cubenCigar->setPosition(glm::vec3(5.0f, -5.0f, 140.0f));
+	cubenCigar->setScaling(glm::vec3(5.5f, 5.5f, 5.5f));
+	cubenCigar->setRotationAxis(glm::vec3(0, 1, 0));
+	cubenCigar->setRotationDegrees(45);
+
+	RigidBodyComponent* rigidBody91 = new RigidBodyComponent("Rigid Body");
+	cubenCigar->addComponent(rigidBody91);
+	rigidBody91->setCollisionSystem(collisionsystem);
+	rigidBody91->setBodyType("STATIC");
+	rigidBody91->setBoundingType("OBB");
+
+	MeshComponent* barriermesh61 = new MeshComponent("test");
+	cubenCigar->addComponent(barriermesh61);
+	barriermesh61->setRenderer(renderer);
+	barriermesh61->loadObject("../../assets/blenderTest.dae");
+	barriermesh61->loadTexture("../../assets/roadbarrier/BARRIERE.bmp");
+
+	objectList.push_back(cubenCigar);
+	///////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////
 
 	//Ground Plane
 	GameObject *GroundPlane = new GameObject("Collada");
-	GroundPlane->setPosition(glm::vec3(0.0f, -5.0f, -30.0f));
+	GroundPlane->setPosition(glm::vec3(0.0f, -5.0f, -60.0f));
 	GroundPlane->setScaling(glm::vec3(60, 0.1f, 60));
 	GroundPlane->setRotationAxis(glm::vec3(NULL, NULL, NULL));
 	RigidBodyComponent* rigidBody4 = new RigidBodyComponent("Rigid Body");
@@ -169,7 +202,7 @@ int main(int argc, char *argv[])
 
 	//Ground Plane 2
 	GameObject *GroundPlane2 = new GameObject("Collada");
-	GroundPlane2->setPosition(glm::vec3(0.0f, -5.0f, 50.0f));
+	GroundPlane2->setPosition(glm::vec3(0.0f, -5.0f, 60.0f));
 	GroundPlane2->setScaling(glm::vec3(60, 0.1f, 60));
 	GroundPlane2->setRotationAxis(glm::vec3(NULL, NULL, NULL));
 	RigidBodyComponent* rigidBody5 = new RigidBodyComponent("Rigid Body");
@@ -422,7 +455,7 @@ int main(int argc, char *argv[])
 
 
 	//Audio Test:
-
+	/*
 
 	IrrKlangAudioSystem * audioSystem = new IrrKlangAudioSystem("audioSystem");
 	audioSystem->init();
@@ -435,7 +468,7 @@ int main(int argc, char *argv[])
 
 	//...Audio Test^^^
 	
-
+	*/
 
 
 
