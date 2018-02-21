@@ -8,7 +8,7 @@ void CollisionSystem::init()
 }
 
 
-
+//Checks all objects for collision with the given rigidbody
 void CollisionSystem::collisionCheck(RigidBodyComponent* rigidbody)
 {
 	
