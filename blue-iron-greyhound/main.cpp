@@ -126,8 +126,10 @@ int main(int argc, char *argv[])
 	GameObject *barrier = new GameObject("old building");
 	barrier->setTranslation(glm::vec3(-20.0f, 0.0f, 90.0f));
 	barrier->setScaling(glm::vec3(3, 3, 3));
+	barrier->setScaling(glm::vec3(0.5f, 0.5f, 0.5f));
 	barrier->setRenderRotateVec(glm::vec3(1, 0, 0));
 	barrier->setRenderRotateDeg(-90);
+	barrier->setRenderRotateDeg(45);
 
 	RigidBodyComponent* rigidBody2 = new RigidBodyComponent("Rigid Body");
 	barrier->addComponent(rigidBody2);
@@ -142,6 +144,8 @@ int main(int argc, char *argv[])
 	barriermesh->setRenderer(renderer);
 	barriermesh->loadObject("../../assets/Warbot-Blue.dae");
 	barriermesh->loadTexture("../../assets/tex/scifi.bmp");
+	barriermesh->loadObject("../../assets/barriere.obj");
+	barriermesh->loadTexture("../../assets/roadbarrier/barriere.bmp");
 
 	objectList.push_back(barrier);
 
