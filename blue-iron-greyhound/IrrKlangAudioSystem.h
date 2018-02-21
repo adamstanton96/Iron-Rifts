@@ -1,7 +1,7 @@
 /*=============================================================================
 * IrrKlangAudioSystem.h
 * Author: Adam Stanton
-* Abstract parent to any audio system classes...
+* Concrete auio system using the irrklang audio library, can be used to play 2d or (linear)3d sound...
 =============================================================================*/
 
 #pragma once
@@ -26,6 +26,8 @@ public:
 	void playAudio(char * filePath, glm::vec3 emmiterPos, glm::vec3 listenerPos);
 	void playAudio(char * filePath, bool looped, glm::vec3 emmiterPos, glm::vec3 listenerPos);
 
+	void stopAudio();
+	void stopAudio(char * filePath);
 
 protected:
 	irrklang::ISound* audioStream;			//stores the sound that is being played.

@@ -40,9 +40,9 @@ void IrrKlangAudioSystem::playAudio(char * filePath, glm::vec3 emmiterPos, glm::
 							((emmiterPos.y - listenerPos.y)*(emmiterPos.y - listenerPos.y)) +
 							((emmiterPos.z - listenerPos.z)*(emmiterPos.z - listenerPos.z))	);
 
-	if (distance <= 100.0f) 
+	if (distance <= 50.0f) 
 	{
-		float linearVolume = ((100.0f - distance) / 100);
+		float linearVolume = ((50.0f - distance) / 50);
 		//linearVolume = 1.0f;
 	
 		audioStream = audioEngine->play2D(filePath, false, false, true); //Plays the audio file once.
@@ -75,4 +75,14 @@ void IrrKlangAudioSystem::playAudio(char * filePath, bool looped, glm::vec3 emmi
 			audioStream = 0;
 		}
 	}
+}
+
+void IrrKlangAudioSystem::stopAudio()
+{
+	audioEngine->removeAllSoundSources();
+}
+
+void IrrKlangAudioSystem::stopAudio(char * filePath)
+{
+	audioEngine->removeSoundSource(filePath);
 }

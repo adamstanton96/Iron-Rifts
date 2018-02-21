@@ -110,6 +110,9 @@
     <ClInclude Include="IrrKlangAudioSystem.h">
       <Filter>Source Files\Audio System</Filter>
     </ClInclude>
+    <ClInclude Include="AudioTestComponent.h">
+      <Filter>Source Files\Audio System</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Component.cpp">
@@ -161,6 +164,9 @@
       <Filter>Source Files\Collidables</Filter>
     </ClCompile>
     <ClCompile Include="IrrKlangAudioSystem.cpp">
+      <Filter>Source Files\Audio System</Filter>
+    </ClCompile>
+    <ClCompile Include="AudioTestComponent.cpp">
       <Filter>Source Files\Audio System</Filter>
     </ClCompile>
   </ItemGroup>
