@@ -140,7 +140,7 @@ char * texVert =
 {
 "	// textured.vert												\n"
 "	// use textures, but no lighting								\n"
-"	#version 430													\n"
+"	#version 330													\n"
 "																	\n"
 "	uniform mat4 modelview;											\n"
 "uniform mat4 projection;											\n"
@@ -183,7 +183,7 @@ char * texVert =
 char * texFrag =
 {
 "	// textured.frag										\n"
-"	#version 430											\n"
+"	#version 330											\n"
 "															\n"
 "	// Some drivers require the following					\n"
 "	precision highp float;									\n"

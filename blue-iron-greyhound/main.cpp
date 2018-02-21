@@ -19,8 +19,12 @@
 #include "CameraComponent.h"
 #include "MovementComponent.h"
 #include "SDLInputSystem.h"
+<<<<<<< HEAD
 #include "AnimatedMeshComponent.h"
 
+=======
+#include "IrrKlangAudioSystem.h"
+>>>>>>> refs/remotes/origin/master
 
 #include "RigidBodyComponent.h"
 #include "CollisionSystem.h"
@@ -425,7 +429,29 @@ int main(int argc, char *argv[])
 
 	//objectList.push_back(AlienPlanet2);
 
+
+
+
+
+	//Audio Test:
+
+
+	IrrKlangAudioSystem * audioSystem = new IrrKlangAudioSystem("audioSystem");
+	audioSystem->init();
+
+	audioSystem->playAudio("../../assets/audio/bell.wav", true, glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f));
 	
+	//audioSystem->playAudio("../../assets/audio/bell.wav");
+
+	//audioSystem->playAudio("../../assets/audio/Surreptitious.ogg", true);
+
+	//...Audio Test^^^
+	
+
+
+
+
+
 	bool running = true;
 
 	SDL_Event sdlEvent;
