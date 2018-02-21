@@ -31,8 +31,6 @@ void MovementComponent::update()
 	if (this->input->keyPressed("D"))
 		moveRight(0.1f);
 
-
-
 	//Get current mouseposition
 	glm::vec2 mousePosition = this->input->getMousePosition();
 	this->input->mousePressRight();
@@ -49,13 +47,8 @@ void MovementComponent::update()
 
 	//Set players rotation based on where the mouse is!
 	this->user->setRotationDegrees(angleInDegrees_);
-	
-
-	
 
 	//Update the user's position by the movement vector...
-	//std::cout << moveVector.x << " ::: " << moveVector.y << " ::: " << moveVector.z << std::endl; //DEBUG LINE
-	//std::cout << this->user->getPosition().x << "/" << this->user->getPosition().y << "/" << this->user->getPosition().z << std::endl; //DEBUG LINE
 	this->user->setPosition(userPos + moveVector);
 }
 

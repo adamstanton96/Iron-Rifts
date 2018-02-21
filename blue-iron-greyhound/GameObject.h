@@ -29,16 +29,16 @@ public:
 	void setPosition(glm::vec3 iposition);
 	glm::vec3 getPosition() { return position; }
 
-	void setRotationAxis(glm::vec3 rot) { rotationAxis = rot; }	// remove (use rotation)
-	glm::vec3 getRotationAxis() { return rotationAxis; }				//
-															//
-	void setRotationDegrees(float deg) { rotationDegrees = deg; }		// 
-	float getRotationDegrees() { return rotationDegrees; }			//
+	void setRotationAxis(glm::vec3 rot) { rotationAxis = rot; }	
+	glm::vec3 getRotationAxis() { return rotationAxis; }				
+															
+	void setRotationDegrees(float deg) { rotationDegrees = deg; }		
+	float getRotationDegrees() { return rotationDegrees; }			
 
 
 
-	void setScaling(glm::vec3 scale) { scaling = scale; }	//To mesh
-	glm::vec3 getScaling() { return scaling; }				//
+	void setScaling(glm::vec3 scale) { scaling = scale; }	
+	glm::vec3 getScaling() { return scaling; }				
 
 
 protected:
@@ -48,7 +48,7 @@ private:
 	glm::vec3 position;
 
 	glm::vec3 scaling;
-	glm::vec3 rotationAxis;			//for the rendering
+	glm::vec3 rotationAxis;			
 	float rotationDegrees;
 };
 
