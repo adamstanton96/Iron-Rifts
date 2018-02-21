@@ -109,7 +109,6 @@
     <ClInclude Include="OBB.h">
       <Filter>Source Files\Collidables</Filter>
     </ClInclude>
-<<<<<<< HEAD
     <ClInclude Include="MeshComponent.h">
       <Filter>Source Files\Mesh Components</Filter>
     </ClInclude>
@@ -118,13 +117,11 @@
     </ClInclude>
     <ClInclude Include="bone.h">
       <Filter>Source Files\Mesh Components\SkeletalAnimation</Filter>
-=======
     <ClInclude Include="AudioSystem.h">
       <Filter>Source Files\Audio System</Filter>
     </ClInclude>
     <ClInclude Include="IrrKlangAudioSystem.h">
       <Filter>Source Files\Audio System</Filter>
->>>>>>> refs/remotes/origin/master
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -173,16 +170,13 @@
     <ClCompile Include="OBB.cpp">
       <Filter>Source Files\Collidables</Filter>
     </ClCompile>
-<<<<<<< HEAD
     <ClCompile Include="MeshComponent.cpp">
       <Filter>Source Files\Mesh Components</Filter>
     </ClCompile>
     <ClCompile Include="bone.cpp">
       <Filter>Source Files\Mesh Components\SkeletalAnimation</Filter>
-=======
     <ClCompile Include="IrrKlangAudioSystem.cpp">
       <Filter>Source Files\Audio System</Filter>
->>>>>>> refs/remotes/origin/master
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

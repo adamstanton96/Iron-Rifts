@@ -127,11 +127,8 @@
     <ClInclude Include="AABB.h" />
     <ClInclude Include="AnimatedMeshComponent.h" />
     <ClInclude Include="AssimpLoader.h" />
-<<<<<<< HEAD
     <ClInclude Include="bone.h" />
-=======
     <ClInclude Include="AudioSystem.h" />
->>>>>>> refs/remotes/origin/master
     <ClInclude Include="boundingVolume.h" />
     <ClInclude Include="CameraComponent.h" />
     <ClInclude Include="CollisionSystem.h" />

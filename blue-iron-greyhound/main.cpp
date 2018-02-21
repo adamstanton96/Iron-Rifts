@@ -19,12 +19,9 @@
 #include "CameraComponent.h"
 #include "MovementComponent.h"
 #include "SDLInputSystem.h"
-<<<<<<< HEAD
 #include "AnimatedMeshComponent.h"
-
-=======
 #include "IrrKlangAudioSystem.h"
->>>>>>> refs/remotes/origin/master
+
 
 #include "RigidBodyComponent.h"
 #include "CollisionSystem.h"
