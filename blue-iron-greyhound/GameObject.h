@@ -25,7 +25,6 @@ public:
 	//static GameObject *find(std::string name);
 	//static void cleanUpObjects();
 
-
 	void setPosition(glm::vec3 iposition);
 	glm::vec3 getPosition() { return position; }
 
@@ -35,26 +34,18 @@ public:
 	void setRotationDegrees(float deg) { rotationDegrees = deg; }		
 	float getRotationDegrees() { return rotationDegrees; }			
 
-
-
 	void setScaling(glm::vec3 scale) { scaling = scale; }	
 	glm::vec3 getScaling() { return scaling; }				
-
 
 protected:
 	std::vector<Component *> componentList;
 
 private:
 	glm::vec3 position;
-
 	glm::vec3 scaling;
 	glm::vec3 rotationAxis;			
 	float rotationDegrees;
 };
-
-
-
-
 
 template<class genericComponent>
 genericComponent *GameObject::getComponent()

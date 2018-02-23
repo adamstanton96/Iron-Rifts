@@ -450,7 +450,7 @@ int main(int argc, char *argv[])
 
 	objectList.push_back(AlienPlanet2);
 
-
+	//Test function for new getcomponent.
 	std::cout << Player->getComponent<MeshComponent>()->getName() << std::endl;
 
 	bool running = true;
