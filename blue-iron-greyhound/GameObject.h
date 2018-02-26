@@ -13,8 +13,8 @@ public:
 	void init();
 	void update();
 
-	template<class T>
-	T *getComponent();
+	template<class genericComponent>
+	genericComponent *getComponent();
 	void addComponent(Component* component);
 
 	void destroy();
@@ -25,7 +25,6 @@ public:
 	//static GameObject *find(std::string name);
 	//static void cleanUpObjects();
 
-
 	void setPosition(glm::vec3 iposition);
 	glm::vec3 getPosition() { return position; }
 
@@ -35,44 +34,33 @@ public:
 	void setRotationDegrees(float deg) { rotationDegrees = deg; }		
 	float getRotationDegrees() { return rotationDegrees; }			
 
-
-
 	void setScaling(glm::vec3 scale) { scaling = scale; }	
 	glm::vec3 getScaling() { return scaling; }				
-
 
 protected:
 	std::vector<Component *> componentList;
 
 private:
 	glm::vec3 position;
-
 	glm::vec3 scaling;
 	glm::vec3 rotationAxis;			
 	float rotationDegrees;
 };
 
-
-
-
-
-template<class T>
-T *GameObject::getComponent()
+template<class genericComponent>
+genericComponent *GameObject::getComponent()
 {
-	bool found = false;
-	T *component = nullptr;
-	int i = 0;
+	//Initialize the return value as a nullptr in case no component is found.
+	genericComponent *component = nullptr;
 
-	while (!found) {
-
-		//Checks if we have found Component
-		if (component = dynamic_cast<T*>(componentList[i]))
-			found = true;
-
-		i++;
-		//Reached the end
-		if (i == componentList.size())
-			found = true;
+	//Loop through the component list, if a component of a matching type is found, break and return the component...
+	for (int i = componentList.size() - 1; i >= 0; i--)
+	{
+		if (component = dynamic_cast<genericComponent*>(componentList[i]))
+		{
+			return component;
+		}	
 	}
+	//If no component found by the end of the loop, will return a nullptr.
 	return component;
 }

@@ -6,7 +6,7 @@ class RigidBodyComponent;
 
 MeshComponent::MeshComponent(std::string name)
 {
-
+	this->name = name;
 }
 
 void MeshComponent::init()
