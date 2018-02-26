@@ -17,6 +17,10 @@ void MechanicsComponent::init()
 
 void MechanicsComponent::update()
 {
+	if (this->health <= 0)
+	{
+		printf("Is Dead! \n"); //Testing
+	}
 	//Check for input... Change input to mouse click once inputsystem is updated.
 	if (this->input->keyPressed("P"))
 		fireWeapon();
