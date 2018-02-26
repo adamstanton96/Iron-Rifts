@@ -4,10 +4,10 @@
 
 OpenglUtils::lightStruct globalLight =
 {
-	{ 0.8f, 0.8f, 0.8f, 0.8f },		// ambient
+	{ 0.4f, 0.4f, 0.4f, 0.4f },		// ambient
 	{ 0.5f, 0.5f, 0.5f, 0.5f },		// diffuse
 	{ 0.0f, 0.0f, 0.0f, 0.04f },	// specular
-	{ 0.0f, 5.0f, 0.0f, 0.0f }		// position
+	{ 5.0f, 5.0f, 60.0f, 0.0f }		// position
 };
 
 OpenglUtils::materialStruct material1 = {

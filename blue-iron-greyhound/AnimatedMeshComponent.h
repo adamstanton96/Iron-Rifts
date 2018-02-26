@@ -5,7 +5,12 @@
 #include "MeshComponent.h"
 #include "AssimpLoader.h"
 #include <vector>
+
 #include "bone.h"
+#include "node.h"
+#include "animNode.h"
+#include"skeleton.h"
+class skeleton;
 
 class AnimatedMeshComponent : public MeshComponent
 {
@@ -20,55 +25,38 @@ public:
 	{
 		
 	}
+
+	void update()
+	{
+		MeshComponent::update();
+
+		sceneLoaderSkeleton->update();
+		//cout << "bone update" << endl;
+	}
+
+
 	
 	void loadObject(const char * filename)
 	{
 		vector<glm::vec3> minmax;
 
-		AssimpLoader::loadObjectDataAnimations(filename, meshIDs, indexCounts, minmax, ai_nodes, ai_nodes_anim, bones);
+		AssimpLoader::loadObjectDataAnimations(filename, meshIDs, indexCounts, minmax, nodes, animNodes, bones);
 
 		setMinMax(minmax);
+
+		sceneLoaderSkeleton = new skeleton(bones, globalInverseTransform);
 	}
 
 
-	//class node
-	//{
-	//public:
-	//	string name;
-	//	glm::mat4 transformation;
-	//	node* parent;
-	//	int numOfChildren;
-	//	std::vector<node*> children;
-	//	int numOfMeshes;
-	//	int MeshIDs;
-	//	//metaData...
-	//private:
-
-
-	//};
-
-	//class animNode
-	//{
-	//public:
-	//	string nodeName;
-	//	int numPositionKeys;
-	//	std::vector<glm::vec3> positionKeys;
-
-	//	int numRotationKeys;
-	//	std::vector<glm::vec3> rotationKeys;
-
-	//	int numScalingKeys;
-	//	std::vector<glm::vec3> scalingKeys;
-	//private:
-
-
-	//};
 
 
 	
 private:
-	std::vector<aiNode*> ai_nodes;
-	std::vector<aiNodeAnim*> ai_nodes_anim;
+
+	skeleton* sceneLoaderSkeleton;
+
+	std::vector<node*> nodes;
+	std::vector<animNode*> animNodes;
 
 
 	std::vector<bone*> bones;

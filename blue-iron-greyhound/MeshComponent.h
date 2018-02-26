@@ -56,18 +56,8 @@ public:
 
 	
 
-	void toggleAnimationAbilities()
-	{
-		//animationData = new AnimatedMeshComponent();
-		isAnimated = true;
-	}
+	
 
-	//void setUpAnimationData(std::vector<aiNode*> nodes, std::vector<aiNodeAnim*> animNodes, std::vector<bone*> bones)
-	//{
-		//animationData->setAiNodes(nodes);
-		//animationData->setAnimNodes(animNodes);
-		//animationData->addBones(bones);
-	//}
 
 protected:
 	//transformation data for renderer
@@ -81,7 +71,7 @@ protected:
 	vector<int> indexCounts;
 	vector<int> textures;	
 
-	//AnimatedMeshComponent* animationData;
+
 
 	
 

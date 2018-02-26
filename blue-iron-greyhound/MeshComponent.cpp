@@ -2,7 +2,7 @@
 #include "OpenglRenderer.h"
 #include "GameObject.h"
 #include "RigidBodyComponent.h"
-class RigidBodyComponent;
+
 
 MeshComponent::MeshComponent(std::string name)
 {
@@ -25,6 +25,7 @@ void MeshComponent::update()
 	translation = getUser()->getPosition();
 	rotate = getUser()->getRotationAxis();
 	deg = this->user->getRotationDegrees();
+
 }
 
 

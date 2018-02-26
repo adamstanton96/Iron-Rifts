@@ -1,204 +1,187 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="Source Files\Game">
-      <UniqueIdentifier>{42f05ca1-04a5-49c6-8e8f-cae5a0a806c4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Camera Component">
-      <UniqueIdentifier>{e1d46a45-10fa-43e0-807e-7b8e83a62fc9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
-    <Filter Include="Source Files\Rendering System">
-      <UniqueIdentifier>{ce392000-16b4-46c5-9f32-4c17ec680776}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Movement System">
-      <UniqueIdentifier>{b4d31123-7bea-48fa-baa8-31a25490b6f8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\CollisionSystem">
-      <UniqueIdentifier>{7a9d1846-42fb-4a28-827e-0ef0561bceca}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Collidables">
-      <UniqueIdentifier>{3e8eed51-656e-4798-b682-a25d096375a6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\CompSysTestClasses">
-      <UniqueIdentifier>{9b498d4e-5b46-4212-b4a1-2f124caa7c5e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Utilities">
-      <UniqueIdentifier>{b35e5da8-4f7f-4469-a51b-563369dd4b9a}</UniqueIdentifier>
-    </Filter>
-<<<<<<< HEAD
-    <Filter Include="Source Files\Mesh Components">
-      <UniqueIdentifier>{81eb862a-c19d-47e8-8b3e-71495a91c1d1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Mesh Components\SkeletalAnimation">
-      <UniqueIdentifier>{df74939e-772d-4fa3-8b80-883b557e87ac}</UniqueIdentifier>
-=======
-    <Filter Include="Source Files\Audio System">
-      <UniqueIdentifier>{8d6cd72a-7c07-4f85-bc17-521d31482cfb}</UniqueIdentifier>
->>>>>>> refs/remotes/origin/master
-    </Filter>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="openglRenderer.h">
-      <Filter>Source Files\Rendering System</Filter>
-    </ClInclude>
-    <ClInclude Include="RenderingSystem.h">
-      <Filter>Source Files\Rendering System</Filter>
-    </ClInclude>
-    <ClInclude Include="TestComponent.h">
-      <Filter>Source Files\CompSysTestClasses</Filter>
-    </ClInclude>
-    <ClInclude Include="InteractiveTestComponent.h">
-      <Filter>Source Files\CompSysTestClasses</Filter>
-    </ClInclude>
-    <ClInclude Include="AssimpLoader.h">
-      <Filter>Source Files\Utilities</Filter>
-    </ClInclude>
-    <ClInclude Include="OpenglUtils.h">
-      <Filter>Source Files\Utilities</Filter>
-    </ClInclude>
-    <ClInclude Include="SDLGLTextureLoader.h">
-      <Filter>Source Files\Utilities</Filter>
-    </ClInclude>
-    <ClInclude Include="CameraComponent.h">
-      <Filter>Source Files\Camera Component</Filter>
-    </ClInclude>
-    <ClInclude Include="InputSystem.h">
-      <Filter>Source Files\Movement System</Filter>
-    </ClInclude>
-    <ClInclude Include="MovementComponent.h">
-      <Filter>Source Files\Movement System</Filter>
-    </ClInclude>
-    <ClInclude Include="SDLInputSystem.h">
-      <Filter>Source Files\Movement System</Filter>
-    </ClInclude>
-    <ClInclude Include="RigidBodyComponent.h">
-      <Filter>Source Files\Collidables</Filter>
-    </ClInclude>
-    <ClInclude Include="Sphere.h">
-      <Filter>Source Files\Collidables</Filter>
-    </ClInclude>
-    <ClInclude Include="AABB.h">
-      <Filter>Source Files\Collidables</Filter>
-    </ClInclude>
-    <ClInclude Include="boundingVolume.h">
-      <Filter>Source Files\Collidables</Filter>
-    </ClInclude>
-    <ClInclude Include="CollisionSystem.h">
-      <Filter>Source Files\CollisionSystem</Filter>
-    </ClInclude>
-    <ClInclude Include="Component.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GameObject.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Object.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="System.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="OBB.h">
-      <Filter>Source Files\Collidables</Filter>
-    </ClInclude>
-    <ClInclude Include="MeshComponent.h">
-      <Filter>Source Files\Mesh Components</Filter>
-    </ClInclude>
-    <ClInclude Include="AnimatedMeshComponent.h">
-      <Filter>Source Files\Mesh Components</Filter>
-    </ClInclude>
-    <ClInclude Include="bone.h">
-      <Filter>Source Files\Mesh Components\SkeletalAnimation</Filter>
-    <ClInclude Include="AudioSystem.h">
-      <Filter>Source Files\Audio System</Filter>
-    </ClInclude>
-    <ClInclude Include="IrrKlangAudioSystem.h">
-      <Filter>Source Files\Audio System</Filter>
-    </ClInclude>
-    <ClInclude Include="AudioTestComponent.h">
-      <Filter>Source Files\Audio System</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="Component.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GameObject.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="TestComponent.cpp">
-      <Filter>Source Files\CompSysTestClasses</Filter>
-    </ClCompile>
-    <ClCompile Include="InteractiveTestComponent.cpp">
-      <Filter>Source Files\CompSysTestClasses</Filter>
-    </ClCompile>
-    <ClCompile Include="main.cpp">
-      <Filter>Source Files\Game</Filter>
-    </ClCompile>
-    <ClCompile Include="openglRenderer.cpp">
-      <Filter>Source Files\Rendering System</Filter>
-    </ClCompile>
-    <ClCompile Include="AssimpLoader.cpp">
-      <Filter>Source Files\Utilities</Filter>
-    </ClCompile>
-    <ClCompile Include="OpenglUtils.cpp">
-      <Filter>Source Files\Utilities</Filter>
-    </ClCompile>
-    <ClCompile Include="SDLGLTextureLoader.cpp">
-      <Filter>Source Files\Utilities</Filter>
-    </ClCompile>
-    <ClCompile Include="CameraComponent.cpp">
-      <Filter>Source Files\Camera Component</Filter>
-    </ClCompile>
-    <ClCompile Include="MovementComponent.cpp">
-      <Filter>Source Files\Movement System</Filter>
-    </ClCompile>
-    <ClCompile Include="SDLInputSystem.cpp">
-      <Filter>Source Files\Movement System</Filter>
-    </ClCompile>
-    <ClCompile Include="RigidBodyComponent.cpp">
-      <Filter>Source Files\Collidables</Filter>
+    <ClCompile Include="CameraComponent.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="bone.cpp">
+      <Filter>Animation</Filter>
     </ClCompile>
     <ClCompile Include="CollisionSystem.cpp">
-      <Filter>Source Files\CollisionSystem</Filter>
+      <Filter>Physics</Filter>
     </ClCompile>
     <ClCompile Include="OBB.cpp">
-      <Filter>Source Files\Collidables</Filter>
+      <Filter>Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="RigidBodyComponent.cpp">
+      <Filter>Physics</Filter>
     </ClCompile>
     <ClCompile Include="MeshComponent.cpp">
-      <Filter>Source Files\Mesh Components</Filter>
+      <Filter>Graphics</Filter>
     </ClCompile>
-    <ClCompile Include="bone.cpp">
-      <Filter>Source Files\Mesh Components\SkeletalAnimation</Filter>
+    <ClCompile Include="openglRenderer.cpp">
+      <Filter>Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="OpenglUtils.cpp">
+      <Filter>Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="SDLGLTextureLoader.cpp">
+      <Filter>Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="AssimpLoader.cpp">
+      <Filter>Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="MovementComponent.cpp">
+      <Filter>Input</Filter>
+    </ClCompile>
+    <ClCompile Include="SDLInputSystem.cpp">
+      <Filter>Input</Filter>
+    </ClCompile>
     <ClCompile Include="IrrKlangAudioSystem.cpp">
-      <Filter>Source Files\Audio System</Filter>
+      <Filter>Audio</Filter>
     </ClCompile>
     <ClCompile Include="AudioTestComponent.cpp">
-      <Filter>Source Files\Audio System</Filter>
+      <Filter>Audio</Filter>
     </ClCompile>
+    <ClCompile Include="TestComponent.cpp">
+      <Filter>Junk</Filter>
+    </ClCompile>
+    <ClCompile Include="InteractiveTestComponent.cpp">
+      <Filter>Junk</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>Upper Level Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="Component.cpp">
+      <Filter>Upper Level Classes</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="CameraComponent.h" />
+    <ClInclude Include="AnimatedMeshComponent.h">
+      <Filter>Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="bone.h">
+      <Filter>Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="AABB.h">
+      <Filter>Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionSystem.h">
+      <Filter>Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="OBB.h">
+      <Filter>Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="RigidBodyComponent.h">
+      <Filter>Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Sphere.h">
+      <Filter>Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="MeshComponent.h">
+      <Filter>Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="openglRenderer.h">
+      <Filter>Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="OpenglUtils.h">
+      <Filter>Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderingSystem.h">
+      <Filter>Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="SDLGLTextureLoader.h">
+      <Filter>Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="AssimpLoader.h">
+      <Filter>Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="boundingVolume.h">
+      <Filter>Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="InputSystem.h">
+      <Filter>Input</Filter>
+    </ClInclude>
+    <ClInclude Include="MovementComponent.h">
+      <Filter>Input</Filter>
+    </ClInclude>
+    <ClInclude Include="SDLInputSystem.h">
+      <Filter>Input</Filter>
+    </ClInclude>
+    <ClInclude Include="IrrKlangAudioSystem.h">
+      <Filter>Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="AudioTestComponent.h">
+      <Filter>Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="AudioSystem.h">
+      <Filter>Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="TestComponent.h">
+      <Filter>Junk</Filter>
+    </ClInclude>
+    <ClInclude Include="InteractiveTestComponent.h">
+      <Filter>Junk</Filter>
+    </ClInclude>
+    <ClInclude Include="System.h">
+      <Filter>Upper Level Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Object.h">
+      <Filter>Upper Level Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>Upper Level Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Component.h">
+      <Filter>Upper Level Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="node.h">
+      <Filter>Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="animNode.h">
+      <Filter>Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="skeleton.h">
+      <Filter>Animation</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="textured.frag">
-      <Filter>Source Files\Resource Files</Filter>
-    </None>
-    <None Include="minimal.frag">
-      <Filter>Source Files\Resource Files</Filter>
+      <Filter>Junk</Filter>
     </None>
     <None Include="minimal.vert">
-      <Filter>Source Files\Resource Files</Filter>
+      <Filter>Junk</Filter>
+    </None>
+    <None Include="minimal.frag">
+      <Filter>Junk</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Filter Include="Animation">
+      <UniqueIdentifier>{7c9c7e9f-a8e9-4a00-86dd-64dcad62505f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Physics">
+      <UniqueIdentifier>{b6f66678-d371-429f-9779-169c1f5897dc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics">
+      <UniqueIdentifier>{58f0dea7-c694-4d67-9313-93e77849e1d5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Input">
+      <UniqueIdentifier>{455bcbea-4cf4-480d-a4b0-5528d8ef0afa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Audio">
+      <UniqueIdentifier>{2c2f76ab-2fe6-4858-8e9c-ba5539a6bbd2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Junk">
+      <UniqueIdentifier>{89a47bc6-9f73-46c5-b860-c45e4f5329a2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Upper Level Classes">
+      <UniqueIdentifier>{27061264-dd50-40b8-973a-e32f50838993}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
     <Xml Include="textured.vert">
-      <Filter>Source Files\Resource Files</Filter>
+      <Filter>Junk</Filter>
     </Xml>
   </ItemGroup>
 </Project>

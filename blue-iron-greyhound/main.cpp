@@ -92,7 +92,6 @@ int main(int argc, char *argv[])
 	Player->addComponent(meshComponent);
 	meshComponent->setRenderer(renderer);
 	meshComponent->loadObject("../../assets/blenderTest.dae");
-	//meshComponent->loadObject("../../assets/AlienPlanet2.dae");
 	meshComponent->loadTexture("../../assets/tex/scifiFloor.bmp");
 	MovementComponent *moveComponent = new MovementComponent("moveComponent");
 	moveComponent->setInput(inputSystem);
@@ -113,10 +112,10 @@ int main(int argc, char *argv[])
 	//spider robot for animation tests
 	GameObject *barrier2 = new GameObject("old building");
 	barrier2->setScaling(glm::vec3(4, 4, 4));
-	barrier2->setPosition(glm::vec3(10.0f, -5.0f, 90.0f));
-	barrier2->setScaling(glm::vec3(0.5f, 0.5f, 0.5f));
-	barrier2->setRotationAxis(glm::vec3(0, 1, 0));
-	barrier2->setRotationDegrees(45);
+	barrier2->setPosition(glm::vec3(10.0f, 0.0f, 90.0f));
+	barrier2->setScaling(glm::vec3(4, 4, 4));
+	barrier2->setRotationAxis(glm::vec3(1, 0, 0));
+	barrier2->setRotationDegrees(-90);
 
 
 	RigidBodyComponent* rigidBody3 = new RigidBodyComponent("Rigid Body");
@@ -128,7 +127,6 @@ int main(int argc, char *argv[])
 	AnimatedMeshComponent* barriermesh2 = new AnimatedMeshComponent("test");
 	barrier2->addComponent(barriermesh2);
 	barriermesh2->setRenderer(renderer);
-	//barriermesh2->toggleAnimationAbilities();
 	barriermesh2->loadObject("../../assets/RobotAnimated.dae");
 	barriermesh2->loadTexture("../../assets/RobotAnimated.bmp");
 

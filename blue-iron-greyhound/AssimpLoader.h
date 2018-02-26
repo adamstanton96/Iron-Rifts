@@ -11,17 +11,20 @@
 
 #include <vector>
 #include "bone.h"
+#include "node.h"
+#include "animNode.h"
+
 class bone;
 using namespace std;
 
 namespace AssimpLoader
 {
 	void loadObjectData(const std::string& file, vector<int>& meshIDs, vector<int> &indexCount, vector<glm::vec3>& maxmin);
-	void loadObjectDataAnimations(const std::string& file, vector<int>& meshIDs, vector<int>& indexCount, vector<glm::vec3>& maxmin, vector<aiNode*>& ai_nodes, vector<aiNodeAnim*>& ai_nodes_anim, std::vector<bone*>& bones);
+	void loadObjectDataAnimations(const std::string& file, vector<int>& meshIDs, vector<int>& indexCount, vector<glm::vec3>& maxmin, vector<node*>& nodes, vector<animNode*>& animNodes, std::vector<bone*>& bones);
 
 
 
-	void recursiveNodeProcess(aiNode* node, vector<aiNode*>& ai_nodes);
+	void recursiveNodeProcess(aiNode* a_node, vector<node*>& nodes);
 	void AnimNodeProcess(const aiScene* m_scene, vector<aiNodeAnim*>& ai_nodes_anim);
 
 	//transform utilities
@@ -31,9 +34,9 @@ namespace AssimpLoader
 	 bone* FindBone(std::string name, std::vector<bone*>& bones);
 
 	 //Search and return a node by name
-	 aiNode* FindAiNode(std::string name, vector<aiNode*>& ai_nodes);
+	 node* FindAiNode(std::string name, vector<node*>& ai_nodes);
 	 
-	 aiNodeAnim* FindAiNodeAnim(std::string name, vector<aiNodeAnim*>& ai_nodes_anim);
+	 animNode* FindAiNodeAnim(std::string name, vector<animNode*>& ai_nodes_anim);
 
 	 //return index of bone in our bones vector
 	 int FindBoneIDByName(std::string name, std::vector<bone*>& bones);

@@ -5,6 +5,8 @@ using namespace std;
 #include <glm/glm.hpp>
 
 
+
+
 namespace AssimpLoader
 {
 	
@@ -12,28 +14,104 @@ namespace AssimpLoader
 	
 	
 
-
-
-
-
-
-
-	void recursiveNodeProcess(aiNode* node, vector<aiNode*>& ai_nodes)
+	glm::vec4 AIQUATtoGLMVec4(aiQuaternion aiQuat)
 	{
-		ai_nodes.push_back(node);
+		glm::vec4 newVec;
+		newVec.x = aiQuat.x;
+		newVec.y = aiQuat.y;
+		newVec.z = aiQuat.z;
+		newVec.w = aiQuat.w;
 
-		for (int i = 0; i < node->mNumChildren; i++)
-			recursiveNodeProcess(node->mChildren[i], ai_nodes);
+		return newVec;
+	}
+
+	glm::vec3 AItoGLMVec3(aiVector3D aivec)
+	{
+		glm::vec3 newVec;
+		newVec.x = aivec.x;
+		newVec.y = aivec.y;
+		newVec.z = aivec.z;
+
+		return newVec;
 	}
 
 
-	void AnimNodeProcess(const aiScene* m_scene, vector<aiNodeAnim*>& ai_nodes_anim)
+
+
+
+
+	void recursiveNodeProcess(aiNode* a_node, vector<node*>& nodes)
+	{
+		node* rootNode = new node();
+
+		//init values off of aiNode param
+		std::string parentName;
+		std::vector<std::string> childrenNames;
+
+		rootNode->name = a_node->mName.data;
+		rootNode->transformation = AiToGLMMat4(a_node->mTransformation);
+
+		if(a_node->mParent != NULL)
+		rootNode->parentName = a_node->mParent->mName.data;
+
+		rootNode->numOfChildren = a_node->mNumChildren;
+
+		for(int i = 0; i <  a_node->mNumChildren; i++)
+		rootNode->childrenNames.push_back(a_node->mChildren[i]->mName.data);
+
+		rootNode->numOfMeshes = a_node->mNumMeshes;
+		rootNode->numOfMeshes = (int)a_node->mMeshes;
+
+
+		nodes.push_back(rootNode);
+
+		for (int i = 0; i < a_node->mNumChildren; i++)
+			recursiveNodeProcess(a_node->mChildren[i], nodes);
+	}
+
+
+	void AnimNodeProcess(const aiScene* m_scene, vector<animNode*>& ai_nodes_anim)
 	{
 		if (m_scene->mNumAnimations == 0)
 			return;
 
+	
+
 		for (int i = 0; i < m_scene->mAnimations[0]->mNumChannels; i++)
-			ai_nodes_anim.push_back(m_scene->mAnimations[0]->mChannels[i]);
+		{
+			aiNodeAnim* a_animNode = m_scene->mAnimations[0]->mChannels[i];
+			animNode* animnode = new animNode();
+
+		/*	
+			int numPositionKeys;
+			std::vector<glm::vec3> positionKeys;
+
+			int numRotationKeys;
+			std::vector<glm::vec3> rotationKeys;
+
+			int numScalingKeys;
+			std::vector<glm::vec3> scalingKeys;*/
+
+			animnode->nodeName = a_animNode->mNodeName.data;
+			animnode->numPositionKeys = a_animNode->mNumPositionKeys;
+			animnode->numRotationKeys = a_animNode->mNumRotationKeys;
+			animnode->numScalingKeys = a_animNode->mNumScalingKeys;
+
+			for (int i = 0; i < a_animNode->mNumPositionKeys; i++)
+			animnode->positionKeys.push_back(AItoGLMVec3(a_animNode->mPositionKeys->mValue));
+
+			for (int i = 0; i < a_animNode->mNumRotationKeys; i++)
+				animnode->positionKeys.push_back(AIQUATtoGLMVec4(a_animNode->mRotationKeys->mValue));
+			
+			for (int i = 0; i < a_animNode->mNumScalingKeys; i++)
+				animnode->positionKeys.push_back(AItoGLMVec3(a_animNode->mScalingKeys->mValue));
+
+
+
+
+			ai_nodes_anim.push_back(animnode);
+		}
+			
 	}
 
 
@@ -178,7 +256,7 @@ namespace AssimpLoader
 
 	//Extracts all the data we need and puts into into our parameters
 	//includes data for animations
-	void loadObjectDataAnimations(const std::string& file, vector<int>& meshIDs, vector<int>& indexCount, vector<glm::vec3>& maxmin, vector<aiNode*>& ai_nodes, vector<aiNodeAnim*>& ai_nodes_anim, std::vector<bone*>& bones)
+	void loadObjectDataAnimations(const std::string& file, vector<int>& meshIDs, vector<int>& indexCount, vector<glm::vec3>& maxmin, vector<node*>& nodes, vector<animNode*>& animNodes, std::vector<bone*>& bones)
 	{
 
 		// Create an instance of the Importer class for loading the object data
@@ -225,11 +303,12 @@ namespace AssimpLoader
 
 		//pull out the scenes aiNodes
 		aiNode* m_rootNode = scene->mRootNode;
-		recursiveNodeProcess(m_rootNode, ai_nodes);
+		//recursiveNodeProcess(m_rootNode, ai_nodes);
+		recursiveNodeProcess(m_rootNode, nodes);
 
 		//Pull out the scenes mAnimation
-		AnimNodeProcess(scene, ai_nodes_anim);
-	
+		//AnimNodeProcess(scene, ai_nodes_anim);
+		AnimNodeProcess(scene, animNodes);
 
 
 		for (unsigned int j = 0; j < scene->mNumMeshes; j++)
@@ -262,8 +341,8 @@ namespace AssimpLoader
 			
 				//Find the corresponding node and animNode to the current bone and store them.
 				//This searches through aiNodes and aiNodeAnims with the bone name.
-				boneObject->node = FindAiNode(b_name, ai_nodes);
-				boneObject->animNode = FindAiNodeAnim(b_name, ai_nodes_anim);
+				boneObject->node = FindAiNode(b_name, nodes);
+				boneObject->animNode = FindAiNodeAnim(b_name, animNodes);
 
 
 				if (boneObject->animNode == nullptr)
@@ -365,11 +444,21 @@ namespace AssimpLoader
 		maxmin.push_back(max);
 
 
+		//nodes need to find their parents
+		for (int i = 0; i < nodes.size(); i++)
+		{
+			if (nodes[i]->parentName.size() != 0)
+			{
+				nodes[i]->parent = FindAiNode(nodes[i]->parentName, nodes);
+			}
+		}
+
+
 		//filling in bone data
 		for (int i = 0; i < bones.size(); i++)
 		{
 			std::string b_name = bones.at(i)->name;
-			std::string parent_name = FindAiNode(b_name, ai_nodes)->mParent->mName.data;
+			std::string parent_name = FindAiNode(b_name, nodes)->parent->name;
 
 			bone* p_bone = FindBone(parent_name, bones);
 
@@ -395,8 +484,8 @@ namespace AssimpLoader
 		for (int i = 0; i < m_rootNode->mNumChildren; i++)
 			recursiveProcess(m_rootNode->mChildren[i], scene);
 	}*/
-
 	
+
 
 	 aiMatrix4x4 GLMMat4ToAi(glm::mat4 mat)
 	{
@@ -448,11 +537,11 @@ namespace AssimpLoader
 	 }
 
 	 //Search and return a node by name
-	 aiNode* FindAiNode(std::string name, vector<aiNode*>& ai_nodes)
+	 node* FindAiNode(std::string name, vector<node*>& ai_nodes)
 	 {
 		 for (int i = 0; i < ai_nodes.size(); i++)
 		 {
-			 if (ai_nodes[i]->mName.data == name)
+			 if (ai_nodes[i]->name == name)
 			 {
 
 				 return ai_nodes.at(i);
@@ -465,11 +554,11 @@ namespace AssimpLoader
 	 }
 
 
-	 aiNodeAnim* FindAiNodeAnim(std::string name, vector<aiNodeAnim*>& ai_nodes_anim)
+	 animNode* FindAiNodeAnim(std::string name, vector<animNode*>& ai_nodes_anim)
 	 {
 		 for (int i = 0; i < ai_nodes_anim.size(); i++)
 		 {
-			 if (ai_nodes_anim.at(i)->mNodeName.data == name)
+			 if (ai_nodes_anim.at(i)->nodeName == name)
 				 return ai_nodes_anim.at(i);
 		 }
 		 return nullptr;

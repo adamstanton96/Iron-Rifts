@@ -12,13 +12,15 @@
 #include <vector>
 using namespace std;
 
-#include <assimp/scene.h> //???
+
 #include <iostream>    
 #include "AssimpLoader.h"
 
+#include "node.h"
+#include "animNode.h"
+
 //#include frametime
-//#include "animation.h"
-//class Skeleton;
+class skeleton;
 
 class bone
 {
@@ -35,15 +37,15 @@ public:
 	int meshID;
 	int id;
 
-	aiNode* node;
-	aiNodeAnim* animNode;
+	node* node;
+	animNode* animNode;
 	bone* parent_bone;
 
 	glm::mat4 parent_transforms;
 
 	glm::mat4 offset_matrix;
 
-	//Skeleton* parent_skeleton;
+	skeleton* parentSkeleton;
 	
 private:
 

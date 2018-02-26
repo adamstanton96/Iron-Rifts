@@ -14,12 +14,16 @@ char * texAnimVert =
 	"in  vec3 in_Position;												\n"
 	"//in  vec3 in_Colour; // colour not used with lighting				\n"
 	"in  vec3 in_Normal;												\n"
-	"in  vec4 in_boneIDs;												\n"
-	"in  vec4 in_boneWeights;											\n"
+
+	"in  vec4 in_boneIDs; //int												\n"
+	"in  vec4 in_boneWeights; //floats											\n"
+
+	"const int MAX_BONES = 100;											\n"
+	"uniform mat4 gBones[MAX_BONES];									\n"
+
 	"out vec4 id;														\n"
 	"out vec4 weight;													\n"
-	"//uniform vec4 boneIDs;											\n"
-	"//uniform vec4 boneWeights;										\n"
+
 	"//out vec4 ex_Color;												\n"
 	"out vec3 ex_N;														\n"
 	"out vec3 ex_V;														\n"
@@ -37,16 +41,26 @@ char * texAnimVert =
 	"    ex_D = distance(vertexPosition, lightPosition);				\n"
 	"																	\n"
 	"	ex_V = normalize(-vertexPosition).xyz;							\n"
-	"  weight = in_boneWeights;														\n"
+	"  weight = in_boneWeights;											\n"
 	"	id = in_boneIDs;												\n"
 	"																	\n"
 	"	mat3 normalmatrix = transpose(inverse(mat3(modelview)));		\n"
 	"	ex_N = normalize(normalmatrix * in_Normal);						\n"
-	"	//ex_N = in_Normal;						\n"
+	"	//ex_N = in_Normal;												\n"
 	"																	\n"
 	"	ex_L = normalize(lightPosition.xyz - vertexPosition.xyz);		\n"
 	"																	\n"
-	"	gl_Position = projection * vertexPosition;						\n"
+	"	int index1 =	int(in_boneIDs[0]);								\n"
+	"	int index2 =	int(in_boneIDs[1]);								\n"
+	"	int index3 =	int(in_boneIDs[2]);								\n"
+	"	int index4 =	int(in_boneIDs[3]);								\n"
+	"																	\n"
+	"mat4 BMatrix = gBones[index1] * in_boneWeights[0];					\n"
+	"BMatrix += gBones[index2] * in_boneWeights[1];						\n"
+	"BMatrix += gBones[index3] * in_boneWeights[2];						\n"
+	"BMatrix += gBones[index4] * in_boneWeights[3];						\n"
+
+	"	gl_Position = projection * vertexPosition * BMatrix;			\n"
 	"																	\n"
 	"	ex_TexCoord = in_TexCoord;										\n"
 	"}																	\n"
@@ -419,8 +433,8 @@ namespace OpenglUtils
 		const char * vv = vs;
 		const char * ff = fs;
 
-		glShaderSource(v, 1, &vv, &vlen);
-		glShaderSource(f, 1, &ff, &flen);
+		glShaderSource(v, 1, &vv, NULL);
+		glShaderSource(f, 1, &ff, NULL);
 
 		GLint compiled;
 
@@ -661,7 +675,10 @@ namespace OpenglUtils
 		return VAO;
 	}
 
+	void updateAnimatedShaderData()
+	{
 
+	}
 
 
 
@@ -670,6 +687,7 @@ namespace OpenglUtils
 		int uniformIndex = glGetUniformLocation(program, uniformName);
 		glUniformMatrix4fv(uniformIndex, 1, GL_FALSE, data);
 	}
+
 
 	void drawIndexedMesh(const GLuint mesh, const GLuint indexCount, const GLuint primitive) {
 		glBindVertexArray(mesh);	// Bind mesh VAO

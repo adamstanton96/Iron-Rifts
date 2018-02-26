@@ -34,7 +34,7 @@ glm::mat4 bone::GetParentTransforms()
 
 	while (b != nullptr)    //As long as 'b' has a parent (see the end of the loop
 	{                      //to avoid confusion).
-		glm::mat4 tmp_mat = AssimpLoader::AiToGLMMat4(b->node->mTransformation); //This bone's transformation.
+		glm::mat4 tmp_mat = b->node->transformation; //This bone's transformation.
 		mats.push_back(tmp_mat);
 
 		b = b->parent_bone;    //We set b to its own parent so the loop can continue.
