@@ -9,13 +9,18 @@ class animNode
 public:
 	std::string nodeName;
 	int numPositionKeys;
-	std::vector<glm::vec3> positionKeys;
+	std::vector<glm::vec3> positionKeysValues;
+
+	std::vector<double> positionKeysTimes;
 
 	int numRotationKeys;
-	std::vector<glm::vec4> rotationKeys;
+	std::vector<glm::vec4> rotationKeysValues;
+
+	std::vector<double> rotationKeysTimes;
 
 	int numScalingKeys;
-	std::vector<glm::vec3> scalingKeys;
+	std::vector<glm::vec3> scalingKeysValues;
+	//std::vector<double>
 private:
 
 

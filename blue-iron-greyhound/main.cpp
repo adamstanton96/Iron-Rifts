@@ -38,11 +38,14 @@
 #include <ctime>
 #include <cstdlib>
 #include "time.h"
+#include "globals.h"
 
 // The number of clock ticks per second
 #define CLOCKS_PER_SEC  ((clock_t)1000)
 std::clock_t start;
 double dt;
+
+double deltaTime = 0;
 
 
 int main(int argc, char *argv[])
@@ -76,7 +79,7 @@ int main(int argc, char *argv[])
 
 	//First Object - Acting as player (camera component / movement component)
 	GameObject *Player = new GameObject("player");
-	Player->setPosition(glm::vec3(5.0f, 0.0f, 60.0f));
+	Player->setPosition(glm::vec3(5.0f, 0.0f, 90.0f));
 	Player->setScaling(glm::vec3(1.0f, 1.0f, 1.0f));
 	Player->setRotationAxis(glm::vec3(0, -1, 0));
 	Player->setRotationDegrees(0);
@@ -482,7 +485,7 @@ int main(int argc, char *argv[])
 	
 	*/
 
-
+	
 
 
 	bool running = true;
@@ -517,6 +520,10 @@ int main(int argc, char *argv[])
  
 		//Stores the time past the frame has taken to complete
 		dt = (std::clock() - start) / (double)CLOCKS_PER_SEC;
+
+		double deltaTime = dt;
+
+
 	
 	} while (running);
 

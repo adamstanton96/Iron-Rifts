@@ -7,6 +7,7 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/quaternion.hpp>
 #include <glm/gtc/type_ptr.hpp>
+#include <glm/gtc/matrix_transform.hpp>
 
 #include <string>
 #include <vector>
@@ -18,6 +19,7 @@ using namespace std;
 
 #include "node.h"
 #include "animNode.h"
+#include "animation.h"
 
 //#include frametime
 class skeleton;
@@ -29,6 +31,13 @@ public:
 
 	 bone(int in_mesh, unsigned int in_id, std::string in_name, aiMatrix4x4 in_o_mat);
 	 bone(int in_mesh, unsigned int in_id, std::string in_name, glm::mat4 in_o_mat);
+
+	 unsigned int FindPosition(float time);
+	 glm::vec3 CalcInterpolatedPosition(float time);
+	 unsigned int FindRotation(float time);
+	 glm::quat CalcInterpolatedRotation(float time);
+
+	 void UpdateKeyframeTransform(float time);
 
 	 glm::mat4 GetParentTransforms();
 
@@ -46,9 +55,13 @@ public:
 	glm::mat4 offset_matrix;
 
 	skeleton* parentSkeleton;
+
+	//Keyframe Data
+	glm::vec3 pos;
+	glm::quat rot;
+	glm::vec3 scale;
+	glm::vec3 p1;
+	glm::vec3 p2;
 	
 private:
-
-
-
 };

@@ -98,13 +98,24 @@ namespace AssimpLoader
 			animnode->numScalingKeys = a_animNode->mNumScalingKeys;
 
 			for (int i = 0; i < a_animNode->mNumPositionKeys; i++)
-			animnode->positionKeys.push_back(AItoGLMVec3(a_animNode->mPositionKeys->mValue));
-
+			{
+				animnode->positionKeysValues.push_back(AItoGLMVec3(a_animNode->mPositionKeys->mValue));
+				animnode->positionKeysTimes.push_back(a_animNode->mPositionKeys->mTime);
+			}
+			
+			
 			for (int i = 0; i < a_animNode->mNumRotationKeys; i++)
-				animnode->positionKeys.push_back(AIQUATtoGLMVec4(a_animNode->mRotationKeys->mValue));
+			{
+				animnode->rotationKeysValues.push_back(AIQUATtoGLMVec4(a_animNode->mRotationKeys->mValue));
+				animnode->rotationKeysTimes.push_back(a_animNode->mRotationKeys->mTime);
+			}
+			
 			
 			for (int i = 0; i < a_animNode->mNumScalingKeys; i++)
-				animnode->positionKeys.push_back(AItoGLMVec3(a_animNode->mScalingKeys->mValue));
+			{
+				animnode->scalingKeysValues.push_back(AItoGLMVec3(a_animNode->mScalingKeys->mValue));
+			}
+				
 
 
 

@@ -139,13 +139,11 @@ char * texAnimFrag =
 	"	vec4 weightsColor = vec4(weight.xyz,1.0);																			\n"
 	"																							\n"
 	"	// Fragment colour																		\n"
-	"	if(texture(textureUnit0, ex_TexCoord).a > 0.1)											\n"
-	"	{																						\n"
+		//this lighting values below are somehow stretching the model, wut
 	"	//out_Color= (diffuseI + specularI +ambientI)*texture(textureUnit0, ex_TexCoord);			\n"
-	"   out_Color= 	weightsColor;	\n"
-	"	}																						\n"
-	"	else																					\n"
-	"	discard;																				\n"
+	" //  out_Color= 	weightsColor;	\n"
+	"   out_Color= 	texture(textureUnit0, ex_TexCoord);	\n"
+
 	"}																							\n"
 };
 

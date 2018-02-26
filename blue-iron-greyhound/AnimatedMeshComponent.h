@@ -16,38 +16,17 @@ class AnimatedMeshComponent : public MeshComponent
 {
 public:
 
-	AnimatedMeshComponent(string Name) 
-	{
-		isAnimated = true;
-	}
+	AnimatedMeshComponent(string Name);
+	AnimatedMeshComponent();
 
-	AnimatedMeshComponent() 
-	{
-		
-	}
+	void update();
 
-	void update()
-	{
-		MeshComponent::update();
+	void loadObject(const char * filename);
 
-		sceneLoaderSkeleton->update();
-		//cout << "bone update" << endl;
-	}
-
-
-	
-	void loadObject(const char * filename)
-	{
-		vector<glm::vec3> minmax;
-
-		AssimpLoader::loadObjectDataAnimations(filename, meshIDs, indexCounts, minmax, nodes, animNodes, bones);
-
-		setMinMax(minmax);
-
-		sceneLoaderSkeleton = new skeleton(bones, globalInverseTransform);
-	}
-
-
+	void AddAnimation(animation& in_anim);
+	animation* FindAnimation(std::string anim_to_find);
+	void PlayAnimation(animation& anim, bool loop = false, bool reset_to_start = false);
+	void StopAnimating();
 
 
 	
@@ -62,6 +41,8 @@ private:
 	std::vector<bone*> bones;
 
 	glm::mat4 globalInverseTransform;
+
+	std::vector<animation> animations;
 
 
 };

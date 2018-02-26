@@ -126,6 +126,7 @@
   <ItemGroup>
     <ClInclude Include="AABB.h" />
     <ClInclude Include="AnimatedMeshComponent.h" />
+    <ClInclude Include="animation.h" />
     <ClInclude Include="animNode.h" />
     <ClInclude Include="AssimpLoader.h" />
     <ClInclude Include="bone.h" />
@@ -136,6 +137,7 @@
     <ClInclude Include="CollisionSystem.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="GameObject.h" />
+    <ClInclude Include="globals.h" />
     <ClInclude Include="InputSystem.h" />
     <ClInclude Include="IrrKlangAudioSystem.h" />
     <ClInclude Include="MovementComponent.h" />
@@ -156,6 +158,7 @@
     <ClInclude Include="TestComponent.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AnimatedMeshComponent.cpp" />
     <ClCompile Include="AssimpLoader.cpp" />
     <ClCompile Include="bone.cpp" />
     <ClCompile Include="AudioTestComponent.cpp" />
@@ -174,6 +177,7 @@
     <ClCompile Include="RigidBodyComponent.cpp" />
     <ClCompile Include="SDLGLTextureLoader.cpp" />
     <ClCompile Include="SDLInputSystem.cpp" />
+    <ClCompile Include="skeleton.cpp" />
     <ClCompile Include="TestComponent.cpp" />
   </ItemGroup>
   <ItemGroup>

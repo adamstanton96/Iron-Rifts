@@ -54,6 +54,12 @@
     <ClCompile Include="Component.cpp">
       <Filter>Upper Level Classes</Filter>
     </ClCompile>
+    <ClCompile Include="skeleton.cpp">
+      <Filter>Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimatedMeshComponent.cpp">
+      <Filter>Animation</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CameraComponent.h" />
@@ -144,6 +150,10 @@
     <ClInclude Include="skeleton.h">
       <Filter>Animation</Filter>
     </ClInclude>
+    <ClInclude Include="animation.h">
+      <Filter>Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="globals.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="textured.frag">
