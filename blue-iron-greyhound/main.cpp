@@ -25,6 +25,7 @@
 #include "CollisionSystem.h"
 
 #include "AudioTestComponent.h"
+#include "MechanicsComponent.h"
 //temp
 ///
 #include "OBB.h"
@@ -109,6 +110,15 @@ int main(int argc, char *argv[])
 	Player->addComponent(audioTester);
 	Player->addComponent(cameraComponent);
 	Player->addComponent(moveComponent);
+
+	MechanicsComponent *mechanics = new MechanicsComponent("playerMechanics");
+	mechanics->init();
+	mechanics->setAudio(audioSystem);
+	mechanics->setInput(inputSystem);
+
+	Player->addComponent(mechanics);
+
+
 
 	objectList.push_back(Player);
 

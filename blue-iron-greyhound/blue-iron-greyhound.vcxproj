@@ -135,6 +135,7 @@
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="InputSystem.h" />
     <ClInclude Include="IrrKlangAudioSystem.h" />
+    <ClInclude Include="MechanicsComponent.h" />
     <ClInclude Include="MovementComponent.h" />
     <ClInclude Include="OBB.h" />
     <ClInclude Include="RigidBodyComponent.h" />
@@ -160,6 +161,7 @@
     <ClCompile Include="InteractiveTestComponent.cpp" />
     <ClCompile Include="IrrKlangAudioSystem.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MechanicsComponent.cpp" />
     <ClCompile Include="MeshComponent.cpp" />
     <ClCompile Include="MovementComponent.cpp" />
     <ClCompile Include="OBB.cpp" />
