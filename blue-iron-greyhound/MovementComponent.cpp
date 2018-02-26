@@ -56,8 +56,8 @@ void MovementComponent::moveForward() { moveForward(0.5f); }
 void MovementComponent::moveBackwards() { moveBackwards(0.5f); }
 void MovementComponent::moveRight() { moveRight(0.5f); }
 void MovementComponent::moveLeft() { moveLeft(0.5f); }
-void MovementComponent::moveUp() {}
-void MovementComponent::moveDown(){}
+void MovementComponent::moveUp() { moveUp(0.5f); }
+void MovementComponent::moveDown(){ moveDown(0.5f); }
 
 void MovementComponent::moveForward(float distance)
 {

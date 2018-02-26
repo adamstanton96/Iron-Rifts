@@ -63,5 +63,4 @@ genericComponent *GameObject::getComponent()
 	}
 	//If no component found by the end of the loop, will return a nullptr.
 	return component;
-
 }
