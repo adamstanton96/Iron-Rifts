@@ -44,7 +44,7 @@ glm::mat4 bone::GetParentTransforms()
 		b = b->parent_bone;    //We set b to its own parent so the loop can continue.
 	}
 
-	glm::mat4 concatenated_transforms;
+	glm::mat4 concatenated_transforms(1);
 
 	for (int i = mats.size() - 1; i >= 0; i--)
 		concatenated_transforms *= mats.at(i);
@@ -54,13 +54,14 @@ glm::mat4 bone::GetParentTransforms()
 }
 
 
+
 unsigned int bone::FindPosition(float time)
 {
-	for (unsigned int i = 0; i < animNode->numPositionKeys - 1; i++)
+	for (unsigned int i = 0; i < animNode->numPositionKeys -1 ; i++)		
 	{
 		//If the time passed in is less than the time of the next
 		//keyframe, then this is the keyframe we want!
-		if (time < (float)animNode->positionKeysTimes[i + 1])
+		if (time < (float)animNode->positionKeysTimes[i+1])				
 			return i;
 	}
 	return 0;    //If we don't find anything, just return 0.
@@ -78,6 +79,7 @@ unsigned int bone::FindRotation(float time)
 	return 0;
 }
 
+float Factor = 0.00000001;
 
 glm::vec3 bone::CalcInterpolatedPosition(float time)
 {
@@ -100,6 +102,7 @@ glm::vec3 bone::CalcInterpolatedPosition(float time)
 	//divided by the amount of time between the two keyframes (the DeltaTime)
 	//to get the percentage, or how far along between the two keyframes we are.
 	float Factor = (time - (float)animNode->positionKeysTimes[PositionIndex]) / DeltaTime;
+	//Factor = 0.5;
 
 	//The start and end positions (the position values of each of the keyframes)
 	glm::vec3 p1 = animNode->positionKeysValues[PositionIndex];
@@ -107,7 +110,7 @@ glm::vec3 bone::CalcInterpolatedPosition(float time)
 
 
 	//and here we linearly interpolate between the two keyframes.
-	glm::vec3 val = glm::mix(p1, p2, Factor);
+	glm::vec3 val = glm::mix(p1, p2, Factor);//, Factor
 
 	return val;
 }
@@ -127,6 +130,7 @@ glm::quat bone::CalcInterpolatedRotation(float time)
 
 	float DeltaTime = animNode->rotationKeysTimes[NextRotationIndex] - animNode->rotationKeysTimes[RotationIndex];
 	float Factor = (time - (float)animNode->rotationKeysTimes[RotationIndex]) / DeltaTime;
+	//Factor = 0.5;
 
 	glm::quat r1 = animNode->rotationKeysValues[RotationIndex];
 	glm::quat r2 = animNode->rotationKeysValues[NextRotationIndex];
@@ -156,5 +160,10 @@ void bone::UpdateKeyframeTransform(float time)
 	mat *= glm::mat4_cast(rot);
 	mat = glm::scale(mat,scale);
 
+	/*glm::mat4 mat;
+	mat *= glm::translate(glm::mat4(1), pos);
+	mat *= glm::mat4_cast(rot);
+	mat *= glm::scale(glm::mat4(1), scale);
+*/
 	node->transformation = mat;
 }

@@ -115,10 +115,10 @@ int main(int argc, char *argv[])
 	//spider robot for animation tests
 	GameObject *barrier2 = new GameObject("old building");
 	barrier2->setScaling(glm::vec3(4, 4, 4));
-	barrier2->setPosition(glm::vec3(10.0f, 0.0f, 90.0f));
-	barrier2->setScaling(glm::vec3(4, 4, 4));
+	barrier2->setPosition(glm::vec3(0.0f, 0.0f, 0.0f));
+	barrier2->setScaling(glm::vec3(2, 2, 2));
 	barrier2->setRotationAxis(glm::vec3(1, 0, 0));
-	barrier2->setRotationDegrees(-90);
+	barrier2->setRotationDegrees(0);
 
 
 	RigidBodyComponent* rigidBody3 = new RigidBodyComponent("Rigid Body");
@@ -130,7 +130,7 @@ int main(int argc, char *argv[])
 	AnimatedMeshComponent* barriermesh2 = new AnimatedMeshComponent("test");
 	barrier2->addComponent(barriermesh2);
 	barriermesh2->setRenderer(renderer);
-	barriermesh2->loadObject("../../assets/RobotAnimated.dae");
+	barriermesh2->loadObject("../../assets/A_Test_Guy.dae");
 	barriermesh2->loadTexture("../../assets/RobotAnimated.bmp");
 
 	objectList.push_back(barrier2);
@@ -235,7 +235,7 @@ int main(int argc, char *argv[])
 	wallmesh->loadObject("../../assets/cube_with_2UVs.DAE");
 	wallmesh->loadTexture("../../assets/tex/scifi.bmp");
 
-	objectList.push_back(walls);
+	//objectList.push_back(walls);
 	
 	//Wall 2
 	GameObject *walls2 = new GameObject("Collada");
@@ -252,7 +252,7 @@ int main(int argc, char *argv[])
 	wallmesh2->loadObject("../../assets/cube_with_2UVs.DAE");
 	wallmesh2->loadTexture("../../assets/tex/scifi.bmp");
 
-	objectList.push_back(walls2);
+	//objectList.push_back(walls2);
 
 	//Wall 2
 	GameObject *walls3 = new GameObject("Collada");
@@ -269,7 +269,7 @@ int main(int argc, char *argv[])
 	wallmesh3->loadObject("../../assets/cube_with_2UVs.DAE");
 	wallmesh3->loadTexture("../../assets/tex/scifi.bmp");
 
-	objectList.push_back(walls3);
+	//objectList.push_back(walls3);
 	
 	// Wall 4
 	GameObject *walls4 = new GameObject("Collada");
@@ -286,7 +286,7 @@ int main(int argc, char *argv[])
 	wallmesh4->loadObject("../../assets/cube_with_2UVs.DAE");
 	wallmesh4->loadTexture("../../assets/tex/scifi.bmp");
 
-	objectList.push_back(walls4);
+	//objectList.push_back(walls4);
 	
 	//Wall 5
 	GameObject *walls5 = new GameObject("Collada");
@@ -299,7 +299,7 @@ int main(int argc, char *argv[])
 	wallmesh5->loadObject("../../assets/cube_with_2UVs.DAE");
 	wallmesh5->loadTexture("../../assets/tex/scifi.bmp");
 
-	objectList.push_back(walls5);
+	//objectList.push_back(walls5);
 
 	//Wall 6
 	GameObject *walls6 = new GameObject("Collada");
@@ -313,7 +313,7 @@ int main(int argc, char *argv[])
 	wallmesh6->loadObject("../../assets/cube_with_2UVs.DAE");
 	wallmesh6->loadTexture("../../assets/tex/scifi.bmp");
 	
-	objectList.push_back(walls6);
+	//objectList.push_back(walls6);
 	
 
 	//Research Building Object
@@ -352,7 +352,7 @@ int main(int argc, char *argv[])
 	buildingMesh->loadTexture("../../assets/tex/building1.bmp");
 	buildingMesh->loadTexture("../../assets/tex/tubes.bmp");
 
-	objectList.push_back(buildingObject);
+	//objectList.push_back(buildingObject);
 
 
 	//watchtower
@@ -372,7 +372,7 @@ int main(int argc, char *argv[])
 	watchTowerMesh->loadTexture("../../assets/plainbuilding/iron.bmp");
 	watchTowerMesh->loadObject("../../assets/watchtower.dae");
 	
-	objectList.push_back(watchTower);
+	//objectList.push_back(watchTower);
 
 	//TRASH PILE
 	GameObject *trashPile = new GameObject("old building");
@@ -396,42 +396,8 @@ int main(int argc, char *argv[])
 	trashmesh->loadTexture("../../assets/Trash/scratchedmetal.bmp");
 	trashmesh->loadTexture("../../assets/Trash/rustmetal.bmp");
 	
-	objectList.push_back(trashPile);
+	//objectList.push_back(trashPile);
 
-	////road barrier 1
-	//GameObject *barrier = new GameObject("old building");
-	//barrier->setTranslation(glm::vec3(-20.0f, -5.0f, 90.0f));
-	//barrier->setScaling(glm::vec3(0.5f, 0.5f, 0.5f));
-	//barrier->setRenderRotateVec(glm::vec3(NULL, -NULL, NULL));
-	//RigidBodyComponent* rigidBody2 = new RigidBodyComponent("Rigid Body");
-	//barrier->addComponent(rigidBody2);
-	//rigidBody2->setCollisionSystem(collisionsystem);
-	//rigidBody2->setBodyType("STATIC");
-	//MeshComponent* barriermesh = new MeshComponent("test");
-	//barrier->addComponent(barriermesh);
-	//barriermesh->setRenderer(renderer);
-	//barriermesh->loadObject("../../assets/BARRIERE.obj");
-	//barriermesh->loadTexture("../../assets/roadbarrier/BARRIERE.bmp");
-	//
-	//objectList.push_back(barrier);
-
-	//road barrier 2
-	/*GameObject *barrier2 = new GameObject("old building");
-	barrier2->setTranslation(glm::vec3(0.0f, -5.0f, 90.0f));
-	barrier2->setScaling(glm::vec3(0.5f, 0.5f, 0.5f));
-	barrier2->setRenderRotateVec(glm::vec3(NULL, NULL, NULL));
-	RigidBodyComponent* rigidBody3 = new RigidBodyComponent("Rigid Body");
-	barrier2->addComponent(rigidBody3);
-	rigidBody3->setCollisionSystem(collisionsystem);
-	rigidBody3->setBodyType("STATIC");
-	MeshComponent* barriermesh2 = new MeshComponent("test");
-	barrier2->addComponent(barriermesh2);
-	barriermesh2->setRenderer(renderer);
-	barriermesh2->loadObject("../../assets/BARRIERE.obj");
-	barriermesh2->loadTexture("../../assets/roadbarrier/BARRIERE.bmp");
-
-	objectList.push_back(barrier2);
-*/
 
 	//planet in the sky
 
@@ -468,23 +434,6 @@ int main(int argc, char *argv[])
 
 
 
-
-	//Audio Test:
-	/*
-
-	IrrKlangAudioSystem * audioSystem = new IrrKlangAudioSystem("audioSystem");
-	audioSystem->init();
-
-	audioSystem->playAudio("../../assets/audio/bell.wav", true, glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f));
-	
-	//audioSystem->playAudio("../../assets/audio/bell.wav");
-
-	//audioSystem->playAudio("../../assets/audio/Surreptitious.ogg", true);
-
-	//...Audio Test^^^
-	
-	*/
-
 	
 
 
@@ -493,35 +442,43 @@ int main(int argc, char *argv[])
 	SDL_Event sdlEvent;
 	do
 	{
-		//start timer 
-		start = std::clock();
 
-		while (SDL_PollEvent(&sdlEvent)) //This poll event should not be here since it couples the main to SDL. 
-		{
-			if (sdlEvent.type == SDL_QUIT)
+
+			
+			//start timer 
+			start = std::clock();
+
+
+
+			while (SDL_PollEvent(&sdlEvent)) //This poll event should not be here since it couples the main to SDL. 
 			{
-				running = false;
+				if (sdlEvent.type == SDL_QUIT)
+				{
+					running = false;
+				}
 			}
-		}
 
 
-		
-		renderer->clearScreen();
 
-		//Update all objects
-		for (unsigned int i = 0; i < objectList.size(); i++)
-		{
-			objectList[i]->update();
-		}
+			renderer->clearScreen();
 
-		renderer->swapBuffers();
+			//Update all objects
+			for (unsigned int i = 0; i < objectList.size(); i++)
+			{
+				objectList[i]->update();
+			}
+
+			renderer->swapBuffers();
+
+			
+
+			//Stores the time past the frame has taken to complete
+			dt = (std::clock() - start) / (double)CLOCKS_PER_SEC;
+
+			//Give delta time to the test animation mesh (it is needed inside its skeleton objet)
+			barriermesh2->giveDeltaTime(dt);
 
 
- 
-		//Stores the time past the frame has taken to complete
-		dt = (std::clock() - start) / (double)CLOCKS_PER_SEC;
-
-		double deltaTime = dt;
 
 
 	

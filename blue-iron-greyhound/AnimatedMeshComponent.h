@@ -28,6 +28,17 @@ public:
 	void PlayAnimation(animation& anim, bool loop = false, bool reset_to_start = false);
 	void StopAnimating();
 
+	//Temporary hopefully
+	void giveDeltaTime(double dt)
+	{
+		sceneLoaderSkeleton->giveDeltaTime(dt);
+	}
+
+
+	std::vector<glm::mat4> getBoneMats()
+	{
+		return sceneLoaderSkeleton->getBoneMats();
+	}
 
 	
 private:

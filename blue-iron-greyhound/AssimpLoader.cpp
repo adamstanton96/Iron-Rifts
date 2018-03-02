@@ -17,10 +17,17 @@ namespace AssimpLoader
 	glm::vec4 AIQUATtoGLMVec4(aiQuaternion aiQuat)
 	{
 		glm::vec4 newVec;
+		
 		newVec.x = aiQuat.x;
 		newVec.y = aiQuat.y;
 		newVec.z = aiQuat.z;
 		newVec.w = aiQuat.w;
+
+		/*newVec.x = aiQuat.w;
+		newVec.y = aiQuat.x;
+		newVec.z = aiQuat.y;
+		newVec.w = aiQuat.z;*/
+		
 
 		return newVec;
 	}
@@ -40,62 +47,53 @@ namespace AssimpLoader
 
 
 
-	void recursiveNodeProcess(aiNode* a_node, vector<node*>& nodes)
+	void recursiveNodeProcess(aiNode* ai_node, vector<node*>& nodes)
 	{
 		node* rootNode = new node();
 
 		//init values off of aiNode param
-		std::string parentName;
-		std::vector<std::string> childrenNames;
+		//std::string parentName;
+		//std::vector<std::string> childrenNames;
 
-		rootNode->name = a_node->mName.data;
-		rootNode->transformation = AiToGLMMat4(a_node->mTransformation);
+		rootNode->name = ai_node->mName.data;
+		rootNode->transformation = AiToGLMMat4(ai_node->mTransformation);
+		rootNode->numOfChildren = ai_node->mNumChildren;
+		rootNode->numOfMeshes = ai_node->mNumMeshes;
 
-		if(a_node->mParent != NULL)
-		rootNode->parentName = a_node->mParent->mName.data;
+		if (ai_node->mParent != NULL)
+			rootNode->parentName = ai_node->mParent->mName.data;
 
-		rootNode->numOfChildren = a_node->mNumChildren;
+		for (int i = 0; i < rootNode->numOfMeshes; i++)
+		rootNode->MeshIDs = (int)ai_node->mMeshes;
 
-		for(int i = 0; i <  a_node->mNumChildren; i++)
-		rootNode->childrenNames.push_back(a_node->mChildren[i]->mName.data);
-
-		rootNode->numOfMeshes = a_node->mNumMeshes;
-		rootNode->numOfMeshes = (int)a_node->mMeshes;
+		for (int i = 0; i < ai_node->mNumChildren; i++)
+			rootNode->childrenNames.push_back(ai_node->mChildren[i]->mName.data);
 
 
 		nodes.push_back(rootNode);
 
-		for (int i = 0; i < a_node->mNumChildren; i++)
-			recursiveNodeProcess(a_node->mChildren[i], nodes);
+		for (int i = 0; i < ai_node->mNumChildren; i++)
+			recursiveNodeProcess(ai_node->mChildren[i], nodes);
 	}
 
 
-	void AnimNodeProcess(const aiScene* m_scene, vector<animNode*>& ai_nodes_anim)
+	void AnimNodeProcess(const aiScene* m_scene, vector<animNode*>& animNodes)
 	{
 		if (m_scene->mNumAnimations == 0)
 			return;
 
-	
+		aiNodeAnim* a_animNode;
 
 		for (int i = 0; i < m_scene->mAnimations[0]->mNumChannels; i++)
 		{
-			aiNodeAnim* a_animNode = m_scene->mAnimations[0]->mChannels[i];
+			a_animNode = m_scene->mAnimations[0]->mChannels[i];
 			animNode* animnode = new animNode();
-
-		/*	
-			int numPositionKeys;
-			std::vector<glm::vec3> positionKeys;
-
-			int numRotationKeys;
-			std::vector<glm::vec3> rotationKeys;
-
-			int numScalingKeys;
-			std::vector<glm::vec3> scalingKeys;*/
 
 			animnode->nodeName = a_animNode->mNodeName.data;
 			animnode->numPositionKeys = a_animNode->mNumPositionKeys;
 			animnode->numRotationKeys = a_animNode->mNumRotationKeys;
 			animnode->numScalingKeys = a_animNode->mNumScalingKeys;
+			double posTime = a_animNode->mPositionKeys->mTime;
 
 			for (int i = 0; i < a_animNode->mNumPositionKeys; i++)
 			{
@@ -120,7 +118,7 @@ namespace AssimpLoader
 
 
 
-			ai_nodes_anim.push_back(animnode);
+			animNodes.push_back(animnode);
 		}
 			
 	}
@@ -282,6 +280,8 @@ namespace AssimpLoader
 			aiProcess_SortByPType |
 			aiProcess_GenSmoothNormals |
 			aiProcess_GenNormals
+			| aiProcess_FindInvalidData
+			
 		);
 
 
@@ -311,15 +311,41 @@ namespace AssimpLoader
 
 		int texCount = 0;
 
+		aiNode* m_rootNode = scene->mRootNode;
 
 		//pull out the scenes aiNodes
-		aiNode* m_rootNode = scene->mRootNode;
-		//recursiveNodeProcess(m_rootNode, ai_nodes);
 		recursiveNodeProcess(m_rootNode, nodes);
 
-		//Pull out the scenes mAnimation
-		//AnimNodeProcess(scene, ai_nodes_anim);
+		//Pull out the scenes aiAnimNodes
 		AnimNodeProcess(scene, animNodes);
+
+		//nodes need to find their parents
+		for (int i = 0; i < nodes.size(); i++)
+		{
+			if (nodes[i]->parentName.size() != 0)
+			{
+				nodes[i]->parent = FindAiNode(nodes[i]->parentName, nodes);
+			}
+			else
+			{
+				std::cout << "Parent aiNode for " << nodes[i]->name << " does not exist (is size 0). " << std::endl;
+			}
+		}
+
+		//nodes need to find their parents
+		for (int index = 0; index < nodes.size(); index++)
+		{
+			if (nodes[index]->childrenNames.size() != 0)
+			{
+				for (int k = 0; k < nodes[index]->numOfChildren; k++)
+				{
+					nodes[index]->children.push_back(FindAiNode(nodes[index]->childrenNames[k], nodes));
+
+					if (nodes[index]->children[k] == NULL)
+						std::cout << "Child aiNode for " << nodes[index]->name << " does not exist. " << std::endl;
+				}
+			}
+		}
 
 
 		for (unsigned int j = 0; j < scene->mNumMeshes; j++)
@@ -337,6 +363,8 @@ namespace AssimpLoader
 			std::vector<float> boneWeights(numOfBones);
 
 		
+
+		
 		
 		for (int i = 0; i < mesh->mNumBones; i++)
 		{
@@ -345,20 +373,20 @@ namespace AssimpLoader
 				//pull data to create a new boneobject with (meshID, boneID, name and matrix)
 				std::string b_name = scene->mMeshes[j]->mBones[i]->mName.data;
 				glm::mat4 b_mat = glm::transpose(AiToGLMMat4(scene->mMeshes[j]->mBones[i]->mOffsetMatrix));
+				
 
 				bone* boneObject = new bone(j, i, b_name, b_mat);
-				bones.push_back(boneObject);
+				
 
-			
 				//Find the corresponding node and animNode to the current bone and store them.
 				//This searches through aiNodes and aiNodeAnims with the bone name.
 				boneObject->node = FindAiNode(b_name, nodes);
 				boneObject->animNode = FindAiNodeAnim(b_name, animNodes);
 
-
 				if (boneObject->animNode == nullptr)
 					std::cout << "No Animations were found for " + b_name << std::endl;
 	
+				bones.push_back(boneObject);
 
 				// Pull per vertex bone related data (vertex ID's and Weights) which are used to make the mesh
 				for (int j = 0; j < currBone->mNumWeights; j++)
@@ -374,6 +402,24 @@ namespace AssimpLoader
 
 							//i == index of bone
 							boneIDs.at(vertexStart + k) = i;
+
+							
+							//NOTE THAT data IS JUST AN ARRAY OF TYPE Vertex, WHERE I STORE ALL OF THE VERTEX INFO.
+							//EACH Vertex CLASS HAS SPACE FOR A POSITION, A UV, A NORMAL, AND 4 INDICES, AND 4 WEIGHTS.
+							//EACH Mesh IS THEN CREATED WITH THIS THIS ARRAY OF Vertex (THIS ARRAY BEING data).
+
+							///data.at(weight.mVertexId).id[k] = i;
+							//SETTING THE ID
+							//AT k, OF
+							//THE VERTEX AT THIS WEIGHT'S ID,
+							//TO THE CURRENT BONE ID.
+
+							///data.at(weight.mVertexId).weight[k] = weight.mWeight;
+							//SETTING THE WEIGHT
+							//AT k, OF
+							//THE VERTEX AT THIS WEIGHT'S ID,
+							//TO THIS WEIGHT'S WEIGHT.
+							break;
 						}
 					}
 				}
@@ -455,20 +501,14 @@ namespace AssimpLoader
 		maxmin.push_back(max);
 
 
-		//nodes need to find their parents
-		for (int i = 0; i < nodes.size(); i++)
-		{
-			if (nodes[i]->parentName.size() != 0)
-			{
-				nodes[i]->parent = FindAiNode(nodes[i]->parentName, nodes);
-			}
-		}
+		
 
 
 		//filling in bone data
 		for (int i = 0; i < bones.size(); i++)
 		{
 			std::string b_name = bones.at(i)->name;
+			//std::string parent_name = FindAiNode(b_name, nodes)->parent->name;
 			std::string parent_name = FindAiNode(b_name, nodes)->parent->name;
 
 			bone* p_bone = FindBone(parent_name, bones);
@@ -482,20 +522,6 @@ namespace AssimpLoader
 		
 	}
 
-	
-
-	/*void recursiveProcess(aiNode* m_rootNode, const aiScene* scene)
-	{
-		for (int i = 0; i < m_rootNode->mNumMeshes; i++)
-		{
-			aiMesh* mesh = scene->mMeshes[i];
-
-		}
-
-		for (int i = 0; i < m_rootNode->mNumChildren; i++)
-			recursiveProcess(m_rootNode->mChildren[i], scene);
-	}*/
-	
 
 
 	 aiMatrix4x4 GLMMat4ToAi(glm::mat4 mat)
@@ -590,75 +616,3 @@ namespace AssimpLoader
 }//Namspace AssimpLoader
 
 
-
-//
-//
-//void loadBoneData(const std::string& file)
-//{
-//	// Create an instance of the Importer class for loading the object data
-//	Assimp::Importer importer;
-//
-//
-//	//loads our file into a scene object so its all accessible.
-//	const aiScene* scene = importer.ReadFile(file,
-//		aiProcess_CalcTangentSpace |
-//		aiProcess_Triangulate |
-//		aiProcess_FlipUVs |
-//		aiProcess_SortByPType |
-//		aiProcess_GenSmoothNormals |
-//		aiProcess_GenNormals
-//	);
-//
-//
-//	for (int i = 0; i < scene->mNumAnimations; i++)
-//	{
-//		std::cout << scene->mAnimations[i]->mName.data << std::endl;
-//		std::cout << scene->mAnimations[i]->mDuration << std::endl;
-//		std::cout << scene->mAnimations[i]->mNumChannels << std::endl;
-//
-//		for (int j = 0; j < scene->mAnimations[i]->mNumChannels; j++)
-//		{
-//			std::cout << scene->mAnimations[i]->mChannels[j]->mNodeName.data << std::endl;
-//			std::cout << scene->mAnimations[i]->mChannels[j]->mPositionKeys->mTime << std::endl;
-//			std::cout << scene->mAnimations[i]->mChannels[j]->mPositionKeys->mValue.x << std::endl;
-//			std::cout << scene->mAnimations[i]->mChannels[j]->mPositionKeys->mValue.y << std::endl;
-//			std::cout << scene->mAnimations[i]->mChannels[j]->mPositionKeys->mValue.z << std::endl;
-//		}
-//	}
-//
-//}
-//
-//void loadAnimationData(aiScene* scene)
-//{
-//
-//	for (unsigned int k = 0; k < scene->mNumMeshes; k++)
-//	{
-//		aiMesh* pMesh = scene->mMeshes[k];
-//
-//
-//		/*for (int i = 0; i < pMesh->mNumBones; i++) {
-//		int BoneIndex = 0;
-//		string BoneName(pMesh->mBones[i]->mName.data);
-//
-//		if (m_BoneMapping.find(BoneName) == m_BoneMapping.end()) {
-//		BoneIndex = m_NumBones;
-//		m_NumBones++;
-//		BoneInfo bi;
-//		m_BoneInfo.push_back(bi);
-//		}
-//		else {
-//		BoneIndex = m_BoneMapping[BoneName];
-//		}
-//
-//		m_BoneMapping[BoneName] = BoneIndex;
-//		m_BoneInfo[BoneIndex].BoneOffset = pMesh->mBones[i]->mOffsetMatrix;
-//
-//		for (int j = 0; j < pMesh->mBones[i]->mNumWeights; j++) {
-//		int VertexID = m_Entries[MeshIndex].BaseVertex + pMesh->mBones[i]->mWeights[j].mVertexId;
-//		float Weight = pMesh->mBones[i]->mWeights[j].mWeight;
-//		Bones[VertexID].AddBoneData(BoneIndex, Weight);
-//		}
-//		}*/
-//	}
-//
-//}

@@ -2,7 +2,7 @@
 
 #include "bone.h"
 #include <vector>
-#include "globals.h"
+
 
 #include <GL/glew.h>
 
@@ -21,6 +21,7 @@ public:
 
 
 	bone* FindBone(std::string name);
+	std::vector<glm::mat4> getBoneMats();
 
 
 	void PlayAnimation(animation& anim, bool loop, bool reset_to_start);
@@ -28,9 +29,16 @@ public:
 	void SetIdleAnimation(animation* in_anim);
 
 
+
+
 	std::vector<bone*> bones;
 	glm::mat4 globalInverseTransform;
 	std::vector<glm::mat4> boneMats;
+
+
+
+
+	void giveDeltaTime(double time);
 
 	float time;
 
@@ -42,6 +50,9 @@ public:
 
 	bool anim_play;
 	bool anim_loop;
+
+	double deltaTime;
+
 
 private:
 

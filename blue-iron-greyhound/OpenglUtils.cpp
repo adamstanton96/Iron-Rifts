@@ -15,8 +15,8 @@ char * texAnimVert =
 	"//in  vec3 in_Colour; // colour not used with lighting				\n"
 	"in  vec3 in_Normal;												\n"
 
-	"in  vec4 in_boneIDs; //int												\n"
-	"in  vec4 in_boneWeights; //floats											\n"
+	"in  ivec4 in_boneIDs;													\n"
+	"in  vec4 in_boneWeights; 												\n"
 
 	"const int MAX_BONES = 100;											\n"
 	"uniform mat4 gBones[MAX_BONES];									\n"
@@ -33,6 +33,8 @@ char * texAnimVert =
 	"																	\n"
 	"in vec2 in_TexCoord;												\n"
 	"out vec2 ex_TexCoord;												\n"
+
+	"out vec4 debugColour;												\n"
 	"																	\n"
 	"	void main(void) {												\n"
 	"																	\n"
@@ -41,7 +43,7 @@ char * texAnimVert =
 	"    ex_D = distance(vertexPosition, lightPosition);				\n"
 	"																	\n"
 	"	ex_V = normalize(-vertexPosition).xyz;							\n"
-	"  weight = in_boneWeights;											\n"
+	"	weight = in_boneWeights;										\n"
 	"	id = in_boneIDs;												\n"
 	"																	\n"
 	"	mat3 normalmatrix = transpose(inverse(mat3(modelview)));		\n"
@@ -50,17 +52,16 @@ char * texAnimVert =
 	"																	\n"
 	"	ex_L = normalize(lightPosition.xyz - vertexPosition.xyz);		\n"
 	"																	\n"
-	"	int index1 =	int(in_boneIDs[0]);								\n"
-	"	int index2 =	int(in_boneIDs[1]);								\n"
-	"	int index3 =	int(in_boneIDs[2]);								\n"
-	"	int index4 =	int(in_boneIDs[3]);								\n"
 	"																	\n"
-	"mat4 BMatrix = gBones[index1] * in_boneWeights[0];					\n"
-	"BMatrix += gBones[index2] * in_boneWeights[1];						\n"
-	"BMatrix += gBones[index3] * in_boneWeights[2];						\n"
-	"BMatrix += gBones[index4] * in_boneWeights[3];						\n"
+	"mat4 BMatrix = gBones[int(in_boneIDs[0])] * in_boneWeights[0];		\n"
+	"BMatrix += gBones[int(in_boneIDs[1])] * in_boneWeights[1];			\n"
+	"BMatrix += gBones[int(in_boneIDs[2])] * in_boneWeights[2];			\n"
+	"BMatrix += gBones[int(in_boneIDs[3])] * in_boneWeights[3];			\n"
 
-	"	gl_Position = projection * vertexPosition * BMatrix;			\n"
+	"	 debugColour = vec4(in_boneWeights);							\n"
+	
+	"	vec4 vertPos =    BMatrix *  vec4(in_Position,1.0)  ;				\n"
+	"	gl_Position = (projection  * modelview) *vertPos  ;				\n"
 	"																	\n"
 	"	ex_TexCoord = in_TexCoord;										\n"
 	"}																	\n"
@@ -83,6 +84,8 @@ char * texAnimFrag =
 	"											\n"
 	"in vec4 weight;												\n"
 	"in vec4 id;												\n"
+
+	"in vec4 debugColour;												\n"
 	"															\n"
 	"uniform float attConst;									\n"
 	"uniform float attLinear;									\n"
@@ -141,8 +144,8 @@ char * texAnimFrag =
 	"	// Fragment colour																		\n"
 		//this lighting values below are somehow stretching the model, wut
 	"	//out_Color= (diffuseI + specularI +ambientI)*texture(textureUnit0, ex_TexCoord);			\n"
-	" //  out_Color= 	weightsColor;	\n"
-	"   out_Color= 	texture(textureUnit0, ex_TexCoord);	\n"
+	"   out_Color= 	debugColour;	\n"
+	"  // out_Color= 	texture(textureUnit0, ex_TexCoord);	\n"
 
 	"}																							\n"
 };
@@ -641,7 +644,7 @@ namespace OpenglUtils
 		if (boneids != nullptr) {
 			glGenBuffers(1, &VBO);
 			glBindBuffer(GL_ARRAY_BUFFER, VBO);
-			glBufferData(GL_ARRAY_BUFFER, (numVerts / 3) * 4 * sizeof(GLuint), boneids, GL_STATIC_DRAW);
+			glBufferData(GL_ARRAY_BUFFER, (numVerts/3) * 4 * sizeof(GLuint), boneids, GL_STATIC_DRAW);
 			glVertexAttribPointer((GLuint)RT3D_BONEIDS, 4, GL_INT, GL_FALSE, 0, 0);						//tutorial has this at true
 			glEnableVertexAttribArray(RT3D_BONEIDS);
 			pMeshBuffers[RT3D_BONEIDS] = VBO;
@@ -651,7 +654,7 @@ namespace OpenglUtils
 		if (boneWeights != nullptr) {
 			glGenBuffers(1, &VBO);
 			glBindBuffer(GL_ARRAY_BUFFER, VBO);
-			glBufferData(GL_ARRAY_BUFFER, (numVerts / 3) * 4 * sizeof(GLfloat), boneWeights, GL_STATIC_DRAW);
+			glBufferData(GL_ARRAY_BUFFER, (numVerts/3) * 4 * sizeof(GLfloat), boneWeights, GL_STATIC_DRAW);
 			glVertexAttribPointer((GLfloat)RT3D_BONEWEIGHTS, 4, GL_FLOAT, GL_FALSE, 0, 0);					//tutorial has this at true
 			glEnableVertexAttribArray(RT3D_BONEWEIGHTS);
 			pMeshBuffers[RT3D_BONEWEIGHTS] = VBO;

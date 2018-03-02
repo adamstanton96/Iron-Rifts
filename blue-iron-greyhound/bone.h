@@ -11,7 +11,7 @@
 
 #include <string>
 #include <vector>
-using namespace std;
+//using namespace std;
 
 
 #include <iostream>    
@@ -27,7 +27,11 @@ class skeleton;
 class bone
 {
 public:
-	 bone() { name = ""; id = -2; }
+	 bone() 
+	 { 
+		 name = "";
+		 id = -2;
+	 }
 
 	 bone(int in_mesh, unsigned int in_id, std::string in_name, aiMatrix4x4 in_o_mat);
 	 bone(int in_mesh, unsigned int in_id, std::string in_name, glm::mat4 in_o_mat);
@@ -42,14 +46,14 @@ public:
 	 glm::mat4 GetParentTransforms();
 
 
-	string name;
+	std::string name;
 	int meshID;
 	int id;
 
 	node* node;
 	animNode* animNode;
-	bone* parent_bone;
 
+	bone* parent_bone;
 	glm::mat4 parent_transforms;
 
 	glm::mat4 offset_matrix;

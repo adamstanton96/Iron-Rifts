@@ -12,9 +12,8 @@ AnimatedMeshComponent::AnimatedMeshComponent()
 }
 
 
-static animation Anim_Test_Idle("Idel_Animation___0_pose_matrix", FramesToTime(glm::vec2(0, 110)), 2);
-//static animation Anim_Test_Walk("Walk", FramesToTime(glm::vec2(1, 45)), 2);
-
+static animation Anim_Test_Idle("Idle", FramesToTime(glm::vec2(51, 110)), 2);
+static animation Anim_Test_Walk("Walk", FramesToTime(glm::vec2(1, 45)), 2);
 
 void AnimatedMeshComponent::update()
 {
@@ -23,14 +22,10 @@ void AnimatedMeshComponent::update()
 	sceneLoaderSkeleton->update();
 
 	sceneLoaderSkeleton->SetIdleAnimation(&Anim_Test_Idle);
-
-	
 		
 	//The true is for loop, and the false is for reset_to_start.
-	PlayAnimation(Anim_Test_Idle, true, true);
+	PlayAnimation(Anim_Test_Walk, true, false);
 	
-	
-
 
 }
 
@@ -44,8 +39,9 @@ void AnimatedMeshComponent::loadObject(const char * filename)
 
 	setMinMax(minmax);
 
-	globalInverseTransform = glm::inverse(nodes[0]->transformation);
 
+
+	globalInverseTransform = glm::inverse(nodes[0]->transformation);
 	sceneLoaderSkeleton = new skeleton(bones, globalInverseTransform);
 }
 
