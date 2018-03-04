@@ -14,7 +14,7 @@ public:
 	std::vector<double> positionKeysTimes;
 
 	int numRotationKeys;
-	std::vector<glm::vec4> rotationKeysValues;
+	std::vector<glm::quat> rotationKeysValues;
 
 	std::vector<double> rotationKeysTimes;
 

@@ -14,20 +14,14 @@ namespace AssimpLoader
 	
 	
 
-	glm::vec4 AIQUATtoGLMVec4(aiQuaternion aiQuat)
+	glm::quat AIquatToGLMquat(aiQuaternion aiQuat)
 	{
-		glm::vec4 newVec;
+		glm::quat newVec;
 		
-		/*newVec.x = aiQuat.x;
+		newVec.x = aiQuat.x;
 		newVec.y = aiQuat.y;
 		newVec.z = aiQuat.z;
-		newVec.w = aiQuat.w;*/
-
-		newVec.x = aiQuat.w;
-		newVec.y = aiQuat.x;
-		newVec.z = aiQuat.y;
-		newVec.w = aiQuat.z;
-		
+		newVec.w = aiQuat.w;
 
 		return newVec;
 	}
@@ -51,9 +45,6 @@ namespace AssimpLoader
 	{
 		node* rootNode = new node();
 
-		//init values off of aiNode param
-		//std::string parentName;
-		//std::vector<std::string> childrenNames;
 
 		rootNode->name = ai_node->mName.data;
 		rootNode->transformation = AiToGLMMat4(ai_node->mTransformation);
@@ -83,52 +74,39 @@ namespace AssimpLoader
 			return;
 
 		aiNodeAnim* a_animNode;
-		
+		animNode* animnode;
 
 		for (int i = 0; i < m_scene->mAnimations[0]->mNumChannels; i++)
 		{
 			a_animNode = m_scene->mAnimations[0]->mChannels[i];
-			animNode* animnode = new animNode();
+			animnode = new animNode();
 
-			a_animNode->mPositionKeys[1];
-			double counter = 0;
 
 			animnode->nodeName = a_animNode->mNodeName.data;
 			animnode->numPositionKeys = a_animNode->mNumPositionKeys;
 			animnode->numRotationKeys = a_animNode->mNumRotationKeys;
 			animnode->numScalingKeys = a_animNode->mNumScalingKeys;
-
-			double posTime = a_animNode->mPositionKeys->mTime;
-			
+		
 
 			for (int i = 0; i < a_animNode->mNumPositionKeys; i++)
 			{
 				animnode->positionKeysValues.push_back(AItoGLMVec3(a_animNode->mPositionKeys[i].mValue));
-				animnode->positionKeysTimes.push_back(a_animNode->mPositionKeys[i].mTime);
-				//animnode->positionKeysTimes.push_back(counter);
-
-				counter += 0.4;
+				animnode->positionKeysTimes.push_back(a_animNode->mPositionKeys[i].mTime);			
 			}
 			
 			
 			for (int i = 0; i < a_animNode->mNumRotationKeys; i++)
 			{
-				animnode->rotationKeysValues.push_back(AIQUATtoGLMVec4(a_animNode->mRotationKeys[i].mValue));
+				animnode->rotationKeysValues.push_back(AIquatToGLMquat(a_animNode->mRotationKeys[i].mValue));
 				animnode->rotationKeysTimes.push_back(a_animNode->mRotationKeys[i].mTime);
-				//animnode->rotationKeysTimes.push_back(counter);
-
-				counter += 0.4;
 			}
 			
 			
 			for (int i = 0; i < a_animNode->mNumScalingKeys; i++)
 			{
-				animnode->scalingKeysValues.push_back(AItoGLMVec3(a_animNode->mScalingKeys->mValue));
+				animnode->scalingKeysValues.push_back(AItoGLMVec3(a_animNode->mScalingKeys[i].mValue));
 			}
 				
-
-			counter += 0.02;
-
 
 			animNodes.push_back(animnode);
 		}
@@ -292,18 +270,13 @@ namespace AssimpLoader
 			aiProcess_SortByPType |
 			aiProcess_GenSmoothNormals |
 			aiProcess_GenNormals
-			| aiProcess_FindInvalidData
-			| aiProcess_LimitBoneWeights
-			| aiProcess_ValidateDataStructure
-
 		);
 
-		aiNodeAnim* a_animNode;
+	
+		aiNode* rootNode = scene->mRootNode;
+		glm::mat4 irhfugv = glm::inverse(AiToGLMMat4(rootNode->mTransformation));
 
-		for (int i = 0; i < scene->mAnimations[0]->mNumChannels; i++)
-		{
-			a_animNode = scene->mAnimations[0]->mChannels[i];
-		}
+		
 
 		if (!scene)
 		{
@@ -316,20 +289,15 @@ namespace AssimpLoader
 		glm::vec3 min(1000, 1000, 1000);
 		glm::vec3 max(-1000, -1000, -1000);
 
-		const aiMesh* mesh;
-	
 		//Temporary containers for object data
 		std::vector<float> verts;
 		std::vector<float> norms;
 		std::vector<float> texCoords;
 		std::vector<int>   indices;
 		std::vector<float> colours;
-
-		////////////
-		
-
 		int texCount = 0;
 
+		const aiMesh* mesh;
 		aiNode* m_rootNode = scene->mRootNode;
 
 		//pull out the scenes aiNodes

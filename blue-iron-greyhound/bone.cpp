@@ -49,6 +49,8 @@ glm::mat4 bone::GetParentTransforms()
 	for (int i = mats.size() - 1; i >= 0; i--)
 		concatenated_transforms *= mats.at(i);
 
+
+
 	return concatenated_transforms;
 
 }
@@ -79,7 +81,7 @@ unsigned int bone::FindRotation(float time)
 	return 0;
 }
 
-float Factor = 0.00000001;
+
 
 glm::vec3 bone::CalcInterpolatedPosition(float time)
 {
@@ -102,7 +104,7 @@ glm::vec3 bone::CalcInterpolatedPosition(float time)
 	//divided by the amount of time between the two keyframes (the DeltaTime)
 	//to get the percentage, or how far along between the two keyframes we are.
 	float Factor = (time - (float)animNode->positionKeysTimes[PositionIndex]) / DeltaTime;
-	//Factor = 0.5;
+	
 
 	//The start and end positions (the position values of each of the keyframes)
 	glm::vec3 p1 = animNode->positionKeysValues[PositionIndex];
@@ -121,7 +123,8 @@ glm::quat bone::CalcInterpolatedRotation(float time)
 {
 	if (animNode->numRotationKeys == 1)
 	{
-		glm::quat val = animNode->rotationKeysValues[0];
+		//glm::quat val = glm::mat4_cast(animNode->rotationKeysValues[0]);c
+			glm::quat val = animNode->rotationKeysValues[0];
 		return val;
 	}
 
@@ -130,7 +133,7 @@ glm::quat bone::CalcInterpolatedRotation(float time)
 
 	float DeltaTime = animNode->rotationKeysTimes[NextRotationIndex] - animNode->rotationKeysTimes[RotationIndex];
 	float Factor = (time - (float)animNode->rotationKeysTimes[RotationIndex]) / DeltaTime;
-	//Factor = 0.5;
+	
 
 	glm::quat r1 = animNode->rotationKeysValues[RotationIndex];
 	glm::quat r2 = animNode->rotationKeysValues[NextRotationIndex];
@@ -150,8 +153,8 @@ void bone::UpdateKeyframeTransform(float time)
 
 	pos = CalcInterpolatedPosition(time);
 	rot = CalcInterpolatedRotation(time);
-	scale = glm::vec3(1.0);    //You could add support for scaling, but that's
-							   //beyond the scope of this tutorial series.
+	scale = glm::vec3(1.0);    
+							   
 
 
 	//Modified - Originally mat *= glm::translate(pos)
@@ -160,9 +163,6 @@ void bone::UpdateKeyframeTransform(float time)
 	mat = glm::translate(mat, pos);
 	mat *= glm::mat4_cast(rot);
 	mat = glm::scale(mat, scale);
-
-
-	glm::mat4 matrix = glm::mat4_cast(rot);
-
+	
 	node->transformation = mat;
 }

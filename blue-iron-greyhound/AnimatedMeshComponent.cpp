@@ -21,11 +21,14 @@ void AnimatedMeshComponent::update()
 
 	sceneLoaderSkeleton->update();
 
-	sceneLoaderSkeleton->SetIdleAnimation(&Anim_Test_Idle);
+	//sceneLoaderSkeleton->SetIdleAnimation(&Anim_Test_Idle);
 		
 	//The true is for loop, and the false is for reset_to_start.
 	PlayAnimation(Anim_Test_Walk, true, false);
-	
+
+
+
+	//PlayAnimation(Anim_Test_Idle, true, false);
 
 }
 

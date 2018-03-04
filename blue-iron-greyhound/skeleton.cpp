@@ -62,20 +62,9 @@ void skeleton::UpdateBoneMatsVector()
 		}
 		else
 		{
-
 				glm::mat4 concatenated_transformation = (bones.at(i)->GetParentTransforms() * bones.at(i)->node->transformation);
-				boneMats.push_back(globalInverseTransform * concatenated_transformation * bones.at(i)->offset_matrix);
+				boneMats.push_back(globalInverseTransform *concatenated_transformation * bones.at(i)->offset_matrix);
 				
-
-
-				glm::mat4 pTrans = (bones.at(i)->GetParentTransforms());
-				glm::mat4 nodeTrans = (bones.at(i)->node->transformation);
-
-
-				glm::mat4 total = globalInverseTransform * concatenated_transformation * bones.at(i)->offset_matrix;
-				glm::mat4 offset = bones.at(i)->offset_matrix;
-				glm::mat4 globalTransform = globalInverseTransform;
-		
 		}
 	}
 

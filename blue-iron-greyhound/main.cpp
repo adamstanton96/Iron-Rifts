@@ -38,7 +38,7 @@
 #include <ctime>
 #include <cstdlib>
 #include "time.h"
-#include "globals.h"
+
 
 // The number of clock ticks per second
 #define CLOCKS_PER_SEC  ((clock_t)1000)
@@ -114,10 +114,10 @@ int main(int argc, char *argv[])
 
 	//spider robot for animation tests
 	GameObject *barrier2 = new GameObject("old building");
-	barrier2->setPosition(glm::vec3(0.0f, 5.0f, 40.0f));
+	barrier2->setPosition(glm::vec3(0.0f, 0.0f, 40.0f));
 	barrier2->setScaling(glm::vec3(1, 1, 1));
-	barrier2->setRotationAxis(glm::vec3(-1, 0, 0));
-	barrier2->setRotationDegrees(90);
+	barrier2->setRotationAxis(glm::vec3(0, 0, 0));
+	barrier2->setRotationDegrees(0);
 
 
 	RigidBodyComponent* rigidBody3 = new RigidBodyComponent("Rigid Body");
@@ -129,7 +129,12 @@ int main(int argc, char *argv[])
 	AnimatedMeshComponent* barriermesh2 = new AnimatedMeshComponent("test");
 	barrier2->addComponent(barriermesh2);
 	barriermesh2->setRenderer(renderer);
+	//barriermesh2->loadObject("../../assets/Monster_1/Monster_1.dae");
 	barriermesh2->loadObject("../../assets/A_Test_Guy.dae");
+	//barriermesh2->loadObject("../../assets/Monster_1/A_Test.dae");
+	//barriermesh2->loadObject("../../assets/Monster_1/A_Test_Soldier.dae");
+	//barriermesh2->loadObject("../../assets/RobotAnimated.dae");
+
 	barriermesh2->loadTexture("../../assets/RobotAnimated.bmp");
 
 	objectList.push_back(barrier2);
