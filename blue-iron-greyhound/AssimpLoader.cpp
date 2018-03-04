@@ -18,15 +18,15 @@ namespace AssimpLoader
 	{
 		glm::vec4 newVec;
 		
-		newVec.x = aiQuat.x;
+		/*newVec.x = aiQuat.x;
 		newVec.y = aiQuat.y;
 		newVec.z = aiQuat.z;
-		newVec.w = aiQuat.w;
+		newVec.w = aiQuat.w;*/
 
-		/*newVec.x = aiQuat.w;
+		newVec.x = aiQuat.w;
 		newVec.y = aiQuat.x;
 		newVec.z = aiQuat.y;
-		newVec.w = aiQuat.z;*/
+		newVec.w = aiQuat.z;
 		
 
 		return newVec;
@@ -76,36 +76,48 @@ namespace AssimpLoader
 			recursiveNodeProcess(ai_node->mChildren[i], nodes);
 	}
 
-
+	
 	void AnimNodeProcess(const aiScene* m_scene, vector<animNode*>& animNodes)
 	{
 		if (m_scene->mNumAnimations == 0)
 			return;
 
 		aiNodeAnim* a_animNode;
+		
 
 		for (int i = 0; i < m_scene->mAnimations[0]->mNumChannels; i++)
 		{
 			a_animNode = m_scene->mAnimations[0]->mChannels[i];
 			animNode* animnode = new animNode();
 
+			a_animNode->mPositionKeys[1];
+			double counter = 0;
+
 			animnode->nodeName = a_animNode->mNodeName.data;
 			animnode->numPositionKeys = a_animNode->mNumPositionKeys;
 			animnode->numRotationKeys = a_animNode->mNumRotationKeys;
 			animnode->numScalingKeys = a_animNode->mNumScalingKeys;
+
 			double posTime = a_animNode->mPositionKeys->mTime;
+			
 
 			for (int i = 0; i < a_animNode->mNumPositionKeys; i++)
 			{
-				animnode->positionKeysValues.push_back(AItoGLMVec3(a_animNode->mPositionKeys->mValue));
-				animnode->positionKeysTimes.push_back(a_animNode->mPositionKeys->mTime);
+				animnode->positionKeysValues.push_back(AItoGLMVec3(a_animNode->mPositionKeys[i].mValue));
+				animnode->positionKeysTimes.push_back(a_animNode->mPositionKeys[i].mTime);
+				//animnode->positionKeysTimes.push_back(counter);
+
+				counter += 0.4;
 			}
 			
 			
 			for (int i = 0; i < a_animNode->mNumRotationKeys; i++)
 			{
-				animnode->rotationKeysValues.push_back(AIQUATtoGLMVec4(a_animNode->mRotationKeys->mValue));
-				animnode->rotationKeysTimes.push_back(a_animNode->mRotationKeys->mTime);
+				animnode->rotationKeysValues.push_back(AIQUATtoGLMVec4(a_animNode->mRotationKeys[i].mValue));
+				animnode->rotationKeysTimes.push_back(a_animNode->mRotationKeys[i].mTime);
+				//animnode->rotationKeysTimes.push_back(counter);
+
+				counter += 0.4;
 			}
 			
 			
@@ -115,7 +127,7 @@ namespace AssimpLoader
 			}
 				
 
-
+			counter += 0.02;
 
 
 			animNodes.push_back(animnode);
@@ -281,10 +293,17 @@ namespace AssimpLoader
 			aiProcess_GenSmoothNormals |
 			aiProcess_GenNormals
 			| aiProcess_FindInvalidData
-			
+			| aiProcess_LimitBoneWeights
+			| aiProcess_ValidateDataStructure
+
 		);
 
+		aiNodeAnim* a_animNode;
 
+		for (int i = 0; i < scene->mAnimations[0]->mNumChannels; i++)
+		{
+			a_animNode = scene->mAnimations[0]->mChannels[i];
+		}
 
 		if (!scene)
 		{

@@ -137,7 +137,6 @@
     <ClInclude Include="CollisionSystem.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="GameObject.h" />
-    <ClInclude Include="globals.h" />
     <ClInclude Include="InputSystem.h" />
     <ClInclude Include="IrrKlangAudioSystem.h" />
     <ClInclude Include="MovementComponent.h" />

@@ -103,13 +103,10 @@ void skeleton::update()
 		glUseProgram(6);
 
 		int uniformIndex = glGetUniformLocation(6, "gBones");
+
 		glUniformMatrix4fv(uniformIndex, boneMats.size(), GL_FALSE,
 			glm::value_ptr(boneMats[0]));
 
-		/*int uniformIndex = glGetUniformLocation(program, uniformName);
-		glUniformMatrix4fv(uniformIndex, 1, GL_FALSE, data);
-
-		OpenglUtils::setUniformMatrix4fv(currShader, "gBones", mesh->getBoneMats());*/
 
 	}
 	else
@@ -125,7 +122,7 @@ void skeleton::update()
 	//Update the time variable by adding the delta time of the last frame
 	//It's * 0.001f because the delta time is in milliseconds, and we 
 	//need it in seconds.
-	time += deltaTime *0.001f;
+	time += deltaTime;// *0.001f;
 
 	//Make sure the time can't be less than our animation's start time.
 	if (time < start_time)

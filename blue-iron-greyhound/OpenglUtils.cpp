@@ -58,9 +58,10 @@ char * texAnimVert =
 	"BMatrix += gBones[int(in_boneIDs[2])] * in_boneWeights[2];			\n"
 	"BMatrix += gBones[int(in_boneIDs[3])] * in_boneWeights[3];			\n"
 
-	"	 debugColour = vec4(in_boneWeights);							\n"
+	"	 debugColour = vec4( gBones[int(in_boneIDs[0])] * in_boneWeights[0]);							\n"
+	"	// debugColour = vec4(1,1,1,1);							\n"
 	
-	"	vec4 vertPos =    BMatrix *  vec4(in_Position,1.0)  ;				\n"
+	"	vec4 vertPos =  BMatrix *  vec4(in_Position,1.0)  ;				\n"
 	"	gl_Position = (projection  * modelview) *vertPos  ;				\n"
 	"																	\n"
 	"	ex_TexCoord = in_TexCoord;										\n"

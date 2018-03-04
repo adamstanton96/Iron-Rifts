@@ -155,15 +155,14 @@ void bone::UpdateKeyframeTransform(float time)
 
 
 	//Modified - Originally mat *= glm::translate(pos)
-	glm::mat4 mat;
-	mat = glm::translate(mat,pos);
-	mat *= glm::mat4_cast(rot);
-	mat = glm::scale(mat,scale);
+	glm::mat4 mat(1);
 
-	/*glm::mat4 mat;
-	mat *= glm::translate(glm::mat4(1), pos);
+	mat = glm::translate(mat, pos);
 	mat *= glm::mat4_cast(rot);
-	mat *= glm::scale(glm::mat4(1), scale);
-*/
+	mat = glm::scale(mat, scale);
+
+
+	glm::mat4 matrix = glm::mat4_cast(rot);
+
 	node->transformation = mat;
 }

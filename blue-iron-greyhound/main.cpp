@@ -114,11 +114,10 @@ int main(int argc, char *argv[])
 
 	//spider robot for animation tests
 	GameObject *barrier2 = new GameObject("old building");
-	barrier2->setScaling(glm::vec3(4, 4, 4));
-	barrier2->setPosition(glm::vec3(0.0f, 0.0f, 0.0f));
-	barrier2->setScaling(glm::vec3(2, 2, 2));
-	barrier2->setRotationAxis(glm::vec3(1, 0, 0));
-	barrier2->setRotationDegrees(0);
+	barrier2->setPosition(glm::vec3(0.0f, 5.0f, 40.0f));
+	barrier2->setScaling(glm::vec3(1, 1, 1));
+	barrier2->setRotationAxis(glm::vec3(-1, 0, 0));
+	barrier2->setRotationDegrees(90);
 
 
 	RigidBodyComponent* rigidBody3 = new RigidBodyComponent("Rigid Body");
