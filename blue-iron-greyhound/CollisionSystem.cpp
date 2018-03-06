@@ -299,7 +299,169 @@ bool CollisionSystem::OBBtoOBB(OBB* box1, OBB* box2 , RigidBodyComponent* rigidb
 }
 
 
+GameObject* CollisionSystem::rayCollisionCheck(glm::vec3 ray, glm::vec3 rayPos)
+{
 
+	for (unsigned int i = 0; i < staticBodies.size(); i++)
+	{
+		if (staticBodies[i]->getBoundingType() == "OBB")
+		 {
+			if (rayToOBB(ray, rayPos,(OBB*)staticBodies[i]->getBoundingVolume()))
+				return staticBodies[i]->getUser();
+		}
+	}
+
+	//test against all other dynamic bodies bodies
+	for (unsigned int i = 0; i < dynamicBodies.size(); i++)
+	{
+		if (staticBodies[i]->getBoundingType() == "OBB")
+		{
+			if(rayToOBB(ray, rayPos, (OBB*)dynamicBodies[i]->getBoundingVolume()))
+				return dynamicBodies[i]->getUser();
+		}
+	}
+	return nullptr;
+}
+
+bool CollisionSystem::rayToOBB(glm::vec3 ray, glm::vec3 rayPos, OBB* obb)
+{
+	float minProj1;
+	float maxProj1;
+
+	float minProj2;
+	float maxProj2;
+
+	std::vector<glm::vec3> vertices1 = obb->worldVertices;
+	std::vector<glm::vec3> faces = obb->faceNormals;
+
+	std::vector<glm::vec3> vertices2;
+	vertices2.push_back(rayPos);
+	vertices2.push_back(ray + rayPos);
+
+	glm::vec3 axis;
+	int axi;
+
+	bool xOverlap = false;
+	bool yOverlap = false;
+	bool zOverlap = false;
+
+
+
+	for (axi = 3; axi < 6; axi++)
+	{
+		minProj1 = 1000;
+		maxProj1 = -1000;
+
+		minProj2 = 1000;
+		maxProj2 = -1000;
+
+
+		axis = faces[axi];
+
+		// Project all vertice of A and B onto axis and store the min and max of these values
+		for (int j = 0; j < vertices1.size(); j++)
+		{
+			float dotproduct1 = glm::dot(vertices1[j], axis);
+
+			if (dotproduct1 < minProj1) minProj1 = dotproduct1;
+			if (dotproduct1 > maxProj1) maxProj1 = dotproduct1;
+
+		}
+
+		for (int j = 0; j < vertices2.size(); j++)
+		{
+			float dotproduct2 = glm::dot(vertices2[j], axis);
+
+			if (dotproduct2 < minProj2) minProj2 = dotproduct2;
+			if (dotproduct2 > maxProj2) maxProj2 = dotproduct2;
+		}
+
+
+
+		// Test all projections for overlap and flag that axis as having overlap
+		//Axis 1
+		if (axi == 3)
+		{
+
+			if (maxProj1 > minProj2 && minProj1 < minProj2)
+			{
+				zOverlap = true;
+			}
+
+			if (minProj1 < maxProj2 && maxProj1 > maxProj2)
+			{
+				zOverlap = true;
+			}
+
+			if (minProj2 < minProj1 && maxProj1 < maxProj2)
+			{
+				zOverlap = true;
+			}
+		}
+
+
+
+		// Axis 2
+		if (axi == 4)
+		{
+
+			if (maxProj1 > minProj2 && minProj1 < minProj2)
+			{
+				xOverlap = true;
+			}
+
+			if (minProj1 < maxProj2 && maxProj1 > maxProj2)
+			{
+				xOverlap = true;
+			}
+
+			if (minProj2 < minProj1 && maxProj1 < maxProj2)
+			{
+				xOverlap = true;
+			}
+
+		}
+
+
+		//Axis 3 
+		if (axi == 5)
+		{
+			if (maxProj1 > minProj2 && minProj1 < minProj2)
+			{
+				yOverlap = true;
+			}
+
+			if (minProj1 < maxProj2 && maxProj1 > maxProj2)
+			{
+				yOverlap = true;
+			}
+
+			if (minProj2 < minProj1 && maxProj1 < maxProj2)
+			{
+				yOverlap = true;
+			}
+
+		}
+
+
+
+
+	}
+
+
+	//Overlap on axi' mean a collision
+	if ((xOverlap && zOverlap && yOverlap) == true)
+	{
+
+		
+		return true;
+
+	}
+
+
+
+	return false;
+}
 
 
 

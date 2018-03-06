@@ -2,14 +2,16 @@
 #include "Component.h"
 #include "InputSystem.h"
 #include <iostream>
+#include "CollisionSystem.h"
 
 
 class Raycast : public Component
 {
 public:
-	Raycast(InputSystem *input)
+	Raycast(InputSystem *input, CollisionSystem* collisionSys)
 	{
 		this->input = input;
+		this->collisionSys = collisionSys;
 	}
 
 	~Raycast(){}
@@ -17,17 +19,17 @@ public:
 
 	void update() 
 	{
-		//glm::vec2 mousePos = input->getMousePosition();
+		
 
-		//glm::vec2 playerForwrd(0, -1);  //x,z
-		//float playerRotation = getUser()->getRotationDegrees();
+		glm::vec3 playerForward(0, 0,-50);  //ray direction 
 
-		//ray.x = glm::cos(playerRotation * 0) - glm::sin(playerRotation*-1);
-		//ray.y = glm::sin(playerRotation * 0) - glm::cos(playerRotation*-1);
-	
-		//std::cout << glm::normalize(ray.x) << ", " << glm::normalize(ray.y) << std::endl;
+		//Collisions are using the position of the player and that position plus the direction about to make a line
+		GameObject* obj = collisionSys->rayCollisionCheck(playerForward, getUser()->getPosition());
 
-
+		//if a collision was found and its not the players cube
+		if (obj != nullptr)
+			if (obj != getUser())
+			cout << "ray collision	-	" << obj->getName() << endl;
 
 			
 	}
@@ -39,6 +41,7 @@ public:
 
 private:
 	InputSystem *input;
+	CollisionSystem* collisionSys;
 
 	glm::vec2 ray;
 };

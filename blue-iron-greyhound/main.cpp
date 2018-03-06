@@ -110,15 +110,16 @@ int main(int argc, char *argv[])
 	Player->addComponent(cameraComponent);
 	Player->addComponent(moveComponent);
 
-	Raycast* raycaster = new Raycast(inputSystem);
+	Raycast* raycaster = new Raycast(inputSystem, collisionsystem);
 	Player->addComponent(raycaster);
+	
 
 	objectList.push_back(Player);
 
 	////////////////////////////////////////////////////
 
-	//road barrier 2
-	GameObject *barrier2 = new GameObject("old building");
+	//road barrier 1
+	/*GameObject *barrier2 = new GameObject("barrier 1");
 	barrier2->setPosition(glm::vec3(10.0f, -5.0f, 90.0f));
 	barrier2->setScaling(glm::vec3(0.5f, 0.5f, 0.5f));
 	barrier2->setRotationAxis(glm::vec3(0, 1, 0));
@@ -136,35 +137,35 @@ int main(int argc, char *argv[])
 	barriermesh2->loadObject("../../assets/BARRIERE.obj");
 	barriermesh2->loadTexture("../../assets/roadbarrier/BARRIERE.bmp");
 
-	objectList.push_back(barrier2);
+	objectList.push_back(barrier2);*/
 	///////////////////////////////////////////////////////////////////
 	////////////////////////////////////////////////////
 
-	//road barrier 1
-	GameObject *barrier = new GameObject("old building");
-	barrier->setPosition(glm::vec3(-20.0f, -5.0f, 90.0f));
-	barrier->setScaling(glm::vec3(0.5f, 0.5f, 0.5f));
-	barrier->setRotationAxis(glm::vec3(1, 0, 0));
-	barrier->setRotationDegrees(0);
+	//road barrier 2
+	//GameObject *barrier = new GameObject("barrier 2");
+	//barrier->setPosition(glm::vec3(-20.0f, -5.0f, 90.0f));
+	//barrier->setScaling(glm::vec3(0.5f, 0.5f, 0.5f));
+	//barrier->setRotationAxis(glm::vec3(1, 0, 0));
+	//barrier->setRotationDegrees(0);
 
-	RigidBodyComponent* rigidBody2 = new RigidBodyComponent("Rigid Body");
-	barrier->addComponent(rigidBody2);
-	rigidBody2->setCollisionSystem(collisionsystem);
-	rigidBody2->setBodyType("STATIC");
-	rigidBody2->setBoundingType("OBB");
+	//RigidBodyComponent* rigidBody2 = new RigidBodyComponent("Rigid Body");
+	//barrier->addComponent(rigidBody2);
+	//rigidBody2->setCollisionSystem(collisionsystem);
+	//rigidBody2->setBodyType("STATIC");
+	//rigidBody2->setBoundingType("OBB");
 
-	MeshComponent* barriermesh = new MeshComponent("test");
-	barrier->addComponent(barriermesh);
-	barriermesh->setRenderer(renderer);
-	barriermesh->loadObject("../../assets/BARRIERE.obj");
-	barriermesh->loadTexture("../../assets/roadbarrier/BARRIERE.bmp");
+	//MeshComponent* barriermesh = new MeshComponent("test");
+	//barrier->addComponent(barriermesh);
+	//barriermesh->setRenderer(renderer);
+	//barriermesh->loadObject("../../assets/BARRIERE.obj");
+	//barriermesh->loadTexture("../../assets/roadbarrier/BARRIERE.bmp");
 
-	objectList.push_back(barrier);
+	//objectList.push_back(barrier);
 
 	///////////////////////////////////////////////////////////////////
 
-	//road barrier 2
-	GameObject *cubenCigar = new GameObject("old building");
+	
+	GameObject *cubenCigar = new GameObject("Demo Block");
 	cubenCigar->setPosition(glm::vec3(5.0f, -5.0f, 140.0f));
 	cubenCigar->setScaling(glm::vec3(5.5f, 5.5f, 5.5f));
 	cubenCigar->setRotationAxis(glm::vec3(0, 1, 0));

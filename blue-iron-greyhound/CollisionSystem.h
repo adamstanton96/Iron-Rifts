@@ -32,6 +32,12 @@ public:
 	void collisionReaction(RigidBodyComponent* rigidbody);
 	void displacementReaction(RigidBodyComponent* rigidbody, glm::vec3 displacementVector);
 
+
+	//This call rayToOBB for all static and dynamic objects in the game and return a game object when it hits it
+	GameObject* rayCollisionCheck(glm::vec3 ray, glm::vec3 rayPosition);
+
+	bool rayToOBB(glm::vec3 ray, glm::vec3 RayPosition, OBB* obb);
+
 private:
 	std::vector<RigidBodyComponent*> staticBodies;
 
