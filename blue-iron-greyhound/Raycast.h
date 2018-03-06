@@ -12,19 +12,27 @@ public:
 	{
 		this->input = input;
 		this->collisionSys = collisionSys;
+	
 	}
 
 	~Raycast(){}
 
 
-	void update() 
+	void init()
 	{
 		
+	}
 
-		glm::vec3 playerForward(0, 0,-50);  //ray direction 
+	void update() 
+	{
+		this->rayDirection = glm::vec3(0, 0, -1);
+		this->rayMagnitude = 10;
 
-		//Collisions are using the position of the player and that position plus the direction about to make a line
-		GameObject* obj = collisionSys->rayCollisionCheck(playerForward, getUser()->getPosition());
+		ray = rayDirection * rayMagnitude;  //ray direction and magnitude
+		glm::vec3 playerPos = getUser()->getPosition(); // position of the ray user
+
+		//the collision system is using the position of the player and that position plus the ray to make a line ( p1 = ray+playerPos, p2 = playerPos)
+		GameObject* obj = collisionSys->rayCollisionCheck(ray, playerPos);
 
 		//if a collision was found and its not the players cube
 		if (obj != nullptr)
@@ -34,14 +42,15 @@ public:
 			
 	}
 
-	void init()
-	{
-
-	}
+	
 
 private:
 	InputSystem *input;
 	CollisionSystem* collisionSys;
 
-	glm::vec2 ray;
+	glm::vec3 rayDirection;
+	float rayMagnitude;
+
+	glm::vec3 ray;
+
 };
