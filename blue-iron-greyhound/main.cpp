@@ -114,9 +114,9 @@ int main(int argc, char *argv[])
 
 	//spider robot for animation tests
 	GameObject *barrier2 = new GameObject("old building");
-	barrier2->setPosition(glm::vec3(0.0f, 0.0f, 40.0f));
-	barrier2->setScaling(glm::vec3(1, 1, 1));
-	barrier2->setRotationAxis(glm::vec3(0, 0, 0));
+	barrier2->setPosition(glm::vec3(0.0f, 0.0f,60.0f));
+	barrier2->setScaling(glm::vec3(0.5, 0.5, 0.5));
+	barrier2->setRotationAxis(glm::vec3(1, 0, 0));
 	barrier2->setRotationDegrees(0);
 
 
@@ -133,9 +133,9 @@ int main(int argc, char *argv[])
 	barriermesh2->loadObject("../../assets/A_Test_Guy.dae");
 	//barriermesh2->loadObject("../../assets/Monster_1/A_Test.dae");
 	//barriermesh2->loadObject("../../assets/Monster_1/A_Test_Soldier.dae");
-	//barriermesh2->loadObject("../../assets/RobotAnimated.dae");
+	////barriermesh2->loadObject("../../assets/RobotAnimated.dae");
 
-	barriermesh2->loadTexture("../../assets/RobotAnimated.bmp");
+	barriermesh2->loadTexture("../../assets/scifi.bmp");
 
 	objectList.push_back(barrier2);
 	///////////////////////////////////////////////////////////////////

@@ -63,8 +63,8 @@ public:
 	//Keyframe Data
 	glm::vec3 pos;
 	glm::quat rot;
-
 	glm::vec3 scale;
+
 	glm::vec3 p1;
 	glm::vec3 p2;
 	

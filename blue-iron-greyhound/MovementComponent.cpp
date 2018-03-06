@@ -30,6 +30,10 @@ void MovementComponent::update()
 		moveLeft(0.5f);
 	if (this->input->keyPressed("D"))
 		moveRight(0.5f);
+	if (this->input->keyPressed("R"))
+		moveUp(0.5f);
+	if (this->input->keyPressed("F"))
+		moveDown(0.5f);
 
 	//Get current mouseposition
 	glm::vec2 mousePosition = this->input->getMousePosition();

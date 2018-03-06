@@ -59,10 +59,9 @@ char * texAnimVert =
 	"BMatrix += gBones[int(in_boneIDs[3])] * in_boneWeights[3];			\n"
 
 	"	 debugColour = vec4(in_boneWeights);							\n"
-	"	// debugColour = vec4(1,1,1,1);							\n"
 	
-	"	vec4 vertPos =  BMatrix * vec4(in_Position,1.0)  ;				\n"
-	"	gl_Position = (projection  * modelview) * vertPos  ;				\n"
+	"	vec4 vertPos =  BMatrix *  vec4(in_Position,1.0)  ;				\n"
+	"	gl_Position = (projection  * modelview) * vertPos  ;			\n"
 	"																	\n"
 	"	ex_TexCoord = in_TexCoord;										\n"
 	"}																	\n"
@@ -82,11 +81,11 @@ char * texAnimFrag =
 	"in vec3 ex_V;												\n"
 	"in vec3 ex_L;												\n"
 	"in float ex_D;												\n"
-	"											\n"
-	"in vec4 weight;												\n"
+	"															\n"
+	"in vec4 weight;											\n"
 	"in vec4 id;												\n"
 
-	"in vec4 debugColour;												\n"
+	"in vec4 debugColour;										\n"
 	"															\n"
 	"uniform float attConst;									\n"
 	"uniform float attLinear;									\n"
@@ -146,7 +145,7 @@ char * texAnimFrag =
 		//this lighting values below are somehow stretching the model, wut
 	"	//out_Color= (diffuseI + specularI +ambientI)*texture(textureUnit0, ex_TexCoord);			\n"
 	"   out_Color= 	debugColour;	\n"
-	"  // out_Color= 	texture(textureUnit0, ex_TexCoord);	\n"
+	" // out_Color= 	texture(textureUnit0, ex_TexCoord);	\n"
 
 	"}																							\n"
 };
@@ -645,7 +644,7 @@ namespace OpenglUtils
 		if (boneids != nullptr) {
 			glGenBuffers(1, &VBO);
 			glBindBuffer(GL_ARRAY_BUFFER, VBO);
-			glBufferData(GL_ARRAY_BUFFER, (numVerts/3) * 4 * sizeof(GLuint), boneids, GL_STATIC_DRAW);
+			glBufferData(GL_ARRAY_BUFFER, ((numVerts/3) * 4) * sizeof(GLuint), boneids, GL_STATIC_DRAW);
 			glVertexAttribPointer((GLuint)RT3D_BONEIDS, 4, GL_INT, GL_FALSE, 0, 0);						//tutorial has this at true
 			glEnableVertexAttribArray(RT3D_BONEIDS);
 			pMeshBuffers[RT3D_BONEIDS] = VBO;
@@ -655,7 +654,7 @@ namespace OpenglUtils
 		if (boneWeights != nullptr) {
 			glGenBuffers(1, &VBO);
 			glBindBuffer(GL_ARRAY_BUFFER, VBO);
-			glBufferData(GL_ARRAY_BUFFER, (numVerts/3) * 4 * sizeof(GLfloat), boneWeights, GL_STATIC_DRAW);
+			glBufferData(GL_ARRAY_BUFFER, ((numVerts/3) * 4) * sizeof(GLfloat), boneWeights, GL_STATIC_DRAW);
 			glVertexAttribPointer((GLfloat)RT3D_BONEWEIGHTS, 4, GL_FLOAT, GL_FALSE, 0, 0);					//tutorial has this at true
 			glEnableVertexAttribArray(RT3D_BONEWEIGHTS);
 			pMeshBuffers[RT3D_BONEWEIGHTS] = VBO;
@@ -666,14 +665,9 @@ namespace OpenglUtils
 		// unbind vertex array
 		glBindVertexArray(0);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+
+
 		// return the identifier needed to draw this mesh
-
-
-
-		//vertexArrayMap.insert(pair<GLuint, GLuint *>(VAO, pMeshBuffers));
-
-
-
 		return VAO;
 	}
 

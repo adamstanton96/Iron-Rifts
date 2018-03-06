@@ -63,8 +63,7 @@ void skeleton::UpdateBoneMatsVector()
 		else
 		{
 				glm::mat4 concatenated_transformation = (bones.at(i)->GetParentTransforms() * bones.at(i)->node->transformation);
-				boneMats.push_back(globalInverseTransform *concatenated_transformation * bones.at(i)->offset_matrix);
-				
+				boneMats.push_back(globalInverseTransform * concatenated_transformation * bones.at(i)->offset_matrix);
 		}
 	}
 
@@ -96,13 +95,13 @@ void skeleton::update()
 		glUniformMatrix4fv(uniformIndex, boneMats.size(), GL_FALSE,
 			glm::value_ptr(boneMats[0]));
 
-
 	}
 	else
 		std::cout << " Skeleton::Update - std vec BoneMats is empty." << std::endl;
-	
 
 
+	for (int i = 0; i < bones.size(); i++)
+		bones.at(i)->UpdateKeyframeTransform(time);
 
 	//If we're not playing an animation, then just give up, do nothing.
 	if (!anim_play)
@@ -133,8 +132,11 @@ void skeleton::update()
 			
 	}
 
-	for (int i = 0; i < bones.size(); i++)
-		bones.at(i)->UpdateKeyframeTransform(time);
+
+
+
+	
+
 }
 
 
