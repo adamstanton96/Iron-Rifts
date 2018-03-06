@@ -23,8 +23,8 @@
 
 #include "RigidBodyComponent.h"
 #include "CollisionSystem.h"
-
 #include "AudioTestComponent.h"
+#include "Raycast.h"
 //temp
 ///
 #include "OBB.h"
@@ -109,6 +109,9 @@ int main(int argc, char *argv[])
 	Player->addComponent(audioTester);
 	Player->addComponent(cameraComponent);
 	Player->addComponent(moveComponent);
+
+	Raycast* raycaster = new Raycast(inputSystem);
+	Player->addComponent(raycaster);
 
 	objectList.push_back(Player);
 

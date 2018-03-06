@@ -113,6 +113,9 @@
     <ClInclude Include="AudioTestComponent.h">
       <Filter>Source Files\Audio System</Filter>
     </ClInclude>
+    <ClInclude Include="Raycast.h">
+      <Filter>Source Files\Collidables</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Component.cpp">

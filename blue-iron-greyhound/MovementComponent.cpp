@@ -39,7 +39,7 @@ void MovementComponent::update()
 	//Really just an up vector 
 	glm::vec2 playerVec(0,1);
 
-	//Mouse position and an x, y representing the center of the screen
+	//Mouse position and an x, y representing the center of the screen (where the player is on screen)
 	glm::vec2 mouseVec = mousePosition - glm::vec2(600,400);		
 
 	float angleInDegrees_ = atan2(mouseVec.y, mouseVec.x) - atan2(playerVec.y, playerVec.x);

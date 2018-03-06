@@ -137,6 +137,7 @@
     <ClInclude Include="IrrKlangAudioSystem.h" />
     <ClInclude Include="MovementComponent.h" />
     <ClInclude Include="OBB.h" />
+    <ClInclude Include="Raycast.h" />
     <ClInclude Include="RigidBodyComponent.h" />
     <ClInclude Include="SDLGLTextureLoader.h" />
     <ClInclude Include="InteractiveTestComponent.h" />
