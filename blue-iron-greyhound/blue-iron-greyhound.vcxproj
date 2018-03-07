@@ -139,6 +139,7 @@
     <ClInclude Include="MovementComponent.h" />
     <ClInclude Include="OBB.h" />
     <ClInclude Include="PhysicsSystem.h" />
+    <ClInclude Include="rayCastTestComponent.h" />
     <ClInclude Include="RigidBodyComponent.h" />
     <ClInclude Include="SDLGLTextureLoader.h" />
     <ClInclude Include="InteractiveTestComponent.h" />
@@ -160,6 +161,7 @@
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="InteractiveTestComponent.cpp" />
+    <ClCompile Include="IronRiftsPhysicsSystem.cpp" />
     <ClCompile Include="IrrKlangAudioSystem.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MeshComponent.cpp" />
@@ -167,6 +169,7 @@
     <ClCompile Include="OBB.cpp" />
     <ClCompile Include="openglRenderer.cpp" />
     <ClCompile Include="OpenglUtils.cpp" />
+    <ClCompile Include="rayCastTestComponent.cpp" />
     <ClCompile Include="RigidBodyComponent.cpp" />
     <ClCompile Include="SDLGLTextureLoader.cpp" />
     <ClCompile Include="SDLInputSystem.cpp" />

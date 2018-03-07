@@ -18,15 +18,20 @@ class RigidBodyComponent;
 class PhysicsSystem : public System
 {
 public:
-	PhysicsSystem();
+	PhysicsSystem() {}
 	virtual ~PhysicsSystem() {}
 
-	void init();
+	virtual void init() = 0;
 
-	void addStaticBody(RigidBodyComponent* rigidbody);
-	void addDynamicBody(RigidBodyComponent* rigidbody);
+	virtual void addStaticBody(RigidBodyComponent* rigidbody) = 0;
+	virtual void addDynamicBody(RigidBodyComponent* rigidbody) = 0;
 
-	void collisionCheck(RigidBodyComponent* rigidbody);
-	void collisionReaction(RigidBodyComponent* rigidbody);
-	void displacementReaction(RigidBodyComponent* rigidbody, glm::vec3 displacementVector);
+	virtual void collisionCheck(RigidBodyComponent* rigidbody) = 0;
+	virtual void collisionReaction(RigidBodyComponent* rigidbody) = 0;
+	virtual void displacementReaction(RigidBodyComponent* rigidbody, glm::vec3 displacementVector) = 0;
+
+	//Raycasting...
+	virtual Ray castRay(glm::vec3 startPoint, glm::vec3 direction, float distance) = 0;
+	virtual std::vector<GameObject*> checkRayCollision(Ray ray) = 0;
+	virtual GameObject* checkClosest(GameObject* object, std::vector<GameObject*> objList) = 0;
 };

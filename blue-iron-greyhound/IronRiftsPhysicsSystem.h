@@ -18,14 +18,17 @@ public:
 	void displacementReaction(RigidBodyComponent* rigidbody, glm::vec3 displacementVector);
 
 	//Raycasting...
-	Ray castRay();
+	Ray castRay(glm::vec3 startPoint, glm::vec3 direction, float distance);
 	std::vector<GameObject*> checkRayCollision(Ray ray);
-	GameObject* checkClosest(std::vector<GameObject*>);
+	GameObject* checkClosest(GameObject* object, std::vector<GameObject*> objList);
 
 private:
 	bool AABBtoAABB(AABB*, AABB*);
 	bool OBBtoOBB(OBB* box1, OBB* box2, RigidBodyComponent* rigidbody);
 	bool OBBtoAABB(OBB* box1, AABB* box2);
+	bool RayToOBB(Ray ray, OBB* obb);
+
+	float distance(glm::vec3 pos1, glm::vec3 pos2);
 
 	std::vector<RigidBodyComponent*> staticBodies;
 	std::vector<RigidBodyComponent*> dynamicBodies;

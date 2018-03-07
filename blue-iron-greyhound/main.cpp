@@ -20,9 +20,12 @@
 #include "MovementComponent.h"
 #include "SDLInputSystem.h"
 #include "IrrKlangAudioSystem.h"
+#include "rayCastTestComponent.h"
+
 
 #include "RigidBodyComponent.h"
 #include "CollisionSystem.h"
+#include "IronRiftsPhysicsSystem.h"
 
 #include "AudioTestComponent.h"
 //temp
@@ -50,7 +53,10 @@ int main(int argc, char *argv[])
 	inputSystem->init();
 
 	//New collision System
-	CollisionSystem* collisionsystem = new CollisionSystem();
+	//CollisionSystem* collisionsystem = new CollisionSystem();
+
+	//New physics system.
+	PhysicsSystem* collisionsystem = new IronRiftsPhysicsSystem();
 
 	IrrKlangAudioSystem * audioSystem = new IrrKlangAudioSystem("audioSystem");
 	audioSystem->init();
@@ -110,12 +116,20 @@ int main(int argc, char *argv[])
 	Player->addComponent(cameraComponent);
 	Player->addComponent(moveComponent);
 
+	RayCastTestComponent *raycasttester = new RayCastTestComponent("testytest");
+	raycasttester->setInput(inputSystem);
+	raycasttester->setPhysics(collisionsystem);
+
+	Player->addComponent(raycasttester);
+
+
+
 	objectList.push_back(Player);
 
 	////////////////////////////////////////////////////
 
 	//road barrier 2
-	GameObject *barrier2 = new GameObject("old building");
+	GameObject *barrier2 = new GameObject("Left Barrier");
 	barrier2->setPosition(glm::vec3(10.0f, -5.0f, 90.0f));
 	barrier2->setScaling(glm::vec3(0.5f, 0.5f, 0.5f));
 	barrier2->setRotationAxis(glm::vec3(0, 1, 0));
@@ -138,7 +152,7 @@ int main(int argc, char *argv[])
 	////////////////////////////////////////////////////
 
 	//road barrier 1
-	GameObject *barrier = new GameObject("old building");
+	GameObject *barrier = new GameObject("Right Barrier");
 	barrier->setPosition(glm::vec3(-20.0f, -5.0f, 90.0f));
 	barrier->setScaling(glm::vec3(0.5f, 0.5f, 0.5f));
 	barrier->setRotationAxis(glm::vec3(1, 0, 0));
@@ -161,7 +175,7 @@ int main(int argc, char *argv[])
 	///////////////////////////////////////////////////////////////////
 
 	//road barrier 2
-	GameObject *cubenCigar = new GameObject("old building");
+	GameObject *cubenCigar = new GameObject("Big Ole Cubey Boi");
 	cubenCigar->setPosition(glm::vec3(5.0f, -5.0f, 140.0f));
 	cubenCigar->setScaling(glm::vec3(5.5f, 5.5f, 5.5f));
 	cubenCigar->setRotationAxis(glm::vec3(0, 1, 0));

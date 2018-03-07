@@ -125,6 +125,9 @@
     <ClInclude Include="IronRiftsPhysicsSystem.h">
       <Filter>Source Files\Physics</Filter>
     </ClInclude>
+    <ClInclude Include="rayCastTestComponent.h">
+      <Filter>Source Files\CompSysTestClasses</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Component.cpp">
@@ -180,6 +183,12 @@
     </ClCompile>
     <ClCompile Include="OBB.cpp">
       <Filter>Source Files\Physics\Depreciated\Collidables</Filter>
+    </ClCompile>
+    <ClCompile Include="IronRiftsPhysicsSystem.cpp">
+      <Filter>Source Files\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="rayCastTestComponent.cpp">
+      <Filter>Source Files\CompSysTestClasses</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

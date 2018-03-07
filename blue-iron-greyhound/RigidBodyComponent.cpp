@@ -43,14 +43,14 @@ void RigidBodyComponent::setboundingVolume(glm::vec3 p1, glm::vec3 p2)
 {
 	glm::vec3 pos = getUser()->getPosition();
 
-	if (boundingType == "AABB")
-	{
-		createAABB(p1, p2);
-		boundingVolume->update(pos);
-	}
-	else if (boundingType == "OBB")
+	if (boundingType == "OBB")
 	{
 		createOBB(p1, p2);
+		boundingVolume->update(pos);
+	}
+	else if (boundingType == "AABB")
+	{
+		createAABB(p1, p2);
 		boundingVolume->update(pos);
 	}
 	else if (boundingType == "SPHERE")
@@ -60,7 +60,7 @@ void RigidBodyComponent::setboundingVolume(glm::vec3 p1, glm::vec3 p2)
 	}
 	else
 	{
-		createAABB(p1, p2);
+		createOBB(p1, p2);
 		boundingVolume->update(pos);
 	}
 
@@ -68,7 +68,7 @@ void RigidBodyComponent::setboundingVolume(glm::vec3 p1, glm::vec3 p2)
 }
 
 
-void RigidBodyComponent::setCollisionSystem(CollisionSystem* collisionSys)
+void RigidBodyComponent::setCollisionSystem(PhysicsSystem* collisionSys)
 {
 	collisionSystem = collisionSys;
 }
