@@ -134,9 +134,11 @@
     <ClInclude Include="Component.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="InputSystem.h" />
+    <ClInclude Include="IronRiftsPhysicsSystem.h" />
     <ClInclude Include="IrrKlangAudioSystem.h" />
     <ClInclude Include="MovementComponent.h" />
     <ClInclude Include="OBB.h" />
+    <ClInclude Include="PhysicsSystem.h" />
     <ClInclude Include="RigidBodyComponent.h" />
     <ClInclude Include="SDLGLTextureLoader.h" />
     <ClInclude Include="InteractiveTestComponent.h" />

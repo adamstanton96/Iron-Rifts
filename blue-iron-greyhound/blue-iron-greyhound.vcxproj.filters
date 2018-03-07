@@ -21,12 +21,6 @@
     <Filter Include="Source Files\Movement System">
       <UniqueIdentifier>{b4d31123-7bea-48fa-baa8-31a25490b6f8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\CollisionSystem">
-      <UniqueIdentifier>{7a9d1846-42fb-4a28-827e-0ef0561bceca}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Collidables">
-      <UniqueIdentifier>{3e8eed51-656e-4798-b682-a25d096375a6}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\CompSysTestClasses">
       <UniqueIdentifier>{9b498d4e-5b46-4212-b4a1-2f124caa7c5e}</UniqueIdentifier>
     </Filter>
@@ -35,6 +29,18 @@
     </Filter>
     <Filter Include="Source Files\Audio System">
       <UniqueIdentifier>{8d6cd72a-7c07-4f85-bc17-521d31482cfb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Physics">
+      <UniqueIdentifier>{c1643bcb-0082-46d7-8f28-0fae424bd5d5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Physics\Depreciated">
+      <UniqueIdentifier>{ef804db1-ab24-40a3-9013-7eba51aa24fb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Physics\Depreciated\CollisionSystem">
+      <UniqueIdentifier>{7a9d1846-42fb-4a28-827e-0ef0561bceca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Physics\Depreciated\Collidables">
+      <UniqueIdentifier>{3e8eed51-656e-4798-b682-a25d096375a6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -74,21 +80,6 @@
     <ClInclude Include="SDLInputSystem.h">
       <Filter>Source Files\Movement System</Filter>
     </ClInclude>
-    <ClInclude Include="RigidBodyComponent.h">
-      <Filter>Source Files\Collidables</Filter>
-    </ClInclude>
-    <ClInclude Include="Sphere.h">
-      <Filter>Source Files\Collidables</Filter>
-    </ClInclude>
-    <ClInclude Include="AABB.h">
-      <Filter>Source Files\Collidables</Filter>
-    </ClInclude>
-    <ClInclude Include="boundingVolume.h">
-      <Filter>Source Files\Collidables</Filter>
-    </ClInclude>
-    <ClInclude Include="CollisionSystem.h">
-      <Filter>Source Files\CollisionSystem</Filter>
-    </ClInclude>
     <ClInclude Include="Component.h">
       <Filter>Source Files</Filter>
     </ClInclude>
@@ -101,9 +92,6 @@
     <ClInclude Include="System.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="OBB.h">
-      <Filter>Source Files\Collidables</Filter>
-    </ClInclude>
     <ClInclude Include="AudioSystem.h">
       <Filter>Source Files\Audio System</Filter>
     </ClInclude>
@@ -112,6 +100,30 @@
     </ClInclude>
     <ClInclude Include="AudioTestComponent.h">
       <Filter>Source Files\Audio System</Filter>
+    </ClInclude>
+    <ClInclude Include="RigidBodyComponent.h">
+      <Filter>Source Files\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionSystem.h">
+      <Filter>Source Files\Physics\Depreciated\CollisionSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="AABB.h">
+      <Filter>Source Files\Physics\Depreciated\Collidables</Filter>
+    </ClInclude>
+    <ClInclude Include="boundingVolume.h">
+      <Filter>Source Files\Physics\Depreciated\Collidables</Filter>
+    </ClInclude>
+    <ClInclude Include="OBB.h">
+      <Filter>Source Files\Physics\Depreciated\Collidables</Filter>
+    </ClInclude>
+    <ClInclude Include="Sphere.h">
+      <Filter>Source Files\Physics\Depreciated\Collidables</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysicsSystem.h">
+      <Filter>Source Files\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="IronRiftsPhysicsSystem.h">
+      <Filter>Source Files\Physics</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -154,20 +166,20 @@
     <ClCompile Include="SDLInputSystem.cpp">
       <Filter>Source Files\Movement System</Filter>
     </ClCompile>
-    <ClCompile Include="RigidBodyComponent.cpp">
-      <Filter>Source Files\Collidables</Filter>
-    </ClCompile>
-    <ClCompile Include="CollisionSystem.cpp">
-      <Filter>Source Files\CollisionSystem</Filter>
-    </ClCompile>
-    <ClCompile Include="OBB.cpp">
-      <Filter>Source Files\Collidables</Filter>
-    </ClCompile>
     <ClCompile Include="IrrKlangAudioSystem.cpp">
       <Filter>Source Files\Audio System</Filter>
     </ClCompile>
     <ClCompile Include="AudioTestComponent.cpp">
       <Filter>Source Files\Audio System</Filter>
+    </ClCompile>
+    <ClCompile Include="RigidBodyComponent.cpp">
+      <Filter>Source Files\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="CollisionSystem.cpp">
+      <Filter>Source Files\Physics\Depreciated\CollisionSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="OBB.cpp">
+      <Filter>Source Files\Physics\Depreciated\Collidables</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
