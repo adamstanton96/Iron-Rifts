@@ -30,6 +30,10 @@ namespace AssimpLoader
 	//transform utilities
 	 aiMatrix4x4 GLMMat4ToAi(glm::mat4 mat);
 	 glm::mat4 AiToGLMMat4(aiMatrix4x4& in_mat);
+
+	 glm::quat AIquatToGLMquat(aiQuaternion aiQuat);
+	 glm::vec3 AItoGLMVec3(aiVector3D aivec);
+
 	 //Search and return a bone by name
 	 bone* FindBone(std::string name, std::vector<bone*>& bones);
 

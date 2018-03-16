@@ -1,11 +1,12 @@
 #include "skeleton.h"
+#include "AssimpLoader.h"
 
 
 skeleton::skeleton()
 {
 	time = start_time = end_time = 0;
 	active_animation = nullptr;
-
+	this->deltaTime = 0;
 	anim_loop = false;
 }
 
@@ -34,83 +35,34 @@ void skeleton::init(std::vector<bone*> bones, glm::mat4 globalInverseTransform)
 }
 
 
-bone* skeleton::FindBone(std::string name)
-{
-	for (int i = 0; i < bones.size(); i++)
-	{
-		if (bones.at(i)->name == name)
-			return bones.at(i);
-	}
-	return nullptr;
-}
-
-
-void skeleton::UpdateBoneMatsVector()
-{
-
-	if (bones.size() == 0)
-		return;
-
-	boneMats.clear();
-
-
-	for (int i = 0; i < 100; i++)
-	{
-		if (i > bones.size() - 1)
-		{
-			boneMats.push_back(glm::mat4(1.0));
-		}
-		else
-		{
-				glm::mat4 concatenated_transformation = (bones.at(i)->GetParentTransforms() * bones.at(i)->node->transformation);
-				boneMats.push_back(globalInverseTransform * concatenated_transformation * bones.at(i)->offset_matrix);
-		}
-	}
-
-}
-
-
-void skeleton::giveDeltaTime(double deltaT)
-{
-	deltaTime = deltaT;
-}
-
-std::vector<glm::mat4> skeleton::getBoneMats()
-{
-	return boneMats;
-}
-
-
 void skeleton::update()
 {
+	//Recalculates each bones transformation matrix
 	UpdateBoneMatsVector();
+	
 
+	//Update the shaders bone data. 6 is the shader ID used for animated meshes, temporarily hard coded shamefully.
 	if (boneMats.size() > 0)
-	{
-		//Update the shaders bone data
+	{	
 		glUseProgram(6);
 
-		int uniformIndex = glGetUniformLocation(6, "gBones");
-
+		GLint uniformIndex = glGetUniformLocation(6, "gBones");
 		glUniformMatrix4fv(uniformIndex, boneMats.size(), GL_FALSE,
 			glm::value_ptr(boneMats[0]));
-
 	}
 	else
 		std::cout << " Skeleton::Update - std vec BoneMats is empty." << std::endl;
 
 
-	for (int i = 0; i < bones.size(); i++)
-		bones.at(i)->UpdateKeyframeTransform(time);
 
-	//If we're not playing an animation, then just give up, do nothing.
+	//Only continue if there is an active animation
 	if (!anim_play)
 		return;
 
 	//Update the time variable by adding the delta time of the last frame
 	//It's * 0.001f because the delta time is in milliseconds, and we 
 	//need it in seconds.
-	time += deltaTime;// *0.001f;
+	time += deltaTime;// *0.001f;												//This multiplication made things too slow
 
 	//Make sure the time can't be less than our animation's start time.
 	if (time < start_time)
@@ -126,18 +78,50 @@ void skeleton::update()
 		}	
 		else
 		{
-			//Else, give up.
+
 			StopAnimating();
 		}
 			
 	}
 
-
-
-
-	
+	//UpdateKeyFrame() updates each bones transform depending on the time
+	//the animation is at (interpolates between keyframes)
+	for (int i = 0; i < bones.size(); i++)
+		bones.at(i)->UpdateKeyframeTransform(time);
 
 }
+
+
+
+
+void skeleton::UpdateBoneMatsVector()
+{
+
+	if (bones.size() == 0)
+		return;
+
+	boneMats.clear();
+
+
+	for (int i = 0; i < 100; i++)
+	{
+		glm::mat4 concatenated_transformation;
+
+		if (i > bones.size() - 1)
+		{
+			boneMats.push_back(glm::mat4(1.0));
+		}
+		else
+		{
+			concatenated_transformation = (bones.at(i)->GetParentTransforms() * bones.at(i)->node->transformation);
+			boneMats.push_back(globalInverseTransform * concatenated_transformation * bones.at(i)->offset_matrix);
+		}
+	}
+
+}
+
+
+
 
 
 
@@ -172,7 +156,7 @@ void skeleton::PlayAnimation(animation& anim, bool loop, bool reset_to_start)
 }
 
 
-//This function stops animating
+
 void skeleton::StopAnimating()
 {
 	time = end_time;
@@ -183,4 +167,26 @@ void skeleton::StopAnimating()
 void skeleton::SetIdleAnimation(animation* in_anim)
 {
 	idle_animation = in_anim;
+}
+
+
+bone* skeleton::FindBone(std::string name)
+{
+	for (int i = 0; i < bones.size(); i++)
+	{
+		if (bones.at(i)->name == name)
+			return bones.at(i);
+	}
+	return nullptr;
+}
+
+
+void skeleton::setDeltaTime(double deltaT)
+{
+	deltaTime = deltaT;
+}
+
+std::vector<glm::mat4> skeleton::getBoneMats()
+{
+	return boneMats;
 }

@@ -29,9 +29,9 @@ public:
 	void StopAnimating();
 
 	//Temporary hopefully
-	void giveDeltaTime(double dt)
+	void setSkeletonDeltaTime(double dt)
 	{
-		sceneLoaderSkeleton->giveDeltaTime(dt);
+		sceneLoaderSkeleton->setDeltaTime(dt);
 	}
 
 
@@ -55,5 +55,6 @@ private:
 
 	std::vector<animation> animations;
 
-
+	animation* Anim_Test_Idle;
+	animation* Anim_Test_Walk;
 };

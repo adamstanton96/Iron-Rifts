@@ -3,19 +3,20 @@
 ///////////////////////////////////////
 
 #include "bone.h"
+#include <glm/gtx/quaternion.hpp>
 
 
-bone::bone(int in_mesh, unsigned int in_id, std::string in_name, aiMatrix4x4 in_o_mat)
-{
-	id = in_id;
-	name = in_name;
-	offset_matrix = AssimpLoader::AiToGLMMat4(in_o_mat);
-
-	meshID = in_mesh;
-
-	parent_bone = nullptr;
-	node = nullptr;
-}
+//bone::bone(int in_mesh, unsigned int in_id, std::string in_name, aiMatrix4x4 in_o_mat)
+//{
+//	id = in_id;
+//	name = in_name;
+//	offset_matrix = AssimpLoader::AiToGLMMat4(in_o_mat);
+//
+//	meshID = in_mesh;
+//
+//	parent_bone = nullptr;
+//	node = nullptr;
+//}
 
 
 bone::bone(int in_mesh, unsigned int in_id, std::string in_name, glm::mat4 in_o_mat)
@@ -45,10 +46,12 @@ glm::mat4 bone::GetParentTransforms()
 		b = b->parent_bone;    //We set b to its own parent so the loop can continue.
 	}
 
-	glm::mat4 concatenated_transforms;
+	glm::mat4 concatenated_transforms(1);
 
 	for (int i = mats.size() - 1; i >= 0; i--)
 		concatenated_transforms *= mats.at(i);
+
+	curr->parent_transforms = concatenated_transforms;
 
 	return concatenated_transforms;
 }
@@ -132,7 +135,7 @@ glm::quat bone::CalcInterpolatedRotation(float time)
 
 	glm::quat val = glm::slerp(r1, r2, Factor);
 
-	return val;
+	return glm::normalize(val);
 }
 
 
@@ -150,10 +153,14 @@ void bone::UpdateKeyframeTransform(float time)
 							   
 
 	glm::mat4 mat(1);
+	
+
+
 
 	mat = glm::translate(mat, pos);
-	mat *= glm::mat4_cast(rot);
-	mat = glm::scale(mat, scale);
+	mat *= glm::toMat4(rot);
+	mat = glm::scale(mat, scale);	
 	
 	node->transformation = mat;
+	
 }

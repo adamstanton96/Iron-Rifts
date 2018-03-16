@@ -1,25 +1,24 @@
 #include "openglUtils.h"
 
 
-
 char * texAnimVert =
 {
 	"	// textured.vert												\n"
 	"	// use textures, but no lighting								\n"
 	"	#version 430													\n"
 	"																	\n"
-	"	uniform mat4 modelview;											\n"
+	"uniform mat4 modelview;											\n"
 	"uniform mat4 projection;											\n"
 	"																	\n"
 	"in  vec3 in_Position;												\n"
 	"//in  vec3 in_Colour; // colour not used with lighting				\n"
 	"in  vec3 in_Normal;												\n"
 
-	"in  ivec4 in_boneIDs;													\n"
-	"in  vec4 in_boneWeights; 												\n"
+	"in ivec4 in_boneIDs;												\n"
+	"in vec4 in_boneWeights; 											\n"
 
 	"const int MAX_BONES = 100;											\n"
-	"uniform mat4 gBones[MAX_BONES];									\n"
+	"uniform mat4x4 gBones[MAX_BONES];									\n"
 
 	"out vec4 id;														\n"
 	"out vec4 weight;													\n"
@@ -52,19 +51,21 @@ char * texAnimVert =
 	"																	\n"
 	"	ex_L = normalize(lightPosition.xyz - vertexPosition.xyz);		\n"
 	"																	\n"
-	"																	\n"
-	"mat4 BMatrix = gBones[int(in_boneIDs[0])] * in_boneWeights[0];		\n"
-	"BMatrix += gBones[int(in_boneIDs[1])] * in_boneWeights[1];			\n"
-	"BMatrix += gBones[int(in_boneIDs[2])] * in_boneWeights[2];			\n"
-	"BMatrix += gBones[int(in_boneIDs[3])] * in_boneWeights[3];			\n"
 
-	"	 debugColour = vec4(in_boneWeights);							\n"
-	
-	"	vec4 vertPos =  BMatrix *  vec4(in_Position,1.0)  ;				\n"
-	"	gl_Position = (projection  * modelview) * vertPos  ;			\n"
+	"	mat4x4 BMatrix;													\n"
+	"	BMatrix = gBones[ in_boneIDs.x ] * in_boneWeights.x;			\n"
+	"	BMatrix += gBones[ in_boneIDs.y ] * in_boneWeights.y;			\n"
+	"	BMatrix += gBones[ in_boneIDs.z ] * in_boneWeights.z;			\n"
+	"	BMatrix += gBones[ in_boneIDs.w ] * in_boneWeights.w;			\n"
 	"																	\n"
-	"	ex_TexCoord = in_TexCoord;										\n"
-	"}																	\n"
+	"																	\n"
+	"																	\n"
+	"	debugColour = vec4(in_boneWeights.xyzw);											\n"
+	
+	"	gl_Position = projection  * modelview  * BMatrix * vec4(in_Position,1.0);			\n"
+	"																						\n"
+	"	ex_TexCoord = in_TexCoord;															\n"
+	"}																						\n"
 
 };
 
@@ -145,6 +146,7 @@ char * texAnimFrag =
 		//this lighting values below are somehow stretching the model, wut
 	"	//out_Color= (diffuseI + specularI +ambientI)*texture(textureUnit0, ex_TexCoord);			\n"
 	"   out_Color= 	debugColour;	\n"
+	"   //out_Color= 	vec4(1,1,1,1);	\n"
 	" // out_Color= 	texture(textureUnit0, ex_TexCoord);	\n"
 
 	"}																							\n"
@@ -462,19 +464,11 @@ namespace OpenglUtils
 		glBindAttribLocation(p, RT3D_COLOUR, "in_Color");
 		glBindAttribLocation(p, RT3D_NORMAL, "in_Normal");
 		glBindAttribLocation(p, RT3D_TEXCOORD, "in_TexCoord");
-
-		////////
 		glBindAttribLocation(p, RT3D_BONEIDS, "in_boneIDs");
 		glBindAttribLocation(p, RT3D_BONEWEIGHTS, "in_boneWeights");
-		///////////
-		
+
 		glLinkProgram(p);
 		glUseProgram(p);
-
-		///memset(&vs[0], 0, sizeof(vs));
-		///memset(&fs[0], 0, sizeof(fs));
-		///delete[] vs; // dont forget to free allocated memory
-		///delete[] fs; // we allocated this in the loadFile function...
 
 		return p;
 	}
@@ -577,11 +571,10 @@ namespace OpenglUtils
 		glGenVertexArrays(1, &VAO);
 		glBindVertexArray(VAO);
 
-		GLuint *pMeshBuffers = new GLuint[7];
+		GLuint *pMeshBuffers = new GLuint[20];
 
 
 		if (vertices == nullptr) {
-			// cant create a mesh without vertices... oops
 			cout << "ERROR: Attempt to create a mesh with no vertices" << endl;
 		}
 
@@ -590,13 +583,37 @@ namespace OpenglUtils
 		glGenBuffers(1, &VBO);
 
 
-
 		// VBO for vertex data
 		glBindBuffer(GL_ARRAY_BUFFER, VBO);
 		glBufferData(GL_ARRAY_BUFFER, numVerts * sizeof(GLfloat), vertices, GL_STATIC_DRAW);
 		glVertexAttribPointer((GLuint)RT3D_VERTEX, 3, GL_FLOAT, GL_FALSE, 0, 0);
 		glEnableVertexAttribArray(RT3D_VERTEX);
 		pMeshBuffers[RT3D_VERTEX] = VBO;
+
+
+
+		//////////////////////////////////////
+		//There are 4 weights and ID's per vertex (number of bone id/weights = numVerts/3 * 4)
+		// VBO for bone IDs data
+		if (boneids != nullptr) {
+			glGenBuffers(1, &VBO);
+			glBindBuffer(GL_ARRAY_BUFFER, VBO);
+			glBufferData(GL_ARRAY_BUFFER, ((numVerts / 3) * 4) * sizeof(GLuint), boneids, GL_STATIC_DRAW);
+			glVertexAttribPointer((GLuint)RT3D_BONEIDS, 4, GL_INT, GL_FALSE, 16, 0);						//tutorial has this at true
+			glEnableVertexAttribArray(RT3D_BONEIDS);
+			pMeshBuffers[RT3D_BONEIDS] = VBO;
+		}
+
+		// VBO for bone weights data
+		if (boneWeights != nullptr) {
+			glGenBuffers(1, &VBO);
+			glBindBuffer(GL_ARRAY_BUFFER, VBO);
+			glBufferData(GL_ARRAY_BUFFER, ((numVerts / 3) * 4) * sizeof(GLfloat), boneWeights, GL_STATIC_DRAW);
+			glVertexAttribPointer((GLuint)RT3D_BONEWEIGHTS, 4, GL_FLOAT, GL_FALSE, 16, 0);					//tutorial has this at true
+			glEnableVertexAttribArray(RT3D_BONEWEIGHTS);
+			pMeshBuffers[RT3D_BONEWEIGHTS] = VBO;
+		}
+		///////////////////////////////////////////////
 
 
 		// VBO for colour data
@@ -639,29 +656,7 @@ namespace OpenglUtils
 		}
 
 
-		//////////////////////////////////////
-		// VBO for bone IDs data
-		if (boneids != nullptr) {
-			glGenBuffers(1, &VBO);
-			glBindBuffer(GL_ARRAY_BUFFER, VBO);
-			glBufferData(GL_ARRAY_BUFFER, ((numVerts/3) * 4) * sizeof(GLuint), boneids, GL_STATIC_DRAW);
-			glVertexAttribPointer((GLuint)RT3D_BONEIDS, 4, GL_INT, GL_FALSE, 0, 0);						//tutorial has this at true
-			glEnableVertexAttribArray(RT3D_BONEIDS);
-			pMeshBuffers[RT3D_BONEIDS] = VBO;
-		}
-
-		// VBO for bone weights data
-		if (boneWeights != nullptr) {
-			glGenBuffers(1, &VBO);
-			glBindBuffer(GL_ARRAY_BUFFER, VBO);
-			glBufferData(GL_ARRAY_BUFFER, ((numVerts/3) * 4) * sizeof(GLfloat), boneWeights, GL_STATIC_DRAW);
-			glVertexAttribPointer((GLfloat)RT3D_BONEWEIGHTS, 4, GL_FLOAT, GL_FALSE, 0, 0);					//tutorial has this at true
-			glEnableVertexAttribArray(RT3D_BONEWEIGHTS);
-			pMeshBuffers[RT3D_BONEWEIGHTS] = VBO;
-		}
-
-
-		///////////////////////////////////////////////
+	
 		// unbind vertex array
 		glBindVertexArray(0);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);

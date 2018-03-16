@@ -32,13 +32,13 @@ public:
 
 
 	std::vector<bone*> bones;
-	glm::mat4 globalInverseTransform;
+	glm::mat4 globalInverseTransform;	//this is calculated in AnimatedMeshComponent::loadObject
 	std::vector<glm::mat4> boneMats;
 
 
 
 
-	void giveDeltaTime(double time);
+	void setDeltaTime(double time);
 
 	float time;
 
