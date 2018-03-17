@@ -523,7 +523,7 @@ Ray IronRiftsPhysicsSystem::castRay(glm::vec3 origin, glm::vec3 direction, float
 {
 	Ray ray;
 	ray.startPoint = origin;
-	ray.endPoint = origin + direction * magnitude;
+	ray.endPoint = origin + (direction * magnitude);
 	return ray;
 }
 
