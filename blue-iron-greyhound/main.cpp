@@ -128,10 +128,10 @@ int main(int argc, char *argv[])
 
 	////////////////////////////////////////////////////
 
-	//road barrier 2
-	GameObject *barrier2 = new GameObject("Left Barrier");
-	barrier2->setPosition(glm::vec3(10.0f, -5.0f, 90.0f));
-	barrier2->setScaling(glm::vec3(0.5f, 0.5f, 0.5f));
+	//Green Demo Cube
+	GameObject *barrier2 = new GameObject("Green Cube");
+	barrier2->setPosition(glm::vec3(5.0f, -5.0f, 100.0f));
+	barrier2->setScaling(glm::vec3(5.5f, 5.5f, 5.5f));
 	barrier2->setRotationAxis(glm::vec3(0, 1, 0));
 	barrier2->setRotationDegrees(45);
 
@@ -144,17 +144,17 @@ int main(int argc, char *argv[])
 	MeshComponent* barriermesh2 = new MeshComponent("test");
 	barrier2->addComponent(barriermesh2);
 	barriermesh2->setRenderer(renderer);
-	barriermesh2->loadObject("../../assets/BARRIERE.obj");
-	barriermesh2->loadTexture("../../assets/roadbarrier/BARRIERE.bmp");
+	barriermesh2->loadObject("../../assets/blenderTest.dae");
+	barriermesh2->loadTexture("../../assets/tex/grass.bmp");
 
 	objectList.push_back(barrier2);
 	///////////////////////////////////////////////////////////////////
 	////////////////////////////////////////////////////
 
-	//road barrier 1
-	GameObject *barrier = new GameObject("Right Barrier");
-	barrier->setPosition(glm::vec3(-20.0f, -5.0f, 90.0f));
-	barrier->setScaling(glm::vec3(0.5f, 0.5f, 0.5f));
+	//Green Demo Cube
+	GameObject *barrier = new GameObject("Blue Cube");
+	barrier->setPosition(glm::vec3(-15.0f, -5.0f, 100.0f));
+	barrier->setScaling(glm::vec3(5.5f, 5.5f, 5.5f));
 	barrier->setRotationAxis(glm::vec3(1, 0, 0));
 	barrier->setRotationDegrees(0);
 
@@ -167,35 +167,57 @@ int main(int argc, char *argv[])
 	MeshComponent* barriermesh = new MeshComponent("test");
 	barrier->addComponent(barriermesh);
 	barriermesh->setRenderer(renderer);
-	barriermesh->loadObject("../../assets/BARRIERE.obj");
-	barriermesh->loadTexture("../../assets/roadbarrier/BARRIERE.bmp");
+	barriermesh->loadObject("../../assets/blenderTest.dae");
+	barriermesh->loadTexture("../../assets/tex/habitatWater.bmp");
 
 	objectList.push_back(barrier);
 
 	///////////////////////////////////////////////////////////////////
 
-	//road barrier 2
-	GameObject *cubenCigar = new GameObject("Big Ole Cubey Boi");
-	cubenCigar->setPosition(glm::vec3(5.0f, -5.0f, 140.0f));
-	cubenCigar->setScaling(glm::vec3(5.5f, 5.5f, 5.5f));
-	cubenCigar->setRotationAxis(glm::vec3(0, 1, 0));
-	cubenCigar->setRotationDegrees(45);
+	//Raycast Test Cube 1
+	GameObject *Raycast = new GameObject("Brown Cube");
+	Raycast->setPosition(glm::vec3(5.0f, -5.0f, 140.0f));
+	Raycast->setScaling(glm::vec3(5.5f, 5.5f, 5.5f));
+	Raycast->setRotationAxis(glm::vec3(0, 1, 0));
+	Raycast->setRotationDegrees(45);
 
-	RigidBodyComponent* rigidBody91 = new RigidBodyComponent("Rigid Body");
-	cubenCigar->addComponent(rigidBody91);
-	rigidBody91->setCollisionSystem(collisionsystem);
-	rigidBody91->setBodyType("STATIC");
-	rigidBody91->setBoundingType("OBB");
+	RigidBodyComponent* RaycastRigid = new RigidBodyComponent("Rigid Body");
+	Raycast->addComponent(RaycastRigid);
+	RaycastRigid->setCollisionSystem(collisionsystem);
+	RaycastRigid->setBodyType("STATIC");
+	RaycastRigid->setBoundingType("OBB");
 
-	MeshComponent* barriermesh61 = new MeshComponent("test");
-	cubenCigar->addComponent(barriermesh61);
-	barriermesh61->setRenderer(renderer);
-	barriermesh61->loadObject("../../assets/blenderTest.dae");
-	barriermesh61->loadTexture("../../assets/roadbarrier/BARRIERE.bmp");
+	MeshComponent* RaycastMesh = new MeshComponent("test");
+	Raycast->addComponent(RaycastMesh);
+	RaycastMesh->setRenderer(renderer);
+	RaycastMesh->loadObject("../../assets/blenderTest.dae");
+	RaycastMesh->loadTexture("../../assets/tex/habitatWood2.bmp");
 
-	objectList.push_back(cubenCigar);
-	///////////////////////////////////////////////////////////////////
-	////////////////////////////////////////////////////
+	objectList.push_back(Raycast);
+
+
+	//Raycast Test Cube 2
+	GameObject *Raycast2 = new GameObject("Grey Cube");
+	Raycast2->setPosition(glm::vec3(-15.0f, -5.0f, 140.0f));
+	Raycast2->setScaling(glm::vec3(5.5f, 5.5f, 5.5f));
+	Raycast2->setRotationAxis(glm::vec3(0, 1, 0));
+	Raycast2->setRotationDegrees(45);
+
+	RigidBodyComponent* Raycast2Rigid = new RigidBodyComponent("Rigid Body");
+	Raycast2->addComponent(Raycast2Rigid);
+	Raycast2Rigid->setCollisionSystem(collisionsystem);
+	Raycast2Rigid->setBodyType("STATIC");
+	Raycast2Rigid->setBoundingType("OBB");
+
+	MeshComponent* Raycast2Mesh = new MeshComponent("test");
+	Raycast2->addComponent(Raycast2Mesh);
+	Raycast2Mesh->setRenderer(renderer);
+	Raycast2Mesh->loadObject("../../assets/blenderTest.dae");
+	Raycast2Mesh->loadTexture("../../assets/plainbuilding/iron.bmp");
+
+	objectList.push_back(Raycast2);
+	
+	/////////////////////////////////////////////////////////////////
 
 	//Ground Plane
 	GameObject *GroundPlane = new GameObject("Collada");
@@ -231,174 +253,174 @@ int main(int argc, char *argv[])
 
 	objectList.push_back(GroundPlane2);
 
-	//Wall 1
-	GameObject *walls = new GameObject("Collada");
-	walls->setPosition(glm::vec3(0.0f, 10.0f, -25.0f));
-	walls->setScaling(glm::vec3(60, 0.5f, 60));
-	walls->setRotationAxis(glm::vec3(1, 0, 0));
-	walls->setRotationDegrees(90);
-	RigidBodyComponent* rigidBody6 = new RigidBodyComponent("Rigid Body");
-	walls->addComponent(rigidBody6);
-	rigidBody6->setCollisionSystem(collisionsystem);
-	rigidBody6->setBodyType("STATIC");
-	MeshComponent* wallmesh = new MeshComponent("cube");
-	walls->addComponent(wallmesh);
-	wallmesh->setRenderer(renderer);
-	wallmesh->loadObject("../../assets/cube_with_2UVs.DAE");
-	wallmesh->loadTexture("../../assets/tex/scifi.bmp");
+	////Wall 1
+	//GameObject *walls = new GameObject("Collada");
+	//walls->setPosition(glm::vec3(0.0f, 10.0f, -25.0f));
+	//walls->setScaling(glm::vec3(60, 0.5f, 60));
+	//walls->setRotationAxis(glm::vec3(1, 0, 0));
+	//walls->setRotationDegrees(90);
+	//RigidBodyComponent* rigidBody6 = new RigidBodyComponent("Rigid Body");
+	//walls->addComponent(rigidBody6);
+	//rigidBody6->setCollisionSystem(collisionsystem);
+	//rigidBody6->setBodyType("STATIC");
+	//MeshComponent* wallmesh = new MeshComponent("cube");
+	//walls->addComponent(wallmesh);
+	//wallmesh->setRenderer(renderer);
+	//wallmesh->loadObject("../../assets/cube_with_2UVs.DAE");
+	//wallmesh->loadTexture("../../assets/tex/scifi.bmp");
 
-	objectList.push_back(walls);
-	
-	//Wall 2
-	GameObject *walls2 = new GameObject("Collada");
-	walls2->setPosition(glm::vec3(-60.0f, -50.0f, -25.0f));
-	walls2->setScaling(glm::vec3(0.5f, 60, 60));
-	walls2->setRotationAxis(glm::vec3(NULL, NULL, NULL));
-	RigidBodyComponent* rigidBody7 = new RigidBodyComponent("Rigid Body");
-	walls2->addComponent(rigidBody7);
-	rigidBody7->setCollisionSystem(collisionsystem);
-	rigidBody7->setBodyType("STATIC");
-	MeshComponent* wallmesh2 = new MeshComponent("cube");
-	walls2->addComponent(wallmesh2);
-	wallmesh2->setRenderer(renderer);
-	wallmesh2->loadObject("../../assets/cube_with_2UVs.DAE");
-	wallmesh2->loadTexture("../../assets/tex/scifi.bmp");
+	//objectList.push_back(walls);
+	//
+	////Wall 2
+	//GameObject *walls2 = new GameObject("Collada");
+	//walls2->setPosition(glm::vec3(-60.0f, -50.0f, -25.0f));
+	//walls2->setScaling(glm::vec3(0.5f, 60, 60));
+	//walls2->setRotationAxis(glm::vec3(NULL, NULL, NULL));
+	//RigidBodyComponent* rigidBody7 = new RigidBodyComponent("Rigid Body");
+	//walls2->addComponent(rigidBody7);
+	//rigidBody7->setCollisionSystem(collisionsystem);
+	//rigidBody7->setBodyType("STATIC");
+	//MeshComponent* wallmesh2 = new MeshComponent("cube");
+	//walls2->addComponent(wallmesh2);
+	//wallmesh2->setRenderer(renderer);
+	//wallmesh2->loadObject("../../assets/cube_with_2UVs.DAE");
+	//wallmesh2->loadTexture("../../assets/tex/scifi.bmp");
 
-	objectList.push_back(walls2);
+	//objectList.push_back(walls2);
 
-	//Wall 2
-	GameObject *walls3 = new GameObject("Collada");
-	walls3->setPosition(glm::vec3(60.0f, -50.0f, -25.0f));
-	walls3->setScaling(glm::vec3(0.5f, 60, 60));
-	walls3->setRotationAxis(glm::vec3(NULL, NULL, NULL));
-	RigidBodyComponent* rigidBody8 = new RigidBodyComponent("Rigid Body");
-	walls3->addComponent(rigidBody8);
-	rigidBody8->setCollisionSystem(collisionsystem);
-	rigidBody8->setBodyType("STATIC");
-	MeshComponent* wallmesh3 = new MeshComponent("cube");
-	walls3->addComponent(wallmesh3);
-	wallmesh3->setRenderer(renderer);
-	wallmesh3->loadObject("../../assets/cube_with_2UVs.DAE");
-	wallmesh3->loadTexture("../../assets/tex/scifi.bmp");
+	////Wall 2
+	//GameObject *walls3 = new GameObject("Collada");
+	//walls3->setPosition(glm::vec3(60.0f, -50.0f, -25.0f));
+	//walls3->setScaling(glm::vec3(0.5f, 60, 60));
+	//walls3->setRotationAxis(glm::vec3(NULL, NULL, NULL));
+	//RigidBodyComponent* rigidBody8 = new RigidBodyComponent("Rigid Body");
+	//walls3->addComponent(rigidBody8);
+	//rigidBody8->setCollisionSystem(collisionsystem);
+	//rigidBody8->setBodyType("STATIC");
+	//MeshComponent* wallmesh3 = new MeshComponent("cube");
+	//walls3->addComponent(wallmesh3);
+	//wallmesh3->setRenderer(renderer);
+	//wallmesh3->loadObject("../../assets/cube_with_2UVs.DAE");
+	//wallmesh3->loadTexture("../../assets/tex/scifi.bmp");
 
-	objectList.push_back(walls3);
-	
-	// Wall 4
-	GameObject *walls4 = new GameObject("Collada");
-	walls4->setPosition(glm::vec3(60.0f, -50.0f, 80.0f));
-	walls4->setScaling(glm::vec3(0.5f, 60, 60));
-	walls4->setRotationAxis(glm::vec3(NULL, NULL, NULL));
-	RigidBodyComponent* rigidBody9 = new RigidBodyComponent("Rigid Body");
-	walls4->addComponent(rigidBody9);
-	rigidBody9->setCollisionSystem(collisionsystem);
-	rigidBody9->setBodyType("STATIC");
-	MeshComponent* wallmesh4 = new MeshComponent("cube");
-	walls4->addComponent(wallmesh4);
-	wallmesh4->setRenderer(renderer);
-	wallmesh4->loadObject("../../assets/cube_with_2UVs.DAE");
-	wallmesh4->loadTexture("../../assets/tex/scifi.bmp");
+	//objectList.push_back(walls3);
+	//
+	//// Wall 4
+	//GameObject *walls4 = new GameObject("Collada");
+	//walls4->setPosition(glm::vec3(60.0f, -50.0f, 80.0f));
+	//walls4->setScaling(glm::vec3(0.5f, 60, 60));
+	//walls4->setRotationAxis(glm::vec3(NULL, NULL, NULL));
+	//RigidBodyComponent* rigidBody9 = new RigidBodyComponent("Rigid Body");
+	//walls4->addComponent(rigidBody9);
+	//rigidBody9->setCollisionSystem(collisionsystem);
+	//rigidBody9->setBodyType("STATIC");
+	//MeshComponent* wallmesh4 = new MeshComponent("cube");
+	//walls4->addComponent(wallmesh4);
+	//wallmesh4->setRenderer(renderer);
+	//wallmesh4->loadObject("../../assets/cube_with_2UVs.DAE");
+	//wallmesh4->loadTexture("../../assets/tex/scifi.bmp");
 
-	objectList.push_back(walls4);
-	
-	//Wall 5
-	GameObject *walls5 = new GameObject("Collada");
-	walls5->setPosition(glm::vec3(-60.0f, -50.0f, 80.0f));
-	walls5->setScaling(glm::vec3(0.5f, 60, 60));
-	walls5->setRotationAxis(glm::vec3(NULL, NULL, NULL));
-	MeshComponent* wallmesh5 = new MeshComponent("cube");
-	walls5->addComponent(wallmesh5);
-	wallmesh5->setRenderer(renderer);
-	wallmesh5->loadObject("../../assets/cube_with_2UVs.DAE");
-	wallmesh5->loadTexture("../../assets/tex/scifi.bmp");
+	//objectList.push_back(walls4);
+	//
+	////Wall 5
+	//GameObject *walls5 = new GameObject("Collada");
+	//walls5->setPosition(glm::vec3(-60.0f, -50.0f, 80.0f));
+	//walls5->setScaling(glm::vec3(0.5f, 60, 60));
+	//walls5->setRotationAxis(glm::vec3(NULL, NULL, NULL));
+	//MeshComponent* wallmesh5 = new MeshComponent("cube");
+	//walls5->addComponent(wallmesh5);
+	//wallmesh5->setRenderer(renderer);
+	//wallmesh5->loadObject("../../assets/cube_with_2UVs.DAE");
+	//wallmesh5->loadTexture("../../assets/tex/scifi.bmp");
 
-	objectList.push_back(walls5);
+	//objectList.push_back(walls5);
 
-	//Wall 6
-	GameObject *walls6 = new GameObject("Collada");
-	walls6->setPosition(glm::vec3(0.0f, 10.0f, 170.0f));
-	walls6->setScaling(glm::vec3(60, 0.5f, 60));
-	walls6->setRotationAxis(glm::vec3(1, 0, 0));
-	walls6->setRotationDegrees(90);
-	MeshComponent* wallmesh6 = new MeshComponent("cube");
-	walls6->addComponent(wallmesh6);
-	wallmesh6->setRenderer(renderer);
-	wallmesh6->loadObject("../../assets/cube_with_2UVs.DAE");
-	wallmesh6->loadTexture("../../assets/tex/scifi.bmp");
-	
-	objectList.push_back(walls6);
-	
+	////Wall 6
+	//GameObject *walls6 = new GameObject("Collada");
+	//walls6->setPosition(glm::vec3(0.0f, 10.0f, 170.0f));
+	//walls6->setScaling(glm::vec3(60, 0.5f, 60));
+	//walls6->setRotationAxis(glm::vec3(1, 0, 0));
+	//walls6->setRotationDegrees(90);
+	//MeshComponent* wallmesh6 = new MeshComponent("cube");
+	//walls6->addComponent(wallmesh6);
+	//wallmesh6->setRenderer(renderer);
+	//wallmesh6->loadObject("../../assets/cube_with_2UVs.DAE");
+	//wallmesh6->loadTexture("../../assets/tex/scifi.bmp");
+	//
+	//objectList.push_back(walls6);
+	//
 
-	//Research Building Object
-	GameObject *buildingObject = new GameObject("old building");
-	buildingObject->setPosition(glm::vec3(-5.0f, -5.0f, 0.0f));
-	buildingObject->setScaling(glm::vec3(3.0f, 3.0f, 3.0f));
-	buildingObject->setRotationAxis(glm::vec3(-1.0f, 0.0f, 0.0f));
-	buildingObject->setRotationDegrees(90);
-	MeshComponent* buildingMesh = new MeshComponent("test");
-	buildingObject->addComponent(buildingMesh);
-	buildingMesh->setRenderer(renderer);
-	buildingMesh->loadObject("../../assets/building.dae");
-	
+	////Research Building Object
+	//GameObject *buildingObject = new GameObject("old building");
+	//buildingObject->setPosition(glm::vec3(-5.0f, -5.0f, 0.0f));
+	//buildingObject->setScaling(glm::vec3(3.0f, 3.0f, 3.0f));
+	//buildingObject->setRotationAxis(glm::vec3(-1.0f, 0.0f, 0.0f));
+	//buildingObject->setRotationDegrees(90);
+	//MeshComponent* buildingMesh = new MeshComponent("test");
+	//buildingObject->addComponent(buildingMesh);
+	//buildingMesh->setRenderer(renderer);
+	//buildingMesh->loadObject("../../assets/building.dae");
+	//
 
-	buildingMesh->loadTexture("../../assets/tex/sandstoneWall1.bmp");
-	buildingMesh->loadTexture("../../assets/tex/tubes.bmp");
-	buildingMesh->loadTexture("../../assets/tex/building1.bmp");
-	buildingMesh->loadTexture("../../assets/tex/sandstoneWall1.bmp");
-	buildingMesh->loadTexture("../../assets/tex/sandstoneWall1.bmp");
-	buildingMesh->loadTexture("../../assets/tex/sandstoneWall1.bmp");
-	buildingMesh->loadTexture("../../assets/tex/sandstoneWall2.bmp");
-	buildingMesh->loadTexture("../../assets/tex/sandstoneWall2.bmp");
-	buildingMesh->loadTexture("../../assets/tex/tubes.bmp");
-	buildingMesh->loadTexture("../../assets/tex/tubes.bmp");
-	buildingMesh->loadTexture("../../assets/tex/fan1.bmp");
-	buildingMesh->loadTexture("../../assets/tex/satDish.bmp");
-	buildingMesh->loadTexture("../../assets/tex/building1.bmp");
-	buildingMesh->loadTexture("../../assets/tex/tubes.bmp");
+	//buildingMesh->loadTexture("../../assets/tex/sandstoneWall1.bmp");
+	//buildingMesh->loadTexture("../../assets/tex/tubes.bmp");
+	//buildingMesh->loadTexture("../../assets/tex/building1.bmp");
+	//buildingMesh->loadTexture("../../assets/tex/sandstoneWall1.bmp");
+	//buildingMesh->loadTexture("../../assets/tex/sandstoneWall1.bmp");
+	//buildingMesh->loadTexture("../../assets/tex/sandstoneWall1.bmp");
+	//buildingMesh->loadTexture("../../assets/tex/sandstoneWall2.bmp");
+	//buildingMesh->loadTexture("../../assets/tex/sandstoneWall2.bmp");
+	//buildingMesh->loadTexture("../../assets/tex/tubes.bmp");
+	//buildingMesh->loadTexture("../../assets/tex/tubes.bmp");
+	//buildingMesh->loadTexture("../../assets/tex/fan1.bmp");
+	//buildingMesh->loadTexture("../../assets/tex/satDish.bmp");
+	//buildingMesh->loadTexture("../../assets/tex/building1.bmp");
+	//buildingMesh->loadTexture("../../assets/tex/tubes.bmp");
 
-	objectList.push_back(buildingObject);
+	//objectList.push_back(buildingObject);
 
 
-	//watchtower
-	GameObject *watchTower = new GameObject("watch tower");
-	watchTower->setPosition(glm::vec3(-40.0f, -5.0f, 70.0f));
-	watchTower->setScaling(glm::vec3(4.0f, 4.0f, 4.0f));
-	watchTower->setRotationAxis(glm::vec3(-1, 0, 0));
-	watchTower->setRotationDegrees(90);
-	RigidBodyComponent* rigidBody1 = new RigidBodyComponent("Rigid Body");
-	watchTower->addComponent(rigidBody1);
-	rigidBody1->setCollisionSystem(collisionsystem);
-	rigidBody1->setBodyType("STATIC");
-	MeshComponent* watchTowerMesh = new MeshComponent("test");
-	watchTower->addComponent(watchTowerMesh);
-	watchTowerMesh->setRenderer(renderer);
-	watchTowerMesh->loadTexture("../../assets/plainbuilding/iron.bmp");
-	watchTowerMesh->loadObject("../../assets/watchtower.dae");
-	
-	objectList.push_back(watchTower);
+	////watchtower
+	//GameObject *watchTower = new GameObject("watch tower");
+	//watchTower->setPosition(glm::vec3(-40.0f, -5.0f, 70.0f));
+	//watchTower->setScaling(glm::vec3(4.0f, 4.0f, 4.0f));
+	//watchTower->setRotationAxis(glm::vec3(-1, 0, 0));
+	//watchTower->setRotationDegrees(90);
+	//RigidBodyComponent* rigidBody1 = new RigidBodyComponent("Rigid Body");
+	//watchTower->addComponent(rigidBody1);
+	//rigidBody1->setCollisionSystem(collisionsystem);
+	//rigidBody1->setBodyType("STATIC");
+	//MeshComponent* watchTowerMesh = new MeshComponent("test");
+	//watchTower->addComponent(watchTowerMesh);
+	//watchTowerMesh->setRenderer(renderer);
+	//watchTowerMesh->loadTexture("../../assets/plainbuilding/iron.bmp");
+	//watchTowerMesh->loadObject("../../assets/watchtower.dae");
+	//
+	//objectList.push_back(watchTower);
 
-	//TRASH PILE
-	GameObject *trashPile = new GameObject("old building");
-	trashPile->setPosition(glm::vec3(40.0f, -5.0f, 30.0f));
-	trashPile->setScaling(glm::vec3(0.5f, 0.5f, 0.5f));
-	trashPile->setRotationAxis(glm::vec3(0, 0, 0));
-	trashPile->setRotationDegrees(90);
-	RigidBodyComponent* rigidBody10 = new RigidBodyComponent("Rigid Body");
-	trashPile->addComponent(rigidBody10);
-	rigidBody10->setCollisionSystem(collisionsystem);
-	rigidBody10->setBodyType("STATIC");
-	MeshComponent* trashmesh = new MeshComponent("test");
-	trashPile->addComponent(trashmesh);
-	trashmesh->setRenderer(renderer);
-	trashmesh->loadObject("../../assets/item01.obj");
-	
-	trashmesh->loadTexture("../../assets/Trash/damagedwood.bmp");
-	trashmesh->loadTexture("../../assets/Trash/mossyConcrete.bmp");
-	trashmesh->loadTexture("../../assets/Trash/scratchedblue.bmp");
-	trashmesh->loadTexture("../../assets/Trash/stone.bmp");
-	trashmesh->loadTexture("../../assets/Trash/scratchedmetal.bmp");
-	trashmesh->loadTexture("../../assets/Trash/rustmetal.bmp");
-	
-	objectList.push_back(trashPile);
+	////TRASH PILE
+	//GameObject *trashPile = new GameObject("old building");
+	//trashPile->setPosition(glm::vec3(40.0f, -5.0f, 30.0f));
+	//trashPile->setScaling(glm::vec3(0.5f, 0.5f, 0.5f));
+	//trashPile->setRotationAxis(glm::vec3(0, 0, 0));
+	//trashPile->setRotationDegrees(90);
+	//RigidBodyComponent* rigidBody10 = new RigidBodyComponent("Rigid Body");
+	//trashPile->addComponent(rigidBody10);
+	//rigidBody10->setCollisionSystem(collisionsystem);
+	//rigidBody10->setBodyType("STATIC");
+	//MeshComponent* trashmesh = new MeshComponent("test");
+	//trashPile->addComponent(trashmesh);
+	//trashmesh->setRenderer(renderer);
+	//trashmesh->loadObject("../../assets/item01.obj");
+	//
+	//trashmesh->loadTexture("../../assets/Trash/damagedwood.bmp");
+	//trashmesh->loadTexture("../../assets/Trash/mossyConcrete.bmp");
+	//trashmesh->loadTexture("../../assets/Trash/scratchedblue.bmp");
+	//trashmesh->loadTexture("../../assets/Trash/stone.bmp");
+	//trashmesh->loadTexture("../../assets/Trash/scratchedmetal.bmp");
+	//trashmesh->loadTexture("../../assets/Trash/rustmetal.bmp");
+	//
+	//objectList.push_back(trashPile);
 
 	////road barrier 1
 	//GameObject *barrier = new GameObject("old building");
@@ -438,31 +460,31 @@ int main(int argc, char *argv[])
 	//planet in the sky
 
 
-	GameObject *AlienPlanet = new GameObject("old building");
-	AlienPlanet->setPosition(glm::vec3(-200, 200, -300));
-	AlienPlanet->setScaling(glm::vec3(50, 50, 50));
-	AlienPlanet->setRotationAxis(glm::vec3(NULL, NULL, NULL));
-	MeshComponent* AlienPlanetMesh = new MeshComponent("test");
-	AlienPlanet->addComponent(AlienPlanetMesh);
-	AlienPlanetMesh->setRenderer(renderer);
-	AlienPlanetMesh->loadObject("../../assets/AlienPlanet2.dae");
-	AlienPlanetMesh->loadTexture("../../assets/tex/AlienPlanet.bmp");
+	//GameObject *AlienPlanet = new GameObject("old building");
+	//AlienPlanet->setPosition(glm::vec3(-200, 200, -300));
+	//AlienPlanet->setScaling(glm::vec3(50, 50, 50));
+	//AlienPlanet->setRotationAxis(glm::vec3(NULL, NULL, NULL));
+	//MeshComponent* AlienPlanetMesh = new MeshComponent("test");
+	//AlienPlanet->addComponent(AlienPlanetMesh);
+	//AlienPlanetMesh->setRenderer(renderer);
+	//AlienPlanetMesh->loadObject("../../assets/AlienPlanet2.dae");
+	//AlienPlanetMesh->loadTexture("../../assets/tex/AlienPlanet.bmp");
 
-	objectList.push_back(AlienPlanet);
+	//objectList.push_back(AlienPlanet);
 
-	//Not showing needs a change of texture
-	GameObject *AlienPlanet2 = new GameObject("old building");
-	AlienPlanet2->setPosition(glm::vec3(200, 200, -300));
-	AlienPlanet2->setScaling(glm::vec3(50, 50, 50));
-	AlienPlanet2->setRotationAxis(glm::vec3(NULL, NULL, NULL));
-	MeshComponent* AlienPlanetMesh2= new MeshComponent("test");
-	AlienPlanet2->addComponent(AlienPlanetMesh2);
-	AlienPlanetMesh2->setRenderer(renderer);
-	AlienPlanetMesh2->loadObject("../../assets/AlienPlanet2.dae");
-	AlienPlanetMesh2->loadTexture("../../assets/tex/mercury.bmp");
+	////Not showing needs a change of texture
+	//GameObject *AlienPlanet2 = new GameObject("old building");
+	//AlienPlanet2->setPosition(glm::vec3(200, 200, -300));
+	//AlienPlanet2->setScaling(glm::vec3(50, 50, 50));
+	//AlienPlanet2->setRotationAxis(glm::vec3(NULL, NULL, NULL));
+	//MeshComponent* AlienPlanetMesh2= new MeshComponent("test");
+	//AlienPlanet2->addComponent(AlienPlanetMesh2);
+	//AlienPlanetMesh2->setRenderer(renderer);
+	//AlienPlanetMesh2->loadObject("../../assets/AlienPlanet2.dae");
+	//AlienPlanetMesh2->loadTexture("../../assets/tex/mercury.bmp");
 
 
-	objectList.push_back(AlienPlanet2);
+	//objectList.push_back(AlienPlanet2);
 
 	//Test function for new getcomponent.
 	std::cout << Player->getComponent<MeshComponent>()->getName() << std::endl;

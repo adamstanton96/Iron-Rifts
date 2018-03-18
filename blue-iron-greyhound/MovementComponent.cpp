@@ -33,7 +33,6 @@ void MovementComponent::update()
 
 	//Get current mouseposition
 	glm::vec2 mousePosition = this->input->getMousePosition();
-	this->input->mousePressRight();
 	
 	//Calculates angle and set player rotation
 	//Really just an up vector 
