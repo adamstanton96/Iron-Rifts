@@ -425,11 +425,11 @@ glm::vec3 IronRiftsPhysicsSystem::RayToOBB(Ray ray, OBB * obb)
 		if (axi == 0)
 		{
 
-			if (maxProj1 > minProj2 && minProj1 < minProj2)
+			/*if (maxProj1 > minProj2 && minProj1 < minProj2)
 			{
-				transVec2 = (maxProj1 - minProj2) * -axis;
+				transVec2 = (maxProj1 - minProj2) * axis;
 				zOverlap = true;
-			}
+			}*/
 
 			if (minProj1 < maxProj2 && maxProj1 > maxProj2)
 			{
@@ -444,7 +444,7 @@ glm::vec3 IronRiftsPhysicsSystem::RayToOBB(Ray ray, OBB * obb)
 			}
 
 			// If crossing through the object
-		/*	if ( ((minProj1&&maxProj1) < maxProj2) && ((minProj1&&maxProj1) > minProj2))
+			/*if ( ((minProj1&&maxProj1) < maxProj2) && ((minProj1&&maxProj1) > minProj2))
 			{
 				transVec2 = (maxProj1 - minProj2) * -axis;
 				zOverlap = true;
@@ -457,11 +457,11 @@ glm::vec3 IronRiftsPhysicsSystem::RayToOBB(Ray ray, OBB * obb)
 		if (axi == 1)
 		{
 
-			if (maxProj1 > minProj2 && minProj1 < minProj2)
+			/*if (maxProj1 > minProj2 && minProj1 < minProj2)
 			{
-				transVec1 = (maxProj1 - minProj2) * -axis;
+				transVec1 = (maxProj1 - minProj2) * axis;
 				xOverlap = true;
-			}
+			}*/
 
 			if (minProj1 < maxProj2 && maxProj1 > maxProj2)
 			{
@@ -476,12 +476,12 @@ glm::vec3 IronRiftsPhysicsSystem::RayToOBB(Ray ray, OBB * obb)
 			}
 
 			//	if crossing through the object
-		/*	if (((minProj1&&maxProj1) < maxProj2) && ((minProj1&&maxProj1) > minProj2))
+			/*if (((minProj1&&maxProj1) < maxProj2) && ((minProj1&&maxProj1) > minProj2))
 			{
 				transVec1 = (maxProj1 - minProj2) * -axis;
 				xOverlap = true;
-			}
-*/
+			}*/
+
 		}
 
 
@@ -507,7 +507,7 @@ glm::vec3 IronRiftsPhysicsSystem::RayToOBB(Ray ray, OBB * obb)
 			}
 
 			//	if crossing through the object
-			/*if ((minProj1&&maxProj1) < maxProj2 && (minProj1&&maxProj1) > minProj2)
+		/*	if ((minProj1&&maxProj1) < maxProj2 && (minProj1&&maxProj1) > minProj2)
 			{
 				transVec3 = (maxProj2 - minProj1) * axis;
 				yOverlap = true;
@@ -521,7 +521,7 @@ glm::vec3 IronRiftsPhysicsSystem::RayToOBB(Ray ray, OBB * obb)
 
 
 	//Overlap on axi' mean a collision
-	if ((xOverlap && zOverlap&&yOverlap) == true)
+	if ((xOverlap && zOverlap) == true)
 	{
 		//Get the shortest displacement distance
 		if (glm::length(transVec1) < (glm::length(transVec2) && (glm::length(transVec3))))
@@ -535,6 +535,10 @@ glm::vec3 IronRiftsPhysicsSystem::RayToOBB(Ray ray, OBB * obb)
 		else if (glm::length(transVec3) < (glm::length(transVec2) && (glm::length(transVec1))))
 		{
 			displacementVector = transVec3;
+		}
+		else
+		{
+			displacementVector = glm::vec3(0);
 		}
 
 		return displacementVector;
