@@ -8,6 +8,7 @@ public:
 	virtual ~IronRiftsPhysicsSystem() {}
 
 	void init();
+	void draw();
 
 	void addStaticBody(RigidBodyComponent* rigidbody);
 	void addDynamicBody(RigidBodyComponent* rigidbody);
@@ -26,7 +27,7 @@ private:
 	bool AABBtoAABB(AABB*, AABB*);
 	bool OBBtoOBB(OBB* box1, OBB* box2, RigidBodyComponent* rigidbody);
 	bool OBBtoAABB(OBB* box1, AABB* box2);
-	bool RayToOBB(Ray ray, OBB* obb);
+	glm::vec3 RayToOBB(Ray ray, OBB* obb);
 
 	float distance(glm::vec3 pos1, glm::vec3 pos2);
 

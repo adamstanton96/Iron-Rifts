@@ -1,5 +1,6 @@
 #include "IronRiftsPhysicsSystem.h"
 #include "RigidBodyComponent.h"
+#include "openglRenderer.h"
 
 IronRiftsPhysicsSystem::IronRiftsPhysicsSystem()
 {
@@ -8,6 +9,13 @@ IronRiftsPhysicsSystem::IronRiftsPhysicsSystem()
 void IronRiftsPhysicsSystem::init()
 {
 }
+
+void IronRiftsPhysicsSystem::draw()
+{
+
+}
+
+openglRenderer renderer;
 
 void IronRiftsPhysicsSystem::collisionCheck(RigidBodyComponent* rigidbody)
 {
@@ -348,7 +356,7 @@ bool IronRiftsPhysicsSystem::OBBtoAABB(OBB* box1, AABB* box2)
 	return false;
 }
 
-bool IronRiftsPhysicsSystem::RayToOBB(Ray ray, OBB * obb)
+glm::vec3 IronRiftsPhysicsSystem::RayToOBB(Ray ray, OBB * obb)
 {
 	float minProj1;
 	float maxProj1;
@@ -360,8 +368,9 @@ bool IronRiftsPhysicsSystem::RayToOBB(Ray ray, OBB * obb)
 	std::vector<glm::vec3> faces = obb->faceNormals;
 
 	std::vector<glm::vec3> vertices2;
-	vertices2.push_back(ray.startPoint);
 	vertices2.push_back(ray.endPoint);
+	vertices2.push_back(ray.startPoint);
+
 
 	glm::vec3 axis;
 	int axi;
@@ -370,9 +379,17 @@ bool IronRiftsPhysicsSystem::RayToOBB(Ray ray, OBB * obb)
 	bool yOverlap = false;
 	bool zOverlap = false;
 
+	glm::vec3 displacementVector;
+
+	glm::vec3 transVec1;
+	glm::vec3 transVec2;
+	glm::vec3 transVec3;
 
 
-	for (axi = 3; axi < 6; axi++)
+
+
+
+	for (axi = 0; axi < 3; axi++)
 	{
 		minProj1 = 1000;
 		maxProj1 = -1000;
@@ -405,67 +422,96 @@ bool IronRiftsPhysicsSystem::RayToOBB(Ray ray, OBB * obb)
 
 		// Test all projections for overlap and flag that axis as having overlap
 		//Axis 1
-		if (axi == 3)
+		if (axi == 0)
 		{
 
-			if (maxProj1 > minProj2 && minProj1 < minProj2)
+			/*if (maxProj1 > minProj2 && minProj1 < minProj2)
 			{
+				transVec2 = (maxProj1 - minProj2) * axis;
 				zOverlap = true;
-			}
+			}*/
 
 			if (minProj1 < maxProj2 && maxProj1 > maxProj2)
 			{
+				transVec2 = (maxProj2 - minProj1) * axis;
 				zOverlap = true;
 			}
 
 			if (minProj2 < minProj1 && maxProj1 < maxProj2)
 			{
+				transVec2 = (maxProj2 - minProj1) * axis;
 				zOverlap = true;
 			}
+
+			// If crossing through the object
+			/*if ( ((minProj1&&maxProj1) < maxProj2) && ((minProj1&&maxProj1) > minProj2))
+			{
+				transVec2 = (maxProj1 - minProj2) * -axis;
+				zOverlap = true;
+			}*/
 		}
 
 
 
 		// Axis 2
-		if (axi == 4)
+		if (axi == 1)
 		{
 
-			if (maxProj1 > minProj2 && minProj1 < minProj2)
+			/*if (maxProj1 > minProj2 && minProj1 < minProj2)
 			{
+				transVec1 = (maxProj1 - minProj2) * axis;
 				xOverlap = true;
-			}
+			}*/
 
 			if (minProj1 < maxProj2 && maxProj1 > maxProj2)
 			{
+				transVec1 = (maxProj2 - minProj1) * axis;
 				xOverlap = true;
 			}
 
 			if (minProj2 < minProj1 && maxProj1 < maxProj2)
 			{
+				transVec1 = (maxProj2 - minProj1) * axis;
 				xOverlap = true;
 			}
+
+			//	if crossing through the object
+			/*if (((minProj1&&maxProj1) < maxProj2) && ((minProj1&&maxProj1) > minProj2))
+			{
+				transVec1 = (maxProj1 - minProj2) * -axis;
+				xOverlap = true;
+			}*/
 
 		}
 
 
 		//Axis 3 
-		if (axi == 5)
+		if (axi == 2)
 		{
 			if (maxProj1 > minProj2 && minProj1 < minProj2)
 			{
+				transVec3 = (maxProj1 - minProj2) * -axis;
 				yOverlap = true;
 			}
 
 			if (minProj1 < maxProj2 && maxProj1 > maxProj2)
 			{
+				transVec3 = (maxProj2 - minProj1) * axis;
 				yOverlap = true;
 			}
 
 			if (minProj2 < minProj1 && maxProj1 < maxProj2)
 			{
+				transVec3 = (maxProj2 - minProj1) * axis;
 				yOverlap = true;
 			}
 
+			//	if crossing through the object
+		/*	if ((minProj1&&maxProj1) < maxProj2 && (minProj1&&maxProj1) > minProj2)
+			{
+				transVec3 = (maxProj2 - minProj1) * axis;
+				yOverlap = true;
+			}*/
 		}
 
 
@@ -475,15 +521,30 @@ bool IronRiftsPhysicsSystem::RayToOBB(Ray ray, OBB * obb)
 
 
 	//Overlap on axi' mean a collision
-	if ((xOverlap && zOverlap && yOverlap) == true)
+	if ((xOverlap && zOverlap) == true)
 	{
+		//Get the shortest displacement distance
+		if (glm::length(transVec1) < (glm::length(transVec2) && (glm::length(transVec3))))
+		{
+			displacementVector = transVec1;
+		}
+		else if (glm::length(transVec2) < (glm::length(transVec3) && (glm::length(transVec1))))
+		{
+			displacementVector = transVec2;
+		}
+		else if (glm::length(transVec3) < (glm::length(transVec2) && (glm::length(transVec1))))
+		{
+			displacementVector = transVec3;
+		}
+		else
+		{
+			displacementVector = glm::vec3(0);
+		}
 
-
-		return true;
-
+		return displacementVector;
 	}
 
-	return false;
+	return glm::vec3(NULL);
 }
 
 float IronRiftsPhysicsSystem::distance(glm::vec3 pos1, glm::vec3 pos2)
@@ -529,29 +590,44 @@ Ray IronRiftsPhysicsSystem::castRay(glm::vec3 origin, glm::vec3 direction, float
 
 std::vector<GameObject*> IronRiftsPhysicsSystem::checkRayCollision(Ray ray)
 {
+
 	std::vector<GameObject*> collisions;
+	glm::vec3 collisionDist;
+	
 
 	//test against all static bodies
-	for (unsigned int i = 0; i < staticBodies.size() -1; i++)
+	for (unsigned int i = 0; i < staticBodies.size(); i++)
 	{
-		if (RayToOBB(ray, (OBB*)staticBodies[i]->getBoundingVolume()))
+		collisionDist = RayToOBB(ray, (OBB*)staticBodies[i]->getBoundingVolume());
+
+		if (collisionDist != glm::vec3(NULL))					//If the collision test comes back as null then there is no collision
 		{
 			collisions.push_back(staticBodies[i]->getUser());
 		}
 	}
 
-	//test against all other dynamic bodies bodies
-	for (unsigned int i = 0; i < dynamicBodies.size() -1; i++)
+	//test against all dynamic bodies bodies
+	for (unsigned int i = 0; i < dynamicBodies.size() ; i++)
 	{
-		if (RayToOBB(ray, (OBB*)dynamicBodies[i]->getBoundingVolume()))
+		collisionDist = RayToOBB(ray, (OBB*)dynamicBodies[i]->getBoundingVolume());
+
+		if (collisionDist != glm::vec3(NULL))
 		{
 			collisions.push_back(dynamicBodies[i]->getUser());
-		}
+		
+		}	
 	}
 
+
+	//Every object in the path of the ray
 	return collisions;
 
 }
+
+
+
+
+
 GameObject * IronRiftsPhysicsSystem::checkClosest(GameObject* object, std::vector<GameObject*> objList)
 {
 	GameObject * returnValue = 0;
@@ -575,3 +651,77 @@ GameObject * IronRiftsPhysicsSystem::checkClosest(GameObject* object, std::vecto
 	}
 	return returnValue;
 }
+
+
+//
+//std::vector<GameObject*> IronRiftsPhysicsSystem::checkRayCollision(Ray ray)
+//{
+//	std::vector<GameObject*> collidables;
+//	std::vector<GameObject*> collisions;
+//
+//	glm::vec3 DistofClosestCollision;
+//	int indexOfClosest = NULL;
+//
+//	glm::vec3 collisionDist;
+//
+//	collidables.clear();
+//
+//	//test against all static bodies
+//	for (unsigned int i = 0; i < staticBodies.size(); i++)
+//	{
+//		collisionDist = RayToOBB(ray, (OBB*)staticBodies[i]->getBoundingVolume());
+//
+//		if (collisionDist != glm::vec3(NULL))
+//		{
+//			if (indexOfClosest == NULL)
+//			{
+//				DistofClosestCollision = collisionDist;
+//				indexOfClosest = i;
+//
+//			}
+//			else if (glm::length(collisionDist) < glm::length(DistofClosestCollision))
+//			{
+//				DistofClosestCollision = collisionDist;
+//				indexOfClosest = i;
+//			}
+//			collisions.push_back(staticBodies[i]->getUser());
+//		}
+//
+//		collidables.push_back(staticBodies[i]->getUser());
+//		//collisions.push_back(collidables[i]);
+//	}
+//
+//	//test against all dynamic bodies bodies
+//	for (unsigned int i = 0; i < dynamicBodies.size(); i++)
+//	{
+//		collisionDist = RayToOBB(ray, (OBB*)dynamicBodies[i]->getBoundingVolume());
+//
+//		if (collisionDist != glm::vec3(NULL))
+//		{
+//
+//			if (indexOfClosest == NULL)
+//			{
+//				DistofClosestCollision = collisionDist;
+//				indexOfClosest = i + staticBodies.size();
+//
+//			}
+//			else if (glm::length(collisionDist) < glm::length(DistofClosestCollision))
+//			{
+//				DistofClosestCollision = collisionDist;
+//				indexOfClosest = i + staticBodies.size();
+//			}
+//			collisions.push_back(dynamicBodies[i]->getUser());
+//		}
+//
+//		collidables.push_back(dynamicBodies[i]->getUser());
+//
+//	}
+//
+//	/*if(collidables[indexOfClosest] != NULL)
+//	collisions.push_back(collidables[indexOfClosest]);
+//	else
+//	collisions.push_back(NULL);*/
+//
+//	return collisions;
+//
+//}
