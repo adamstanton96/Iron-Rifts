@@ -5,8 +5,8 @@
 #include "AABB.h"
 #include "Sphere.h"
 #include "OBB.h"
-#include "CollisionSystem.h"
-class CollisionSystem;
+#include "PhysicsSystem.h"
+
 
 
 class RigidBodyComponent : public Component
@@ -32,14 +32,14 @@ public:
 	void init();
 	void update();
 
-	void setCollisionSystem(CollisionSystem* collisionSys);
+	void setCollisionSystem(PhysicsSystem* collisionSys);
 
 	glm::vec3 prevPosition;
 private:
 	bool isInitialised;
 	bool isAsleep;
 
-	CollisionSystem* collisionSystem;
+	PhysicsSystem* collisionSystem;
 
 	string bodyType;    //dynamic or static
 	string boundingType;
