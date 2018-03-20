@@ -29,6 +29,7 @@ public:
 	virtual void collisionCheck(RigidBodyComponent* rigidbody) = 0;
 	virtual void collisionReaction(RigidBodyComponent* rigidbody) = 0;
 	virtual void displacementReaction(RigidBodyComponent* rigidbody, glm::vec3 displacementVector) = 0;
+	virtual glm::vec3 collisionDirectionVector(RigidBodyComponent* rigidbody) = 0;
 
 	//Raycasting...
 	virtual Ray castRay(glm::vec3 startPoint, glm::vec3 direction, float distance) = 0;
