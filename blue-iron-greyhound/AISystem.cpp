@@ -13,7 +13,7 @@ void AISystem::init()
 
 }
 
-std::vector<glm::vec2> AISystem::findPath(glm::vec2 currPos, glm::vec2 target)
+std::vector<glm::vec3> AISystem::findPath(glm::vec2 currPos, glm::vec2 target)
 {
 	int startNode;
 	int goalNode;
@@ -21,29 +21,31 @@ std::vector<glm::vec2> AISystem::findPath(glm::vec2 currPos, glm::vec2 target)
 	int closestNode;
 	float closestNodeDist = 9999;
 	
-	//find cloest start node
+	// Find cloest start node
 	for (int i = 0; i < mapPath->nodes.size(); i++)
 	{
-		 //closestNode;
-		 closestNodeDist = 9999;
 
-		if (glm::distance(mapPath->nodes[i]->getPos(), currPos) < closestNodeDist)
+		float dist = glm::distance(mapPath->nodes[i]->getPos(), currPos);
+
+		if (dist < closestNodeDist)
 		{
 			closestNode = i;
+			closestNodeDist = dist;
 		}
 	}
 
 	startNode = closestNode;
+	closestNodeDist = 9999;
 
 	//find cloest target node
 	for (int i = 0; i < mapPath->nodes.size(); i++)
 	{
-		// closestNode;
-		 closestNodeDist = 9999;
+		float dist = glm::distance(mapPath->nodes[i]->getPos(), target);
 
-		if (glm::distance(mapPath->nodes[i]->getPos(), target) < closestNodeDist)
+		if (dist < closestNodeDist)
 		{
 			closestNode = i;
+			closestNodeDist = dist;
 		}
 	}
 
@@ -51,10 +53,11 @@ std::vector<glm::vec2> AISystem::findPath(glm::vec2 currPos, glm::vec2 target)
 
 	std::vector<node*> pathway = AstarAlgorithm.AStarAlgorithm(*mapPath, startNode, goalNode);
 
-	std::vector<glm::vec2> path;
+	std::vector<glm::vec3> path;
 	for (int i = 0; i < pathway.size(); i++)
 	{
-		path.push_back(pathway[i]->getPos());
+		glm::vec2 edge = pathway[i]->getPos();
+		path.push_back(glm::vec3(edge.x, 0, edge.y));
 	}
 
 	return path;

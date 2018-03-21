@@ -13,7 +13,7 @@ public:
 	void init();
 	void addPathGraph(AstarGraph* graph);
 	
-	std::vector<glm::vec2> findPath(glm::vec2 currPos, glm::vec2 target);
+	std::vector<glm::vec3> findPath(glm::vec2 currPos, glm::vec2 target);
 
 private:
 	AstarGraph* mapPath;

@@ -1,6 +1,6 @@
 #pragma once
 #include "Component.h"
-#include "PhysicsSystem.h"
+#include "GameObject.h"
 #include "AISystem.h"
 
 
@@ -13,19 +13,24 @@ public:
 	void init();
 	void update();
 
-	void setCollisionSystem(PhysicsSystem*);
+	
 	void setAIsystem(AISystem*);
 
+	void moveTowards(glm::vec2 goal);
 
 private:
-	PhysicsSystem* collisionSys;
 	AISystem* AIsystem;
 
 	glm::vec3 velocity;
 
-	std::vector<glm::vec2> currentRoute;
+	std::vector<glm::vec3> currentRoute;
+	glm::vec3 currentGoalPosition;
 
-	bool newDestination;
+	bool atFinalDestination;
+	int goalNodeIndex;
 
+	int tempCounter;
+
+	std::vector<glm::vec3> targets;
 
 };
