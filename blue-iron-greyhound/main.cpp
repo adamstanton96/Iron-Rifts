@@ -236,6 +236,7 @@ int main(int argc, char *argv[])
 	
 	objectList.push_back(GroundPlane);
 
+
 	//Ground Plane 2
 	GameObject *GroundPlane2 = new GameObject("Collada");
 	GroundPlane2->setPosition(glm::vec3(0.0f, -5.0f, 60.0f));
@@ -252,8 +253,97 @@ int main(int argc, char *argv[])
 	secondMesh2->loadTexture("../../assets/tex/rockyground.bmp");
 
 	objectList.push_back(GroundPlane2);
+	/////////////////////////////////////////////////////
+	// Wall object 1
+	GameObject *Wall1 = new GameObject("Wall1");
+	Wall1->setPosition(glm::vec3(0.0f, 0.0f, -58.0f));
+	Wall1->setScaling(glm::vec3(60.0f, 2.0f, 2.0f));
+	Wall1->setRotationAxis(glm::vec3(1, 0, 0));
+	Wall1->setRotationDegrees(0);
 
-	////Wall 1
+	RigidBodyComponent* Wall1Rigid = new RigidBodyComponent("Rigid Body");
+	Wall1->addComponent(Wall1Rigid);
+	Wall1Rigid->setCollisionSystem(collisionsystem);
+	Wall1Rigid->setBodyType("STATIC");
+	Wall1Rigid->setBoundingType("OBB");
+
+	MeshComponent* Wall1Mesh = new MeshComponent("test");
+	Wall1->addComponent(Wall1Mesh);
+	Wall1Mesh->setRenderer(renderer);
+	Wall1Mesh->loadObject("../../assets/blenderTest.dae");
+	Wall1Mesh->loadTexture("../../assets/plainbuilding/iron.bmp");
+
+	objectList.push_back(Wall1);
+	//Wall object 2
+	GameObject *Wall2 = new GameObject("Wall2");
+	Wall2->setPosition(glm::vec3(0.0f, 0.0f, 178.0f));
+	Wall2->setScaling(glm::vec3(60.0f, 2.0f, 2.0f));
+	Wall2->setRotationAxis(glm::vec3(1, 0, 0));
+	Wall2->setRotationDegrees(0);
+
+	RigidBodyComponent* Wall2Rigid = new RigidBodyComponent("Rigid Body");
+	Wall2->addComponent(Wall2Rigid);
+	Wall2Rigid->setCollisionSystem(collisionsystem);
+	Wall2Rigid->setBodyType("STATIC");
+	Wall2Rigid->setBoundingType("OBB");
+
+	MeshComponent* Wall2Mesh = new MeshComponent("test");
+	Wall2->addComponent(Wall2Mesh);
+	Wall2Mesh->setRenderer(renderer);
+	Wall2Mesh->loadObject("../../assets/blenderTest.dae");
+	Wall2Mesh->loadTexture("../../assets/plainbuilding/iron.bmp");
+
+	objectList.push_back(Wall2);
+	//Wall object 3
+	GameObject *Wall3 = new GameObject("Wall3");
+	Wall3->setPosition(glm::vec3(-58.0f, 0.0f, 60.0f));
+	Wall3->setScaling(glm::vec3(2.0f, 2.0f, 120.0f));
+	Wall3->setRotationAxis(glm::vec3(1, 0, 0));
+	Wall3->setRotationDegrees(0);
+
+	RigidBodyComponent* Wall3Rigid = new RigidBodyComponent("Rigid Body");
+	Wall3->addComponent(Wall3Rigid);
+	Wall3Rigid->setCollisionSystem(collisionsystem);
+	Wall3Rigid->setBodyType("STATIC");
+	Wall3Rigid->setBoundingType("OBB");
+
+	MeshComponent* Wall3Mesh = new MeshComponent("test");
+	Wall3->addComponent(Wall3Mesh);
+	Wall3Mesh->setRenderer(renderer);
+	Wall3Mesh->loadObject("../../assets/blenderTest.dae");
+	Wall3Mesh->loadTexture("../../assets/plainbuilding/iron.bmp");
+
+	objectList.push_back(Wall3);
+	//Wall object 4
+	GameObject *Wall4 = new GameObject("Wall4");
+	Wall4->setPosition(glm::vec3(58.0f, 0.0f, 60.0f));
+	Wall4->setScaling(glm::vec3(2.0f, 2.0f, 120.0f));
+	Wall4->setRotationAxis(glm::vec3(1, 0, 0));
+	Wall4->setRotationDegrees(0);
+
+	RigidBodyComponent* Wall4Rigid = new RigidBodyComponent("Rigid Body");
+	Wall4->addComponent(Wall4Rigid);
+	Wall4Rigid->setCollisionSystem(collisionsystem);
+	Wall4Rigid->setBodyType("STATIC");
+	Wall4Rigid->setBoundingType("OBB");
+
+	MeshComponent* Wall4Mesh = new MeshComponent("test");
+	Wall4->addComponent(Wall4Mesh);
+	Wall4Mesh->setRenderer(renderer);
+	Wall4Mesh->loadObject("../../assets/blenderTest.dae");
+	Wall4Mesh->loadTexture("../../assets/plainbuilding/iron.bmp");
+
+	objectList.push_back(Wall4);
+	                                            
+	
+
+	
+	
+
+	
+	/////////////////////////////////////////////////////////////////////
+
+	//Wall 1
 	//GameObject *walls = new GameObject("Collada");
 	//walls->setPosition(glm::vec3(0.0f, 10.0f, -25.0f));
 	//walls->setScaling(glm::vec3(60, 0.5f, 60));
@@ -270,7 +360,7 @@ int main(int argc, char *argv[])
 	//wallmesh->loadTexture("../../assets/tex/scifi.bmp");
 
 	//objectList.push_back(walls);
-	//
+	
 	////Wall 2
 	//GameObject *walls2 = new GameObject("Collada");
 	//walls2->setPosition(glm::vec3(-60.0f, -50.0f, -25.0f));
