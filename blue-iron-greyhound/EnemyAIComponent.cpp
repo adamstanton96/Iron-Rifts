@@ -12,15 +12,18 @@ EnemyAIComponent::EnemyAIComponent()
 void EnemyAIComponent::init()
 {
 	//Give the object an initial route to follow
+	targetIndex = 0;
 	
-	targets.push_back(glm::vec3(100, 0, 0));
-	targets.push_back(glm::vec3(-100, 0, 0));
-	targets.push_back(glm::vec3(0, 0, 100));
-	targets.push_back(glm::vec3(0, 0, -100));
+	targets.push_back(glm::vec3(50, 0, 0));
+	targets.push_back(glm::vec3(0, 0, 50));
+	targets.push_back(glm::vec3(0, 0, -50));
+	targets.push_back(glm::vec3(-50, 0, 0));
 
-	currentGoalPosition = targets[0];
+	currentGoalPosition = targets[targetIndex];
 
-	currentRoute = AIsystem->findPath(glm::vec2(0, 0), currentGoalPosition);
+	glm::vec2 goal(currentGoalPosition.x, currentGoalPosition.z);
+
+	currentRoute = AIsystem->findPath(glm::vec2(0, 0), goal);
 	goalNodeIndex = 0;
 
 	atFinalDestination = false;
@@ -32,32 +35,41 @@ void EnemyAIComponent::update()
 {
 	glm::vec3 currPosition = this->getUser()->getPosition();
 
-	float gradient;
-
+	
+	
+	//Recalculate route with nw destination
 	if (currentRoute.size() == 0)
 	{
-		goalNodeIndex++;
-		currentRoute = AIsystem->findPath(glm::vec2(0, 0), currentGoalPosition);
+		goalNodeIndex = 0;
+		targetIndex++;
+
+		if (targetIndex >= targets.size() - 1)
+			targetIndex = 0;
+
+		currentGoalPosition = targets[targetIndex];
+
+		glm::vec2 pos(currPosition.x, currPosition.z);
+		glm::vec2 goal(currentGoalPosition.x, currentGoalPosition.z);
+
+		currentRoute = AIsystem->findPath(pos, goal);
 	}
 		
 
-	//Reset target if needed
-	if (goalNodeIndex == targets.size() - 1)
-	goalNodeIndex = 0;
+
 
 
 	if (!atFinalDestination)
 	{
 		//Still travelling to next position
-		if (glm::distance(currPosition, currentRoute[goalNodeIndex]) > 10) 
+		if (glm::distance(currPosition, currentRoute[goalNodeIndex]) > 5) 
 		{
-			velocity = (currPosition - currentRoute[goalNodeIndex]);
-			velocity = velocity * glm::vec3(0.005, 0.005, 0.005);
+			velocity = glm::normalize(currentRoute[goalNodeIndex] - currPosition);
+			velocity = velocity * glm::vec3(0.05, 0, 0.05);
 		}
 		else
 		{
-			//at final destination
-			if (glm::distance(currPosition, currentRoute[currentRoute.size()-1]) < 10)
+			
+			if (glm::distance(currPosition, currentRoute[currentRoute.size()-1]) < 5)
 			{
 				atFinalDestination = true;
 				velocity = glm::vec3(0);
@@ -66,16 +78,31 @@ void EnemyAIComponent::update()
 			{
 				goalNodeIndex++;
 			}
-			currentGoalPosition = currentRoute[goalNodeIndex];
+		
 		}
 			
 	}
 	else
 	{
-		//decide where the next goal lies
-		currentGoalPosition = targets[0];
-		currentRoute = AIsystem->findPath(glm::vec2(0, 0), currentGoalPosition);
-	
+		// Decide where the next goal lies
+		targetIndex++;
+
+		
+
+		if (targetIndex >= targets.size() - 1)
+			targetIndex = 0;
+
+		currentGoalPosition = targets[targetIndex];
+
+		glm::vec2 pos(currPosition.x, currPosition.z);
+		glm::vec2 goal(currentGoalPosition.x, currentGoalPosition.z);
+
+		currentRoute = AIsystem->findPath(pos, goal);
+
+		atFinalDestination = false;
+
+		goalNodeIndex = 0;
+
 	}
 		
 	

@@ -139,8 +139,8 @@ int main(int argc, char *argv[])
 	
 	typedef std::pair<int, int> path;
 	int names[] = { 0,1,2,3,4 };
-	glm::vec2 locations[] = { { 0,0 },{ 5,0 },{ 5,-5 },{ 5,-10 },{ 0,-10 } };
-	std::pair<int, int> edges[] = { path(0,1),path(1,2),path(2,3),path(3,4) ,path(4,0) };
+	glm::vec2 locations[] = { { 0,0 },{ 20,0 },{ 20,-20 },{ 0,-20 },{ 0,0 } };
+	std::pair<int, int> edges[] = { path(0,1),path(1,2),path(2,3),path(3,4), path(4,0) };
 	float weights[] = {1, 1, 1, 1, 1};
 
 	AISystem* AiSys = new AISystem();
@@ -153,7 +153,7 @@ int main(int argc, char *argv[])
 	//AI test object (enemy Player)
 	//Green Demo Cube
 	GameObject *Enemey = new GameObject("Enemy Cube");
-	Enemey->setPosition(glm::vec3(5.0f, 0.0f, 60.0f));
+	Enemey->setPosition(glm::vec3(0.0f, 0.0f, 0.0f));
 	Enemey->setScaling(glm::vec3(2, 2, 2));
 	Enemey->setRotationAxis(glm::vec3(0, 1, 0));
 	Enemey->setRotationDegrees(0);

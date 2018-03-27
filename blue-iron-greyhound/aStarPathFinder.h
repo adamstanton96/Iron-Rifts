@@ -2,6 +2,7 @@
 #include "node.h"
 #include "AstarGraph.h"
 
+
 class aStarPathFinder
 {
 public:
@@ -119,6 +120,9 @@ public:
 				{
 					pathToGoal.push_back(currentNode);
 					currentNode = currentNode->parent;
+
+					if (currentNode == graph.nodes[start])
+						break;
 				}
 
 				//std::cout << "A* Pathfinding Complete: " << std::endl;

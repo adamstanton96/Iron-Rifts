@@ -29,7 +29,7 @@ private:
 	bool atFinalDestination;
 	int goalNodeIndex;
 
-	int tempCounter;
+	int targetIndex;
 
 	std::vector<glm::vec3> targets;
 
