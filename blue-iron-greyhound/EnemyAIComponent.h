@@ -17,6 +17,7 @@ public:
 	void setAIsystem(AISystem*);
 
 	void moveTowards(glm::vec2 goal);
+	void faceDestination(glm::vec3 pos, glm::vec3 dest);
 
 private:
 	AISystem* AIsystem;

@@ -181,6 +181,7 @@ public:
 		if (currentNode != goalNode)
 		{
 			std::cout << "A* algorithm failed: Goal node not found" << std::endl;
+			return pathToGoal;
 		}
 	}
 

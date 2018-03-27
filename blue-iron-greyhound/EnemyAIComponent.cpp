@@ -26,15 +26,37 @@ void EnemyAIComponent::init()
 	currentRoute = AIsystem->findPath(glm::vec2(0, 0), goal);
 	goalNodeIndex = 0;
 
+	//faceDestination(glm::vec2(0, 0), currentRoute[goalNodeIndex]);
+
 	atFinalDestination = false;
 }
 
+void EnemyAIComponent::faceDestination(glm::vec3 pos, glm::vec3 dest)
+{
+	//Calculates angle and set player rotation
+	//Really just an up vector 
+	glm::vec3 playerVec(0, 1,0);
 
+	//Mouse position and an x, y representing the center of the screen
+	glm::vec3 facingVector = dest - pos;
+
+	float angleInDegrees_ = atan2(facingVector.y, facingVector.x) - atan2(playerVec.y, playerVec.x);
+	angleInDegrees_ = glm::degrees(angleInDegrees_);
+
+	//Set players rotation based on where the mouse is!
+	this->user->setRotationDegrees(angleInDegrees_+90);
+}
 
 void EnemyAIComponent::update()
 {
 	glm::vec3 currPosition = this->getUser()->getPosition();
 
+	//Stops vector subscript out of range errors
+	if (goalNodeIndex > currentRoute.size() - 1)
+		goalNodeIndex = 0;
+
+
+	faceDestination(currPosition, currentRoute[goalNodeIndex]);
 	
 	
 	//Recalculate route with nw destination
@@ -54,10 +76,10 @@ void EnemyAIComponent::update()
 		currentRoute = AIsystem->findPath(pos, goal);
 	}
 		
+	
 
 
-
-
+	//Not at last node in the current path
 	if (!atFinalDestination)
 	{
 		//Still travelling to next position
@@ -89,7 +111,7 @@ void EnemyAIComponent::update()
 
 		
 
-		if (targetIndex >= targets.size() - 1)
+		if (targetIndex > targets.size() - 1)
 			targetIndex = 0;
 
 		currentGoalPosition = targets[targetIndex];
@@ -111,7 +133,6 @@ void EnemyAIComponent::update()
 	
 	//update player movement
 	this->getUser()->setPosition(currPosition + velocity);
-
 
 	
 }

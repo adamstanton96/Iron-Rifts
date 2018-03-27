@@ -139,7 +139,7 @@ int main(int argc, char *argv[])
 	
 	typedef std::pair<int, int> path;
 	int names[] = { 0,1,2,3,4 };
-	glm::vec2 locations[] = { { 0,0 },{ 20,0 },{ 20,-20 },{ 0,-20 },{ 0,0 } };
+	glm::vec2 locations[] = { { 0,0 },{ 30,0 },{ 30,-30 },{ 0,-30 },{ 0,0 } };
 	std::pair<int, int> edges[] = { path(0,1),path(1,2),path(2,3),path(3,4), path(4,0) };
 	float weights[] = {1, 1, 1, 1, 1};
 
@@ -169,10 +169,8 @@ int main(int argc, char *argv[])
 	MeshComponent* EnemeyMesh = new MeshComponent("test");
 	Enemey->addComponent(EnemeyMesh);
 	EnemeyMesh->setRenderer(renderer);
-	EnemeyMesh->loadObject("../../assets/blenderTest.dae");
+	EnemeyMesh->loadObject("../../assets/colt1911.dae");
 	EnemeyMesh->loadTexture("../../assets/tex/grass.bmp");
-
-
 
 	objectList.push_back(Enemey);
 
