@@ -14,6 +14,7 @@ void EnemyAIComponent::init()
 	//Give the object an initial route to follow
 	targetIndex = 0;
 	
+	//Inventives for where to go. These in the end should be things like the players psoition or a defensive position
 	targets.push_back(glm::vec3(50, 0, 0));
 	targets.push_back(glm::vec3(0, 0, 50));
 	targets.push_back(glm::vec3(0, 0, -50));
@@ -25,8 +26,6 @@ void EnemyAIComponent::init()
 
 	currentRoute = AIsystem->findPath(glm::vec2(0, 0), goal);
 	goalNodeIndex = 0;
-
-	//faceDestination(glm::vec2(0, 0), currentRoute[goalNodeIndex]);
 
 	atFinalDestination = false;
 }
@@ -83,15 +82,15 @@ void EnemyAIComponent::update()
 	if (!atFinalDestination)
 	{
 		//Still travelling to next position
-		if (glm::distance(currPosition, currentRoute[goalNodeIndex]) > 5) 
+		if (glm::distance(currPosition, currentRoute[goalNodeIndex]) > 1) 
 		{
 			velocity = glm::normalize(currentRoute[goalNodeIndex] - currPosition);
-			velocity = velocity * glm::vec3(0.05, 0, 0.05);
+			velocity = velocity * glm::vec3(0.08, 0, 0.08);
 		}
 		else
 		{
 			
-			if (glm::distance(currPosition, currentRoute[currentRoute.size()-1]) < 5)
+			if (glm::distance(currPosition, currentRoute[currentRoute.size()-1]) < 1)
 			{
 				atFinalDestination = true;
 				velocity = glm::vec3(0);

@@ -169,7 +169,7 @@ int main(int argc, char *argv[])
 	MeshComponent* EnemeyMesh = new MeshComponent("test");
 	Enemey->addComponent(EnemeyMesh);
 	EnemeyMesh->setRenderer(renderer);
-	EnemeyMesh->loadObject("../../assets/colt1911.dae");
+	EnemeyMesh->loadObject("../../assets/blenderTest.dae");
 	EnemeyMesh->loadTexture("../../assets/tex/grass.bmp");
 
 	objectList.push_back(Enemey);
