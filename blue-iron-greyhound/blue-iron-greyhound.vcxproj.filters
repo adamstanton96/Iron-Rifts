@@ -128,6 +128,12 @@
     <ClInclude Include="rayCastTestComponent.h">
       <Filter>Source Files\CompSysTestClasses</Filter>
     </ClInclude>
+    <ClInclude Include="bulletParticle.h">
+      <Filter>Source Files\Rendering System</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleRenderer.h">
+      <Filter>Source Files\Rendering System</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Component.cpp">
@@ -189,6 +195,12 @@
     </ClCompile>
     <ClCompile Include="rayCastTestComponent.cpp">
       <Filter>Source Files\CompSysTestClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="bulletParticle.cpp">
+      <Filter>Source Files\Rendering System</Filter>
+    </ClCompile>
+    <ClCompile Include="ParticleRenderer.cpp">
+      <Filter>Source Files\Rendering System</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
