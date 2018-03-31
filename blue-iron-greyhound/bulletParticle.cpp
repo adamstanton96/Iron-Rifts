@@ -5,7 +5,7 @@ bulletParticles::bulletParticles(glm::vec3 pos, glm::vec3 trajectory, glm::vec3 
 {
 	position = pos;
 	velocity = vel;
-	colour = glm::vec4(1); //white bullet
+	colour = glm::vec4(1, 0, 0, 1); //Red bullet
 
 	ray = trajectory;
 
@@ -70,11 +70,11 @@ void bulletParticles::draw()
 	glBindBuffer(GL_ARRAY_BUFFER, vbo[1]);
 	glBufferData(GL_ARRAY_BUFFER, 1 * sizeof(glm::vec4), &colour, GL_DYNAMIC_DRAW);
 	glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, 0, 0);
-	glEnableVertexAttribArray(0);    
+	glEnableVertexAttribArray(1);    
 
-	glPointSize(5);
+	glPointSize(10);
 
-	render->draw(position, colour);
+	render->draw(position);
 	
 	//Draw all of our particles...
 	for (int i = 0; i < 2; i++)

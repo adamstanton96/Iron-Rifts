@@ -34,7 +34,7 @@ void ParticleRenderer::init()
 	mvStack.top() = glm::lookAt(eye, at, up);
 }
 
-void ParticleRenderer::draw(glm::vec3 pos, glm::vec3 colour)
+void ParticleRenderer::draw(glm::vec3 pos)
 {
 	update();
 

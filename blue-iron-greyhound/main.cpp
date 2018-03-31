@@ -143,7 +143,7 @@ int main(int argc, char *argv[])
 
 	//Green Demo Cube
 	GameObject *barrier2 = new GameObject("Green Cube");
-	barrier2->setPosition(glm::vec3(5.0f, -5.0f, 100.0f));
+	barrier2->setPosition(glm::vec3(5.0f, -5.0f, 50.0f));
 	barrier2->setScaling(glm::vec3(5.5f, 5.5f, 5.5f));
 	barrier2->setRotationAxis(glm::vec3(0, 1, 0));
 	barrier2->setRotationDegrees(45);

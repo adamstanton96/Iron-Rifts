@@ -17,7 +17,7 @@ public:
 	~ParticleRenderer();
 
 	void init();
-	void draw(glm::vec3 pos, glm::vec3 colour);
+	void draw(glm::vec3 pos);
 
 	void update();
 
@@ -38,6 +38,8 @@ private:
 	{
 	"	#version 330					\n"
 	"									\n"
+		"	// Some drivers require the following					\n"
+		"	precision highp float;									\n"
 	"uniform vec4 spotLightPosition; \n"
 	"out vec4 Vposition;				\n"
 
@@ -88,7 +90,7 @@ private:
 	"uniform float attQuadratic;		\n"
 
 	"in  vec4 ex_Color;					\n"
-	"out vec4 out_Color;				\n"
+	//"out vec4 out_Color;				\n"
 	"uniform sampler2D textureUnit0;	\n"
 
 
@@ -99,7 +101,7 @@ private:
 	"	L = normalize(L);												\n"
 
 	"	//out_Color = (ex_Color + totalLight) * vec4(ex_Color.a);		\n"
-		"	out_Color = vec4(1,0,0,1);			\n"
+	"	out_Color = vec4(1,0,0,1);			\n"
 
 	"}																	\n"
 	};
