@@ -118,17 +118,24 @@ int main(int argc, char *argv[])
 	Player->addComponent(cameraComponent);
 	Player->addComponent(moveComponent);
 
+	//Bullet Particle System
+	ParticleRenderer* particleRender = new ParticleRenderer(cameraComponent);
+	particleRender->init();
+
+	//bullet itself
+	bulletParticles* bullet = new bulletParticles(glm::vec3(5.0f, -3.0f, 60.0f), glm::vec3(0, 0, 1), glm::vec3(0, 0, 0), particleRender); //(pos,direction, velocity, renderer)
+	bullet->init();
+	Player->addComponent(bullet);
+
+	//Raycast
 	RayCastTestComponent *raycasttester = new RayCastTestComponent("testytest");
+	raycasttester->setRenderer(bullet);
 	raycasttester->setInput(inputSystem);
 	raycasttester->setPhysics(collisionsystem);
 	Player->addComponent(raycasttester);
 
-	ParticleRenderer* particleRender = new ParticleRenderer(cameraComponent);
-	particleRender->init();
-	bulletParticles* bullet = new bulletParticles(glm::vec3(5.0f, 0.0f, 60.0f), glm::vec3(0,0,1), glm::vec3(0,0,-0.05), particleRender);
 	
-	bullet->init();
-	Player->addComponent(bullet);
+	
 
 	objectList.push_back(Player);
 

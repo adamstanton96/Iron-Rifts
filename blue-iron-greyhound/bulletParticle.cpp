@@ -41,9 +41,10 @@ void bulletParticles::init()
 void bulletParticles::emit(glm::vec3 pos, glm::vec3 trajectory, glm::vec3 vel)
 {
 	position = pos;
-	velocity = vel;
-	//ray = trajectory;
-	//colour = glm::vec4(1); //white bullet
+	//velocity = vel;
+	//ray = trajectory * ve;
+	velocity = trajectory * vel;
+	colour = glm::vec4(1,0,0,1); //Red bullet
 }
 
 void bulletParticles::update()
@@ -63,7 +64,8 @@ void bulletParticles::draw()
 	glBufferData(GL_ARRAY_BUFFER, 1 * sizeof(glm::vec3), &position, GL_DYNAMIC_DRAW);
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
 	glEnableVertexAttribArray(0);     
-							
+						
+	//Colour doesn't seem to be setting?
 	glBindVertexArray(vao[1]); 
 	glBindBuffer(GL_ARRAY_BUFFER, vbo[1]);
 	glBufferData(GL_ARRAY_BUFFER, 1 * sizeof(glm::vec4), &colour, GL_DYNAMIC_DRAW);

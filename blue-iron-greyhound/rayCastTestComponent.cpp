@@ -12,6 +12,12 @@ RayCastTestComponent::~RayCastTestComponent()
 
 void RayCastTestComponent::init()
 {
+	
+}
+
+void RayCastTestComponent::setRenderer(bulletParticles* renderer)
+{
+	this->bulletRender = renderer;
 }
 
 void RayCastTestComponent::update()
@@ -19,6 +25,7 @@ void RayCastTestComponent::update()
 	if (this->input->keyPressed("R"))
 	{
 
+		glm::vec3 userPos = this->getUser()->getPosition();
 
 		//Calculate the rays direction
 		glm::vec3 forward(0, 0, -1);
@@ -30,12 +37,12 @@ void RayCastTestComponent::update()
 		glm::vec3 cos_theta(cos(theta));
 		glm::vec3 sin_theta(sin(theta));
 
-		glm::dvec3 rotated = (forward * cos_theta) + (glm::cross(up, forward) * sin_theta) + (up * glm::dot(up, forward)) * glm::vec3((1 - cos_thetaf));
-		rotated = glm::vec3(rotated.x, rotated.y, -rotated.z);
+		glm::dvec3 rotatedDirectionVector = (forward * cos_theta) + (glm::cross(up, forward) * sin_theta) + (up * glm::dot(up, forward)) * glm::vec3((1 - cos_thetaf));
+		rotatedDirectionVector = glm::vec3(rotatedDirectionVector.x, rotatedDirectionVector.y, -rotatedDirectionVector.z);
 
 		//cout << rotated.x << ", " << rotated.y << ", "<< rotated.z << endl;
 		//Find the two points defining our ray 
-		Ray blappo = physics->castRay(this->getUser()->getPosition(), rotated, 50.0f);
+		Ray blappo = physics->castRay(userPos, rotatedDirectionVector, 50.0f);
 
 		//Get all objects in the pathh of the ray
 		std::vector<GameObject*> bleppo = physics->checkRayCollision(blappo);
@@ -53,6 +60,9 @@ void RayCastTestComponent::update()
 			std::cout << "No Collision: " << std::endl;
 	
 			
+
+		//Emit bullet particle
+		bulletRender->emit(userPos,rotatedDirectionVector, glm::vec3(0.5));
 	}
 }
 
