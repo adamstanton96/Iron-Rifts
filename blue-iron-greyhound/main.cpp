@@ -21,6 +21,8 @@
 #include "SDLInputSystem.h"
 #include "IrrKlangAudioSystem.h"
 #include "rayCastTestComponent.h"
+#include "BulletParticle.h"
+#include "ParticleRenderer.h"
 
 
 #include "RigidBodyComponent.h"
@@ -119,10 +121,14 @@ int main(int argc, char *argv[])
 	RayCastTestComponent *raycasttester = new RayCastTestComponent("testytest");
 	raycasttester->setInput(inputSystem);
 	raycasttester->setPhysics(collisionsystem);
-
 	Player->addComponent(raycasttester);
 
-
+	ParticleRenderer* particleRender = new ParticleRenderer(cameraComponent);
+	particleRender->init();
+	bulletParticles* bullet = new bulletParticles(glm::vec3(5.0f, 0.0f, 60.0f), glm::vec3(0,0,1), glm::vec3(0,0,-0.05), particleRender);
+	
+	bullet->init();
+	Player->addComponent(bullet);
 
 	objectList.push_back(Player);
 
