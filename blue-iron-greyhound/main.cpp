@@ -21,25 +21,21 @@
 #include "SDLInputSystem.h"
 #include "IrrKlangAudioSystem.h"
 #include "rayCastTestComponent.h"
-#include "EnemyAIComponent.h"
+#include "BulletParticle.h"
+#include "ParticleRenderer.h"
+
 
 #include "RigidBodyComponent.h"
 #include "CollisionSystem.h"
 #include "IronRiftsPhysicsSystem.h"
 
 #include "AudioTestComponent.h"
-
 //temp
 ///
 #include "OBB.h"
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 ///
-
-//New AI stuff
-#include "AISystem.h"
-#include "AstarGraph.h"
-
 
 //timer
 #include <ctime>
@@ -85,14 +81,13 @@ int main(int argc, char *argv[])
 	RenderingSystem* renderer = new openglRenderer();
 	renderer->camera = cameraComponent;
 
-	
 	//Temporarily hold all objects so that main isn't so awkward
 	std::vector<GameObject*> objectList;
 	
 
 	//First Object - Acting as player (camera component / movement component)
 	GameObject *Player = new GameObject("player");
-	Player->setPosition(glm::vec3(0.0f, 0.0f, 30.0f));
+	Player->setPosition(glm::vec3(5.0f, 0.0f, 60.0f));
 	Player->setScaling(glm::vec3(1.0f, 1.0f, 1.0f));
 	Player->setRotationAxis(glm::vec3(0, -1, 0));
 	Player->setRotationDegrees(0);
@@ -123,64 +118,32 @@ int main(int argc, char *argv[])
 	Player->addComponent(cameraComponent);
 	Player->addComponent(moveComponent);
 
+	//Bullet Particle System
+	ParticleRenderer* particleRender = new ParticleRenderer(cameraComponent);
+	particleRender->init();
+
+	//bullet itself
+	bulletParticles* bullet = new bulletParticles(glm::vec3(5.0f, -3.0f, 60.0f), glm::vec3(0, 0, 1), glm::vec3(0, 0, 0), particleRender); //(pos,direction, velocity, renderer)
+	bullet->init();
+	Player->addComponent(bullet);
+
+	//Raycast
 	RayCastTestComponent *raycasttester = new RayCastTestComponent("testytest");
+	raycasttester->setRenderer(bullet);
 	raycasttester->setInput(inputSystem);
 	raycasttester->setPhysics(collisionsystem);
-
 	Player->addComponent(raycasttester);
 
-
-
-	objectList.push_back(Player); 
 	
 	
-	//AI system and pathfinding
-	EnemyAIComponent* EnemyAI = new EnemyAIComponent();
-	
-	typedef std::pair<int, int> path;
-	int names[] = { 0,1,2,3,4 };
-	glm::vec2 locations[] = { { 0,0 },{ 30,0 },{ 30,-30 },{ 0,-30 },{ 0,0 } };
-	std::pair<int, int> edges[] = { path(0,1),path(1,2),path(2,3),path(3,4), path(4,0) };
-	float weights[] = {1, 1, 1, 1, 1};
 
-	AISystem* AiSys = new AISystem();
-	AstarGraph* graph = new AstarGraph(names, locations, edges, weights, 5, 5);
+	objectList.push_back(Player);
 
-	AiSys->addPathGraph(graph);
-	EnemyAI->setAIsystem(AiSys);
-	EnemyAI->init();
-
-	//AI test object (enemy Player)
-	//Green Demo Cube
-	GameObject *Enemey = new GameObject("Enemy Cube");
-	Enemey->setPosition(glm::vec3(0.0f, 0.0f, 0.0f));
-	Enemey->setScaling(glm::vec3(2, 2, 2));
-	Enemey->setRotationAxis(glm::vec3(0, 1, 0));
-	Enemey->setRotationDegrees(0);
-
-	Enemey->addComponent(EnemyAI);
-
-	RigidBodyComponent* EnemeyRigidBody = new RigidBodyComponent("Rigid Body");
-	Enemey->addComponent(EnemeyRigidBody);
-	EnemeyRigidBody->setCollisionSystem(collisionsystem);
-	EnemeyRigidBody->setBodyType("DYNAMIC");
-	EnemeyRigidBody->setBoundingType("OBB");
-
-	MeshComponent* EnemeyMesh = new MeshComponent("test");
-	Enemey->addComponent(EnemeyMesh);
-	EnemeyMesh->setRenderer(renderer);
-	EnemeyMesh->loadObject("../../assets/blenderTest.dae");
-	EnemeyMesh->loadTexture("../../assets/tex/grass.bmp");
-
-	objectList.push_back(Enemey);
-
-
-	//Raycast Test cubes
 	////////////////////////////////////////////////////
 
 	//Green Demo Cube
 	GameObject *barrier2 = new GameObject("Green Cube");
-	barrier2->setPosition(glm::vec3(5.0f, -5.0f, 60.0f));
+	barrier2->setPosition(glm::vec3(5.0f, -5.0f, 50.0f));
 	barrier2->setScaling(glm::vec3(5.5f, 5.5f, 5.5f));
 	barrier2->setRotationAxis(glm::vec3(0, 1, 0));
 	barrier2->setRotationDegrees(45);
@@ -198,10 +161,12 @@ int main(int argc, char *argv[])
 	barriermesh2->loadTexture("../../assets/tex/grass.bmp");
 
 	objectList.push_back(barrier2);
+	///////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////
 
 	//Green Demo Cube
 	GameObject *barrier = new GameObject("Blue Cube");
-	barrier->setPosition(glm::vec3(-15.0f, -5.0f, 60.0f));
+	barrier->setPosition(glm::vec3(-15.0f, -5.0f, 100.0f));
 	barrier->setScaling(glm::vec3(5.5f, 5.5f, 5.5f));
 	barrier->setRotationAxis(glm::vec3(1, 0, 0));
 	barrier->setRotationDegrees(0);
@@ -220,10 +185,11 @@ int main(int argc, char *argv[])
 
 	objectList.push_back(barrier);
 
+	///////////////////////////////////////////////////////////////////
 
 	//Raycast Test Cube 1
 	GameObject *Raycast = new GameObject("Brown Cube");
-	Raycast->setPosition(glm::vec3(5.0f, -5.0f, 100.0f));
+	Raycast->setPosition(glm::vec3(5.0f, -5.0f, 140.0f));
 	Raycast->setScaling(glm::vec3(5.5f, 5.5f, 5.5f));
 	Raycast->setRotationAxis(glm::vec3(0, 1, 0));
 	Raycast->setRotationDegrees(45);
@@ -245,7 +211,7 @@ int main(int argc, char *argv[])
 
 	//Raycast Test Cube 2
 	GameObject *Raycast2 = new GameObject("Grey Cube");
-	Raycast2->setPosition(glm::vec3(-15.0f, -5.0f, 100.0f));
+	Raycast2->setPosition(glm::vec3(-15.0f, -5.0f, 140.0f));
 	Raycast2->setScaling(glm::vec3(5.5f, 5.5f, 5.5f));
 	Raycast2->setRotationAxis(glm::vec3(0, 1, 0));
 	Raycast2->setRotationDegrees(45);
@@ -285,7 +251,7 @@ int main(int argc, char *argv[])
 
 	//Ground Plane 2
 	GameObject *GroundPlane2 = new GameObject("Collada");
-	GroundPlane2->setPosition(glm::vec3(0.0f, -5.0f, 0.0f));
+	GroundPlane2->setPosition(glm::vec3(0.0f, -5.0f, 60.0f));
 	GroundPlane2->setScaling(glm::vec3(60, 0.1f, 60));
 	GroundPlane2->setRotationAxis(glm::vec3(NULL, NULL, NULL));
 	RigidBodyComponent* rigidBody5 = new RigidBodyComponent("Rigid Body");

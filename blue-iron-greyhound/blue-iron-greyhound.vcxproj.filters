@@ -134,6 +134,13 @@
     <ClInclude Include="rayCastTestComponent.h">
       <Filter>Source Files\CompSysTestClasses</Filter>
     </ClInclude>
+<<<<<<< HEAD
+    <ClInclude Include="bulletParticle.h">
+      <Filter>Source Files\Rendering System</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleRenderer.h">
+      <Filter>Source Files\Rendering System</Filter>
+=======
     <ClInclude Include="EnemyAIComponent.h">
       <Filter>Source Files\AI</Filter>
     </ClInclude>
@@ -148,6 +155,7 @@
     </ClInclude>
     <ClInclude Include="aStarPathFinder.h">
       <Filter>Source Files\AI\Graph</Filter>
+>>>>>>> refs/remotes/origin/master
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -211,11 +219,19 @@
     <ClCompile Include="rayCastTestComponent.cpp">
       <Filter>Source Files\CompSysTestClasses</Filter>
     </ClCompile>
+<<<<<<< HEAD
+    <ClCompile Include="bulletParticle.cpp">
+      <Filter>Source Files\Rendering System</Filter>
+    </ClCompile>
+    <ClCompile Include="ParticleRenderer.cpp">
+      <Filter>Source Files\Rendering System</Filter>
+=======
     <ClCompile Include="EnemyAIComponent.cpp">
       <Filter>Source Files\AI</Filter>
     </ClCompile>
     <ClCompile Include="AISystem.cpp">
       <Filter>Source Files\AI</Filter>
+>>>>>>> refs/remotes/origin/master
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

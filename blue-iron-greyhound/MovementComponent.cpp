@@ -38,11 +38,14 @@ void MovementComponent::update()
 	//Really just an up vector 
 	glm::vec2 playerVec(0,1);
 
-	//Mouse position and an x, y representing the center of the screen
-	glm::vec2 mouseVec = mousePosition - glm::vec2(600,400);		
+	//Mouse position and an x, y representing the center of the screen (where the player should be)
+	glm::vec2 mouseVec = mousePosition - glm::vec2(600,300);		
+	//cout << mousePosition.x << ", " << mousePosition.y << ", " << endl;
 
 	float angleInDegrees_ = atan2(mouseVec.y, mouseVec.x) - atan2(playerVec.y, playerVec.x);
 	angleInDegrees_ = glm::degrees(angleInDegrees_);
+
+	//angleInDegrees_ = angleInDegrees_  *DEG_TO_RADIAN;
 
 	//Set players rotation based on where the mouse is!
 	this->user->setRotationDegrees(angleInDegrees_);
