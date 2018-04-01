@@ -1,6 +1,9 @@
+/*=============================================================================
+Enemy AI Component
+Author : Chloe Madden(B00286864)
+=============================================================================*/
+
 #include "EnemyAIComponent.h"
-
-
 
 
 EnemyAIComponent::EnemyAIComponent()
@@ -11,22 +14,27 @@ EnemyAIComponent::EnemyAIComponent()
 
 void EnemyAIComponent::init()
 {
-	//Give the object an initial route to follow
-	targetIndex = 0;
-	
-	//Inventives for where to go. These in the end should be things like the players psoition or a defensive position
+	//Inventives for where to go. These in the end should be things like
+	//the players psoition or a defensive position
 	targets.push_back(glm::vec3(50, 0, 0));
 	targets.push_back(glm::vec3(0, 0, 50));
 	targets.push_back(glm::vec3(0, 0, -50));
 	targets.push_back(glm::vec3(-50, 0, 0));
 
+	//Pick one of the targets
+	targetIndex = 0;
+
+	//Keep track of current oal position
 	currentGoalPosition = targets[targetIndex];
 
+	//Get a path to the chosen route
 	glm::vec2 goal(currentGoalPosition.x, currentGoalPosition.z);
-
 	currentRoute = AIsystem->findPath(glm::vec2(0, 0), goal);
+
+	//Set currentRoute[0] as the first destination to head to 
 	goalNodeIndex = 0;
 
+	//Not at the final destination of currentRoute
 	atFinalDestination = false;
 }
 
@@ -34,16 +42,16 @@ void EnemyAIComponent::faceDestination(glm::vec3 pos, glm::vec3 dest)
 {
 	//Calculates angle and set player rotation
 	//Really just an up vector 
-	glm::vec3 playerVec(0, 1,0);
+	glm::vec3 playerVec(0, 1, 0);
 
-	//Mouse position and an x, y representing the center of the screen
+	//Calculate rotation in degrees
 	glm::vec3 facingVector = dest - pos;
 
 	float angleInDegrees_ = atan2(facingVector.y, facingVector.x) - atan2(playerVec.y, playerVec.x);
 	angleInDegrees_ = glm::degrees(angleInDegrees_);
 
-	//Set players rotation based on where the mouse is!
-	this->user->setRotationDegrees(angleInDegrees_+90);
+	//Set GameObjects rotation
+	this->user->setRotationDegrees(angleInDegrees_);
 }
 
 void EnemyAIComponent::update()
@@ -55,10 +63,7 @@ void EnemyAIComponent::update()
 		goalNodeIndex = 0;
 
 
-	faceDestination(currPosition, currentRoute[goalNodeIndex]);
-	
-	
-	//Recalculate route with nw destination
+	//Recalculate route with new target if there's no route to follow
 	if (currentRoute.size() == 0)
 	{
 		goalNodeIndex = 0;
@@ -78,10 +83,10 @@ void EnemyAIComponent::update()
 	
 
 
-	//Not at last node in the current path
+	//if not at last node in the current path
 	if (!atFinalDestination)
 	{
-		//Still travelling to next position
+		// If still travelling to next position
 		if (glm::distance(currPosition, currentRoute[goalNodeIndex]) > 1) 
 		{
 			velocity = glm::normalize(currentRoute[goalNodeIndex] - currPosition);
@@ -89,13 +94,13 @@ void EnemyAIComponent::update()
 		}
 		else
 		{
-			
+			//If at the position of the last node in the current path
 			if (glm::distance(currPosition, currentRoute[currentRoute.size()-1]) < 1)
 			{
 				atFinalDestination = true;
 				velocity = glm::vec3(0);
 			}
-			else//Make next node the target
+			else//else start heading towards the next part of 'CurrentRoute'
 			{
 				goalNodeIndex++;
 			}
@@ -103,43 +108,40 @@ void EnemyAIComponent::update()
 		}
 			
 	}
-	else
+	else//Else we have reached the final position of 'CurrentRoute'
 	{
-		// Decide where the next goal lies
+
+		// Decide where the next goal lies. Should simply
+		//Loop this but write and algorithm deciding what to do/where to go
 		targetIndex++;
 
 		
-
+		//Reset target index if out of range
 		if (targetIndex > targets.size() - 1)
 			targetIndex = 0;
 
 		currentGoalPosition = targets[targetIndex];
 
+		//Generate a new route using the AI System
 		glm::vec2 pos(currPosition.x, currPosition.z);
 		glm::vec2 goal(currentGoalPosition.x, currentGoalPosition.z);
 
 		currentRoute = AIsystem->findPath(pos, goal);
 
-		atFinalDestination = false;
 
+		//Resets
+		atFinalDestination = false;
 		goalNodeIndex = 0;
 
 	}
 		
-	
-	
-
-	
 	//update player movement
 	this->getUser()->setPosition(currPosition + velocity);
 
+
+	//Turn togace direction of travel
+	faceDestination(currPosition, currentRoute[goalNodeIndex]);
 	
-}
-
-
-void EnemyAIComponent::moveTowards(glm::vec2 goal)
-{
-
 }
 
 

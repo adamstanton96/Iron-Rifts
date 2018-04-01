@@ -1,4 +1,11 @@
 #pragma once
+/*=============================================================================
+Enemy AI Component
+Author : Chloe Madden(B00286864)
+=============================================================================*/
+/*
+A node represents a vertex/destination in the map pathways 
+*/
 #include <vector>
 #include <glm/glm.hpp>
 

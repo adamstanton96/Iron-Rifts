@@ -1,4 +1,15 @@
 #pragma once
+/*=============================================================================
+Enemy AI Component
+Author : Chloe Madden(B00286864)
+=============================================================================*/
+/*
+This class stores a map of pathways. The Enemy AI Component can use this system 
+to find routes around the map. This system uses the A* algorithm to calculate 
+the shortest path.
+*/
+
+
 #include "System.h"
 #include "AstarGraph.h"
 #include "aStarPathFinder.h"
