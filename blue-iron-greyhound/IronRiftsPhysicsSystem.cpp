@@ -15,7 +15,7 @@ void IronRiftsPhysicsSystem::draw()
 
 }
 
-openglRenderer renderer;
+
 
 void IronRiftsPhysicsSystem::collisionCheck(RigidBodyComponent* rigidbody)
 {
@@ -107,6 +107,19 @@ void IronRiftsPhysicsSystem::collisionReaction(RigidBodyComponent* rigidbody)
 	translationVector = (currentPosition - rigidbody->prevPosition);
 
 	rigidbody->getUser()->setPosition(currentPosition + translationVector * glm::vec3(-2));
+
+
+}
+
+glm::vec3 IronRiftsPhysicsSystem::collisionDirectionVector(RigidBodyComponent* rigidbody)
+{
+	glm::vec3 currentPosition = rigidbody->getUser()->getPosition();
+
+	glm::vec3 translationVector = (currentPosition - rigidbody->prevPosition) * glm::vec3(-2.5);
+
+	translationVector = (currentPosition - rigidbody->prevPosition);
+
+	return translationVector;
 
 
 }

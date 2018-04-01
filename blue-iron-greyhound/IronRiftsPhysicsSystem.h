@@ -17,6 +17,8 @@ public:
 	void collisionCheck(RigidBodyComponent* rigidbody);
 	void collisionReaction(RigidBodyComponent* rigidbody);
 	void displacementReaction(RigidBodyComponent* rigidbody, glm::vec3 displacementVector);
+	glm::vec3 collisionDirectionVector(RigidBodyComponent* rigidbody);
+
 
 	//Raycasting...
 	Ray castRay(glm::vec3 startPoint, glm::vec3 direction, float distance);

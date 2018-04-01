@@ -42,6 +42,12 @@
     <Filter Include="Source Files\Physics\Depreciated\Collidables">
       <UniqueIdentifier>{3e8eed51-656e-4798-b682-a25d096375a6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\AI">
+      <UniqueIdentifier>{5f68c9ef-343e-4b44-81f8-0044d59090db}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\AI\Graph">
+      <UniqueIdentifier>{26c64ce6-296a-43d5-be8f-48cb6de09f0b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="openglRenderer.h">
@@ -128,6 +134,21 @@
     <ClInclude Include="rayCastTestComponent.h">
       <Filter>Source Files\CompSysTestClasses</Filter>
     </ClInclude>
+    <ClInclude Include="EnemyAIComponent.h">
+      <Filter>Source Files\AI</Filter>
+    </ClInclude>
+    <ClInclude Include="AISystem.h">
+      <Filter>Source Files\AI</Filter>
+    </ClInclude>
+    <ClInclude Include="node.h">
+      <Filter>Source Files\AI\Graph</Filter>
+    </ClInclude>
+    <ClInclude Include="AstarGraph.h">
+      <Filter>Source Files\AI\Graph</Filter>
+    </ClInclude>
+    <ClInclude Include="aStarPathFinder.h">
+      <Filter>Source Files\AI\Graph</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Component.cpp">
@@ -189,6 +210,12 @@
     </ClCompile>
     <ClCompile Include="rayCastTestComponent.cpp">
       <Filter>Source Files\CompSysTestClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyAIComponent.cpp">
+      <Filter>Source Files\AI</Filter>
+    </ClCompile>
+    <ClCompile Include="AISystem.cpp">
+      <Filter>Source Files\AI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
