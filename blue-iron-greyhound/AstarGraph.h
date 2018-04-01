@@ -1,4 +1,12 @@
 #pragma once
+/*=============================================================================
+Enemy AI Component
+Author : Chloe Madden(B00286864)
+=============================================================================*/
+/*
+This class represent the entire pathway map for a scene. It represents this using nodes.
+The nodes store information on their position, paths and path weights.
+*/
 #include "node.h"
 #include <iostream>
 

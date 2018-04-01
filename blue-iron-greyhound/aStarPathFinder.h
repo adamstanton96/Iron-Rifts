@@ -1,4 +1,12 @@
 #pragma once
+/*=============================================================================
+Enemy AI Component
+Author : Chloe Madden(B00286864)
+=============================================================================*/
+/*
+This class runs the A* algorithm for the AI System. Returns a vector of positions
+in space (the shortest path between two given positions)
+*/
 #include "node.h"
 #include "AstarGraph.h"
 
