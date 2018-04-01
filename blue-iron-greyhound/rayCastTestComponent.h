@@ -3,6 +3,7 @@
 #include "GameObject.h"
 #include "InputSystem.h"
 #include "IronRiftsPhysicsSystem.h"
+#include "bulletParticle.h"
 
 #define DEG_TO_RADIAN 0.017453293
 
@@ -15,9 +16,11 @@ public:
 	void init();
 	void update();
 
+	void setRenderer(bulletParticles* renderer);
 	void setInput(InputSystem *newInput);
 	void setPhysics(PhysicsSystem *newPhysics);
 private:
 	InputSystem *input;
 	PhysicsSystem *physics;
+	bulletParticles* bulletRender;
 };

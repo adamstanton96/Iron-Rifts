@@ -132,6 +132,7 @@
     <ClInclude Include="AudioSystem.h" />
     <ClInclude Include="AudioTestComponent.h" />
     <ClInclude Include="boundingVolume.h" />
+    <ClInclude Include="bulletParticle.h" />
     <ClInclude Include="CameraComponent.h" />
     <ClInclude Include="CollisionSystem.h" />
     <ClInclude Include="Component.h" />
@@ -143,6 +144,7 @@
     <ClInclude Include="MovementComponent.h" />
     <ClInclude Include="node.h" />
     <ClInclude Include="OBB.h" />
+    <ClInclude Include="ParticleRenderer.h" />
     <ClInclude Include="PhysicsSystem.h" />
     <ClInclude Include="rayCastTestComponent.h" />
     <ClInclude Include="RigidBodyComponent.h" />
@@ -162,6 +164,7 @@
     <ClCompile Include="AISystem.cpp" />
     <ClCompile Include="AssimpLoader.cpp" />
     <ClCompile Include="AudioTestComponent.cpp" />
+    <ClCompile Include="bulletParticle.cpp" />
     <ClCompile Include="CameraComponent.cpp" />
     <ClCompile Include="CollisionSystem.cpp" />
     <ClCompile Include="Component.cpp" />
@@ -176,19 +179,12 @@
     <ClCompile Include="OBB.cpp" />
     <ClCompile Include="openglRenderer.cpp" />
     <ClCompile Include="OpenglUtils.cpp" />
+    <ClCompile Include="ParticleRenderer.cpp" />
     <ClCompile Include="rayCastTestComponent.cpp" />
     <ClCompile Include="RigidBodyComponent.cpp" />
     <ClCompile Include="SDLGLTextureLoader.cpp" />
     <ClCompile Include="SDLInputSystem.cpp" />
     <ClCompile Include="TestComponent.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="minimal.frag" />
-    <None Include="minimal.vert" />
-    <None Include="textured.frag" />
-    <Xml Include="textured.vert">
-      <FileType>Document</FileType>
-    </Xml>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
