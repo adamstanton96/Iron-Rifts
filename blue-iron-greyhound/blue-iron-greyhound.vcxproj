@@ -125,7 +125,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="AABB.h" />
+    <ClInclude Include="AISystem.h" />
     <ClInclude Include="AssimpLoader.h" />
+    <ClInclude Include="AstarGraph.h" />
+    <ClInclude Include="aStarPathFinder.h" />
     <ClInclude Include="AudioSystem.h" />
     <ClInclude Include="AudioTestComponent.h" />
     <ClInclude Include="boundingVolume.h" />
@@ -133,11 +136,13 @@
     <ClInclude Include="CameraComponent.h" />
     <ClInclude Include="CollisionSystem.h" />
     <ClInclude Include="Component.h" />
+    <ClInclude Include="EnemyAIComponent.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="InputSystem.h" />
     <ClInclude Include="IronRiftsPhysicsSystem.h" />
     <ClInclude Include="IrrKlangAudioSystem.h" />
     <ClInclude Include="MovementComponent.h" />
+    <ClInclude Include="node.h" />
     <ClInclude Include="OBB.h" />
     <ClInclude Include="ParticleRenderer.h" />
     <ClInclude Include="PhysicsSystem.h" />
@@ -156,12 +161,14 @@
     <ClInclude Include="TestComponent.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AISystem.cpp" />
     <ClCompile Include="AssimpLoader.cpp" />
     <ClCompile Include="AudioTestComponent.cpp" />
     <ClCompile Include="bulletParticle.cpp" />
     <ClCompile Include="CameraComponent.cpp" />
     <ClCompile Include="CollisionSystem.cpp" />
     <ClCompile Include="Component.cpp" />
+    <ClCompile Include="EnemyAIComponent.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="InteractiveTestComponent.cpp" />
     <ClCompile Include="IronRiftsPhysicsSystem.cpp" />
