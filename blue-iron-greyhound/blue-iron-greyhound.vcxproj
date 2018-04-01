@@ -186,14 +186,6 @@
     <ClCompile Include="SDLInputSystem.cpp" />
     <ClCompile Include="TestComponent.cpp" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="minimal.frag" />
-    <None Include="minimal.vert" />
-    <None Include="textured.frag" />
-    <Xml Include="textured.vert">
-      <FileType>Document</FileType>
-    </Xml>
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
