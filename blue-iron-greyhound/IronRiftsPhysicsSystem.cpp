@@ -438,11 +438,11 @@ glm::vec3 IronRiftsPhysicsSystem::RayToOBB(Ray ray, OBB * obb)
 		if (axi == 0)
 		{
 
-			/*if (maxProj1 > minProj2 && minProj1 < minProj2)
+			if (maxProj1 > minProj2 && minProj1 < minProj2)
 			{
 				transVec2 = (maxProj1 - minProj2) * axis;
 				zOverlap = true;
-			}*/
+			}
 
 			if (minProj1 < maxProj2 && maxProj1 > maxProj2)
 			{
@@ -470,11 +470,11 @@ glm::vec3 IronRiftsPhysicsSystem::RayToOBB(Ray ray, OBB * obb)
 		if (axi == 1)
 		{
 
-			/*if (maxProj1 > minProj2 && minProj1 < minProj2)
+			if (maxProj1 > minProj2 && minProj1 < minProj2)
 			{
 				transVec1 = (maxProj1 - minProj2) * axis;
 				xOverlap = true;
-			}*/
+			}
 
 			if (minProj1 < maxProj2 && maxProj1 > maxProj2)
 			{
@@ -519,12 +519,7 @@ glm::vec3 IronRiftsPhysicsSystem::RayToOBB(Ray ray, OBB * obb)
 				yOverlap = true;
 			}
 
-			//	if crossing through the object
-		/*	if ((minProj1&&maxProj1) < maxProj2 && (minProj1&&maxProj1) > minProj2)
-			{
-				transVec3 = (maxProj2 - minProj1) * axis;
-				yOverlap = true;
-			}*/
+	
 		}
 
 
