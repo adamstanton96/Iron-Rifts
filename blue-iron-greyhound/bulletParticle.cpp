@@ -1,15 +1,16 @@
 #include "bulletParticle.h"
 
 
-bulletParticles::bulletParticles(glm::vec3 pos, glm::vec3 trajectory, glm::vec3 vel, ParticleRenderer* renderer)
+bulletParticles::bulletParticles(glm::vec3 pos, glm::vec3 trajectory, glm::vec3 vel, glm::vec4 col, char* tex, ParticleRenderer* renderer)
 {
 	position = pos;
 	velocity = vel;
-	colour = glm::vec4(1, 0, 0, 1); //Red bullet
+	colour = col; //Red bullet
 
 	ray = trajectory;
 
 	render = renderer;
+	texture = tex;
 }
 
 
@@ -20,7 +21,8 @@ bulletParticles::~bulletParticles()
 
 void bulletParticles::init()
 {
-	
+	render->initTexture(texture);
+
 	glGenVertexArrays(1, vao);
 	glGenBuffers(2, vbo);
 	glBindVertexArray(vao[0]); 
@@ -41,10 +43,9 @@ void bulletParticles::init()
 void bulletParticles::emit(glm::vec3 pos, glm::vec3 trajectory, glm::vec3 vel)
 {
 	position = pos;
-	//velocity = vel;
-	//ray = trajectory * ve;
+
 	velocity = trajectory * vel;
-	colour = glm::vec4(1,0,0,1); //Red bullet
+	
 }
 
 void bulletParticles::update()
@@ -56,6 +57,8 @@ void bulletParticles::update()
 
 void bulletParticles::draw()
 {
+
+	render->updateShader(position);
 
 	//Update the positions...
 	glBindVertexArray(vao[0]); 
@@ -72,16 +75,30 @@ void bulletParticles::draw()
 	glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, 0, 0);
 	glEnableVertexAttribArray(1);    
 
-	glPointSize(10);
+	glPointSize(100);
 
-	render->draw(position);
+
+	//pre draw settings
+	glEnable(GL_POINT_SPRITE); //use for particles.
+	glEnable(GL_PROGRAM_POINT_SIZE);
+
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glEnable(GL_BLEND);
+	//glDepthMask(0);
+
+
 	
 	//Draw all of our particles...
-	for (int i = 0; i < 2; i++)
+	for (int i = 0; i < 1; i++)
 	{
 		glDrawArrays(GL_POINTS, 0, 1);
 	}
 	glBindVertexArray(0);
+
+	////post draw settings
+	glDisable(GL_BLEND);
+//	glDepthMask(1);
+	glDepthMask(GL_TRUE);
 }
 
 

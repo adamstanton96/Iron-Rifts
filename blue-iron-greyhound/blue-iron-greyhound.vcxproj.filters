@@ -42,10 +42,10 @@
       <Filter>Input/Movement</Filter>
     </ClCompile>
     <ClCompile Include="AudioTestComponent.cpp">
-      <Filter>Utils\Audio</Filter>
+      <Filter>Audio</Filter>
     </ClCompile>
     <ClCompile Include="IrrKlangAudioSystem.cpp">
-      <Filter>Utils\Audio</Filter>
+      <Filter>Audio</Filter>
     </ClCompile>
     <ClCompile Include="SDLGLTextureLoader.cpp">
       <Filter>Utils</Filter>
@@ -125,13 +125,13 @@
       <Filter>Input/Movement</Filter>
     </ClInclude>
     <ClInclude Include="AudioSystem.h">
-      <Filter>Utils\Audio</Filter>
+      <Filter>Audio</Filter>
     </ClInclude>
     <ClInclude Include="AudioTestComponent.h">
-      <Filter>Utils\Audio</Filter>
+      <Filter>Audio</Filter>
     </ClInclude>
     <ClInclude Include="IrrKlangAudioSystem.h">
-      <Filter>Utils\Audio</Filter>
+      <Filter>Audio</Filter>
     </ClInclude>
     <ClInclude Include="SDLGLTextureLoader.h">
       <Filter>Utils</Filter>
@@ -192,9 +192,6 @@
     <Filter Include="Input/Movement">
       <UniqueIdentifier>{85b25e2c-3bdd-40ce-8199-0ab2d83b930f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Utils\Audio">
-      <UniqueIdentifier>{d35912bd-cc94-4ca2-aa59-57b42689af39}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Low Level Classes">
       <UniqueIdentifier>{b916e8fd-def7-4ce5-a051-13255e464720}</UniqueIdentifier>
     </Filter>
@@ -209,6 +206,9 @@
     </Filter>
     <Filter Include="Physics\Bounding Volumes">
       <UniqueIdentifier>{e0b17c42-4a18-4f2b-8013-3052895e907b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Audio">
+      <UniqueIdentifier>{d35912bd-cc94-4ca2-aa59-57b42689af39}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
