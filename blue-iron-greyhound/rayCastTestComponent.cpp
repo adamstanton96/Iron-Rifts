@@ -58,7 +58,7 @@ void RayCastTestComponent::update()
 			
 
 		//Emit bullet particle (graphics). the position needed to be offset so it came from the center of the current test cube in use and not fired from the corner
-		bulletRender->emit(glm::vec3(userPos.x - 1, userPos.y, userPos.z + 1), rotatedDirectionVector, glm::vec3(0.3));
+		bulletRender->emit(glm::vec3(userPos.x - 1, userPos.y, userPos.z + 1), rotatedDirectionVector, glm::vec3(0.8));
 	}
 }
 

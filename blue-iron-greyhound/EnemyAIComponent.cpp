@@ -90,7 +90,7 @@ void EnemyAIComponent::update()
 		if (glm::distance(currPosition, currentRoute[goalNodeIndex]) > 1) 
 		{
 			velocity = glm::normalize(currentRoute[goalNodeIndex] - currPosition);
-			velocity = velocity * glm::vec3(0.08, 0, 0.08);
+			velocity = velocity * glm::vec3(0.02, 0, 0.02);
 		}
 		else
 		{
