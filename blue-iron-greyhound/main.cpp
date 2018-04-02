@@ -105,7 +105,7 @@ int main(int argc, char *argv[])
 	Player->addComponent(meshComponent);
 	meshComponent->setRenderer(renderer);
 	meshComponent->loadObject("../../assets/blenderTest.dae");
-	meshComponent->loadTexture("../../assets/tex/scifiFloor.bmp");
+	meshComponent->loadTexture("../../assets/tex/habitatWater.bmp");
 	MovementComponent *moveComponent = new MovementComponent("moveComponent");
 	moveComponent->setInput(inputSystem);
 
@@ -122,7 +122,7 @@ int main(int argc, char *argv[])
 	particleRender->init();
 
 	//bullet itself
-	bulletParticles* bullet = new bulletParticles(glm::vec3(5.0f, -3.0f, 60.0f), glm::vec3(0, 0, 1), glm::vec3(0, 0, 0), particleRender); //(pos,direction, velocity, renderer)
+	bulletParticle* bullet = new bulletParticle(glm::vec4(1, 0.5f, 0.5f,1.0f), 200, "../../assets/tex/rainTex.png", particleRender); //(colour, numOfParticles, texture, ParticleRenderer)
 	bullet->init();
 	Player->addComponent(bullet);
 

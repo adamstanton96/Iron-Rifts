@@ -287,6 +287,71 @@ namespace OpenglUtils
 	}
 
 
+	GLuint initParticleShaders(char *vertFile,char *fragFile)
+	{
+		GLuint p, f, v;
+
+		char *vs, *fs;
+
+		v = glCreateShader(GL_VERTEX_SHADER);
+		f = glCreateShader(GL_FRAGMENT_SHADER);
+
+		// load shaders & get length of each
+		GLint vlen;
+		GLint flen;
+
+		//vs = loadFile(vertFile, vlen);
+		//fs = loadFile(fragFile, flen);
+
+		vs = vertFile ;
+		fs = fragFile;
+
+
+
+		const char * vv = vs;
+		const char * ff = fs;
+
+		//glShaderSource(v, 1, &vv, &vlen);
+		//glShaderSource(f, 1, &ff, &flen);
+
+		glShaderSource(v, 1, &vv, NULL);
+		glShaderSource(f, 1, &ff, NULL);
+
+		GLint compiled;
+
+		glCompileShader(v);
+		glGetShaderiv(v, GL_COMPILE_STATUS, &compiled);
+		if (!compiled) {
+			cout << "Vertex shader not compiled." << endl;
+			OpenglUtils::printShaderError(v);
+		}
+
+		glCompileShader(f);
+		glGetShaderiv(f, GL_COMPILE_STATUS, &compiled);
+		if (!compiled) {
+			cout << "Fragment shader not compiled." << endl;
+			OpenglUtils::printShaderError(f);
+		}
+
+		p = glCreateProgram();
+
+		glAttachShader(p, v);
+		glAttachShader(p, f);
+
+		glBindAttribLocation(p, RT3D_VERTEX, "in_Position");
+		glBindAttribLocation(p, RT3D_COLOUR, "in_Color");
+		glBindAttribLocation(p, RT3D_NORMAL, "in_Normal");
+		glBindAttribLocation(p, RT3D_TEXCOORD, "in_TexCoord");
+
+		glLinkProgram(p);
+		glUseProgram(p);
+
+		//delete[] vs; // dont forget to free allocated memory
+		//delete[] fs; // we allocated this in the loadFile function...
+
+		return p;
+	}
+
 
 
 	GLuint createMesh(const GLuint numVerts, const GLfloat* vertices, const GLfloat* colours, const GLfloat* normals,

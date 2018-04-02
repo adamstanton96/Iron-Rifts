@@ -3,7 +3,7 @@
 
 ParticleRenderer::ParticleRenderer(Camera* camera)
 {
-	shaderID = OpenglUtils::initShaders(particleVert, particleFrag);
+	shader = OpenglUtils::initParticleShaders(particleVert, particleFrag);
 	this->camera = camera;
 }
 
@@ -34,16 +34,24 @@ void ParticleRenderer::init()
 	mvStack.top() = glm::lookAt(eye, at, up);
 }
 
-void ParticleRenderer::draw(glm::vec3 pos)
+
+void ParticleRenderer::initTexture(char* tex)
+{
+	texture = SDLGLTextureLoader::loadPNG(tex);
+}
+
+
+void ParticleRenderer::updateShader(glm::vec3 pos)
 {
 	update();
 
-	glUseProgram(shaderID);
+	glUseProgram(shader);
+	glBindTexture(GL_TEXTURE_2D, texture);
 
-	OpenglUtils::setUniformMatrix4fv(shaderID, "projection", glm::value_ptr(projection));
+	OpenglUtils::setUniformMatrix4fv(shader, "projection", glm::value_ptr(projection));
 
 	mvStack.push(mvStack.top());
 	mvStack.top() = glm::translate(mvStack.top(), pos);
-	OpenglUtils::setUniformMatrix4fv(shaderID, "modelview", glm::value_ptr(mvStack.top()));
+	OpenglUtils::setUniformMatrix4fv(shader, "modelview", glm::value_ptr(mvStack.top()));
 	mvStack.pop();
 }

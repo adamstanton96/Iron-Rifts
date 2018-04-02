@@ -1,6 +1,7 @@
 #pragma once
 #include "System.h"
 #include "OpenglUtils.h"
+#include "SDLGLTextureLoader.h"
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
@@ -17,12 +18,14 @@ public:
 	~ParticleRenderer();
 
 	void init();
-	void draw(glm::vec3 pos);
+	void initTexture(char* tex);
+	void updateShader(glm::vec3 pos);
 
 	void update();
 
 private:
-	int shaderID;
+	int shader;
+	int texture;
 
 	Camera* camera;
 
@@ -36,73 +39,52 @@ private:
 
 	char* particleVert =
 	{
-	"	#version 330					\n"
-	"									\n"
-		"	// Some drivers require the following					\n"
-		"	precision highp float;									\n"
-	"uniform vec4 spotLightPosition; \n"
-	"out vec4 Vposition;				\n"
+	"	#version 330										\n"
+	"														\n"
+	"// Some drivers require the following					\n"
+	"precision highp float;									\n"
+	
+	"in  vec3 in_Position;									\n"
+	"in  vec4 in_Color;										\n"
+	"out vec4 ex_Color;										\n"
 
-	"in  vec3 in_Position;				\n"
-	"in  vec4 in_Color;					\n"
-	"out vec4 ex_Color;					\n"
+	"uniform mat4 modelview;								\n"
+	"uniform mat4 projection;								\n"
+	"uniform float pointSize;								\n"
 
-	"uniform mat4 modelview;			\n"
-	"uniform mat4 projection;			\n"
-	"uniform float pointSize;			\n"
-
-	"void main(void)					\n"
-	"{									\n"
-	"	ex_Color = in_Color;			\n"
+	"void main(void)													\n"
+	"{																	\n"
 
 	"	vec4 vertexPosition = modelview * vec4(in_Position,1.0);		\n"
 
 	"	//Calculate distance from point to camera and					\n"
 	"	//scale point size so size is consistent at varying distances	\n"
 	"	float distance = distance(vec3(vertexPosition), vec3(0,0,0));	\n"
-	"	gl_PointSize = pointSize / distance;							\n"
+	"	gl_PointSize = 400 / distance;							\n"
 
 	"	gl_Position = projection * vertexPosition;						\n"
-
-	"	//spotlight														\n"
-	"	Vposition = vertexPosition;										\n"
-
-	"	ex_Color = in_Color;												\n"
-	"} \n"
+	"	ex_Color = in_Color;											\n"
+	"}																	\n"
 	};
 
 
 	char* particleFrag =
 	{
-	"	#version 330				\n"
+	"	#version 330													\n"
+	"	precision highp float;											\n"
 
-	"	precision highp float;		\n"
-
-	"struct lightStruct				\n"
-	"{								\n"
-	"	vec4 ambient;				\n"
-	"	vec4 diffuse;				\n"
-	"	vec4 specular;				\n"
-	"};								\n"
-
-	"uniform float attConst;			\n"
-	"uniform float attLinear;			\n"
-	"uniform float attQuadratic;		\n"
-
-	"in  vec4 ex_Color;					\n"
-	//"out vec4 out_Color;				\n"
-	"uniform sampler2D textureUnit0;	\n"
+	"in  vec4 ex_Color;													\n"
+	"out vec4 out_Color;												\n"
+	"uniform sampler2D textureUnit0;									\n"
 
 
-	"void main(void)								\n"
-	"{												\n"
-	
-	"	float distToLight = length(L);									//this could be used for attenuation \n"
-	"	L = normalize(L);												\n"
+	"void main(void)													\n"
+	"{																	\n"
+	"	//Ditch low values of transparency								\n"
+	"	if(texture(textureUnit0, gl_PointCoord).a < 0.5) discard;		\n"
 
-	"	//out_Color = (ex_Color + totalLight) * vec4(ex_Color.a);		\n"
-	"	out_Color = vec4(1,0,0,1);			\n"
-
+	"	out_Color = (ex_Color) * vec4(ex_Color.a);						\n"
+		
 	"}																	\n"
 	};
 };

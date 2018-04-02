@@ -75,13 +75,13 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>..\..\dev\irrKlang-1.6.0\include;..\..\dev\assimp-3.1.1-win-binaries\include;..\..\Dev\SDL2-2.0.5\include;..\..\Dev\glm-0.9.8.5;..\..\Dev\glew-2.0.0\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\dev\irrKlang-1.6.0\include;..\..\dev\assimp-3.1.1-win-binaries\include;..\..\Dev\SDL2-2.0.5\include;..\..\Dev\glm-0.9.8.5;..\..\Dev\glew-2.0.0\include;..\..\dev\SDL2 plugins\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>
       </PreprocessorDefinitions>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>..\..\dev\irrKlang-1.6.0\lib\win32-visualStudio;..\..\dev\assimp-3.1.1-win-binaries\lib32;..\..\Dev\SDL2-2.0.5\lib\x86;..\..\Dev\glew-2.0.0\lib\Release\Win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;glew32.lib;opengl32.lib;assimp.lib;irrklang.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\..\dev\irrKlang-1.6.0\lib\win32-visualStudio;..\..\dev\assimp-3.1.1-win-binaries\lib32;..\..\Dev\SDL2-2.0.5\lib\x86;..\..\Dev\glew-2.0.0\lib\Release\Win32;..\..\dev\SDL2 plugins\lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;glew32.lib;opengl32.lib;assimp.lib;irrklang.lib;SDL2_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Console</SubSystem>
     </Link>
   </ItemDefinitionGroup>
