@@ -502,37 +502,10 @@ glm::vec3 IronRiftsPhysicsSystem::RayToOBB(Ray ray, OBB * obb)
 
 		}
 
-
-		//Axis 3 
-		if (axi == 2)
-		{
-			if (maxProj1 > minProj2 && minProj1 < minProj2)
-			{
-				transVec3 = (maxProj1 - minProj2) * -axis;
-				yOverlap = true;
-			}
-
-			if (minProj1 < maxProj2 && maxProj1 > maxProj2)
-			{
-				transVec3 = (maxProj2 - minProj1) * axis;
-				yOverlap = true;
-			}
-
-			if (minProj2 < minProj1 && maxProj1 < maxProj2)
-			{
-				transVec3 = (maxProj2 - minProj1) * axis;
-				yOverlap = true;
-			}
-
-	
-		}
-
-
-
-
 	}
 
 
+	//Check the seperating axis of the Ray (Axis perpendicular to it)
 	minProj1 = 1000;
 	maxProj1 = -1000;
 
@@ -559,10 +532,13 @@ glm::vec3 IronRiftsPhysicsSystem::RayToOBB(Ray ray, OBB * obb)
 	}
 
 	if (minProj2 > minProj1 && minProj2 < maxProj1)
+	{
 		rayOverlap = true;
+		transVec3 = (minProj2 - minProj1) * rayAxis;
+	}
+		
 
-	//if (minProj2 > minProj1 && minProj2 < maxProj1)
-		//rayOverlap = true;
+
 
 
 
@@ -586,7 +562,7 @@ glm::vec3 IronRiftsPhysicsSystem::RayToOBB(Ray ray, OBB * obb)
 		}
 		else
 		{
-			displacementVector = glm::vec3(0);
+			displacementVector = glm::vec3(0.01);
 		}
 
 		return displacementVector;
@@ -652,6 +628,10 @@ std::vector<GameObject*> IronRiftsPhysicsSystem::checkRayCollision(Ray ray)
 		{
 			collisions.push_back(staticBodies[i]->getUser());
 		}
+		//else if (collisionDist == glm::vec3(0))					//If the collision test comes back as null then there is no collision
+		//{
+		//	collisions.push_back(staticBodies[i]->getUser());
+		//}
 	}
 
 	//test against all dynamic bodies bodies
@@ -664,6 +644,10 @@ std::vector<GameObject*> IronRiftsPhysicsSystem::checkRayCollision(Ray ray)
 			collisions.push_back(dynamicBodies[i]->getUser());
 		
 		}	
+		//else if (collisionDist == glm::vec3(0))					//If the collision test comes back as null then there is no collision
+		//{
+		//	collisions.push_back(staticBodies[i]->getUser());
+		//}
 	}
 
 

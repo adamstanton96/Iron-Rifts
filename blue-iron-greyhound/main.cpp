@@ -181,7 +181,7 @@ int main(int argc, char *argv[])
 	//Green Demo Cube
 	GameObject *barrier2 = new GameObject("Green Cube");
 	barrier2->setPosition(glm::vec3(5.0f, -5.0f, 50.0f));
-	barrier2->setScaling(glm::vec3(5.5f, 5.5f, 5.5f));
+	barrier2->setScaling(glm::vec3(2.0f, 2.0f, 2.0f));
 	barrier2->setRotationAxis(glm::vec3(0, 1, 0));
 	barrier2->setRotationDegrees(45);
 
@@ -274,10 +274,10 @@ int main(int argc, char *argv[])
 	GroundPlane->setPosition(glm::vec3(0.0f, -5.0f, -60.0f));
 	GroundPlane->setScaling(glm::vec3(60, 0.1f, 60));
 	GroundPlane->setRotationAxis(glm::vec3(NULL, NULL, NULL));
-	RigidBodyComponent* rigidBody4 = new RigidBodyComponent("Rigid Body");
-	GroundPlane->addComponent(rigidBody4);
-	rigidBody4->setCollisionSystem(collisionsystem);
-	rigidBody4->setBodyType("STATIC");
+//	RigidBodyComponent* rigidBody4 = new RigidBodyComponent("Rigid Body");
+//	GroundPlane->addComponent(rigidBody4);
+//	rigidBody4->setCollisionSystem(collisionsystem);
+//	rigidBody4->setBodyType("STATIC");
 	MeshComponent* secondMesh = new MeshComponent("cube");
 	GroundPlane->addComponent(secondMesh);
 	secondMesh->setRenderer(renderer);
@@ -291,10 +291,10 @@ int main(int argc, char *argv[])
 	GroundPlane2->setPosition(glm::vec3(0.0f, -5.0f, 60.0f));
 	GroundPlane2->setScaling(glm::vec3(60, 0.1f, 60));
 	GroundPlane2->setRotationAxis(glm::vec3(NULL, NULL, NULL));
-	RigidBodyComponent* rigidBody5 = new RigidBodyComponent("Rigid Body");
-	GroundPlane2->addComponent(rigidBody5);
-	rigidBody5->setCollisionSystem(collisionsystem);
-	rigidBody5->setBodyType("STATIC");
+	//RigidBodyComponent* rigidBody5 = new RigidBodyComponent("Rigid Body");
+	//GroundPlane2->addComponent(rigidBody5);
+	//rigidBody5->setCollisionSystem(collisionsystem);
+	//rigidBody5->setBodyType("STATIC");
 	MeshComponent* secondMesh2 = new MeshComponent("cube");
 	GroundPlane2->addComponent(secondMesh2);
 	secondMesh2->setRenderer(renderer);
