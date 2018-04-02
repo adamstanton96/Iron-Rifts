@@ -4,6 +4,11 @@
 #include "InputSystem.h"
 #include "IronRiftsPhysicsSystem.h"
 #include "bulletParticle.h"
+//timer
+#include <ctime>
+#include <cstdlib>
+#include "time.h"
+#define CLOCKS_PER_SEC  ((clock_t)1000)
 
 #define DEG_TO_RADIAN 0.017453293
 
@@ -25,4 +30,9 @@ private:
 	bulletParticle* bulletRender;
 
 	float rayMagnitude;
+
+	std::clock_t start;
+	double dt;
+	float fireCoolOffTime;		//number of seconds between bullet fire
+	float bulletVelocity;
 };

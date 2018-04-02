@@ -4,7 +4,12 @@
 RayCastTestComponent::RayCastTestComponent(std::string name)
 {
 	this->name = name;
+
 	rayMagnitude = 50;
+	fireCoolOffTime = 0.2;
+	bulletVelocity = 0.8;
+
+	start = std::clock();
 }
 
 RayCastTestComponent::~RayCastTestComponent()
@@ -14,7 +19,7 @@ RayCastTestComponent::~RayCastTestComponent()
 
 void RayCastTestComponent::init()
 {
-	
+
 }
 
 
@@ -23,11 +28,15 @@ void RayCastTestComponent::update()
 {
 	glm::vec3 userPos = this->getUser()->getPosition();
 
+
+	dt = (std::clock() - start) / (double)CLOCKS_PER_SEC;
+
+
+if (dt > fireCoolOffTime)
+{
+
 	if (this->input->keyPressed("R"))
 	{
-
-		
-
 		//Calculate the rays direction
 		glm::vec3 forward(0, 0, -1);
 		glm::vec3 up(0, 1, 0);
@@ -61,10 +70,13 @@ void RayCastTestComponent::update()
 
 		//Emit bullet - If its going to hit something, set the distance so it stops when it hits.
 		if (obj != nullptr)
-			bulletRender->emit(glm::vec3(userPos.x - 1, userPos.y, userPos.z + 1), rotatedDirectionVector, glm::vec3(0.8), glm::distance(userPos, obj->getPosition()));
+			bulletRender->emit(userPos, rotatedDirectionVector, glm::vec3(bulletVelocity), glm::distance(userPos, obj->getPosition()));
 		else
-			bulletRender->emit(glm::vec3(userPos.x - 1, userPos.y, userPos.z + 1), rotatedDirectionVector, glm::vec3(0.8), rayMagnitude);
+			bulletRender->emit(userPos, rotatedDirectionVector, glm::vec3(bulletVelocity), rayMagnitude);
+
+		start = std::clock();
 	}
+}
 	
 			
 	bulletRender->updateEmitPosition(userPos);

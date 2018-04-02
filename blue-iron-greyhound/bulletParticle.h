@@ -5,6 +5,8 @@
 #include "ParticleRenderer.h"
 #include <vector>
 
+
+
 class bulletParticle : public Component
 {
 public:
@@ -34,8 +36,8 @@ private:
 
 	glm::vec3 emitPosition;
 
-	glm::vec4 colour;
-
+	//glm::vec4 colour;
+	std::vector<glm::vec4> colours;
 	std::vector<glm::vec3> positions;
 	std::vector<glm::vec3> trajectories;
 	std::vector<glm::vec3> velocities;

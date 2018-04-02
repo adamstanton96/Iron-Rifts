@@ -9,18 +9,20 @@ bulletParticle::bulletParticle(glm::vec4 col, int numOfParticles, char* tex, Par
 		positions.push_back(glm::vec3(0));
 		trajectories.push_back(glm::vec3(0));
 		velocities.push_back(glm::vec3(0));
+		colours.push_back(col);
 		lifeSpan.push_back(0);
 	}
 	
 
 
 	this->numOfParticles = numOfParticles;
-	this->colour = col;
 	this->render = renderer;
 	this->texture = tex;
 
 	this->emitPosition = glm::vec3(0);
 	nextParticle = 0;
+
+	
 }
 
 
@@ -43,7 +45,7 @@ void bulletParticle::init()
 	glEnableVertexAttribArray(0);     
 
 	glBindBuffer(GL_ARRAY_BUFFER, vbo[1]);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec4), &colour, GL_DYNAMIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, numOfParticles * sizeof(glm::vec4), colours.data(), GL_DYNAMIC_DRAW);
 	glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, 0, 0);
 	glEnableVertexAttribArray(1);
 
@@ -52,29 +54,20 @@ void bulletParticle::init()
 
 void bulletParticle::emit(glm::vec3 pos, glm::vec3 trajectory, glm::vec3 vel, float dist)
 {
-	//emitPosition = pos;
+		positions[nextParticle] = pos;
+		velocities[nextParticle] = trajectory * vel;
+		lifeSpan[nextParticle] = dist;
 
 
-	positions[nextParticle] = pos;
-	velocities[nextParticle] = trajectory * vel;
-	lifeSpan[nextParticle] = dist;
-	//float distance = dist;
-	//lifeSpan[nextParticle] =30;
-
-	//Load next bullet
-	if (nextParticle == numOfParticles - 1)
-		nextParticle = 0;
-	else
-		nextParticle++;
-
-
-	
+		//Load next bullet
+		if (nextParticle == numOfParticles - 1)
+			nextParticle = 0;
+		else
+			nextParticle++;
 }
 
 void bulletParticle::update()
 {
-	//All active particles
-	///position += velocity;
 
 	for (int i = 0; i < numOfParticles; i++)
 	{
@@ -109,7 +102,7 @@ void bulletParticle::draw()
 	//Colour doesn't seem to be setting?
 	glBindVertexArray(vao[1]); 
 	glBindBuffer(GL_ARRAY_BUFFER, vbo[1]);
-	glBufferData(GL_ARRAY_BUFFER, 1 * sizeof(glm::vec4), &colour, GL_DYNAMIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, numOfParticles * sizeof(glm::vec4), colours.data(), GL_DYNAMIC_DRAW);
 	glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, 0, 0);
 	glEnableVertexAttribArray(1);    
 
