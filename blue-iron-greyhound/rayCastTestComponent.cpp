@@ -4,10 +4,12 @@
 RayCastTestComponent::RayCastTestComponent(std::string name)
 {
 	this->name = name;
+	rayMagnitude = 50;
 }
 
 RayCastTestComponent::~RayCastTestComponent()
 {
+	rayMagnitude = 50;
 }
 
 void RayCastTestComponent::init()
@@ -19,10 +21,12 @@ void RayCastTestComponent::init()
 
 void RayCastTestComponent::update()
 {
+	glm::vec3 userPos = this->getUser()->getPosition();
+
 	if (this->input->keyPressed("R"))
 	{
 
-		glm::vec3 userPos = this->getUser()->getPosition();
+		
 
 		//Calculate the rays direction
 		glm::vec3 forward(0, 0, -1);
@@ -38,7 +42,7 @@ void RayCastTestComponent::update()
 		rotatedDirectionVector = glm::vec3(rotatedDirectionVector.x, rotatedDirectionVector.y, -rotatedDirectionVector.z);
 
 		//Find the two points defining our ray 
-		Ray blappo = physics->castRay(userPos, rotatedDirectionVector, 50.0f);
+		Ray blappo = physics->castRay(userPos, rotatedDirectionVector, rayMagnitude);
 
 		//Get all objects in the pathh of the ray
 		std::vector<GameObject*> objectCollisions = physics->checkRayCollision(blappo);
@@ -54,12 +58,16 @@ void RayCastTestComponent::update()
 			std::cout << "closest: " << obj->getName() << std::endl;
 		else
 			std::cout << "No Collision: " << std::endl;
+
+		//Emit bullet - If its going to hit something, set the distance so it stops when it hits.
+		if (obj != nullptr)
+			bulletRender->emit(glm::vec3(userPos.x - 1, userPos.y, userPos.z + 1), rotatedDirectionVector, glm::vec3(0.8), glm::distance(userPos, obj->getPosition()));
+		else
+			bulletRender->emit(glm::vec3(userPos.x - 1, userPos.y, userPos.z + 1), rotatedDirectionVector, glm::vec3(0.8), rayMagnitude);
+	}
 	
 			
-
-		//Emit bullet particle (graphics). the position needed to be offset so it came from the center of the current test cube in use and not fired from the corner
-		bulletRender->emit(glm::vec3(userPos.x - 1, userPos.y, userPos.z + 1), rotatedDirectionVector, glm::vec3(0.8));
-	}
+	bulletRender->updateEmitPosition(userPos);
 }
 
 void RayCastTestComponent::setInput(InputSystem * newInput)
@@ -72,7 +80,7 @@ void RayCastTestComponent::setPhysics(PhysicsSystem * newPhysics)
 	physics = newPhysics;
 }
 
-void RayCastTestComponent::setRenderer(bulletParticles* newRenderer)
+void RayCastTestComponent::setRenderer(bulletParticle* newRenderer)
 {
 	this->bulletRender = newRenderer;
 }

@@ -1,25 +1,35 @@
 #include "bulletParticle.h"
 
 
-bulletParticles::bulletParticles(glm::vec3 pos, glm::vec3 trajectory, glm::vec3 vel, glm::vec4 col, char* tex, ParticleRenderer* renderer)
+bulletParticle::bulletParticle(glm::vec4 col, int numOfParticles, char* tex, ParticleRenderer* renderer)
 {
-	position = pos;
-	velocity = vel;
-	colour = col; //Red bullet
 
-	ray = trajectory;
+	for (int i = 0; i < numOfParticles; i++)
+	{
+		positions.push_back(glm::vec3(0));
+		trajectories.push_back(glm::vec3(0));
+		velocities.push_back(glm::vec3(0));
+		lifeSpan.push_back(0);
+	}
+	
 
-	render = renderer;
-	texture = tex;
+
+	this->numOfParticles = numOfParticles;
+	this->colour = col;
+	this->render = renderer;
+	this->texture = tex;
+
+	this->emitPosition = glm::vec3(0);
+	nextParticle = 0;
 }
 
 
-bulletParticles::~bulletParticles()
+bulletParticle::~bulletParticle()
 {
 
 }
 
-void bulletParticles::init()
+void bulletParticle::init()
 {
 	render->initTexture(texture);
 
@@ -28,43 +38,71 @@ void bulletParticles::init()
 	glBindVertexArray(vao[0]); 
 						
 	glBindBuffer(GL_ARRAY_BUFFER, vbo[0]); 
-	glBufferData(GL_ARRAY_BUFFER, 1 * sizeof(glm::vec3), &position, GL_DYNAMIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, numOfParticles * sizeof(glm::vec3), positions.data(), GL_DYNAMIC_DRAW);
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
 	glEnableVertexAttribArray(0);     
 
 	glBindBuffer(GL_ARRAY_BUFFER, vbo[1]);
-	glBufferData(GL_ARRAY_BUFFER, 1 * sizeof(glm::vec4), &colour, GL_DYNAMIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec4), &colour, GL_DYNAMIC_DRAW);
 	glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, 0, 0);
 	glEnableVertexAttribArray(1);
 
 	glBindVertexArray(0);
 }
 
-void bulletParticles::emit(glm::vec3 pos, glm::vec3 trajectory, glm::vec3 vel)
+void bulletParticle::emit(glm::vec3 pos, glm::vec3 trajectory, glm::vec3 vel, float dist)
 {
-	position = pos;
+	//emitPosition = pos;
 
-	velocity = trajectory * vel;
+
+	positions[nextParticle] = pos;
+	velocities[nextParticle] = trajectory * vel;
+	lifeSpan[nextParticle] = dist;
+	//float distance = dist;
+	//lifeSpan[nextParticle] =30;
+
+	//Load next bullet
+	if (nextParticle == numOfParticles - 1)
+		nextParticle = 0;
+	else
+		nextParticle++;
+
+
 	
 }
 
-void bulletParticles::update()
+void bulletParticle::update()
 {
-	position += velocity;
+	//All active particles
+	///position += velocity;
+
+	for (int i = 0; i < numOfParticles; i++)
+	{
+		if (lifeSpan[i] > 0)
+		{
+			positions[i] = positions[i] + velocities[i];
+			lifeSpan[i] -= glm::length(velocities[i]);
+		}
+	}
+
 	draw();
 }
 
-
-void bulletParticles::draw()
+void bulletParticle::updateEmitPosition(glm::vec3 pos)
 {
+	emitPosition = pos;
+}
 
-	render->updateShader(position);
+void bulletParticle::draw()
+{
+	render->updateShader(positions[0]);
+
 
 	//Update the positions...
 	glBindVertexArray(vao[0]); 
 							  
 	glBindBuffer(GL_ARRAY_BUFFER, vbo[0]); 
-	glBufferData(GL_ARRAY_BUFFER, 1 * sizeof(glm::vec3), &position, GL_DYNAMIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, numOfParticles * sizeof(glm::vec3), positions.data(), GL_DYNAMIC_DRAW);
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
 	glEnableVertexAttribArray(0);     
 						
@@ -84,20 +122,22 @@ void bulletParticles::draw()
 
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glEnable(GL_BLEND);
-	//glDepthMask(0);
-
 
 	
 	//Draw all of our particles...
-	for (int i = 0; i < 1; i++)
+	for (int i = 0; i < numOfParticles; i++)
 	{
-		glDrawArrays(GL_POINTS, 0, 1);
+		if (lifeSpan[i] > 0)
+		{
+			render->updateShader(positions[i]);
+			glDrawArrays(GL_POINTS, i, 1);
+		}
+		
 	}
 	glBindVertexArray(0);
 
 	////post draw settings
 	glDisable(GL_BLEND);
-//	glDepthMask(1);
 	glDepthMask(GL_TRUE);
 }
 

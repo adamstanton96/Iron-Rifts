@@ -16,11 +16,13 @@ public:
 	void init();
 	void update();
 
-	void setRenderer(bulletParticles* renderer);
+	void setRenderer(bulletParticle* renderer);
 	void setInput(InputSystem *newInput);
 	void setPhysics(PhysicsSystem *newPhysics);
 private:
 	InputSystem *input;
 	PhysicsSystem *physics;
-	bulletParticles* bulletRender;
+	bulletParticle* bulletRender;
+
+	float rayMagnitude;
 };
