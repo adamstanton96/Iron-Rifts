@@ -399,6 +399,11 @@ glm::vec3 IronRiftsPhysicsSystem::RayToOBB(Ray ray, OBB * obb)
 	glm::vec3 transVec3;
 
 
+	glm::vec3 rayUp(ray.startPoint.x, ray.startPoint.y + 1, ray.startPoint.z);
+	glm::vec3 rayAxis = glm::normalize(glm::cross((rayUp - ray.startPoint), (ray.endPoint - ray.startPoint)));
+	bool rayOverlap = false;
+
+
 
 
 
@@ -528,8 +533,43 @@ glm::vec3 IronRiftsPhysicsSystem::RayToOBB(Ray ray, OBB * obb)
 	}
 
 
+	minProj1 = 1000;
+	maxProj1 = -1000;
+
+	minProj2 = 1000;
+	maxProj2 = -1000;
+
+
+	// Project all vertice of A and B onto axis and store the min and max of these values
+	for (int j = 0; j < vertices1.size(); j++)
+	{
+		float dotproduct1 = glm::dot(vertices1[j], rayAxis);
+
+		if (dotproduct1 < minProj1) minProj1 = dotproduct1;
+		if (dotproduct1 > maxProj1) maxProj1 = dotproduct1;
+
+	}
+
+	for (int j = 0; j < vertices2.size(); j++)
+	{
+		float dotproduct2 = glm::dot(vertices2[j], rayAxis);
+
+		if (dotproduct2 < minProj2) minProj2 = dotproduct2;
+		if (dotproduct2 > maxProj2) maxProj2 = dotproduct2;
+	}
+
+	if (minProj2 > minProj1 && minProj2 < maxProj1)
+		rayOverlap = true;
+
+	//if (minProj2 > minProj1 && minProj2 < maxProj1)
+		//rayOverlap = true;
+
+
+
+
+
 	//Overlap on axi' mean a collision
-	if ((xOverlap && zOverlap) == true)
+	if ((xOverlap && zOverlap && rayOverlap) == true)
 	{
 		//Get the shortest displacement distance
 		if (glm::length(transVec1) < (glm::length(transVec2) && (glm::length(transVec3))))
