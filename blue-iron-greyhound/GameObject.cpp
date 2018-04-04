@@ -27,11 +27,11 @@ void GameObject::init()
 	}
 }
 
-void GameObject::update()
+void GameObject::update(double dt)
 {
 
 	for (unsigned int i = 0; i < componentList.size(); i++) {
-		componentList[i]->update();
+		componentList[i]->update(dt);
 	}
 
 }

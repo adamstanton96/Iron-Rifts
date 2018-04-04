@@ -417,7 +417,7 @@ int main(int argc, char *argv[])
 		//Update all objects
 		for (unsigned int i = 0; i < objectList.size(); i++)
 		{
-			objectList[i]->update();
+			objectList[i]->update(dt);
 		}
 
 		renderer->swapBuffers();

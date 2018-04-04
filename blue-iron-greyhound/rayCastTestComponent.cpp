@@ -24,7 +24,7 @@ void RayCastTestComponent::init()
 
 
 
-void RayCastTestComponent::update()
+void RayCastTestComponent::update(double dt)
 {
 	glm::vec3 userPos = this->getUser()->getPosition();
 

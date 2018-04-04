@@ -15,7 +15,7 @@ void InteractiveTestComponent::init()
 	std::cout << "Component " << getName() << " belonging to GameObject " << getUser()->getName() << " is now initialized." << std::endl;
 }
 
-void InteractiveTestComponent::update()
+void InteractiveTestComponent::update(double dt)
 {
 	testingValue++;
 }

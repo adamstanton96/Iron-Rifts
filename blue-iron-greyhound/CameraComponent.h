@@ -14,7 +14,7 @@ public:
 	~Camera() {};
 
 	void init();
-	void update();
+	void update(double dt);
 
 	void setEye(glm::vec3 newEye);
 	void setAt(glm::vec3 newEye);
