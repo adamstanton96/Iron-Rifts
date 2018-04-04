@@ -55,42 +55,93 @@ std::clock_t start;
 double dt;
 
 
+//Input System
+InputSystem *inputSystem = new SDLInputSystem();
+
+//physics system.
+PhysicsSystem* collisionsystem = new IronRiftsPhysicsSystem();
+
+//Audio System
+IrrKlangAudioSystem * audioSystem = new IrrKlangAudioSystem("audioSystem");
+
+//camera set up
+Camera *cameraComponent = new Camera("camera");
+
+//Render System
+RenderingSystem* renderer = new openglRenderer();
+
+//Temporarily hold all objects so that main isn't so awkward
+std::vector<GameObject*> objectList;
+
+
+
+
+void createWall(glm::vec3 pos, float rotation, float scale)
+{
+	//Wall Panel 1
+	GameObject *wall = new GameObject("wall");
+	wall->setPosition(glm::vec3(pos));
+	wall->setScaling(glm::vec3(scale));
+	wall->setRotationAxis(glm::vec3(0, 1, 0));
+	wall->setRotationDegrees(rotation);
+
+	RigidBodyComponent* wallBody = new RigidBodyComponent("Rigid Body");
+	wall->addComponent(wallBody);
+	wallBody->setCollisionSystem(collisionsystem);
+	wallBody->setBodyType("STATIC");
+	wallBody->setBoundingType("OBB");
+
+	MeshComponent* wallMesh = new MeshComponent("test");
+	wall->addComponent(wallMesh);
+	wallMesh->setRenderer(renderer);
+	wallMesh->loadObject("../../assets/cube_with_2UVs.DAE");
+	wallMesh->loadTexture("../../assets/Scene/wall.bmp");
+
+	objectList.push_back(wall);
+}
+
+
+void createGround(glm::vec3 pos)
+{
+		//Ground Plane
+		GameObject *GroundPlane = new GameObject("Ground Plane");
+		GroundPlane->setPosition(glm::vec3(pos));
+		GroundPlane->setScaling(glm::vec3(10, 0.001, 10));
+		GroundPlane->setRotationAxis(glm::vec3(NULL, NULL, NULL));
+		RigidBodyComponent* rigidBody4 = new RigidBodyComponent("Rigid Body");
+		GroundPlane->addComponent(rigidBody4);
+		rigidBody4->setCollisionSystem(collisionsystem);
+		rigidBody4->setBodyType("STATIC");
+		MeshComponent* secondMesh = new MeshComponent("cube");
+		GroundPlane->addComponent(secondMesh);
+		secondMesh->setRenderer(renderer);
+		secondMesh->loadObject("../../assets/cube_with_2UVs.DAE");
+		secondMesh->loadTexture("../../assets/tex/scifiFloor.bmp");
+		
+		objectList.push_back(GroundPlane);
+}
+
+
+
 int main(int argc, char *argv[])
 {
-	//Input System
-	InputSystem *inputSystem = new SDLInputSystem();
+	
 	inputSystem->init();
-
-
-	//physics system.
-	PhysicsSystem* collisionsystem = new IronRiftsPhysicsSystem();
-
-	IrrKlangAudioSystem * audioSystem = new IrrKlangAudioSystem("audioSystem");
 	audioSystem->init();
 
-	//camera set up
-	Camera *cameraComponent = new Camera("camera");
-	cameraComponent->setEye(glm::vec3(-2.0f, 2.0f, 30.0f));
+	cameraComponent->setEye(glm::vec3(0.0f, 2.0f, 0.0f));
 	cameraComponent->setAt(glm::vec3(0.0f, 1.0f, -1.0f));
 	cameraComponent->setUp(glm::vec3(0.0f, 1.0f, -1.0f));
 	cameraComponent->setRotation(0.0f);
 	cameraComponent->setInput(inputSystem);
 	cameraComponent->init();
 
-	//Render System
-	RenderingSystem* renderer = new openglRenderer();
 	renderer->camera = cameraComponent;
-
-	
-	//Temporarily hold all objects so that main isn't so awkward
-	std::vector<GameObject*> objectList;
-	
-
 
 	////////////////////////////////////////////////////
 	//First Object - Acting as player (camera component / movement component)
 	GameObject *Player = new GameObject("player");
-	Player->setPosition(glm::vec3(5.0f, 0.0f, 60.0f));
+	Player->setPosition(glm::vec3(0.0f, 0.0f, 0.0f));
 	Player->setScaling(glm::vec3(1.0f, 1.0f, 1.0f));
 	Player->setRotationAxis(glm::vec3(0, -1, 0));
 	Player->setRotationDegrees(0);
@@ -151,11 +202,11 @@ int main(int argc, char *argv[])
 	AiSys->addPathGraph(graph);
 	EnemyAI->setAIsystem(AiSys);
 	EnemyAI->init();
-
+	////////////////////////////////////////////////////
 	//AI test object (enemy Player)
 	//Green Demo Cube
 	GameObject *Enemey = new GameObject("Enemy AI Cube");
-	Enemey->setPosition(glm::vec3(0.0f, 0.0f, 0.0f));
+	Enemey->setPosition(glm::vec3(0.0f, 0.0f, 20.0f));
 	Enemey->setScaling(glm::vec3(2, 2, 2));
 	Enemey->setRotationAxis(glm::vec3(0, 1, 0));
 	Enemey->setRotationDegrees(0);
@@ -175,143 +226,179 @@ int main(int argc, char *argv[])
 	EnemeyMesh->loadTexture("../../assets/tex/grass.bmp");
 
 	objectList.push_back(Enemey);
+
+
 	////////////////////////////////////////////////////
+	//Scene/////////////////////////////////////////////
 
 
-	//Green Demo Cube
-	GameObject *barrier2 = new GameObject("Green Cube");
-	barrier2->setPosition(glm::vec3(5.0f, -5.0f, 50.0f));
-	barrier2->setScaling(glm::vec3(2.0f, 2.0f, 2.0f));
-	barrier2->setRotationAxis(glm::vec3(0, 1, 0));
-	barrier2->setRotationDegrees(45);
+	//Start (0, 0)
+	createGround(glm::vec3(0.0f, -5.0f, 0.0f));//0
 
-	RigidBodyComponent* rigidBody3 = new RigidBodyComponent("Rigid Body");
-	barrier2->addComponent(rigidBody3);
-	rigidBody3->setCollisionSystem(collisionsystem);
-	rigidBody3->setBodyType("STATIC");
-	rigidBody3->setBoundingType("OBB");
+	//Hub 1
+	createGround(glm::vec3(-20.0f, -5.0f, 0.0f));//1
+	createGround(glm::vec3(-40.0f, -5.0f, 0.0f));//2
+	createGround(glm::vec3(-60.0f, -5.0f, 0.0f));//3
+	createGround(glm::vec3(-60.0f, -5.0f, -20.0f));//6
+	createGround(glm::vec3(-60.0f, -5.0f, -40.0f));//9
+	createGround(glm::vec3(-40.0f, -5.0f, -20.0f));//5
+	createGround(glm::vec3(-80.0f, -5.0f, -20.0f));//7
+	createGround(glm::vec3(-80.0f, -5.0f, -40.0f));//10
+	createGround(glm::vec3(-80.0f, -5.0f,  0.0f));//4
+	createGround(glm::vec3(-40.0f, -5.0f, -40.0f));//8
+	createGround(glm::vec3(-80.0f, -5.0f, -60.0f));//11
 
-	MeshComponent* barriermesh2 = new MeshComponent("test");
-	barrier2->addComponent(barriermesh2);
-	barriermesh2->setRenderer(renderer);
-	barriermesh2->loadObject("../../assets/blenderTest.dae");
-	barriermesh2->loadTexture("../../assets/tex/grass.bmp");
-
-	objectList.push_back(barrier2);
-
-
-	//Blue Demo Cube
-	GameObject *barrier = new GameObject("Blue Cube");
-	barrier->setPosition(glm::vec3(-15.0f, -5.0f, 100.0f));
-	barrier->setScaling(glm::vec3(5.5f, 5.5f, 5.5f));
-	barrier->setRotationAxis(glm::vec3(1, 0, 0));
-	barrier->setRotationDegrees(0);
-
-	RigidBodyComponent* rigidBody2 = new RigidBodyComponent("Rigid Body");
-	barrier->addComponent(rigidBody2);
-	rigidBody2->setCollisionSystem(collisionsystem);
-	rigidBody2->setBodyType("STATIC");
-	rigidBody2->setBoundingType("OBB");
-
-	MeshComponent* barriermesh = new MeshComponent("test");
-	barrier->addComponent(barriermesh);
-	barriermesh->setRenderer(renderer);
-	barriermesh->loadObject("../../assets/blenderTest.dae");
-	barriermesh->loadTexture("../../assets/tex/habitatWater.bmp");
-
-	objectList.push_back(barrier);
-
-
-	//Brown Demo Cube
-	GameObject *Raycast = new GameObject("Brown Cube");
-	Raycast->setPosition(glm::vec3(5.0f, -5.0f, 140.0f));
-	Raycast->setScaling(glm::vec3(5.5f, 5.5f, 5.5f));
-	Raycast->setRotationAxis(glm::vec3(0, 1, 0));
-	Raycast->setRotationDegrees(45);
-
-	RigidBodyComponent* RaycastRigid = new RigidBodyComponent("Rigid Body");
-	Raycast->addComponent(RaycastRigid);
-	RaycastRigid->setCollisionSystem(collisionsystem);
-	RaycastRigid->setBodyType("STATIC");
-	RaycastRigid->setBoundingType("OBB");
-
-	MeshComponent* RaycastMesh = new MeshComponent("test");
-	Raycast->addComponent(RaycastMesh);
-	RaycastMesh->setRenderer(renderer);
-	RaycastMesh->loadObject("../../assets/blenderTest.dae");
-	RaycastMesh->loadTexture("../../assets/tex/habitatWood2.bmp");
-
-	objectList.push_back(Raycast);
-
-
-	//Grey Demo Cube
-	GameObject *Raycast2 = new GameObject("Grey Cube");
-	Raycast2->setPosition(glm::vec3(-15.0f, -5.0f, 140.0f));
-	Raycast2->setScaling(glm::vec3(5.5f, 5.5f, 5.5f));
-	Raycast2->setRotationAxis(glm::vec3(0, 1, 0));
-	Raycast2->setRotationDegrees(45);
-
-	RigidBodyComponent* Raycast2Rigid = new RigidBodyComponent("Rigid Body");
-	Raycast2->addComponent(Raycast2Rigid);
-	Raycast2Rigid->setCollisionSystem(collisionsystem);
-	Raycast2Rigid->setBodyType("STATIC");
-	Raycast2Rigid->setBoundingType("OBB");
-
-	MeshComponent* Raycast2Mesh = new MeshComponent("test");
-	Raycast2->addComponent(Raycast2Mesh);
-	Raycast2Mesh->setRenderer(renderer);
-	Raycast2Mesh->loadObject("../../assets/blenderTest.dae");
-	Raycast2Mesh->loadTexture("../../assets/plainbuilding/iron.bmp");
-
-	objectList.push_back(Raycast2);
-	/////////////////////////////////////////////////////////////////
-
-
-
-
-	//Ground Plane
-	GameObject *GroundPlane = new GameObject("Ground Plane");
-	GroundPlane->setPosition(glm::vec3(0.0f, -5.0f, -60.0f));
-	GroundPlane->setScaling(glm::vec3(60, 0.1f, 60));
-	GroundPlane->setRotationAxis(glm::vec3(NULL, NULL, NULL));
-//	RigidBodyComponent* rigidBody4 = new RigidBodyComponent("Rigid Body");
-//	GroundPlane->addComponent(rigidBody4);
-//	rigidBody4->setCollisionSystem(collisionsystem);
-//	rigidBody4->setBodyType("STATIC");
-	MeshComponent* secondMesh = new MeshComponent("cube");
-	GroundPlane->addComponent(secondMesh);
-	secondMesh->setRenderer(renderer);
-	secondMesh->loadObject("../../assets/cube_with_2UVs.DAE");
-	secondMesh->loadTexture("../../assets/tex/rockyground.bmp");
 	
-	objectList.push_back(GroundPlane);
 
-	//Ground Plane 2
-	GameObject *GroundPlane2 = new GameObject("Ground Plane");
-	GroundPlane2->setPosition(glm::vec3(0.0f, -5.0f, 60.0f));
-	GroundPlane2->setScaling(glm::vec3(60, 0.1f, 60));
-	GroundPlane2->setRotationAxis(glm::vec3(NULL, NULL, NULL));
-	//RigidBodyComponent* rigidBody5 = new RigidBodyComponent("Rigid Body");
-	//GroundPlane2->addComponent(rigidBody5);
-	//rigidBody5->setCollisionSystem(collisionsystem);
-	//rigidBody5->setBodyType("STATIC");
-	MeshComponent* secondMesh2 = new MeshComponent("cube");
-	GroundPlane2->addComponent(secondMesh2);
-	secondMesh2->setRenderer(renderer);
-	secondMesh2->loadObject("../../assets/cube_with_2UVs.DAE");
-	secondMesh2->loadTexture("../../assets/tex/rockyground.bmp");
+	//hub2
+	createGround(glm::vec3(20.0f, -5.0f, 0.0f));//1
+	createGround(glm::vec3(40.0f, -5.0f, 0.0f));//2
+	createGround(glm::vec3(60.0f, -5.0f, 0.0f));//3
+	createGround(glm::vec3(40.0f, -5.0f, -20.0f));//5
+	createGround(glm::vec3(60.0f, -5.0f, -20.0f));//6
+	createGround(glm::vec3(40.0f, -5.0f, -40.0f));//8
+	createGround(glm::vec3(60.0f, -5.0f, -40.0f));//9
 
-	objectList.push_back(GroundPlane2);
+	createGround(glm::vec3(80.0f, -5.0f, -40.0f));//10
+	createGround(glm::vec3(80.0f, -5.0f, -20.0f));//7
+	createGround(glm::vec3(80.0f, -5.0f, 0.0f));//4
+	createGround(glm::vec3(80.0f, -5.0f, -60.0f));//11
 
 
-	//Test function for new getcomponent.
-	///std::cout << Player->getComponent<MeshComponent>()->getName() << std::endl;
 
+	//hub 3
+	createGround(glm::vec3(-80.0f, -5.0f, -100.0f));//1
+	createGround(glm::vec3(-80.0f, -5.0f, -120.0f));//2
+	createGround(glm::vec3(-60.0f, -5.0f, -120.0f));//3
+	createGround(glm::vec3(-40.0f, -5.0f, -120.0f));//4
+
+	createGround(glm::vec3(-80.0f, -5.0f, -140.0f));//5
+	createGround(glm::vec3(-60.0f, -5.0f, -140.0f));//6
+	createGround(glm::vec3(-40.0f, -5.0f, -140.0f));//7
+
+	createGround(glm::vec3(-80.0f, -5.0f, -160.0f));//8
+	createGround(glm::vec3(-60.0f, -5.0f, -160.0f));//9
+	createGround(glm::vec3(-40.0f, -5.0f, -160.0f));//10
+	createGround(glm::vec3(-20.0f, -5.0f, -160.0f));//11
+
+	//hub 4
+	createGround(glm::vec3(80.0f, -5.0f, -100.0f));//1
+
+	createGround(glm::vec3(80.0f, -5.0f, -120.0f));//2
+	createGround(glm::vec3(60.0f, -5.0f, -120.0f));//3
+	createGround(glm::vec3(40.0f, -5.0f, -120.0f));//4
+
+	createGround(glm::vec3(80.0f, -5.0f, -140.0f));//5
+	createGround(glm::vec3(60.0f, -5.0f, -140.0f));//6
+	createGround(glm::vec3(40.0f, -5.0f, -140.0f));//7
+
+	createGround(glm::vec3(80.0f, -5.0f, -160.0f));//8
+	createGround(glm::vec3(60.0f, -5.0f, -160.0f));//9
+	createGround(glm::vec3(40.0f, -5.0f, -160.0f));//10
+
+	createGround(glm::vec3(20.0f, -5.0f, -160.0f));//10
+
+	//Center and corridors
+	//vertical
+	createGround(glm::vec3(0.0f, -5.0f, -20.0f));//1
+	createGround(glm::vec3(0.0f, -5.0f, -40.0f));//2
+	createGround(glm::vec3(0.0f, -5.0f, -60.0f));//3
+	createGround(glm::vec3(0.0f, -5.0f, -80.0f));//4
+	createGround(glm::vec3(0.0f, -5.0f, -100.0f));//5
+	createGround(glm::vec3(0.0f, -5.0f, -120.0f));//6
+	createGround(glm::vec3(0.0f, -5.0f, -140.0f));//7
+	createGround(glm::vec3(0.0f, -5.0f, -160.0f));//8
+
+	//horizontal
+	createGround(glm::vec3(-20.0f, -5.0f, -80.0f));//3
+	createGround(glm::vec3(-40.0f, -5.0f, -80.0f));//2
+	createGround(glm::vec3(-60.0f, -5.0f, -80.0f));//1
+	createGround(glm::vec3(-80.0f, -5.0f, -80.0f));//0
+	createGround(glm::vec3(20.0f, -5.0f, -80.0f));//5
+	createGround(glm::vec3(40.0f, -5.0f, -80.0f));//6
+	createGround(glm::vec3(60.0f, -5.0f, -80.0f));//7
+	createGround(glm::vec3(80.0f, -5.0f, -80.0f));//8
+	
+	//center
+	createGround(glm::vec3(-20.0f, -5.0f, -100.0f));//9
+	createGround(glm::vec3(20.0f, -5.0f, -100.0f));//10
+	createGround(glm::vec3(20.0f, -5.0f, -60.0f));//11
+	createGround(glm::vec3(-20.0f, -5.0f, -60.0f));//12
+	
+
+	//walls hub 1/2					  
+	createWall(glm::vec3(-60.0f, -5.0f, 20.0f), 0, 10);//3
+	createWall(glm::vec3(-40.0f, -5.0f, 20.0f), 0, 10);//2
+	createWall(glm::vec3(-20.0f, -5.0f, 20.0f), 0, 10);//1
+	createWall(glm::vec3(0.0f, -5.0f, 20.0f), 0, 10);//0
+	createWall(glm::vec3(20.0f, -5.0f, 20.0f), 0, 10);//1
+	createWall(glm::vec3(40.0f, -5.0f, 20.0f), 0, 10);//2
+	createWall(glm::vec3(60.0f, -5.0f, 20.0f), 0, 10);//3
+
+	//walss hub 1/3
+	createWall(glm::vec3(-100.0f, -5.0f, -20.0f), 0 , 10);//1
+	createWall(glm::vec3(-100.0f, -5.0f, -40.0f), 0, 10);//2
+	createWall(glm::vec3(-100.0f, -5.0f, -60.0f), 0, 10);//3
+	createWall(glm::vec3(-100.0f, -5.0f, -80.0f), 0, 10);//4
+	createWall(glm::vec3(-100.0f, -5.0f, -100.0f), 0, 10);//5
+	createWall(glm::vec3(-100.0f, -5.0f, -120.0f), 0, 10);//6
+	createWall(glm::vec3(-100.0f, -5.0f, -140.0f), 0, 10);//7
+
+	//wall hub2/4													 
+	createWall(glm::vec3(100.0f, -5.0f, -20.0f), 0, 10);//1
+	createWall(glm::vec3(100.0f, -5.0f, -40.0f), 0, 10);//2
+	createWall(glm::vec3(100.0f, -5.0f, -60.0f), 0, 10);//3
+	createWall(glm::vec3(100.0f, -5.0f, -80.0f), 0, 10);//4
+	createWall(glm::vec3(100.0f, -5.0f, -100.0f), 0, 10);//5
+	createWall(glm::vec3(100.0f, -5.0f, -120.0f), 0, 10);//6
+	createWall(glm::vec3(100.0f, -5.0f, -140.0f), 0, 10);//7
+
+	//walls hub 3/2					  
+	createWall(glm::vec3(-60.0f, -5.0f, -180.0f), 0, 10);//3
+	createWall(glm::vec3(-40.0f, -5.0f, -180.0f), 0, 10);//2
+	createWall(glm::vec3(-20.0f, -5.0f, -180.0f), 0, 10);//1
+	createWall(glm::vec3(0.0f, -5.0f, -180.0f), 0, 10);//0
+	createWall(glm::vec3(20.0f, -5.0f, -180.0f), 0, 10);//1
+	createWall(glm::vec3(40.0f, -5.0f, -180.0f), 0, 10);//2
+	createWall(glm::vec3(60.0f, -5.0f, -180.0f), 0, 10);//3
+
+	//rest of the walls
+	//bottom left
+	createWall(glm::vec3(-20.0f, -5.0f, -20.0f), 0, 10);
+	createWall(glm::vec3(-20.0f, -5.0f, -40.0f), 0, 10);
+	createWall(glm::vec3(-40.0f, -5.0f, -60.0f), 0, 10);
+	createWall(glm::vec3(-60.0f, -5.0f, -60.0f), 0, 10);
+
+	//bottom Right
+	createWall(glm::vec3(20.0f, -5.0f, -20.0f), 0, 10);
+	createWall(glm::vec3(20.0f, -5.0f, -40.0f), 0, 10);
+	createWall(glm::vec3(40.0f, -5.0f, -60.0f), 0, 10);
+	createWall(glm::vec3(60.0f, -5.0f, -60.0f), 0, 10);
+
+	//top left
+	createWall(glm::vec3(-60.0f, -5.0f, -100.0f), 0, 10);
+	createWall(glm::vec3(-40.0f, -5.0f, -100.0f), 0, 10);
+	createWall(glm::vec3(-20.0f, -5.0f, -120.0f), 0, 10);
+	createWall(glm::vec3(-20.0f, -5.0f, -140.0f), 0, 10);
+
+	//top Right
+	createWall(glm::vec3(60.0f, -5.0f, -100.0f), 0, 10);
+	createWall(glm::vec3(40.0f, -5.0f, -100.0f), 0, 10);
+	createWall(glm::vec3(20.0f, -5.0f, -120.0f), 0, 10);
+	createWall(glm::vec3(20.0f, -5.0f, -140.0f), 0, 10);
+
+	
+	
+	
+	int frameRate = 0;
+	float timeSoFar = 0;
 	bool running = true;
 
 	SDL_Event sdlEvent;
 	do
 	{
+		frameRate++;
+		timeSoFar += dt;
 		//start timer 
 		start = std::clock();
 
@@ -339,6 +426,18 @@ int main(int argc, char *argv[])
  
 		//Stores the time past the frame has taken to complete
 		dt = (std::clock() - start) / (double)CLOCKS_PER_SEC;
+
+
+		//Show frame rate
+		if (timeSoFar >= 1)
+		{
+			cout << frameRate << endl;
+
+			timeSoFar = 0;
+			frameRate = 0;
+		}
+
+
 	
 	} while (running);
 
