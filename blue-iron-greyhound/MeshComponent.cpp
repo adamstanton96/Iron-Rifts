@@ -16,7 +16,7 @@ void MeshComponent::init()
 
 
 
-void MeshComponent::update()
+void MeshComponent::update(double dt)
 {
 	renderer->draw(this);
 

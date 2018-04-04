@@ -18,7 +18,7 @@ public:
 	~MovementComponent();
 
 	void init();
-	void update();
+	void update(double dt);
 
 	void moveForward();
 	void moveBackwards();

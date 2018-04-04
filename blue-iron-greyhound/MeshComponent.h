@@ -15,7 +15,7 @@ public:
 	~MeshComponent() {}
 
 	void init();
-	void update();
+	void update(double dt);
 
 	
 	void loadTexture(char * filename);

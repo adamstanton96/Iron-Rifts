@@ -19,7 +19,7 @@ public:
 	~RayCastTestComponent();
 
 	void init();
-	void update();
+	void update(double dt);
 
 	void setRenderer(bulletParticle* renderer);
 	void setInput(InputSystem *newInput);

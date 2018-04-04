@@ -620,19 +620,16 @@ std::vector<GameObject*> IronRiftsPhysicsSystem::checkRayCollision(Ray ray)
 	
 
 	//test against all static bodies
-	for (unsigned int i = 0; i < staticBodies.size(); i++)
-	{
-		collisionDist = RayToOBB(ray, (OBB*)staticBodies[i]->getBoundingVolume());
+	//for (unsigned int i = 0; i < staticBodies.size(); i++)
+	//{
+	//	collisionDist = RayToOBB(ray, (OBB*)staticBodies[i]->getBoundingVolume());
 
-		if (collisionDist != glm::vec3(NULL))					//If the collision test comes back as null then there is no collision
-		{
-			collisions.push_back(staticBodies[i]->getUser());
-		}
-		//else if (collisionDist == glm::vec3(0))					//If the collision test comes back as null then there is no collision
-		//{
-		//	collisions.push_back(staticBodies[i]->getUser());
-		//}
-	}
+	//	if (collisionDist != glm::vec3(NULL))					//If the collision test comes back as null then there is no collision
+	//	{
+	//		collisions.push_back(staticBodies[i]->getUser());
+	//	}
+	//
+	//}
 
 	//test against all dynamic bodies bodies
 	for (unsigned int i = 0; i < dynamicBodies.size() ; i++)
@@ -644,10 +641,7 @@ std::vector<GameObject*> IronRiftsPhysicsSystem::checkRayCollision(Ray ray)
 			collisions.push_back(dynamicBodies[i]->getUser());
 		
 		}	
-		//else if (collisionDist == glm::vec3(0))					//If the collision test comes back as null then there is no collision
-		//{
-		//	collisions.push_back(staticBodies[i]->getUser());
-		//}
+	
 	}
 
 

@@ -54,7 +54,7 @@ void EnemyAIComponent::faceDestination(glm::vec3 pos, glm::vec3 dest)
 	this->user->setRotationDegrees(angleInDegrees_);
 }
 
-void EnemyAIComponent::update()
+void EnemyAIComponent::update(double dt)
 {
 	glm::vec3 currPosition = this->getUser()->getPosition();
 
@@ -90,7 +90,8 @@ void EnemyAIComponent::update()
 		if (glm::distance(currPosition, currentRoute[goalNodeIndex]) > 1) 
 		{
 			velocity = glm::normalize(currentRoute[goalNodeIndex] - currPosition);
-			velocity = velocity * glm::vec3(0.02, 0, 0.02);
+			//velocity = velocity * glm::vec3(0.02, 0, 0.02);
+			velocity *=  20 * dt;
 		}
 		else
 		{

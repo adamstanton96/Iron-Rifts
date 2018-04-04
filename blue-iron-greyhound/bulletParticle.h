@@ -14,7 +14,7 @@ public:
 	~bulletParticle();
 
 	void init();
-	void update();
+	void update(double dt);
 	void draw();
 	void updateEmitPosition(glm::vec3 pos);
 
