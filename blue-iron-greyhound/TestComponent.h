@@ -10,5 +10,5 @@ public:
 	~TestComponent();
 
 	void init();
-	void update();
+	void update(double dt);
 };

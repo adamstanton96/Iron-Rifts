@@ -14,7 +14,7 @@ void MovementComponent::init()
 	moveVector = glm::vec3(0.0f, 0.0f, 0.0f);
 }
 
-void MovementComponent::update()
+void MovementComponent::update(double dt)
 {
 	//Store player position for reuse
 	glm::vec3 userPos = this->user->getPosition();
@@ -23,13 +23,13 @@ void MovementComponent::update()
 	moveVector = glm::vec3(0.0f, 0.0f, 0.0f);
 	//Check for input...
 	if (this->input->keyPressed("W"))
-		moveForward(0.1f);
+		moveForward(40*dt);
 	if (this->input->keyPressed("S"))
-		moveBackwards(0.1f);
+		moveBackwards(40*dt);
 	if (this->input->keyPressed("A"))
-		moveLeft(0.1f);
+		moveLeft(40*dt);
 	if (this->input->keyPressed("D"))
-		moveRight(0.1f);
+		moveRight(40*dt);
 
 	//Get current mouseposition
 	glm::vec2 mousePosition = this->input->getMousePosition();

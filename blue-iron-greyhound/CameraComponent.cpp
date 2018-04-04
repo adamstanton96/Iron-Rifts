@@ -18,7 +18,7 @@ void Camera::init()
 }
 
 
-void Camera::update()
+void Camera::update(double dt)
 {
 	glm::vec3 playerPos = getUser()->getPosition();
 	this->eye = playerPos;

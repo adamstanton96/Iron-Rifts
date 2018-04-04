@@ -23,7 +23,7 @@ boundingVolume* RigidBodyComponent::getBoundingVolume()
 }
 
 
-void RigidBodyComponent::update()
+void RigidBodyComponent::update(double dt)
 {
 
 	//If dynamic update the bounding volumes position

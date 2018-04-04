@@ -11,7 +11,7 @@ public:
 	virtual ~Object() {};
 
 	virtual void init() = 0;
-	virtual void update() = 0;
+	virtual void update(double dt) = 0;
 	virtual void destroy() = 0;
 	virtual void destroyObj(Object *object) = 0;
 

@@ -11,7 +11,7 @@ public:
 	virtual ~Component() = 0;
 
 	virtual void init() = 0;
-	virtual void update() = 0;
+	virtual void update(double dt) = 0;
 
 	void setUser(GameObject *user);
 	GameObject *getUser() { return user; }

@@ -31,7 +31,7 @@ public:
 	~EnemyAIComponent() {}
 
 	void init();
-	void update();
+	void update(double dt);
 
 	void setAIsystem(AISystem*);
 

@@ -9,7 +9,7 @@ void AudioTester::init()
 {
 }
 
-void AudioTester::update()
+void AudioTester::update(double dt)
 {
 	if (this->input->keyPressed("Z"))
 		audio->playAudio("../../assets/audio/bell.wav");

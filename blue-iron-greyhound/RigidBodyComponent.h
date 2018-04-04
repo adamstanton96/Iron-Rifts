@@ -30,7 +30,7 @@ public:
 	bool isInit();
 
 	void init();
-	void update();
+	void update(double dt);
 
 	void setCollisionSystem(PhysicsSystem* collisionSys);
 
