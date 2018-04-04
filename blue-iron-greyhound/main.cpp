@@ -191,13 +191,28 @@ int main(int argc, char *argv[])
 	EnemyAIComponent* EnemyAI = new EnemyAIComponent();
 
 	typedef std::pair<int, int> path;
-	int names[] = { 0,1,2,3,4 };
-	glm::vec2 locations[] = { { 0,0 },{ 30,0 },{ 30,-30 },{ 0,-30 },{ 0,0 } };
-	std::pair<int, int> edges[] = { path(0,1),path(1,2),path(2,3),path(3,4), path(4,0) };
-	float weights[] = { 1, 1, 1, 1, 1 };
+	int names[] = { 0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16 };
+	glm::vec2 locations[] = 
+	{ 
+		{ 0,0 },{ 0,-20 },{ 0,-40 },{ 0,-60 },{ 0,-80 },{ 0,-100 },{ 0,-120},{ 0,-140 },{ 0,-150 },	//vertical corridor 0-8
+		{ -80,-80 },{ -60,-80 },{ -40,-80 },{ -20,-80 },{ 0,-80 },{ 20,-80 },{ 40,-80 },{ 60,-80 },{ 80,-80 }	  //horizontal corridor 9-17
+	
+	
+	
+	
+	};
+	std::pair<int, int> edges[] = 
+	{ 
+		path(0,1),path(1,2),path(2,3),path(3,4), path(4,5), path(5,6), path(6,7),path(7,8), //vertical corridor
+		path(3,12),path(12,11),path(11,10),path(10,9), path(3,13), path(13,14), path(14,15),path(15,16) //vertical corridor
+	};
+
+
+
+	float weights[] = { 1, 1, 1, 1, 1, 1, 1,1,1,1,1,1,1,1,1,1,1 };
 
 	AISystem* AiSys = new AISystem();
-	AstarGraph* graph = new AstarGraph(names, locations, edges, weights, 5, 5);
+	AstarGraph* graph = new AstarGraph(names, locations, edges, weights, 17, 16);
 
 	AiSys->addPathGraph(graph);
 	EnemyAI->setAIsystem(AiSys);
@@ -206,23 +221,23 @@ int main(int argc, char *argv[])
 	//AI test object (enemy Player)
 	//Green Demo Cube
 	GameObject *Enemey = new GameObject("Enemy AI Cube");
-	Enemey->setPosition(glm::vec3(0.0f, 0.0f, 20.0f));
+	Enemey->setPosition(glm::vec3(0.0f, 0.0f, 0.0f));
 	Enemey->setScaling(glm::vec3(2, 2, 2));
 	Enemey->setRotationAxis(glm::vec3(0, 1, 0));
 	Enemey->setRotationDegrees(0);
 
 	Enemey->addComponent(EnemyAI);
 
-	RigidBodyComponent* EnemeyRigidBody = new RigidBodyComponent("Rigid Body");
+	/*RigidBodyComponent* EnemeyRigidBody = new RigidBodyComponent("Rigid Body");
 	Enemey->addComponent(EnemeyRigidBody);
 	EnemeyRigidBody->setCollisionSystem(collisionsystem);
 	EnemeyRigidBody->setBodyType("DYNAMIC");
-	EnemeyRigidBody->setBoundingType("OBB");
+	EnemeyRigidBody->setBoundingType("OBB");*/
 
 	MeshComponent* EnemeyMesh = new MeshComponent("test");
 	Enemey->addComponent(EnemeyMesh);
 	EnemeyMesh->setRenderer(renderer);
-	EnemeyMesh->loadObject("../../assets/blenderTest.dae");
+	EnemeyMesh->loadObject("../../assets/cube_with_2UVs.DAE");
 	EnemeyMesh->loadTexture("../../assets/tex/grass.bmp");
 
 	objectList.push_back(Enemey);

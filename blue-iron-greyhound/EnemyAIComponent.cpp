@@ -14,12 +14,14 @@ EnemyAIComponent::EnemyAIComponent()
 
 void EnemyAIComponent::init()
 {
+
+	previousPos = glm::vec3(10);
 	//Inventives for where to go. These in the end should be things like
 	//the players psoition or a defensive position
-	targets.push_back(glm::vec3(50, 0, 0));
-	targets.push_back(glm::vec3(0, 0, 50));
-	targets.push_back(glm::vec3(0, 0, -50));
-	targets.push_back(glm::vec3(-50, 0, 0));
+	targets.push_back(glm::vec3(200, 0, 0));
+	targets.push_back(glm::vec3(0, 0, 200));
+	targets.push_back(glm::vec3(0, 0, -200));
+	targets.push_back(glm::vec3(-200, 0, 0));
 
 	//Pick one of the targets
 	targetIndex = 0;
@@ -64,7 +66,7 @@ void EnemyAIComponent::update(double dt)
 
 
 	//Recalculate route with new target if there's no route to follow
-	if (currentRoute.size() == 0)
+	while (currentRoute.size() == 0 )
 	{
 		goalNodeIndex = 0;
 		targetIndex++;
@@ -80,6 +82,7 @@ void EnemyAIComponent::update(double dt)
 		currentRoute = AIsystem->findPath(pos, goal);
 	}
 		
+	
 	
 
 
@@ -142,6 +145,9 @@ void EnemyAIComponent::update(double dt)
 
 	//Turn togace direction of travel
 	faceDestination(currPosition, currentRoute[goalNodeIndex]);
+
+	//Store position. If AI gets stuck it will change target
+	previousPos = currPosition;
 	
 }
 
