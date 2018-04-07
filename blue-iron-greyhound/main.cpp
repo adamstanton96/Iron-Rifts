@@ -196,7 +196,13 @@ int main(int argc, char *argv[])
 		0,1,2,3,4,5,6,7,8,      //vertical corridor 0-8
 		9,10,11,12,13,14,15,16,  //horizontal corridor 9-16
 
-		17,18,19,20,21,22,23,24	//vertical left corridor 17 -24
+		17,18,19,20,21,22,23,24,	//vertical left corridor 17 -24
+
+		25,26,27,28,29,30,31,32,	//vertical right corridor 25 - 32
+
+		33,34,35,36,37,38,	//horizontal bottom corridor 33 - 38
+
+		39,40,41,42,43,44	//horizontal bottom corridor 39 - 34
 	
 	
 	};
@@ -211,6 +217,12 @@ int main(int argc, char *argv[])
 	
 		{ -80, 0 },{ -80,-20 },{ -80,-40 },{ -80,-60 },{ -80,-100 },{ -80,-120 },{ -80,-140 },{ -80,-150 },			//vertical left corridor 17-24 (8)
 
+		{ 80, 0 },{ 80,-20 },{ 80,-40 },{ 80,-60 },{ 80,-100 },{ 80,-120 },{ 80,-140 },{ 80,-150 },				//vertical Right corridor 25-32 (8)
+
+		{ -60, 0 },{ -40, 0 },{ -20, 0 },{ 20, 0 },{ 40, 0 },{ 60, 0 },		//horizontal bottom corridor 33 - 38 (6)
+
+	   { -60, -150 },{ -40, 150 },{ -20, 150 },{ 20, 150 },{ 40, 150 },{ 60, 150 }		//horizontal top corridor 39 - 34(6)
+
 
 	
 	
@@ -222,20 +234,29 @@ int main(int argc, char *argv[])
 
 		path(4,12),path(12,11),path(11,10),path(10,9), path(4,13), path(13,14), path(14,15),path(15,16), //horicontal corridor
 
-		path(17,18),path(18,19),path(19,20),path(20,9), path(9,21), path(21,22), path(22,23),path(23,24) //vertical left corridor
+		path(17,18),path(18,19),path(19,20),path(20,9), path(9,21), path(21,22), path(22,23),path(23,24), //vertical left corridor
+
+		path(25,26),path(26,27),path(27,28),path(28,16), path(16,29), path(29,30), path(30,31),path(31,32), //vertical right corridor
+
+		path(0,35),path(35,34),path(34,33),path(33,17), path(0,36), path(36,37), path(37,38),path(38,25), //horizontal bottom corridor
+
+		path(24,39),path(39,40),path(40,41),path(41,8), path(8,42), path(42,43), path(43,44),path(44,32) //horizontal top corridor
 	};
 
 
 
 	float weights[] = 
-	{ 1, 1, 1, 1, 1, 1, 1,1,1,
-	1,1,1,1,1,1,1,1 ,
-		1,1,1,1,1,1,1,1
+{   1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1
 	
 	};
 
 	AISystem* AiSys = new AISystem();
-	AstarGraph* graph = new AstarGraph(names, locations, edges, weights, 25, 24);
+	AstarGraph* graph = new AstarGraph(names, locations, edges, weights, 45, 47);
 
 	AiSys->addPathGraph(graph);
 	EnemyAI->setAIsystem(AiSys);

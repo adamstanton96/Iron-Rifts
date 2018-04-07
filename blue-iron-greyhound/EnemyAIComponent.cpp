@@ -33,8 +33,8 @@ void EnemyAIComponent::init()
 	//Inventives for where to go. These in the end should be things like
 	//the players psoition or a defensive position
 	targets.push_back(glm::vec3(0, 0, 0));		//middle top
-	targets.push_back(glm::vec3(-80, 0, -150));		//middle left
-	targets.push_back(glm::vec3(-80, 0, -80));		//middle left
+	targets.push_back(glm::vec3(80, 0, 0));		//middle left
+	targets.push_back(glm::vec3(80, 0, -150));		//middle left
 	targets.push_back(glm::vec3(80, 0, -75));		//middle right
 	targets.push_back(glm::vec3(0, 0, -150));		//middle
 	
