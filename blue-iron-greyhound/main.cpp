@@ -213,15 +213,15 @@ int main(int argc, char *argv[])
 	{ 
 		{ 0,0 },{ 0,-20 },{ 0,-40 },{ 0,-60 },{ 0,-80 },{ 0,-100 },{ 0,-120},{ 0,-140 },{ 0,-150 },					//vertical corridor 0-8  (9)
 
-		{ -80,-80 },{ -60,-80 },{ -40,-80 },{ -20,-80 },{ 20,-80 },{ 40,-80 },{ 60,-80 },{ 80,-80 },				//horizontal corridor 9-16 (8)
+		{ -80,-75 },{ -60,-75 },{ -40,-75 },{ -20,-75 },{ 20,-75 },{ 40,-75 },{ 60,-75 },{ 80,-75 },				//horizontal corridor 9-16 (8)
 	
 		{ -80, 0 },{ -80,-20 },{ -80,-40 },{ -80,-60 },{ -80,-100 },{ -80,-120 },{ -80,-140 },{ -80,-150 },			//vertical left corridor 17-24 (8)
 
 		{ 80, 0 },{ 80,-20 },{ 80,-40 },{ 80,-60 },{ 80,-100 },{ 80,-120 },{ 80,-140 },{ 80,-150 },				//vertical Right corridor 25-32 (8)
 
-		{ -60, 0 },{ -40, 0 },{ -20, 0 },{ 20, 0 },{ 40, 0 },{ 60, 0 },		//horizontal bottom corridor 33 - 38 (6)
+		{ -60, 5 },{ -40, 5 },{ -20, 5 },{ 20, 5 },{ 40, 5 },{ 60, 5 },		//horizontal bottom corridor 33 - 38 (6)
 
-	   { -60, -150 },{ -40, 150 },{ -20, 150 },{ 20, 150 },{ 40, 150 },{ 60, 150 }		//horizontal top corridor 39 - 34(6)
+	   { -60, -150 },{ -40, -150 },{ -20, -150 },{ 20, -150 },{ 40, -150 },{ 60, -150 }		//horizontal top corridor 39 - 34(6)
 
 
 	
@@ -251,12 +251,12 @@ int main(int argc, char *argv[])
 	1,1,1,1,1,1,1,1,
 	1,1,1,1,1,1,1,1,
 	1,1,1,1,1,1,1,1,
-	1,1,1,1,1,1,1,1
+	1,1,1,1,1,1,1,1,1
 	
 	};
 
 	AISystem* AiSys = new AISystem();
-	AstarGraph* graph = new AstarGraph(names, locations, edges, weights, 45, 47);
+	AstarGraph* graph = new AstarGraph(names, locations, edges, weights, 45, 48);
 
 	AiSys->addPathGraph(graph);
 	EnemyAI->setAIsystem(AiSys);
@@ -266,23 +266,23 @@ int main(int argc, char *argv[])
 	//Green Demo Cube
 	GameObject *Enemey = new GameObject("Enemy AI Cube");
 	Enemey->setPosition(glm::vec3(0.0f, 0.0f, 0.0f));
-	Enemey->setScaling(glm::vec3(2, 2, 2));
+	Enemey->setScaling(glm::vec3(0.05, 0.05, 0.05));
 	Enemey->setRotationAxis(glm::vec3(0, 1, 0));
 	Enemey->setRotationDegrees(0);
 
 	Enemey->addComponent(EnemyAI);
 
-	/*RigidBodyComponent* EnemeyRigidBody = new RigidBodyComponent("Rigid Body");
+	RigidBodyComponent* EnemeyRigidBody = new RigidBodyComponent("Rigid Body");
 	Enemey->addComponent(EnemeyRigidBody);
 	EnemeyRigidBody->setCollisionSystem(collisionsystem);
 	EnemeyRigidBody->setBodyType("DYNAMIC");
-	EnemeyRigidBody->setBoundingType("OBB");*/
+	EnemeyRigidBody->setBoundingType("OBB");
 
 	MeshComponent* EnemeyMesh = new MeshComponent("test");
 	Enemey->addComponent(EnemeyMesh);
 	EnemeyMesh->setRenderer(renderer);
-	EnemeyMesh->loadObject("../../assets/cube_with_2UVs.DAE");
-	EnemeyMesh->loadTexture("../../assets/tex/grass.bmp");
+	EnemeyMesh->loadObject("../../assets/duck_triangulate.DAE");
+	EnemeyMesh->loadTexture("../../assets/tex/habitatWood2.bmp");
 
 	objectList.push_back(Enemey);
 

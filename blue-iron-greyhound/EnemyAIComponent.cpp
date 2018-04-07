@@ -33,10 +33,11 @@ void EnemyAIComponent::init()
 	//Inventives for where to go. These in the end should be things like
 	//the players psoition or a defensive position
 	targets.push_back(glm::vec3(0, 0, 0));		//middle top
-	targets.push_back(glm::vec3(80, 0, 0));		//middle left
-	targets.push_back(glm::vec3(80, 0, -150));		//middle left
-	targets.push_back(glm::vec3(80, 0, -75));		//middle right
-	targets.push_back(glm::vec3(0, 0, -150));		//middle
+	targets.push_back(glm::vec3(-80, 0, 0));		//middle left
+	targets.push_back(glm::vec3(-80, 0, -150));		//middle left
+	targets.push_back(glm::vec3(0, 0, -150));		//middle right
+	targets.push_back(glm::vec3(80, 0, -150));		//middle
+	targets.push_back(glm::vec3(80, 0, 0));		//middle
 	
 //	targets.push_back(glm::vec3(0, 0, 0));			//middle bottom
 
@@ -56,6 +57,7 @@ void EnemyAIComponent::init()
 
 void EnemyAIComponent::faceDestination(glm::vec3 pos, glm::vec3 dest)
 {
+
 	//Calculates angle and set player rotation
 	//Really just an up vector 
 	glm::vec3 playerVec(0, 1, 0);
@@ -67,7 +69,7 @@ void EnemyAIComponent::faceDestination(glm::vec3 pos, glm::vec3 dest)
 	angleInDegrees_ = glm::degrees(angleInDegrees_);
 
 	//Set GameObjects rotation
-	this->user->setRotationDegrees(angleInDegrees_);
+	this->user->setRotationDegrees(angleInDegrees_ + 90);
 }
 
 void EnemyAIComponent::update(double dt)
@@ -81,9 +83,13 @@ void EnemyAIComponent::update(double dt)
 
 	glm::vec3 currPosition = this->getUser()->getPosition();
 
+
+
 	//Stops vector subscript out of range errors
 	if (goalNodeIndex > currentRoute.size() - 1)
 		goalNodeIndex = 0;
+
+	
 
 
 	//Recalculate route with new target if there's no route to follow
@@ -124,6 +130,8 @@ void EnemyAIComponent::update(double dt)
 			else//else start heading towards the next part of 'CurrentRoute'
 			{
 				goalNodeIndex++;
+
+			
 			}
 		
 		}
@@ -161,7 +169,8 @@ void EnemyAIComponent::update(double dt)
 
 
 	//Turn togace direction of travel
-	//faceDestination(currPosition, currentRoute[goalNodeIndex]);
+	faceDestination(currPosition, currentRoute[goalNodeIndex]);
+
 
 	//Store position. If AI gets stuck it will change target
 	previousPos = currPosition;
