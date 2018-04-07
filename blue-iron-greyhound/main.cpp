@@ -10,8 +10,13 @@
 //Asset pathway:
 /// ../../assets/
 
+
+
 #include "SDL.h"
 #include <glm/glm.hpp>
+
+//MD2
+#include "MD2Mesh.h"
 
 //Graphics
 #include "OpenglRenderer.h"
@@ -266,23 +271,28 @@ int main(int argc, char *argv[])
 	//Green Demo Cube
 	GameObject *Enemey = new GameObject("Enemy AI Cube");
 	Enemey->setPosition(glm::vec3(0.0f, 0.0f, 0.0f));
-	Enemey->setScaling(glm::vec3(0.05, 0.05, 0.05));
-	Enemey->setRotationAxis(glm::vec3(0, 1, 0));
+	Enemey->setScaling(glm::vec3(0.3, 0.3, 0.3));
+	Enemey->setRotationAxis(glm::vec3(0, 0, 1));
 	Enemey->setRotationDegrees(0);
 
 	Enemey->addComponent(EnemyAI);
 
-	RigidBodyComponent* EnemeyRigidBody = new RigidBodyComponent("Rigid Body");
+	/*RigidBodyComponent* EnemeyRigidBody = new RigidBodyComponent("Rigid Body");
 	Enemey->addComponent(EnemeyRigidBody);
 	EnemeyRigidBody->setCollisionSystem(collisionsystem);
 	EnemeyRigidBody->setBodyType("DYNAMIC");
-	EnemeyRigidBody->setBoundingType("OBB");
+	EnemeyRigidBody->setBoundingType("OBB");*/
 
-	MeshComponent* EnemeyMesh = new MeshComponent("test");
-	Enemey->addComponent(EnemeyMesh);
-	EnemeyMesh->setRenderer(renderer);
-	EnemeyMesh->loadObject("../../assets/duck_triangulate.DAE");
-	EnemeyMesh->loadTexture("../../assets/tex/habitatWood2.bmp");
+	MD2Mesh* Md2Mesh = new MD2Mesh();
+	Md2Mesh->init();
+	Md2Mesh->camera = cameraComponent;
+	Enemey->addComponent(Md2Mesh);
+
+	//MeshComponent* EnemeyMesh = new MeshComponent("test");
+	//Enemey->addComponent(EnemeyMesh);
+	//EnemeyMesh->setRenderer(renderer);
+	//EnemeyMesh->loadObject("../../assets/duck_triangulate.DAE");
+	//EnemeyMesh->loadTexture("../../assets/tex/habitatWood2.bmp");
 
 	objectList.push_back(Enemey);
 
