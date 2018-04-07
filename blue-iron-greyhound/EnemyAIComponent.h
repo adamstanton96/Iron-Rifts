@@ -64,4 +64,7 @@ private:
 	//The index to 'targets' for the position that we are what to get to
 	int targetIndex;
 
+	//Store position. If AI gets stuck it will change target
+	glm::vec3 previousPos;
+
 };
