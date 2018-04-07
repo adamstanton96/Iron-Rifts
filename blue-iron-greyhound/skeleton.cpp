@@ -113,7 +113,8 @@ void skeleton::UpdateBoneMatsVector()
 		}
 		else
 		{
-			concatenated_transformation = (bones.at(i)->GetParentTransforms() * bones.at(i)->node->transformation);
+			concatenated_transformation = (bones.at(i)->GetParentTransforms() * AssimpLoader::AiToGLMMat4(bones.at(i)->node->transformation));
+
 			boneMats.push_back(globalInverseTransform * concatenated_transformation * bones.at(i)->offset_matrix);
 		}
 	}

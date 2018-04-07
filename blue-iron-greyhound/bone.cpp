@@ -4,19 +4,20 @@
 
 #include "bone.h"
 #include <glm/gtx/quaternion.hpp>
+#include <glm/gtx/transform.hpp>
 
 
-//bone::bone(int in_mesh, unsigned int in_id, std::string in_name, aiMatrix4x4 in_o_mat)
-//{
-//	id = in_id;
-//	name = in_name;
-//	offset_matrix = AssimpLoader::AiToGLMMat4(in_o_mat);
-//
-//	meshID = in_mesh;
-//
-//	parent_bone = nullptr;
-//	node = nullptr;
-//}
+bone::bone(int in_mesh, unsigned int in_id, std::string in_name, aiMatrix4x4 in_o_mat)
+{
+	id = in_id;
+	name = in_name;
+	offset_matrix = AssimpLoader::AiToGLMMat4(in_o_mat);
+
+	meshID = in_mesh;
+
+	parent_bone = nullptr;
+	node = nullptr;
+}
 
 
 bone::bone(int in_mesh, unsigned int in_id, std::string in_name, glm::mat4 in_o_mat)
@@ -40,7 +41,7 @@ glm::mat4 bone::GetParentTransforms()
 
 	while (b != nullptr)    //As long as 'b' has a parent (see the end of the loop //to avoid confusion).
 	{
-		glm::mat4 tmp_mat = b->node->transformation; //This bone's transformation.
+		glm::mat4 tmp_mat = AssimpLoader::AiToGLMMat4(b->node->transformation); //This bone's transformation.
 		mats.push_back(tmp_mat);
 	
 		b = b->parent_bone;    //We set b to its own parent so the loop can continue.
@@ -152,15 +153,56 @@ void bone::UpdateKeyframeTransform(float time)
 	scale = glm::vec3(1.0);    
 							   
 
-	glm::mat4 mat(1);
+	glm::mat4 mat;
 	
 
 
-
-	mat = glm::translate(mat, pos);
-	mat *= glm::toMat4(rot);
+	mat *= glm::translate(pos);
+	mat *= glm::mat4_cast(rot);
 	mat = glm::scale(mat, scale);	
 	
-	node->transformation = mat;
+	node->transformation = GLMMat4ToAi(mat);
 	
+}
+
+
+//Translates assimps matrix format into glm format
+glm::mat4 bone::AiToGLMMat4(aiMatrix4x4& in_mat)
+{
+	glm::mat4 tmp;
+	tmp[0][0] = in_mat.a1;
+	tmp[1][0] = in_mat.b1;
+	tmp[2][0] = in_mat.c1;
+	tmp[3][0] = in_mat.d1;
+
+	tmp[0][1] = in_mat.a2;
+	tmp[1][1] = in_mat.b2;
+	tmp[2][1] = in_mat.c2;
+	tmp[3][1] = in_mat.d2;
+
+	tmp[0][2] = in_mat.a3;
+	tmp[1][2] = in_mat.b3;
+	tmp[2][2] = in_mat.c3;
+	tmp[3][2] = in_mat.d3;
+
+	tmp[0][3] = in_mat.a4;
+	tmp[1][3] = in_mat.b4;
+	tmp[2][3] = in_mat.c4;
+	tmp[3][3] = in_mat.d4;
+	return tmp;
+
+	//glm::dmat4 dmat4;
+	//dmat4[0][0] = in_mat.a1; dmat4[1][0] = in_mat.a2; dmat4[2][0] = in_mat.a3; dmat4[3][0] = in_mat.a4;
+	//dmat4[0][1] = in_mat.b1; dmat4[1][1] = in_mat.b2; dmat4[2][1] = in_mat.b3; dmat4[3][1] = in_mat.b4;
+	//dmat4[0][2] = in_mat.c1; dmat4[1][2] = in_mat.c2; dmat4[2][2] = in_mat.c3; dmat4[3][2] = in_mat.c4;
+	//dmat4[0][3] = in_mat.d1; dmat4[1][3] = in_mat.d2; dmat4[2][3] = in_mat.d3; dmat4[3][3] = in_mat.d4;
+	//return dmat4;
+}
+
+aiMatrix4x4 bone::GLMMat4ToAi(glm::mat4 mat)
+{
+	return aiMatrix4x4(mat[0][0], mat[0][1], mat[0][2], mat[0][3],
+		mat[1][0], mat[1][1], mat[1][2], mat[1][3],
+		mat[2][0], mat[2][1], mat[2][2], mat[2][3],
+		mat[3][0], mat[3][1], mat[3][2], mat[3][3]);
 }

@@ -24,7 +24,7 @@ namespace AssimpLoader
 		node* rootNode = new node();
 
 		rootNode->name = ai_node->mName.data;
-		rootNode->transformation = AiToGLMMat4(ai_node->mTransformation);
+		rootNode->transformation = ai_node->mTransformation;
 		rootNode->numOfChildren = ai_node->mNumChildren;
 		rootNode->numOfMeshes = ai_node->mNumMeshes;
 
@@ -245,6 +245,8 @@ namespace AssimpLoader
 			aiProcess_GenSmoothNormals |
 			aiProcess_GenNormals |
 			aiProcess_FindInvalidData
+			| aiProcess_LimitBoneWeights
+	
 		);
 
 	
@@ -537,6 +539,13 @@ namespace AssimpLoader
 		 tmp[2][3] = in_mat.c4;
 		 tmp[3][3] = in_mat.d4;
 		 return tmp;
+
+		 //glm::dmat4 dmat4;
+		 //dmat4[0][0] = in_mat.a1; dmat4[1][0] = in_mat.a2; dmat4[2][0] = in_mat.a3; dmat4[3][0] = in_mat.a4;
+		 //dmat4[0][1] = in_mat.b1; dmat4[1][1] = in_mat.b2; dmat4[2][1] = in_mat.b3; dmat4[3][1] = in_mat.b4;
+		 //dmat4[0][2] = in_mat.c1; dmat4[1][2] = in_mat.c2; dmat4[2][2] = in_mat.c3; dmat4[3][2] = in_mat.c4;
+		 //dmat4[0][3] = in_mat.d1; dmat4[1][3] = in_mat.d2; dmat4[2][3] = in_mat.d3; dmat4[3][3] = in_mat.d4;
+		 //return dmat4;
 	 }
 
 
@@ -552,12 +561,14 @@ namespace AssimpLoader
 
 	 glm::quat AIquatToGLMquat(aiQuaternion aiQuat)
 	 {
-		 glm::quat newVec;
+		 glm::quat newVec(aiQuat.w, aiQuat.x, aiQuat.y, aiQuat.z);
 
-		 newVec.w = aiQuat.w;
-		 newVec.x = aiQuat.x;
-		 newVec.y = aiQuat.y;
-		 newVec.z = aiQuat.z;
+		//// newVec;
+
+		// newVec.w = aiQuat.w;
+		// newVec.x = aiQuat.x;
+		// newVec.y = aiQuat.y;
+		// newVec.z = aiQuat.z;
 
 		 return newVec;
 	 }

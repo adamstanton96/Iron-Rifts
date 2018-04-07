@@ -51,7 +51,7 @@ char * texAnimVert =
 	"																	\n"
 	"	ex_L = normalize(lightPosition.xyz - vertexPosition.xyz);		\n"
 	"																	\n"
-
+	"																	\n"
 	"	mat4x4 BMatrix;													\n"
 	"	BMatrix = gBones[ in_boneIDs.x ] * in_boneWeights.x;			\n"
 	"	BMatrix += gBones[ in_boneIDs.y ] * in_boneWeights.y;			\n"

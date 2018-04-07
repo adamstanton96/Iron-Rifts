@@ -21,6 +21,8 @@
 #include "animNode.h"
 #include "animation.h"
 
+#include <assimp/scene.h>           // Output data structure
+
 //#include frametime
 class skeleton;
 
@@ -33,7 +35,7 @@ public:
 		 id = -2;
 	 }
 
-	 bone(int in_mesh, unsigned int in_id, std::string in_name, aiMatrix4x4 in_o_mat);
+	bone(int in_mesh, unsigned int in_id, std::string in_name, aiMatrix4x4 in_o_mat);
 	 bone(int in_mesh, unsigned int in_id, std::string in_name, glm::mat4 in_o_mat);
 
 	 unsigned int FindPosition(float time);
@@ -44,6 +46,9 @@ public:
 	 void UpdateKeyframeTransform(float time);
 
 	 glm::mat4 GetParentTransforms();
+
+	 glm::mat4 AiToGLMMat4(aiMatrix4x4& in_mat);
+	 aiMatrix4x4 GLMMat4ToAi(glm::mat4 mat);
 
 
 	std::string name;
@@ -67,6 +72,8 @@ public:
 
 	glm::vec3 p1;
 	glm::vec3 p2;
+
+	
 	
 private:
 };

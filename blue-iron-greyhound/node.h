@@ -1,13 +1,14 @@
 #pragma once
 #include <vector>
 #include <glm/glm.hpp>
+#include <assimp/scene.h>
 
 
 class node
 {
 public:
 	std::string name;
-	glm::mat4 transformation;
+	aiMatrix4x4 transformation;
 	node* parent;
 	int numOfChildren;
 	std::vector<node*> children;

@@ -41,7 +41,10 @@ void AnimatedMeshComponent::loadObject(const char * filename)
 
 	setMinMax(minmax);
 
-	globalInverseTransform = glm::inverse(nodes[0]->transformation);
+	
+	globalInverseTransform = glm::inverse(AssimpLoader::AiToGLMMat4(nodes[0]->transformation));
+	
+
 	sceneLoaderSkeleton = new skeleton(bones, globalInverseTransform);
 }
 
