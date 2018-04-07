@@ -7,7 +7,7 @@ RayCastTestComponent::RayCastTestComponent(std::string name)
 
 	rayMagnitude = 50;
 	fireCoolOffTime = 0.2;
-	bulletVelocity = 0.8;
+	bulletVelocity = 30;
 
 	start = std::clock();
 }
@@ -70,9 +70,9 @@ if (dt > fireCoolOffTime)
 
 		//Emit bullet - If its going to hit something, set the distance so it stops when it hits.
 		if (obj != nullptr)
-			bulletRender->emit(userPos, rotatedDirectionVector, glm::vec3(bulletVelocity), glm::distance(userPos, obj->getPosition()));
+			bulletRender->emit(userPos, rotatedDirectionVector, glm::vec3(bulletVelocity*dt), glm::distance(userPos, obj->getPosition()));
 		else
-			bulletRender->emit(userPos, rotatedDirectionVector, glm::vec3(bulletVelocity), rayMagnitude);
+			bulletRender->emit(userPos, rotatedDirectionVector, glm::vec3(bulletVelocity*dt), rayMagnitude);
 
 		start = std::clock();
 	}

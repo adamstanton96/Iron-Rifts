@@ -191,28 +191,51 @@ int main(int argc, char *argv[])
 	EnemyAIComponent* EnemyAI = new EnemyAIComponent();
 
 	typedef std::pair<int, int> path;
-	int names[] = { 0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16 };
+	int names[] = 
+	{ 
+		0,1,2,3,4,5,6,7,8,      //vertical corridor 0-8
+		9,10,11,12,13,14,15,16,  //horizontal corridor 9-16
+
+		17,18,19,20,21,22,23,24	//vertical left corridor 17 -24
+	
+	
+	};
+
+
+
 	glm::vec2 locations[] = 
 	{ 
-		{ 0,0 },{ 0,-20 },{ 0,-40 },{ 0,-60 },{ 0,-80 },{ 0,-100 },{ 0,-120},{ 0,-140 },{ 0,-150 },	//vertical corridor 0-8
-		{ -80,-80 },{ -60,-80 },{ -40,-80 },{ -20,-80 },{ 0,-80 },{ 20,-80 },{ 40,-80 },{ 60,-80 },{ 80,-80 }	  //horizontal corridor 9-17
+		{ 0,0 },{ 0,-20 },{ 0,-40 },{ 0,-60 },{ 0,-80 },{ 0,-100 },{ 0,-120},{ 0,-140 },{ 0,-150 },					//vertical corridor 0-8  (9)
+
+		{ -80,-80 },{ -60,-80 },{ -40,-80 },{ -20,-80 },{ 20,-80 },{ 40,-80 },{ 60,-80 },{ 80,-80 },				//horizontal corridor 9-16 (8)
 	
+		{ -80, 0 },{ -80,-20 },{ -80,-40 },{ -80,-60 },{ -80,-100 },{ -80,-120 },{ -80,-140 },{ -80,-150 },			//vertical left corridor 17-24 (8)
+
+
 	
 	
 	
 	};
 	std::pair<int, int> edges[] = 
 	{ 
-		path(0,1),path(1,2),path(2,3),path(3,4), path(4,5), path(5,6), path(6,7),path(7,8), //vertical corridor
-		path(3,12),path(12,11),path(11,10),path(10,9), path(3,13), path(13,14), path(14,15),path(15,16) //vertical corridor
+		path(0,1),path(1,2),path(2,3),path(3,4), path(4,5), path(5,6), path(6,7),path(7,8),				//vertical corridor
+
+		path(4,12),path(12,11),path(11,10),path(10,9), path(4,13), path(13,14), path(14,15),path(15,16), //horicontal corridor
+
+		path(17,18),path(18,19),path(19,20),path(20,9), path(9,21), path(21,22), path(22,23),path(23,24) //vertical left corridor
 	};
 
 
 
-	float weights[] = { 1, 1, 1, 1, 1, 1, 1,1,1,1,1,1,1,1,1,1,1 };
+	float weights[] = 
+	{ 1, 1, 1, 1, 1, 1, 1,1,1,
+	1,1,1,1,1,1,1,1 ,
+		1,1,1,1,1,1,1,1
+	
+	};
 
 	AISystem* AiSys = new AISystem();
-	AstarGraph* graph = new AstarGraph(names, locations, edges, weights, 17, 16);
+	AstarGraph* graph = new AstarGraph(names, locations, edges, weights, 25, 24);
 
 	AiSys->addPathGraph(graph);
 	EnemyAI->setAIsystem(AiSys);

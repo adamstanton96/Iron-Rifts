@@ -6,6 +6,19 @@ Author : Chloe Madden(B00286864)
 #include "EnemyAIComponent.h"
 
 
+//temp debug function
+void printPath(std::vector<glm::vec3> path)
+{
+
+	for (int i = 0; i < path.size(); i++)
+	{
+		std::cout << i << ":	" << path[i].x << ", " << path[i].y << ", " << path[i].z << ", " << std::endl;
+	}
+	
+	std::cout  << std::endl;
+	std::cout  << std::endl;
+}
+
 EnemyAIComponent::EnemyAIComponent()
 {
 	velocity = glm::vec3(0, 0, 0);	
@@ -16,22 +29,23 @@ void EnemyAIComponent::init()
 {
 
 	previousPos = glm::vec3(10);
+
 	//Inventives for where to go. These in the end should be things like
 	//the players psoition or a defensive position
-	targets.push_back(glm::vec3(200, 0, 0));
-	targets.push_back(glm::vec3(0, 0, 200));
-	targets.push_back(glm::vec3(0, 0, -200));
-	targets.push_back(glm::vec3(-200, 0, 0));
+	targets.push_back(glm::vec3(0, 0, 0));		//middle top
+	targets.push_back(glm::vec3(-80, 0, -150));		//middle left
+	targets.push_back(glm::vec3(-80, 0, -80));		//middle left
+	targets.push_back(glm::vec3(80, 0, -75));		//middle right
+	targets.push_back(glm::vec3(0, 0, -150));		//middle
+	
+//	targets.push_back(glm::vec3(0, 0, 0));			//middle bottom
+
 
 	//Pick one of the targets
 	targetIndex = 0;
 
-	//Keep track of current oal position
+	//Keep track of current goal position
 	currentGoalPosition = targets[targetIndex];
-
-	//Get a path to the chosen route
-	glm::vec2 goal(currentGoalPosition.x, currentGoalPosition.z);
-	currentRoute = AIsystem->findPath(glm::vec2(0, 0), goal);
 
 	//Set currentRoute[0] as the first destination to head to 
 	goalNodeIndex = 0;
@@ -58,6 +72,13 @@ void EnemyAIComponent::faceDestination(glm::vec3 pos, glm::vec3 dest)
 
 void EnemyAIComponent::update(double dt)
 {
+	
+
+	///debug
+	printPath(currentRoute);
+	///
+
+
 	glm::vec3 currPosition = this->getUser()->getPosition();
 
 	//Stops vector subscript out of range errors
@@ -82,9 +103,6 @@ void EnemyAIComponent::update(double dt)
 		currentRoute = AIsystem->findPath(pos, goal);
 	}
 		
-	
-	
-
 
 	//if not at last node in the current path
 	if (!atFinalDestination)
@@ -93,13 +111,12 @@ void EnemyAIComponent::update(double dt)
 		if (glm::distance(currPosition, currentRoute[goalNodeIndex]) > 1) 
 		{
 			velocity = glm::normalize(currentRoute[goalNodeIndex] - currPosition);
-			//velocity = velocity * glm::vec3(0.02, 0, 0.02);
-			velocity *=  20 * dt;
+			velocity *=  15 * dt;
 		}
 		else
 		{
 			//If at the position of the last node in the current path
-			if (glm::distance(currPosition, currentRoute[currentRoute.size()-1]) < 1)
+			if (glm::distance(currPosition, currentRoute[currentRoute.size()-1]) < 1 )
 			{
 				atFinalDestination = true;
 				velocity = glm::vec3(0);
@@ -144,7 +161,7 @@ void EnemyAIComponent::update(double dt)
 
 
 	//Turn togace direction of travel
-	faceDestination(currPosition, currentRoute[goalNodeIndex]);
+	//faceDestination(currPosition, currentRoute[goalNodeIndex]);
 
 	//Store position. If AI gets stuck it will change target
 	previousPos = currPosition;
