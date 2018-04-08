@@ -1,4 +1,10 @@
 #pragma once
+/*============================================================================ =
+ParticleRenderer
+Author : Chloe Madden(B00286864)
+============================================================================ =*/
+
+
 #include "System.h"
 #include "OpenglUtils.h"
 #include "SDLGLTextureLoader.h"

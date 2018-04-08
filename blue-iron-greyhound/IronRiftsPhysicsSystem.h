@@ -1,4 +1,9 @@
 #pragma once
+/*============================================================================ =
+IronRiftsPhysicsSystem
+Author : Chloe Madden(B00286864)
+============================================================================ =*/
+
 #include "PhysicsSystem.h"
 
 class IronRiftsPhysicsSystem : public PhysicsSystem

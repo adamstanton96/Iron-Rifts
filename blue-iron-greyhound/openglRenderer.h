@@ -1,6 +1,11 @@
 #ifndef openglRenderer_H
 #define openglRenderer_H
 
+/*============================================================================ =
+openglRenderer
+Author : Chloe Madden(B00286864)
+============================================================================ =*/
+
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>

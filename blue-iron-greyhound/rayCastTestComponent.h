@@ -1,9 +1,15 @@
 #pragma once
+/*============================================================================ =
+RayCastTestComponent
+Author : Chloe Madden(B00286864)
+============================================================================ =*/
+
 #include "Component.h"
 #include "GameObject.h"
 #include "InputSystem.h"
 #include "IronRiftsPhysicsSystem.h"
 #include "bulletParticle.h"
+
 //timer
 #include <ctime>
 #include <cstdlib>
