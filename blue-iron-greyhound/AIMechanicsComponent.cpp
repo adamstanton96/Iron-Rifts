@@ -1,30 +1,19 @@
 #include "AIMechanicsComponent.h"
 
-#include "AIMechanicsComponent.h"
-#include "AIMechanicsComponent.h"
-
-
-//temp debug function
-void printPath(std::vector<glm::vec3> path)
+AIMechanicsComponent::AIMechanicsComponent(std::string name)
 {
-
-	for (int i = 0; i < path.size(); i++)
-	{
-		std::cout << i << ":	" << path[i].x << ", " << path[i].y << ", " << path[i].z << ", " << std::endl;
-	}
-
-	std::cout << std::endl;
-	std::cout << std::endl;
-}
-
-AIMechanicsComponent::AIMechanicsComponent()
-{
-	velocity = glm::vec3(0, 0, 0);
+	this->name = name;
 }
 
 
 void AIMechanicsComponent::init()
 {
+	this->health = 100;
+	this->damage = 5;
+	this->weaponRange = 50;
+	this->rateOfFire = 10;
+
+	velocity = glm::vec3(0, 0, 0);
 	previousPos = glm::vec3(10);
 
 	//Inventives for where to go. These in the end should be things like
@@ -36,10 +25,7 @@ void AIMechanicsComponent::init()
 	targets.push_back(glm::vec3(80, 0, -150));		//middle
 	targets.push_back(glm::vec3(80, 0, 0));		//middle
 
-												//	targets.push_back(glm::vec3(0, 0, 0));			//middle bottom
-
-
-												//Pick one of the targets
+	//Pick one of the targets
 	targetIndex = 0;
 
 	//Keep track of current goal position
@@ -54,9 +40,83 @@ void AIMechanicsComponent::init()
 
 void AIMechanicsComponent::update(double dt)
 {
-	///debug
-	printPath(currentRoute);
-	///
+	if (this->health <= 0)
+	{
+		std::cout << this->user->getName() << " Is Dead!" << std::endl; //Testing
+	}
+
+	attack(dt);
+	move(dt);
+}
+
+
+
+void AIMechanicsComponent::setAIsystem(AISystem* ai)
+{
+	AIsystem = ai;
+}
+
+void AIMechanicsComponent::fireWeapon(double dt)
+{
+	printf("AI Shooty Shooty! \n"); //Testing
+	audio->playAudio("../../assets/audio/bell.wav");
+
+	int bulletVelocity = 30;
+
+
+	//Calculate the rays direction
+	glm::vec3 forward(0, 0, -1);
+	glm::vec3 up(0, 1, 0);
+
+	double theta = (this->getUser()->getRotationDegrees()* DEG_TO_RADIAN);	//The minus was an attempt to fix the collision inaccuracy
+
+	double cos_thetaf = cos(theta);
+	glm::vec3 cos_theta(cos(theta));
+	glm::vec3 sin_theta(sin(theta));
+
+	glm::dvec3 rotatedDirectionVector = (forward * cos_theta) + (glm::cross(up, forward) * sin_theta) + (up * glm::dot(up, forward)) * glm::vec3((1 - cos_thetaf));
+	rotatedDirectionVector = glm::vec3(rotatedDirectionVector.x, rotatedDirectionVector.y, -rotatedDirectionVector.z);
+
+	//Find the two points defining our ray 
+	Ray weaponRay = physics->castRay(this->getUser()->getPosition(), rotatedDirectionVector, weaponRange);
+
+	//Get all objects in the path of the ray
+	std::vector<GameObject*> potentialHits = physics->checkRayCollision(weaponRay);
+
+	//Find out which collided object is closest to the player
+	GameObject* obj = nullptr;
+
+	if (potentialHits.size() != 0)
+		obj = physics->checkClosest(this->getUser(), potentialHits);
+
+	//Debug - print the closest object name
+	if (obj != nullptr)
+	{
+		std::cout << "closest: " << obj->getName() << std::endl;
+
+		MechanicsComponent * comp = obj->getComponent<MechanicsComponent>();
+		if (comp != nullptr)
+		{
+			comp->setHealth(comp->getHealth() - this->damage);
+			std::cout << comp->getUser()->getName() << "health: " << comp->getHealth();
+		}
+	}
+	else
+	{
+		std::cout << "No Collision: " << std::endl;
+	}
+
+	//Emit bullet - If its going to hit something, set the distance so it stops when it hits.
+	if (obj != nullptr)
+		particleRenderer->emit(this->getUser()->getPosition(), rotatedDirectionVector, glm::vec3(bulletVelocity*dt), glm::distance(this->getUser()->getPosition(), obj->getPosition()));
+	else
+		particleRenderer->emit(this->getUser()->getPosition(), rotatedDirectionVector, glm::vec3(bulletVelocity*dt), weaponRange);
+
+	start = std::clock();
+}
+
+void AIMechanicsComponent::move(double dt)
+{
 	glm::vec3 currPosition = this->getUser()->getPosition();
 
 	//Stops vector subscript out of range errors
@@ -101,8 +161,6 @@ void AIMechanicsComponent::update(double dt)
 			else//else start heading towards the next part of 'CurrentRoute'
 			{
 				goalNodeIndex++;
-
-
 			}
 
 		}
@@ -114,7 +172,6 @@ void AIMechanicsComponent::update(double dt)
 		// Decide where the next goal lies. Should simply
 		//Loop this but write and algorithm deciding what to do/where to go
 		targetIndex++;
-
 
 		//Reset target index if out of range
 		if (targetIndex > targets.size() - 1)
@@ -128,7 +185,6 @@ void AIMechanicsComponent::update(double dt)
 
 		currentRoute = AIsystem->findPath(pos, goal);
 
-
 		//Resets
 		atFinalDestination = false;
 		goalNodeIndex = 0;
@@ -138,24 +194,13 @@ void AIMechanicsComponent::update(double dt)
 	//update player movement
 	this->getUser()->setPosition(currPosition + velocity);
 
-
-	//Turn togace direction of travel
-	faceDestination(currPosition, currentRoute[goalNodeIndex]);
-
-
 	//Store position. If AI gets stuck it will change target
 	previousPos = currPosition;
 
 }
 
-
-
-void AIMechanicsComponent::setAIsystem(AISystem* ai)
+void AIMechanicsComponent::attack(double dt)
 {
-	AIsystem = ai;
-}
-
-void AIMechanicsComponent::fireWeapon(double dt)
-{
-
+	if (dt > rateOfFire)
+		fireWeapon(dt);
 }

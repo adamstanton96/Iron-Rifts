@@ -71,11 +71,11 @@ void PlayerMechanicsComponent::fireWeapon(double dt)
 	{
 		std::cout << "closest: " << obj->getName() << std::endl;
 
-		PlayerMechanicsComponent * comp = obj->getComponent<PlayerMechanicsComponent>();
+		MechanicsComponent * comp = obj->getComponent<MechanicsComponent>();
 		if (comp != nullptr)
 		{
 			comp->setHealth(comp->getHealth() - this->damage);
-			std::cout << comp->user->getName() << "health: " << comp->health;
+			std::cout << comp->getUser()->getName() << "health: " << comp->getHealth();
 		}
 	}
 	else
@@ -90,5 +90,4 @@ void PlayerMechanicsComponent::fireWeapon(double dt)
 		particleRenderer->emit(this->getUser()->getPosition(), rotatedDirectionVector, glm::vec3(bulletVelocity*dt), weaponRange);
 
 	start = std::clock();
-
 }

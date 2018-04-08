@@ -26,7 +26,7 @@ the AI component decide what to target and when.
 class AIMechanicsComponent : public MechanicsComponent
 {
 public:
-	AIMechanicsComponent();
+	AIMechanicsComponent(std::string name);
 	~AIMechanicsComponent() {}
 
 	void init();
@@ -65,4 +65,7 @@ private:
 	//Store position. If AI gets stuck it will change target
 	glm::vec3 previousPos;
 
+
+	void move(double dt);
+	void attack(double dt);
 };

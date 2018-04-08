@@ -4,7 +4,6 @@ Author : Chloe Madden(B00286864)
 =============================================================================*/
 
 #include "EnemyAIComponent.h"
-#include "AIMechanicsComponent.h"
 
 
 //temp debug function
@@ -185,7 +184,3 @@ void EnemyAIComponent::setAIsystem(AISystem* ai)
 	AIsystem = ai;
 }
 
-void EnemyAIComponent::fireWeapon(double dt)
-{
-
-}

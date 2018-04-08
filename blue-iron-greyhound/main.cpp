@@ -51,6 +51,7 @@
 
 //player mechs
 #include "PlayerMechanicsComponent.h"
+#include "AIMechanicsComponent.h"
 
 // The number of clock ticks per second
 #define CLOCKS_PER_SEC  ((clock_t)1000)
@@ -201,7 +202,7 @@ int main(int argc, char *argv[])
 
 	////////////////////////////////////////////////////
 	//AI system and pathfinding/////////////////////////
-	EnemyAIComponent* EnemyAI = new EnemyAIComponent();
+	AIMechanicsComponent* EnemyAI = new AIMechanicsComponent("AIMechanicsComponent");
 
 	typedef std::pair<int, int> path;
 	int names[] = 
@@ -268,12 +269,7 @@ int main(int argc, char *argv[])
 	
 	};
 
-	AISystem* AiSys = new AISystem();
-	AstarGraph* graph = new AstarGraph(names, locations, edges, weights, 45, 48);
 
-	AiSys->addPathGraph(graph);
-	EnemyAI->setAIsystem(AiSys);
-	EnemyAI->init();
 	////////////////////////////////////////////////////
 	//AI test object (enemy Player)
 	//Green Demo Cube
@@ -283,7 +279,27 @@ int main(int argc, char *argv[])
 	Enemey->setRotationAxis(glm::vec3(0, 1, 0));
 	Enemey->setRotationDegrees(0);
 
+
+
+
+	AISystem* AiSys = new AISystem();
+	AstarGraph* graph = new AstarGraph(names, locations, edges, weights, 45, 48);
+
+	AiSys->addPathGraph(graph);
+	EnemyAI->setAIsystem(AiSys);
+	EnemyAI->setAudio(audioSystem);
+	EnemyAI->setPhysics(collisionsystem);
+
+	//bullet itself
+	bulletParticle* bullet2 = new bulletParticle(glm::vec4(0.5, 1.0f, 0.5f, 1.0f), 200, "../../assets/tex/rainTex.png", particleRender); //(colour, numOfParticles, texture, ParticleRenderer)
+	bullet2->init();
+	Enemey->addComponent(bullet2);
+
+	EnemyAI->setParticleRenderer(bullet2);
+	EnemyAI->init();
+
 	Enemey->addComponent(EnemyAI);
+
 
 	RigidBodyComponent* EnemeyRigidBody = new RigidBodyComponent("Rigid Body");
 	Enemey->addComponent(EnemeyRigidBody);
