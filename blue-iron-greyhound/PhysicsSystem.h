@@ -35,4 +35,7 @@ public:
 	virtual Ray castRay(glm::vec3 startPoint, glm::vec3 direction, float distance) = 0;
 	virtual std::vector<GameObject*> checkRayCollision(Ray ray) = 0;
 	virtual GameObject* checkClosest(GameObject* object, std::vector<GameObject*> objList) = 0;
+
+	virtual std::vector<RigidBodyComponent*> getStaticBodies() = 0;
+	virtual std::vector<RigidBodyComponent*> getDynamicBodies() = 0;
 };

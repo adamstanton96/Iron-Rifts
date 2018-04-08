@@ -68,4 +68,6 @@ private:
 
 	void move(double dt);
 	void attack(double dt);
+
+	double cooldownTimer;
 };

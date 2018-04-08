@@ -15,11 +15,14 @@ void PlayerMechanicsComponent::init()
 	this->health = 100;
 	this->damage = 5;
 	this->weaponRange = 50;
-	this->rateOfFire = 0;
+	this->rateOfFire = 1;
+	this->cooldownTimer = 0;
 }
 
 void PlayerMechanicsComponent::update(double dt)
 {
+	cooldownTimer += dt;
+
 	if (this->health <= 0)
 	{
 		std::cout << this->user->getName() << " Is Dead!" << std::endl; //Testing
@@ -28,8 +31,11 @@ void PlayerMechanicsComponent::update(double dt)
 	//Check for input... Change input to mouse click once inputsystem is updated.
 	if (this->input->keyPressed("R"))
 	{
-		if (dt > rateOfFire)
+		if (cooldownTimer > rateOfFire)
+		{
 			fireWeapon(dt);
+			cooldownTimer = 0;
+		}	
 	}	
 }
 

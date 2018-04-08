@@ -17,5 +17,6 @@ public:
 	InputSystem *getInput() { return this->input; }
 
 private:
+	double cooldownTimer;
 	InputSystem *input;
 };

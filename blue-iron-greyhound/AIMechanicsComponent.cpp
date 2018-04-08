@@ -1,4 +1,5 @@
 #include "AIMechanicsComponent.h"
+#include "RigidBodyComponent.h"
 
 AIMechanicsComponent::AIMechanicsComponent(std::string name)
 {
@@ -11,7 +12,8 @@ void AIMechanicsComponent::init()
 	this->health = 100;
 	this->damage = 5;
 	this->weaponRange = 50;
-	this->rateOfFire = 0;
+	this->rateOfFire = 1;
+	this->cooldownTimer = 0;
 
 	velocity = glm::vec3(0, 0, 0);
 	previousPos = glm::vec3(10);
@@ -40,11 +42,12 @@ void AIMechanicsComponent::init()
 
 void AIMechanicsComponent::update(double dt)
 {
+	cooldownTimer += dt;
+
 	if (this->health <= 0)
 	{
 		std::cout << this->user->getName() << " Is Dead!" << std::endl; //Testing
 	}
-
 	attack(dt);
 	move(dt);
 }
@@ -201,6 +204,31 @@ void AIMechanicsComponent::move(double dt)
 
 void AIMechanicsComponent::attack(double dt)
 {
-	if (dt > rateOfFire)
-		fireWeapon(dt);
+	GameObject *target;
+
+	std::vector<RigidBodyComponent*> possibleTargets = physics->getDynamicBodies();
+	for (int i = 0; i <= possibleTargets.size() -1; i++)
+	{
+		RigidBodyComponent *temp = possibleTargets[i];
+		if (temp->getUser() != this->getUser())
+		{
+			float dist = sqrt((((this->user->getPosition().x - temp->getUser()->getPosition().x) * (this->user->getPosition().x - temp->getUser()->getPosition().x)) +
+				((this->user->getPosition().y - temp->getUser()->getPosition().y) * (this->user->getPosition().y - temp->getUser()->getPosition().y)) +
+				((this->user->getPosition().z - temp->getUser()->getPosition().z) * (this->user->getPosition().z - temp->getUser()->getPosition().z))));
+
+			if (dist <= weaponRange + 5)
+			{
+				float angleInDegrees_ = atan2(temp->getUser()->getPosition().y, temp->getUser()->getPosition().x) - atan2(this->user->getPosition().y, this->user->getPosition().x);
+				angleInDegrees_ = glm::degrees(angleInDegrees_);
+				this->user->setRotationDegrees(angleInDegrees_);
+
+				//if (cooldownTimer > rateOfFire)
+				//{
+					//fireWeapon(dt);
+					//cooldownTimer = 0;
+				//}
+			}	
+		}
+	}
 }
+
