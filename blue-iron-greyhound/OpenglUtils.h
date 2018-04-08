@@ -32,9 +32,16 @@ namespace OpenglUtils
 	char* loadFile(const char *fname, GLint &fSize);
 
 	GLuint initShaders(const char *vertFile, const char *fragFile);
+	GLuint initParticleShaders( char *vertFile,  char *fragFile);
 
 	GLuint createMesh(const GLuint numVerts, const GLfloat* vertices, const GLfloat* colours, const GLfloat* normals,
 		const GLfloat* texcoords,const GLuint texCount, const GLuint indexCount, const GLuint* indices);
+	
+	GLuint createMesh(const GLuint numVerts, const GLfloat* vertices, const GLfloat* colours,
+		const GLfloat* normals, const GLfloat* texcoords, const GLuint indexCount, const GLuint* indices);
+
+	GLuint createMesh(const GLuint numVerts, const GLfloat* vertices, const GLfloat* colours, const GLfloat* normals,
+		const GLfloat* texcoords);
 
 	void setUniformMatrix4fv(const GLuint program, const char* uniformName, const GLfloat *data);
 
@@ -45,6 +52,8 @@ namespace OpenglUtils
 
 	void drawIndexedMesh(const GLuint mesh, const GLuint indexCount, const GLuint primitive);
 	void drawMesh(const GLuint mesh, const GLuint numVerts, const GLuint primitive);
+
+	void updateMesh(const GLuint mesh, const unsigned int bufferType, const GLfloat *data, const GLuint size);
 }
 
 #endif

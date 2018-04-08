@@ -1,4 +1,8 @@
 #pragma once
+/*============================================================================ =
+RigidBodyComponent
+Author : Chloe Madden(B00286864)
+============================================================================ =*/
 #include "Component.h"
 #include "glm\glm.hpp"
 #include "boundingVolume.h"
@@ -30,7 +34,7 @@ public:
 	bool isInit();
 
 	void init();
-	void update();
+	void update(double dt);
 
 	void setCollisionSystem(PhysicsSystem* collisionSys);
 

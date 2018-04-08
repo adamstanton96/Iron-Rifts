@@ -1,4 +1,9 @@
 #pragma once
+/*============================================================================ =
+IronRiftsPhysicsSystem
+Author : Chloe Madden(B00286864)
+============================================================================ =*/
+
 #include "PhysicsSystem.h"
 
 class IronRiftsPhysicsSystem : public PhysicsSystem
@@ -17,6 +22,8 @@ public:
 	void collisionCheck(RigidBodyComponent* rigidbody);
 	void collisionReaction(RigidBodyComponent* rigidbody);
 	void displacementReaction(RigidBodyComponent* rigidbody, glm::vec3 displacementVector);
+	glm::vec3 collisionDirectionVector(RigidBodyComponent* rigidbody);
+
 
 	//Raycasting...
 	Ray castRay(glm::vec3 startPoint, glm::vec3 direction, float distance);

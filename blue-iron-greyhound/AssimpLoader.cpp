@@ -29,6 +29,7 @@ namespace AssimpLoader
 			//| aiProcess_FindDegenerates
 			//| aiProcess_PreTransformVertices
 			|aiProcess_GenNormals
+
 		);
 
 			//  | aiProcess_JoinIdenticalVertices		

@@ -11,12 +11,16 @@ Camera::Camera(std::string name)
 
 void Camera::init()
 {
-	offset = glm::vec3(0.0, 30.0, 0.0);				//top down offset
+
+
+	offset = glm::vec3(0.0, 40.0, 10.0);				//top down offset
+
+
 	//offset = glm::vec3(0.0, 5.0, 20.0);					//first person offset
 }
 
 
-void Camera::update()
+void Camera::update(double dt)
 {
 	glm::vec3 playerPos = getUser()->getPosition();
 	this->eye = playerPos;

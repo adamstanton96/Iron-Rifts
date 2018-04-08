@@ -1,13 +1,18 @@
+/*============================================================================ =
+openglRenderer
+Author : Chloe Madden(B00286864)
+============================================================================ =*/
+
 #include "openglRenderer.h"
 
 
 
 OpenglUtils::lightStruct globalLight =
 {
-	{ 0.8f, 0.8f, 0.8f, 0.8f },		// ambient
-	{ 0.5f, 0.5f, 0.5f, 0.5f },		// diffuse
-	{ 0.0f, 0.0f, 0.0f, 0.04f },	// specular
-	{ 0.0f, 5.0f, 0.0f, 0.0f }		// position
+	{ 0.6f, 0.6f, 0.6f, 0.6f },		// ambient
+	{ 0.5f, 0.5f, 0.5f, 0.9f },		// diffuse
+	{ 0.7f, 0.7f, 0.7f, 1.0f },	// specular
+	{ 0.0f, 0.0f, -80.0f, 0.0f }		// position
 };
 
 OpenglUtils::materialStruct material1 = {
@@ -17,7 +22,7 @@ OpenglUtils::materialStruct material1 = {
 	0.5  // shininess
 };
 
-glm::vec4 lightPos(0.0f, 5.0f, 0.0f, 0.0f);
+glm::vec4 lightPos(0.0f, 5.0f, 60.0f, 0.0f);
 
 
 // light attenuation

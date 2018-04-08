@@ -10,7 +10,7 @@ public:
 	~InteractiveTestComponent();
 
 	void init();
-	void update();
+	void update(double dt);
 
 	int testingValue;
 };

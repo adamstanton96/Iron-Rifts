@@ -75,13 +75,12 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>..\..\dev\irrKlang-1.6.0\include;..\..\dev\assimp-3.1.1-win-binaries\include;..\..\Dev\SDL2-2.0.5\include;..\..\Dev\glm-0.9.8.5;..\..\Dev\glew-2.0.0\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>
-      </PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\..\dev\irrKlang-1.6.0\include;..\..\dev\assimp-3.1.1-win-binaries\include;..\..\Dev\SDL2-2.0.5\include;..\..\Dev\glm-0.9.8.5;..\..\Dev\glew-2.0.0\include;..\..\dev\SDL2 plugins\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>..\..\dev\irrKlang-1.6.0\lib\win32-visualStudio;..\..\dev\assimp-3.1.1-win-binaries\lib32;..\..\Dev\SDL2-2.0.5\lib\x86;..\..\Dev\glew-2.0.0\lib\Release\Win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;glew32.lib;opengl32.lib;assimp.lib;irrklang.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\..\dev\irrKlang-1.6.0\lib\win32-visualStudio;..\..\dev\assimp-3.1.1-win-binaries\lib32;..\..\Dev\SDL2-2.0.5\lib\x86;..\..\Dev\glew-2.0.0\lib\Release\Win32;..\..\dev\SDL2 plugins\lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;glew32.lib;opengl32.lib;assimp.lib;irrklang.lib;SDL2_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Console</SubSystem>
     </Link>
   </ItemDefinitionGroup>
@@ -104,6 +103,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -125,19 +125,29 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="AABB.h" />
+    <ClInclude Include="AISystem.h" />
+    <ClInclude Include="anorms.h" />
     <ClInclude Include="AssimpLoader.h" />
+    <ClInclude Include="AstarGraph.h" />
+    <ClInclude Include="aStarPathFinder.h" />
     <ClInclude Include="AudioSystem.h" />
     <ClInclude Include="AudioTestComponent.h" />
     <ClInclude Include="boundingVolume.h" />
+    <ClInclude Include="bulletParticle.h" />
     <ClInclude Include="CameraComponent.h" />
     <ClInclude Include="CollisionSystem.h" />
     <ClInclude Include="Component.h" />
+    <ClInclude Include="EnemyAIComponent.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="InputSystem.h" />
     <ClInclude Include="IronRiftsPhysicsSystem.h" />
     <ClInclude Include="IrrKlangAudioSystem.h" />
+    <ClInclude Include="MD2Mesh.h" />
+    <ClInclude Include="md2model.h" />
     <ClInclude Include="MovementComponent.h" />
+    <ClInclude Include="node.h" />
     <ClInclude Include="OBB.h" />
+    <ClInclude Include="ParticleRenderer.h" />
     <ClInclude Include="PhysicsSystem.h" />
     <ClInclude Include="rayCastTestComponent.h" />
     <ClInclude Include="RigidBodyComponent.h" />
@@ -154,34 +164,32 @@
     <ClInclude Include="TestComponent.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AISystem.cpp" />
     <ClCompile Include="AssimpLoader.cpp" />
     <ClCompile Include="AudioTestComponent.cpp" />
+    <ClCompile Include="bulletParticle.cpp" />
     <ClCompile Include="CameraComponent.cpp" />
     <ClCompile Include="CollisionSystem.cpp" />
     <ClCompile Include="Component.cpp" />
+    <ClCompile Include="EnemyAIComponent.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="InteractiveTestComponent.cpp" />
     <ClCompile Include="IronRiftsPhysicsSystem.cpp" />
     <ClCompile Include="IrrKlangAudioSystem.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MD2Mesh.cpp" />
+    <ClCompile Include="md2model.cpp" />
     <ClCompile Include="MeshComponent.cpp" />
     <ClCompile Include="MovementComponent.cpp" />
     <ClCompile Include="OBB.cpp" />
     <ClCompile Include="openglRenderer.cpp" />
     <ClCompile Include="OpenglUtils.cpp" />
+    <ClCompile Include="ParticleRenderer.cpp" />
     <ClCompile Include="rayCastTestComponent.cpp" />
     <ClCompile Include="RigidBodyComponent.cpp" />
     <ClCompile Include="SDLGLTextureLoader.cpp" />
     <ClCompile Include="SDLInputSystem.cpp" />
     <ClCompile Include="TestComponent.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="minimal.frag" />
-    <None Include="minimal.vert" />
-    <None Include="textured.frag" />
-    <Xml Include="textured.vert">
-      <FileType>Document</FileType>
-    </Xml>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
