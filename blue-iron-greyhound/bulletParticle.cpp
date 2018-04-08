@@ -66,7 +66,7 @@ void bulletParticle::emit(glm::vec3 pos, glm::vec3 trajectory, glm::vec3 vel, fl
 			nextParticle++;
 }
 
-void bulletParticle::update()
+void bulletParticle::update(double dt)
 {
 
 	for (int i = 0; i < numOfParticles; i++)

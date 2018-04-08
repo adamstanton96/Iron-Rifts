@@ -76,8 +76,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>..\..\dev\irrKlang-1.6.0\include;..\..\dev\assimp-3.1.1-win-binaries\include;..\..\Dev\SDL2-2.0.5\include;..\..\Dev\glm-0.9.8.5;..\..\Dev\glew-2.0.0\include;..\..\dev\SDL2 plugins\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>
-      </PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>..\..\dev\irrKlang-1.6.0\lib\win32-visualStudio;..\..\dev\assimp-3.1.1-win-binaries\lib32;..\..\Dev\SDL2-2.0.5\lib\x86;..\..\Dev\glew-2.0.0\lib\Release\Win32;..\..\dev\SDL2 plugins\lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -104,6 +103,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -126,6 +126,7 @@
   <ItemGroup>
     <ClInclude Include="AABB.h" />
     <ClInclude Include="AISystem.h" />
+    <ClInclude Include="anorms.h" />
     <ClInclude Include="AssimpLoader.h" />
     <ClInclude Include="AstarGraph.h" />
     <ClInclude Include="aStarPathFinder.h" />
@@ -141,6 +142,8 @@
     <ClInclude Include="InputSystem.h" />
     <ClInclude Include="IronRiftsPhysicsSystem.h" />
     <ClInclude Include="IrrKlangAudioSystem.h" />
+    <ClInclude Include="MD2Mesh.h" />
+    <ClInclude Include="md2model.h" />
     <ClInclude Include="MovementComponent.h" />
     <ClInclude Include="node.h" />
     <ClInclude Include="OBB.h" />
@@ -174,6 +177,8 @@
     <ClCompile Include="IronRiftsPhysicsSystem.cpp" />
     <ClCompile Include="IrrKlangAudioSystem.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MD2Mesh.cpp" />
+    <ClCompile Include="md2model.cpp" />
     <ClCompile Include="MeshComponent.cpp" />
     <ClCompile Include="MovementComponent.cpp" />
     <ClCompile Include="OBB.cpp" />

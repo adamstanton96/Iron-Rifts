@@ -12,7 +12,7 @@ public:
 	~AudioTester() {};
 
 	void init();
-	void update();
+	void update(double dt);
 
 
 	void setAudio(IrrKlangAudioSystem *newAudio);

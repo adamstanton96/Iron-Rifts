@@ -11,7 +11,7 @@ public:
 	GameObject(std::string name);
 	virtual ~GameObject();
 	void init();
-	void update();
+	void update(double dt);
 
 	template<class genericComponent>
 	genericComponent *getComponent();
