@@ -72,6 +72,7 @@
       <Filter>Physics\Bounding Volumes</Filter>
     </ClCompile>
     <ClCompile Include="PlayerMechanicsComponent.cpp" />
+    <ClCompile Include="AIMechanicsComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="OpenglUtils.h">

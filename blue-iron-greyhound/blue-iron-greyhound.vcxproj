@@ -165,6 +165,7 @@
     <ClInclude Include="TestComponent.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AIMechanicsComponent.cpp" />
     <ClCompile Include="AISystem.cpp" />
     <ClCompile Include="AssimpLoader.cpp" />
     <ClCompile Include="AudioTestComponent.cpp" />

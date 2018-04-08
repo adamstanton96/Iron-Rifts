@@ -1,8 +1,8 @@
 #pragma once
 /*
 =============================================================================
-Enemy AI Component
-Author: Chloe Madden (B00286864)
+* AIMechanicsComponent
+* Author: Chloe Madden (B00286864) & Adam Stanton (B00266256)
 =============================================================================
 
 This class uses the AI system to navigate as that is where the current graph/map
@@ -19,24 +19,22 @@ the AI component decide what to target and when.
 =============================================================================*/
 
 
-#include "Component.h"
-#include "GameObject.h"
+#include "MechanicsComponent.h"
 #include "AISystem.h"
 
 
-class EnemyAIComponent : public Component
+class AIMechanicsComponent : public MechanicsComponent
 {
 public:
-	EnemyAIComponent();
-	~EnemyAIComponent() {}
+	AIMechanicsComponent();
+	~AIMechanicsComponent() {}
 
 	void init();
 	void update(double dt);
 
 	void setAIsystem(AISystem*);
 
-	//Rotate mesh to face direction of travel
-	void faceDestination(glm::vec3 pos, glm::vec3 dest);
+	void fireWeapon(double dt);
 
 private:
 	//The AI system deals with directing this class. You can pass in any 
