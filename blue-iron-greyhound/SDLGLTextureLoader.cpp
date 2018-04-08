@@ -3,8 +3,31 @@
 namespace SDLGLTextureLoader {
 
 
+	static char* TexturePaths[10];
+	static int TextureIDs[10];
+	static int texCount;
+
+	GLuint checkTextures(char* fileName)
+	{
+		for (int i = 0; i < texCount; i++)
+		{
+			if (strcmp(TexturePaths[i], fileName) == 0)
+				return TextureIDs[i];
+		}
+
+		return 0;
+	}
+
+
 
 	GLuint loadBitmap(char *fname) {
+
+		if (checkTextures(fname))
+			return checkTextures(fname);
+
+
+
+
 		GLuint texID;
 		glGenTextures(1, &texID); // generate texture ID
 
@@ -43,6 +66,12 @@ namespace SDLGLTextureLoader {
 		if (texID == NULL)
 			std::cout << "ERROR: Texture " << fname << " not loaded" << std::endl;
 	
+
+		
+		TexturePaths[texCount] = fname;
+		TextureIDs[texCount] = texID;
+		texCount++;
+
 		return texID;	// return value of texture ID
 	}
 
@@ -100,6 +129,11 @@ namespace SDLGLTextureLoader {
 	//Loads a PNG file as a texture//
 	/////////////////////////////////
 	GLuint loadPNG(char *fname) {
+
+		if (checkTextures(fname))
+			return checkTextures(fname);
+
+
 		GLuint texID;
 		glGenTextures(1, &texID); // generate texture ID
 
@@ -141,6 +175,12 @@ namespace SDLGLTextureLoader {
 		glGenerateMipmap(GL_TEXTURE_2D);
 
 		SDL_FreeSurface(tmpSurface); // texture loaded, free the temporary buffer
+
+		
+		TextureIDs[texCount] = texID;
+		TexturePaths[texCount] = fname;
+		texCount++;
+
 		return texID;	// return value of texture ID
 	}
 
