@@ -12,11 +12,9 @@ Camera::Camera(std::string name)
 void Camera::init()
 {
 
-<<<<<<< HEAD
-	offset = glm::vec3(0.0, 40.0, 0.0);				//top down offset
-=======
+
 	offset = glm::vec3(0.0, 40.0, 10.0);				//top down offset
->>>>>>> refs/remotes/origin/master
+
 
 	//offset = glm::vec3(0.0, 5.0, 20.0);					//first person offset
 }

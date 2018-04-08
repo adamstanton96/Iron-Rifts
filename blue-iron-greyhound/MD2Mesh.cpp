@@ -2,7 +2,7 @@
 
 MD2Mesh::MD2Mesh()
 {
-	currentAnim = 0;
+	currentAnim = 1;
 	md2VertCount = 0;
 	mvStack.push(glm::mat4(1));
 	projection = glm::perspective(float(60.0f*DEG_TO_RADIAN), 1200.0f / 600.0f, 0.5f, 2000.0f);

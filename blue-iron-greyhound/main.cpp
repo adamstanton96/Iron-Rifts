@@ -295,12 +295,6 @@ int main(int argc, char *argv[])
 	Md2Mesh->camera = cameraComponent;
 	Enemey->addComponent(Md2Mesh);
 
-	//MeshComponent* EnemeyMesh = new MeshComponent("test");
-	//Enemey->addComponent(EnemeyMesh);
-	//EnemeyMesh->setRenderer(renderer);
-	//EnemeyMesh->loadObject("../../assets/duck_triangulate.DAE");
-	//EnemeyMesh->loadTexture("../../assets/tex/habitatWood2.bmp");
-
 	objectList.push_back(Enemey);
 
 
