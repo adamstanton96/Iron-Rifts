@@ -71,6 +71,7 @@
     <ClCompile Include="OBB.cpp">
       <Filter>Physics\Bounding Volumes</Filter>
     </ClCompile>
+    <ClCompile Include="PlayerMechanicsComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="OpenglUtils.h">
@@ -178,6 +179,8 @@
     <ClInclude Include="Sphere.h">
       <Filter>Physics\Bounding Volumes</Filter>
     </ClInclude>
+    <ClInclude Include="MechanicsComponent.h" />
+    <ClInclude Include="PlayerMechanicsComponent.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Utils">
