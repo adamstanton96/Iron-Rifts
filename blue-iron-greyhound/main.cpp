@@ -290,8 +290,11 @@ int main(int argc, char *argv[])
 	EnemyAI->setAudio(audioSystem);
 	EnemyAI->setPhysics(collisionsystem);
 
+	//Bullet Particle System
+	ParticleRenderer* particleRender2 = new ParticleRenderer(cameraComponent);
+	particleRender2->init();
 	//bullet itself
-	bulletParticle* bullet2 = new bulletParticle(glm::vec4(0.5, 1.0f, 0.5f, 1.0f), 200, "../../assets/tex/rainTex.png", particleRender); //(colour, numOfParticles, texture, ParticleRenderer)
+	bulletParticle* bullet2 = new bulletParticle(glm::vec4(0.5, 1.0f, 0.5f, 1.0f), 200, "../../assets/tex/rainTex.png", particleRender2); //(colour, numOfParticles, texture, ParticleRenderer)
 	bullet2->init();
 	Enemey->addComponent(bullet2);
 

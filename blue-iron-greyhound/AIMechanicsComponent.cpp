@@ -11,7 +11,7 @@ void AIMechanicsComponent::init()
 	this->health = 100;
 	this->damage = 5;
 	this->weaponRange = 50;
-	this->rateOfFire = 10;
+	this->rateOfFire = 0;
 
 	velocity = glm::vec3(0, 0, 0);
 	previousPos = glm::vec3(10);
@@ -61,7 +61,7 @@ void AIMechanicsComponent::fireWeapon(double dt)
 	printf("AI Shooty Shooty! \n"); //Testing
 	audio->playAudio("../../assets/audio/bell.wav");
 
-	int bulletVelocity = 30;
+	int bulletVelocity = 100;
 
 
 	//Calculate the rays direction

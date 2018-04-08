@@ -38,7 +38,7 @@ void PlayerMechanicsComponent::fireWeapon(double dt)
 	printf("Shooty Shooty! \n"); //Testing
 	audio->playAudio("../../assets/audio/bell.wav");
 
-	int bulletVelocity = 30;
+	int bulletVelocity = 100;
 
 	
 	//Calculate the rays direction
