@@ -10,8 +10,13 @@
 //Asset pathway:
 /// ../../assets/
 
+
+
 #include "SDL.h"
 #include <glm/glm.hpp>
+
+//MD2
+#include "MD2Mesh.h"
 
 //Graphics
 #include "OpenglRenderer.h"
@@ -191,39 +196,117 @@ int main(int argc, char *argv[])
 	EnemyAIComponent* EnemyAI = new EnemyAIComponent();
 
 	typedef std::pair<int, int> path;
-	int names[] = { 0,1,2,3,4 };
-	glm::vec2 locations[] = { { 0,0 },{ 30,0 },{ 30,-30 },{ 0,-30 },{ 0,0 } };
-	std::pair<int, int> edges[] = { path(0,1),path(1,2),path(2,3),path(3,4), path(4,0) };
-	float weights[] = { 1, 1, 1, 1, 1 };
+	int names[] = 
+	{ 
+		0,1,2,3,4,5,6,7,8,      //vertical corridor 0-8
+		9,10,11,12,13,14,15,16,  //horizontal corridor 9-16
+
+		17,18,19,20,21,22,23,24,	//vertical left corridor 17 -24
+
+		25,26,27,28,29,30,31,32,	//vertical right corridor 25 - 32
+
+		33,34,35,36,37,38,	//horizontal bottom corridor 33 - 38
+
+		39,40,41,42,43,44	//horizontal bottom corridor 39 - 34
+	
+	
+	};
+
+
+
+	glm::vec2 locations[] = 
+	{ 
+		{ 0,0 },{ 0,-20 },{ 0,-40 },{ 0,-60 },{ 0,-80 },{ 0,-100 },{ 0,-120},{ 0,-140 },{ 0,-150 },					//vertical corridor 0-8  (9)
+
+		{ -80,-75 },{ -60,-75 },{ -40,-75 },{ -20,-75 },{ 20,-75 },{ 40,-75 },{ 60,-75 },{ 80,-75 },				//horizontal corridor 9-16 (8)
+	
+		{ -80, 0 },{ -80,-20 },{ -80,-40 },{ -80,-60 },{ -80,-100 },{ -80,-120 },{ -80,-140 },{ -80,-150 },			//vertical left corridor 17-24 (8)
+
+		{ 80, 0 },{ 80,-20 },{ 80,-40 },{ 80,-60 },{ 80,-100 },{ 80,-120 },{ 80,-140 },{ 80,-150 },				//vertical Right corridor 25-32 (8)
+
+		{ -60, 5 },{ -40, 5 },{ -20, 5 },{ 20, 5 },{ 40, 5 },{ 60, 5 },		//horizontal bottom corridor 33 - 38 (6)
+
+	   { -60, -150 },{ -40, -150 },{ -20, -150 },{ 20, -150 },{ 40, -150 },{ 60, -150 }		//horizontal top corridor 39 - 34(6)
+
+
+	
+	
+	
+	};
+	std::pair<int, int> edges[] = 
+	{ 
+		path(0,1),path(1,2),path(2,3),path(3,4), path(4,5), path(5,6), path(6,7),path(7,8),				//vertical corridor
+
+		path(3,12),path(12,11),path(11,10),path(10,9), path(3,13), path(13,14), path(14,15),path(15,16), //horicontal corridor
+
+		path(17,18),path(18,19),path(19,20),path(20,9), path(9,21), path(21,22), path(22,23),path(23,24), //vertical left corridor
+
+		path(25,26),path(26,27),path(27,28),path(28,16), path(16,29), path(29,30), path(30,31),path(31,32), //vertical right corridor
+
+		path(0,35),path(35,34),path(34,33),path(33,17), path(0,36), path(36,37), path(37,38),path(38,25), //horizontal bottom corridor
+
+		path(24,39),path(39,40),path(40,41),path(41,8), path(8,42), path(42,43), path(43,44),path(44,32), //horizontal top corridor
+
+		path(34,19), path(22,40), path(43,30),path(37,27), path(5,12),path(5,13) //extras
+	};
+
+
+
+	float weights[] = 
+{   1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,
+
+	1,1,1,1,1,1 //extras
+	
+	};
 
 	AISystem* AiSys = new AISystem();
-	AstarGraph* graph = new AstarGraph(names, locations, edges, weights, 5, 5);
+	AstarGraph* graph = new AstarGraph(names, locations, edges, weights, 45, 54);
 
 	AiSys->addPathGraph(graph);
 	EnemyAI->setAIsystem(AiSys);
 	EnemyAI->init();
+
+	//AItargets - Places the AI will move to and from
+	std::vector<glm::vec3> AItargets;
+	AItargets.push_back(glm::vec3(0, 0, 0));		
+	AItargets.push_back(glm::vec3(-80, 0, 0));		
+	AItargets.push_back(glm::vec3(-80, 0, -150));		
+	AItargets.push_back(glm::vec3(0, 0, -150));		
+	AItargets.push_back(glm::vec3(80, 0, -150));	
+	AItargets.push_back(glm::vec3(80, 0, 0));		
+
+	EnemyAI->setTargets(AItargets);
+
+
 	////////////////////////////////////////////////////
 	//AI test object (enemy Player)
 	//Green Demo Cube
 	GameObject *Enemey = new GameObject("Enemy AI Cube");
-	Enemey->setPosition(glm::vec3(0.0f, 0.0f, 20.0f));
-	Enemey->setScaling(glm::vec3(2, 2, 2));
-	Enemey->setRotationAxis(glm::vec3(0, 1, 0));
+	Enemey->setPosition(glm::vec3(0.0f, 10.0f, 0.0f));
+	Enemey->setScaling(glm::vec3(0.3, 0.3, 0.3));
+	Enemey->setRotationAxis(glm::vec3(0, 0, 1));
 	Enemey->setRotationDegrees(0);
 
 	Enemey->addComponent(EnemyAI);
 
+	//Manually made because MD2 in use and assimp won't
+	//Automatically created a bounding volume (setboundingVolume()) is used for this)
 	RigidBodyComponent* EnemeyRigidBody = new RigidBodyComponent("Rigid Body");
 	Enemey->addComponent(EnemeyRigidBody);
 	EnemeyRigidBody->setCollisionSystem(collisionsystem);
 	EnemeyRigidBody->setBodyType("DYNAMIC");
 	EnemeyRigidBody->setBoundingType("OBB");
+	EnemeyRigidBody->setboundingVolume(glm::vec3(-2, -2, -2), glm::vec3(2, 2, 2));
 
-	MeshComponent* EnemeyMesh = new MeshComponent("test");
-	Enemey->addComponent(EnemeyMesh);
-	EnemeyMesh->setRenderer(renderer);
-	EnemeyMesh->loadObject("../../assets/blenderTest.dae");
-	EnemeyMesh->loadTexture("../../assets/tex/grass.bmp");
+	MD2Mesh* Md2Mesh = new MD2Mesh();
+	Md2Mesh->init();
+	Md2Mesh->camera = cameraComponent;
+	Enemey->addComponent(Md2Mesh);
 
 	objectList.push_back(Enemey);
 
