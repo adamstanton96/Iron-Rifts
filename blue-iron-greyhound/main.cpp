@@ -105,6 +105,31 @@ void createWall(glm::vec3 pos, float rotation, float scale)
 	objectList.push_back(wall);
 }
 
+void createCornerWall(glm::vec3 pos, float rotation, glm::vec3 scale)
+{
+	//Wall Panel 1
+	GameObject *wall = new GameObject("wall");
+	wall->setPosition(glm::vec3(pos));
+	wall->setScaling(glm::vec3(scale));
+	wall->setRotationAxis(glm::vec3(0, 1, 0));
+	wall->setRotationDegrees(rotation);
+
+	RigidBodyComponent* wallBody = new RigidBodyComponent("Rigid Body");
+	wall->addComponent(wallBody);
+	wallBody->setCollisionSystem(collisionsystem);
+	wallBody->setBodyType("STATIC");
+	wallBody->setBoundingType("OBB");
+
+	MeshComponent* wallMesh = new MeshComponent("test");
+	wall->addComponent(wallMesh);
+	wallMesh->setRenderer(renderer);
+	wallMesh->loadObject("../../assets/cube_with_2UVs.DAE");
+
+	objectList.push_back(wall);
+}
+
+
+
 
 void createGround(glm::vec3 pos)
 {
@@ -469,6 +494,24 @@ int main(int argc, char *argv[])
 	createWall(glm::vec3(40.0f, -5.0f, -100.0f), 0, 10);
 	createWall(glm::vec3(20.0f, -5.0f, -120.0f), 0, 10);
 	createWall(glm::vec3(20.0f, -5.0f, -140.0f), 0, 10);
+
+	//Rotated corner walls
+	//(outer)
+	createCornerWall(glm::vec3(-105.0f, -5.0f, 5.0f), 45, glm::vec3(15,10,20));
+	createCornerWall(glm::vec3(105.0f, -5.0f, 5.0f), -45, glm::vec3(15, 10, 20));
+
+	createCornerWall(glm::vec3(-108.0f, -5.0f, -178.0f), 45, glm::vec3(15, 10, 20));
+	createCornerWall(glm::vec3(108.0f, -5.0f, -178.0f), -45, glm::vec3(15, 10, 20));
+
+	//(Inner)
+	createCornerWall(glm::vec3(-40.0f, -4.9f, -50.0f), 45, glm::vec3(14, 10, 14));
+	createCornerWall(glm::vec3(20.0f, -4.9f, -50.0f), 45, glm::vec3(14, 10, 14));
+
+	createCornerWall(glm::vec3(-20.0f, -4.9f, -110.0f), -45, glm::vec3(14, 10, 14));
+	createCornerWall(glm::vec3(40.0f, -4.9f, -110.0f), -45, glm::vec3(14, 10, 14));
+
+
+
 
 	
 	
