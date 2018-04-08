@@ -66,7 +66,7 @@ private:
 	"	//Calculate distance from point to camera and					\n"
 	"	//scale point size so size is consistent at varying distances	\n"
 	"	float distance = distance(vec3(vertexPosition), vec3(0,0,0));	\n"
-	"	gl_PointSize = 400 / distance;							\n"
+	"	gl_PointSize = 700 / distance;							\n"
 
 	"	gl_Position = projection * vertexPosition;						\n"
 	"	ex_Color = in_Color;											\n"
@@ -89,7 +89,7 @@ private:
 	"	//Ditch low values of transparency								\n"
 	"	if(texture(textureUnit0, gl_PointCoord).a < 0.5) discard;		\n"
 
-	"	out_Color = (ex_Color) * vec4(ex_Color.a);						\n"
+		"	out_Color = ( (ex_Color) * vec4(ex_Color.a) ) *texture(textureUnit0, gl_PointCoord);						\n"
 		
 	"}																	\n"
 	};

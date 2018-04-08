@@ -111,7 +111,6 @@ void bulletParticle::draw()
 	glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, 0, 0);
 	glEnableVertexAttribArray(1);    
 
-	glPointSize(100);
 
 
 	//pre draw settings
