@@ -20,6 +20,8 @@ namespace SDLGLTextureLoader {
 
 	GLuint checkTextures(char* fileName);
 
+	GLuint loadMd2Bitmap(char *fname);
+
 
 	
 }
