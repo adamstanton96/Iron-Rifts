@@ -37,7 +37,7 @@ void MD2Mesh::update(double dt)
 
 void MD2Mesh::draw()
 {
-	tmpModel.Animate(currentAnim, 0.1);
+	tmpModel.Animate(currentAnim, 0.2);
 
 	OpenglUtils::updateMesh(meshID, 0, tmpModel.getAnimVerts(), tmpModel.getVertDataSize());
 

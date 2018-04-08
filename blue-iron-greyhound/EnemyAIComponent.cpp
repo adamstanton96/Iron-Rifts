@@ -32,27 +32,27 @@ void EnemyAIComponent::init()
 
 	//Inventives for where to go. These in the end should be things like
 	//the players psoition or a defensive position
-	targets.push_back(glm::vec3(0, 0, 0));		//middle top
-	targets.push_back(glm::vec3(-80, 0, 0));		//middle left
-	targets.push_back(glm::vec3(-80, 0, -150));		//middle left
-	targets.push_back(glm::vec3(0, 0, -150));		//middle right
-	targets.push_back(glm::vec3(80, 0, -150));		//middle
-	targets.push_back(glm::vec3(80, 0, 0));		//middle
+
 	
-//	targets.push_back(glm::vec3(0, 0, 0));			//middle bottom
 
 
 	//Pick one of the targets
 	targetIndex = 0;
-
-	//Keep track of current goal position
-	currentGoalPosition = targets[targetIndex];
 
 	//Set currentRoute[0] as the first destination to head to 
 	goalNodeIndex = 0;
 
 	//Not at the final destination of currentRoute
 	atFinalDestination = false;
+}
+
+
+void EnemyAIComponent::setTargets(std::vector<glm::vec3> targetList)
+{
+	targets = targetList;
+
+	//Keep track of current goal position
+	currentGoalPosition = targets[targetIndex];
 }
 
 void EnemyAIComponent::faceDestination(glm::vec3 pos, glm::vec3 dest)
@@ -74,11 +74,13 @@ void EnemyAIComponent::faceDestination(glm::vec3 pos, glm::vec3 dest)
 
 void EnemyAIComponent::update(double dt)
 {
-	
-
 	///debug
 	//printPath(currentRoute);
 	///
+
+	//If no where to go is defined then don't bother continuing
+	if (targets.size() == 0)
+		return;
 
 
 	glm::vec3 currPosition = this->getUser()->getPosition();
