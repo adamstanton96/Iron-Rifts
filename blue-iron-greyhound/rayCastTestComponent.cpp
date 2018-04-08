@@ -34,10 +34,10 @@ void RayCastTestComponent::update(double dt)
 	glm::vec3 userPos = this->getUser()->getPosition();
 
 
-	dt = (std::clock() - start) / (double)CLOCKS_PER_SEC;
+	deltaTime = (std::clock() - start) / (double)CLOCKS_PER_SEC;
 
 
-if (dt > fireCoolOffTime)
+if (deltaTime > fireCoolOffTime)
 {
 
 	if (this->input->keyPressed("R"))
@@ -73,11 +73,12 @@ if (dt > fireCoolOffTime)
 		else
 			std::cout << "No Collision: " << std::endl;
 
+	
 		//Emit bullet - If its going to hit something, set the distance so it stops when it hits.
 		if (obj != nullptr)
-			bulletRender->emit(userPos, rotatedDirectionVector, glm::vec3(bulletVelocity*dt), glm::distance(userPos, obj->getPosition()));
+			bulletRender->emit(userPos, rotatedDirectionVector, glm::vec3(bulletVelocity*deltaTime), glm::distance(userPos, obj->getPosition()));
 		else
-			bulletRender->emit(userPos, rotatedDirectionVector, glm::vec3(bulletVelocity*dt), rayMagnitude);
+			bulletRender->emit(userPos, rotatedDirectionVector, glm::vec3(bulletVelocity*deltaTime), rayMagnitude);
 
 		start = std::clock();
 	}

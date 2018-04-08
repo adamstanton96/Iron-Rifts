@@ -12,6 +12,8 @@ OBB::OBB(glm::vec3 min, glm::vec3 max,glm::vec3 rotAxis, float degrees, glm::vec
 
 	calculateVertices();
 	position = worldSpacePosition;
+	rotationAxis = rotAxis;
+	this->degrees = degrees;
 
 	setRotation(degrees, rotAxis);
 	updateVertices();
@@ -72,12 +74,11 @@ void OBB::update(glm::vec3 worldPos)
 	{
 		position = worldPos;
 
-		setRotation(degrees, rotationAxis);
+		//setRotation(degrees, rotationAxis);
 		updateVertices();
-		calculateSurfaceNormals();
+		//calculateSurfaceNormals();
 	}
-	
-	
+
 }
 
 void OBB::setminmax(glm::vec3 min, glm::vec3 max)

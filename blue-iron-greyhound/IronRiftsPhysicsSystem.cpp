@@ -561,7 +561,8 @@ glm::vec3 IronRiftsPhysicsSystem::RayToOBB(Ray ray, OBB * obb)
 
 float IronRiftsPhysicsSystem::distance(glm::vec3 pos1, glm::vec3 pos2)
 {
-	return sqrt((((pos1.x - pos2.x) * (pos1.x - pos2.x)) + ((pos1.y - pos2.y) * (pos1.y - pos2.y)) + ((pos1.z - pos2.z) * (pos1.z - pos2.z))));
+	//return sqrt((((pos1.x - pos2.x) * (pos1.x - pos2.x)) + ((pos1.y - pos2.y) * (pos1.y - pos2.y)) + ((pos1.z - pos2.z) * (pos1.z - pos2.z))));
+	return (((pos1.x - pos2.x) * (pos1.x - pos2.x)) + ((pos1.y - pos2.y) * (pos1.y - pos2.y)) + ((pos1.z - pos2.z) * (pos1.z - pos2.z)));
 }
 
 
@@ -607,7 +608,7 @@ std::vector<GameObject*> IronRiftsPhysicsSystem::checkRayCollision(Ray ray)
 	glm::vec3 collisionDist;
 	
 
-	//test against all static bodies
+	////test against all static bodies
 	//for (unsigned int i = 0; i < staticBodies.size(); i++)
 	//{
 	//	collisionDist = RayToOBB(ray, (OBB*)staticBodies[i]->getBoundingVolume());
