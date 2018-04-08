@@ -6,6 +6,7 @@ RayCastTestComponent::RayCastTestComponent(std::string name)
 	this->name = name;
 
 	rayMagnitude = 50;
+
 	fireCoolOffTime = 0.2;
 	bulletVelocity = 30;
 

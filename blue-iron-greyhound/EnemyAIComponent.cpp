@@ -77,7 +77,7 @@ void EnemyAIComponent::update(double dt)
 	
 
 	///debug
-	printPath(currentRoute);
+	//printPath(currentRoute);
 	///
 
 
