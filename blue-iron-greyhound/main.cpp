@@ -49,6 +49,9 @@
 #include <cstdlib>
 #include "time.h"
 
+//player mechs
+#include "PlayerMechanicsComponent.h"
+
 // The number of clock ticks per second
 #define CLOCKS_PER_SEC  ((clock_t)1000)
 std::clock_t start;
@@ -176,13 +179,23 @@ int main(int argc, char *argv[])
 	bulletParticle* bullet = new bulletParticle(glm::vec4(1, 0.5f, 0.5f,1.0f), 200, "../../assets/tex/rainTex.png", particleRender); //(colour, numOfParticles, texture, ParticleRenderer)
 	bullet->init();
 	Player->addComponent(bullet);
-
+	/*
 	//Raycast
 	RayCastTestComponent *raycasttester = new RayCastTestComponent("Raycaster");
 	raycasttester->setRenderer(bullet);
 	raycasttester->setInput(inputSystem);
 	raycasttester->setPhysics(collisionsystem);
 	Player->addComponent(raycasttester);
+	*/
+	//PlayerMechanics
+	PlayerMechanicsComponent *playerMechanicsComponent = new PlayerMechanicsComponent("PlayerMechanicsComponent");
+	playerMechanicsComponent->init();
+	playerMechanicsComponent->setInput(inputSystem);
+	playerMechanicsComponent->setAudio(audioSystem);
+	playerMechanicsComponent->setPhysics(collisionsystem);
+	playerMechanicsComponent->setParticleRenderer(bullet);
+
+	Player->addComponent(playerMechanicsComponent);
 
 	objectList.push_back(Player);
 

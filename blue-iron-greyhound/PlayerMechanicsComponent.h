@@ -1,5 +1,6 @@
 #pragma once
 #include "MechanicsComponent.h"
+#include "InputSystem.h"
 
 class PlayerMechanicsComponent : public MechanicsComponent
 {
@@ -10,5 +11,11 @@ public:
 	void init();
 	void update(double dt);
 
-	void fireWeapon();
+	void fireWeapon(double dt);
+
+	void setInput(InputSystem *input) { this->input = input; }
+	InputSystem *getInput() { return this->input; }
+
+private:
+	InputSystem *input;
 };

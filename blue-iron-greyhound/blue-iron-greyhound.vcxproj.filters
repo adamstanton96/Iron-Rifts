@@ -181,6 +181,8 @@
     </ClInclude>
     <ClInclude Include="MechanicsComponent.h" />
     <ClInclude Include="PlayerMechanicsComponent.h" />
+    <ClInclude Include="GameManager.h" />
+    <ClInclude Include="AIMechanicsComponent.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Utils">
