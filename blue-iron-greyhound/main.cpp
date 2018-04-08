@@ -124,6 +124,7 @@ void createCornerWall(glm::vec3 pos, float rotation, glm::vec3 scale)
 	wall->addComponent(wallMesh);
 	wallMesh->setRenderer(renderer);
 	wallMesh->loadObject("../../assets/cube_with_2UVs.DAE");
+	wallMesh->loadTexture("../../assets/Scene/wallCorner.bmp");
 
 	objectList.push_back(wall);
 }
