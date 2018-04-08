@@ -2,7 +2,7 @@
 
 MD2Mesh::MD2Mesh()
 {
-	currentAnim = 1;
+	currentAnim = 0;
 	md2VertCount = 0;
 	mvStack.push(glm::mat4(1));
 	projection = glm::perspective(float(60.0f*DEG_TO_RADIAN), 1200.0f / 600.0f, 0.5f, 2000.0f);
@@ -11,8 +11,8 @@ MD2Mesh::MD2Mesh()
 
 void MD2Mesh::init()
 {
-	textureID = SDLGLTextureLoader::loadMd2Bitmap("../../assets/hayden.bmp");
-	meshID = tmpModel.ReadMD2Model("../../assets/hayden-tris.MD2");
+	textureID = SDLGLTextureLoader::loadMd2Bitmap("../../assets/MD2/hayden.bmp");
+	meshID = tmpModel.ReadMD2Model("../../assets/MD2/ROBOT.MD2");
 	md2VertCount = tmpModel.getVertDataCount();
 }
 
