@@ -38,6 +38,8 @@ public:
 	//Rotate mesh to face direction of travel
 	void faceDestination(glm::vec3 pos, glm::vec3 dest);
 
+	void setTargets(std::vector<glm::vec3> targetList);
+
 private:
 	//The AI system deals with directing this class. You can pass in any 
 	//world space coordinate as a target and it will return a vector of positions 
