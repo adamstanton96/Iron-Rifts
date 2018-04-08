@@ -1,4 +1,8 @@
 #pragma once
+/*============================================================================ =
+MD2Mesh
+Author : Chloe Madden(B00286864)
+============================================================================ =*/
 #include "md2model.h"
 #include "anorms.h"
 #include "OpenglUtils.h"
@@ -37,7 +41,7 @@ private:
 
 	GLuint md2VertCount;
 
-	md2model tmpModel;
+	md2model model;
 
 	int currentAnim;
 

@@ -1,3 +1,8 @@
+/*============================================================================ =
+MD2Mesh
+Author : Chloe Madden(B00286864)
+============================================================================ =*/
+
 #include "MD2Mesh.h"
 
 MD2Mesh::MD2Mesh()
@@ -12,21 +17,16 @@ MD2Mesh::MD2Mesh()
 void MD2Mesh::init()
 {
 	textureID = SDLGLTextureLoader::loadMd2Bitmap("../../assets/MD2/hayden.bmp");
-	meshID = tmpModel.ReadMD2Model("../../assets/MD2/ROBOT.MD2");
-	md2VertCount = tmpModel.getVertDataCount();
+	meshID = model.ReadMD2Model("../../assets/MD2/ROBOT.MD2");
+	md2VertCount = model.getVertDataCount();
 }
 
 
 void MD2Mesh::update(double dt)
 {
-
 	glm::vec3 eye = camera->getEye();
-	//r = camera->getRotation();
 	glm::vec3 at = camera->getAt();
-
 	glm::vec3 up(0, 1, 0);
-
-
 
 	mvStack.top() = glm::lookAt(eye, at, up);
 
@@ -37,9 +37,9 @@ void MD2Mesh::update(double dt)
 
 void MD2Mesh::draw()
 {
-	tmpModel.Animate(currentAnim, 0.2);
+	model.Animate(currentAnim, 0.2);
 
-	OpenglUtils::updateMesh(meshID, 0, tmpModel.getAnimVerts(), tmpModel.getVertDataSize());
+	OpenglUtils::updateMesh(meshID, 0, model.getAnimVerts(), model.getVertDataSize());
 
 	GLuint ShaderProgram = 3;
 

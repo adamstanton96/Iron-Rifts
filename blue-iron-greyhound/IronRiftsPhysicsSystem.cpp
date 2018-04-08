@@ -1,3 +1,8 @@
+/*============================================================================ =
+IronRiftsPhysicsSystem
+Author : Chloe Madden(B00286864)
+============================================================================ =*/
+
 #include "IronRiftsPhysicsSystem.h"
 #include "RigidBodyComponent.h"
 #include "openglRenderer.h"
@@ -307,6 +312,7 @@ bool IronRiftsPhysicsSystem::OBBtoOBB(OBB* box1, OBB* box2, RigidBodyComponent* 
 			displacementVector = transVec3;
 		}
 
+		///debug
 		///std::cout << "Vector 1: ";
 		///std::cout << "(" << transVec1.x << ", " << transVec1.y << ", " << transVec1.z << ")" << std::endl;
 
@@ -460,13 +466,6 @@ glm::vec3 IronRiftsPhysicsSystem::RayToOBB(Ray ray, OBB * obb)
 				transVec2 = (maxProj2 - minProj1) * axis;
 				zOverlap = true;
 			}
-
-			// If crossing through the object
-			/*if ( ((minProj1&&maxProj1) < maxProj2) && ((minProj1&&maxProj1) > minProj2))
-			{
-				transVec2 = (maxProj1 - minProj2) * -axis;
-				zOverlap = true;
-			}*/
 		}
 
 
@@ -492,13 +491,6 @@ glm::vec3 IronRiftsPhysicsSystem::RayToOBB(Ray ray, OBB * obb)
 				transVec1 = (maxProj2 - minProj1) * axis;
 				xOverlap = true;
 			}
-
-			//	if crossing through the object
-			/*if (((minProj1&&maxProj1) < maxProj2) && ((minProj1&&maxProj1) > minProj2))
-			{
-				transVec1 = (maxProj1 - minProj2) * -axis;
-				xOverlap = true;
-			}*/
 
 		}
 
@@ -678,76 +670,3 @@ GameObject * IronRiftsPhysicsSystem::checkClosest(GameObject* object, std::vecto
 	return returnValue;
 }
 
-
-//
-//std::vector<GameObject*> IronRiftsPhysicsSystem::checkRayCollision(Ray ray)
-//{
-//	std::vector<GameObject*> collidables;
-//	std::vector<GameObject*> collisions;
-//
-//	glm::vec3 DistofClosestCollision;
-//	int indexOfClosest = NULL;
-//
-//	glm::vec3 collisionDist;
-//
-//	collidables.clear();
-//
-//	//test against all static bodies
-//	for (unsigned int i = 0; i < staticBodies.size(); i++)
-//	{
-//		collisionDist = RayToOBB(ray, (OBB*)staticBodies[i]->getBoundingVolume());
-//
-//		if (collisionDist != glm::vec3(NULL))
-//		{
-//			if (indexOfClosest == NULL)
-//			{
-//				DistofClosestCollision = collisionDist;
-//				indexOfClosest = i;
-//
-//			}
-//			else if (glm::length(collisionDist) < glm::length(DistofClosestCollision))
-//			{
-//				DistofClosestCollision = collisionDist;
-//				indexOfClosest = i;
-//			}
-//			collisions.push_back(staticBodies[i]->getUser());
-//		}
-//
-//		collidables.push_back(staticBodies[i]->getUser());
-//		//collisions.push_back(collidables[i]);
-//	}
-//
-//	//test against all dynamic bodies bodies
-//	for (unsigned int i = 0; i < dynamicBodies.size(); i++)
-//	{
-//		collisionDist = RayToOBB(ray, (OBB*)dynamicBodies[i]->getBoundingVolume());
-//
-//		if (collisionDist != glm::vec3(NULL))
-//		{
-//
-//			if (indexOfClosest == NULL)
-//			{
-//				DistofClosestCollision = collisionDist;
-//				indexOfClosest = i + staticBodies.size();
-//
-//			}
-//			else if (glm::length(collisionDist) < glm::length(DistofClosestCollision))
-//			{
-//				DistofClosestCollision = collisionDist;
-//				indexOfClosest = i + staticBodies.size();
-//			}
-//			collisions.push_back(dynamicBodies[i]->getUser());
-//		}
-//
-//		collidables.push_back(dynamicBodies[i]->getUser());
-//
-//	}
-//
-//	/*if(collidables[indexOfClosest] != NULL)
-//	collisions.push_back(collidables[indexOfClosest]);
-//	else
-//	collisions.push_back(NULL);*/
-//
-//	return collisions;
-//
-//}

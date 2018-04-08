@@ -1,5 +1,8 @@
 #pragma once
-
+/*============================================================================ =
+Enemy AI Component
+Author : Chloe Madden(B00286864)
+============================================================================ =*/
 #include <vector>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>

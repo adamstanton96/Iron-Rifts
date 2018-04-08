@@ -27,15 +27,6 @@ EnemyAIComponent::EnemyAIComponent()
 
 void EnemyAIComponent::init()
 {
-
-	previousPos = glm::vec3(10);
-
-	//Inventives for where to go. These in the end should be things like
-	//the players psoition or a defensive position
-
-	
-
-
 	//Pick one of the targets
 	targetIndex = 0;
 
@@ -173,9 +164,6 @@ void EnemyAIComponent::update(double dt)
 	//Turn togace direction of travel
 	faceDestination(currPosition, currentRoute[goalNodeIndex]);
 
-
-	//Store position. If AI gets stuck it will change target
-	previousPos = currPosition;
 	
 }
 
