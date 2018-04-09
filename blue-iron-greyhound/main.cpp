@@ -439,10 +439,38 @@ int main(int argc, char *argv[])
 	createWall(glm::vec3(-60.0f, -5.0f, 20.0f), 0, 10);//3
 	createWall(glm::vec3(-40.0f, -5.0f, 20.0f), 0, 10);//2
 	createWall(glm::vec3(-20.0f, -5.0f, 20.0f), 0, 10);//1
+
 	createWall(glm::vec3(0.0f, -5.0f, 20.0f), 0, 10);//0
+
 	createWall(glm::vec3(20.0f, -5.0f, 20.0f), 0, 10);//1
 	createWall(glm::vec3(40.0f, -5.0f, 20.0f), 0, 10);//2
 	createWall(glm::vec3(60.0f, -5.0f, 20.0f), 0, 10);//3
+
+
+
+													  //Wall Panel 1
+	//GameObject *wall = new GameObject("wall");
+	//wall->setPosition(glm::vec3(glm::vec3(0.0f, -5.0f, 20.0f)));
+	//wall->setScaling(glm::vec3(glm::vec3(10)));
+	//wall->setRotationAxis(glm::vec3(0, 1, 0));
+	//wall->setRotationDegrees(0);
+
+	//RigidBodyComponent* wallBody = new RigidBodyComponent("Rigid Body");
+	//wall->addComponent(wallBody);
+	//wallBody->setCollisionSystem(collisionsystem);
+	//wallBody->setBodyType("STATIC");
+	//wallBody->setBoundingType("AABB");
+
+	//MeshComponent* wallMesh = new MeshComponent("test");
+	//wall->addComponent(wallMesh);
+	//wallMesh->setRenderer(renderer);
+	//wallMesh->loadObject("../../assets/cube_with_2UVs.DAE");
+	//wallMesh->loadTexture("../../assets/Scene/wallCorner.bmp");
+
+	//objectList.push_back(wall);
+
+
+
 
 	//walss hub 1/3
 	createWall(glm::vec3(-100.0f, -5.0f, -20.0f), 0 , 10);//1

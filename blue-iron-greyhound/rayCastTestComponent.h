@@ -38,7 +38,7 @@ private:
 	float rayMagnitude;
 
 	std::clock_t start;
-	double dt;
+	double deltaTime;
 	float fireCoolOffTime;		//number of seconds between bullet fire
 	float bulletVelocity;
 };
