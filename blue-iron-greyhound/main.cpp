@@ -304,25 +304,6 @@ int main(int argc, char *argv[])
 	
 	};
 
-
-	AISystem* AiSys = new AISystem();
-	AstarGraph* graph = new AstarGraph(names, locations, edges, weights, 45, 54);
-
-	AiSys->addPathGraph(graph);
-	EnemyAI->setAIsystem(AiSys);
-	EnemyAI->init();
-
-	//AItargets - Places the AI will move to and from
-	std::vector<glm::vec3> AItargets;
-	AItargets.push_back(glm::vec3(0, 0, 0));		
-	AItargets.push_back(glm::vec3(-80, 0, 0));		
-	AItargets.push_back(glm::vec3(-80, 0, -150));		
-	AItargets.push_back(glm::vec3(0, 0, -150));		
-	AItargets.push_back(glm::vec3(80, 0, -150));	
-	AItargets.push_back(glm::vec3(80, 0, 0));		
-
-	EnemyAI->setTargets(AItargets);
-
 	////////////////////////////////////////////////////
 	//AI test object (enemy Player)
 	//Green Demo Cube
