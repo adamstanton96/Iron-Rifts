@@ -164,6 +164,10 @@ void createGround(glm::vec3 pos)
 		sceneObjects.push_back(GroundPlane);
 }
 
+#include <ctime>
+#include <cstdlib>
+
+
 void createEnemy(AISystem* aisys, ParticleRenderer* particleRender, std::vector<glm::vec3> targets)
 {
 	GameObject *Enemey = new GameObject("Enemy AI Cube");
@@ -204,6 +208,20 @@ void createEnemy(AISystem* aisys, ParticleRenderer* particleRender, std::vector<
 	Enemey->addComponent(Md2Mesh);
 
 	objectList.push_back(Enemey);
+}
+
+std::vector<glm::vec3> generateRandomPaths(std::vector<glm::vec3> targets)
+{
+	std::vector<glm::vec3> randomTargets;
+	
+	for (int i = 0; i < targets.size() - 1; i++)
+	{
+		int random = (rand() % targets.size());
+		randomTargets.push_back(targets[random]);
+	}
+		//	int random = (std::rand() % targets.size());
+	
+	return randomTargets;
 }
 
 
@@ -351,15 +369,25 @@ int main(int argc, char *argv[])
 	AiSys->addPathGraph(graph);
 
 	std::vector<glm::vec3> targets;
-	targets.push_back(glm::vec3(0, 0, 0));		//middle top
-	targets.push_back(glm::vec3(-80, 0, 0));		//middle left
-	targets.push_back(glm::vec3(-80, 0, -150));		//middle left
-	targets.push_back(glm::vec3(0, 0, -150));		//middle right
-	targets.push_back(glm::vec3(80, 0, -150));		//middle
-	targets.push_back(glm::vec3(80, 0, 0));		//middle
+	targets.push_back(glm::vec3(0, 0, 0));		
+	targets.push_back(glm::vec3(-80, 0, 0));		
+	targets.push_back(glm::vec3(80, 0, 0));		
+	targets.push_back(glm::vec3(-80, 0, -140));		
+	targets.push_back(glm::vec3(80, 0, -140));		
+	targets.push_back(glm::vec3(0, 0, -80));	
+	targets.push_back(glm::vec3(0, 0, -140));		
+	targets.push_back(glm::vec3(80, 0, -80));
+	targets.push_back(glm::vec3(80, 0, -140));
+	targets.push_back(glm::vec3(-80, 0, -80));
+	
 
 
-	createEnemy(AiSys, particleRender, targets);
+
+	createEnemy(AiSys, particleRender, generateRandomPaths(targets));
+	createEnemy(AiSys, particleRender, generateRandomPaths(targets));
+	createEnemy(AiSys, particleRender, generateRandomPaths(targets));
+	createEnemy(AiSys, particleRender, generateRandomPaths(targets));
+	createEnemy(AiSys, particleRender, generateRandomPaths(targets));
 
 	//Need to do this becaue for some reason the bulletParticle objects need
 	//to be initialised after all meshe objects
