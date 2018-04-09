@@ -167,7 +167,7 @@ void createGround(glm::vec3 pos)
 void createEnemy(AISystem* aisys, ParticleRenderer* particleRender, std::vector<glm::vec3> targets)
 {
 	GameObject *Enemey = new GameObject("Enemy AI Cube");
-	Enemey->setPosition(glm::vec3(0.0f, 10.0f, 0.0f));
+	Enemey->setPosition(glm::vec3(-80.0f, 10.0f, -150.0f));
 	Enemey->setScaling(glm::vec3(0.3, 0.3, 0.3));
 	Enemey->setRotationAxis(glm::vec3(0, 0, 1));
 	Enemey->setRotationDegrees(0);
@@ -302,13 +302,13 @@ int main(int argc, char *argv[])
 
 		{ -80,-75 },{ -60,-75 },{ -40,-75 },{ -20,-75 },{ 20,-75 },{ 40,-75 },{ 60,-75 },{ 80,-75 },				//horizontal corridor 9-16 (8)
 	
-		{ -80, 0 },{ -80,-20 },{ -80,-40 },{ -80,-60 },{ -80,-100 },{ -80,-120 },{ -80,-140 },{ -80,-150 },			//vertical left corridor 17-24 (8)
+		{ -80, 0 },{ -80,-20 },{ -80,-40 },{ -80,-60 },{ -80,-100 },{ -80,-120 },{ -80,-140 },{ -80,-140 },			//vertical left corridor 17-24 (8)
 
-		{ 80, 0 },{ 80,-20 },{ 80,-40 },{ 80,-60 },{ 80,-100 },{ 80,-120 },{ 80,-140 },{ 80,-150 },				//vertical Right corridor 25-32 (8)
+		{ 80, 0 },{ 80,-20 },{ 80,-40 },{ 80,-60 },{ 80,-100 },{ 80,-120 },{ 80,-140 },{ 80,-140 },				//vertical Right corridor 25-32 (8)
 
 		{ -60, 5 },{ -40, 5 },{ -20, 5 },{ 20, 5 },{ 40, 5 },{ 60, 5 },		//horizontal bottom corridor 33 - 38 (6)
 
-	   { -60, -150 },{ -40, -150 },{ -20, -150 },{ 20, -150 },{ 40, -150 },{ 60, -150 }		//horizontal top corridor 39 - 34(6)
+	   { -60, -140 },{ -40, -145 },{ -20, -145 },{ 20, -145 },{ 40, -145 },{ 60, -145 }		//horizontal top corridor 39 - 34(6)
 
 
 	
