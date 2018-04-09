@@ -58,6 +58,11 @@
 #include "PlayerMechanicsComponent.h"
 #include "AIMechanicsComponent.h"
 
+//Game
+#include "Game.h"
+
+
+
 // The number of clock ticks per second
 #define CLOCKS_PER_SEC  ((clock_t)1000)
 std::clock_t start;
@@ -81,6 +86,7 @@ RenderingSystem* renderer = new openglRenderer();
 
 //Temporarily hold all objects so that main isn't so awkward
 std::vector<GameObject*> objectList;
+std::vector<GameObject*> sceneObjects;
 
 
 
@@ -106,7 +112,7 @@ void createWall(glm::vec3 pos, float rotation, float scale)
 	wallMesh->loadObject("../../assets/cube_with_2UVs.DAE");
 	wallMesh->loadTexture("../../assets/Scene/wall.bmp");
 
-	objectList.push_back(wall);
+	sceneObjects.push_back(wall);
 }
 
 void createCornerWall(glm::vec3 pos, float rotation, glm::vec3 scale)
@@ -130,7 +136,7 @@ void createCornerWall(glm::vec3 pos, float rotation, glm::vec3 scale)
 	wallMesh->loadObject("../../assets/cube_with_2UVs.DAE");
 	wallMesh->loadTexture("../../assets/Scene/wallCorner.bmp");
 
-	objectList.push_back(wall);
+	sceneObjects.push_back(wall);
 }
 
 
@@ -153,7 +159,7 @@ void createGround(glm::vec3 pos)
 		secondMesh->loadObject("../../assets/cube_with_2UVs.DAE");
 		secondMesh->loadTexture("../../assets/tex/scifiFloor.bmp");
 		
-		objectList.push_back(GroundPlane);
+		sceneObjects.push_back(GroundPlane);
 }
 
 
@@ -559,7 +565,10 @@ int main(int argc, char *argv[])
 
 
 
-	
+
+
+	Game* game = new Game(sceneObjects);
+	game->addPlayers(objectList);
 	
 	
 	int frameRate = 0;
@@ -587,10 +596,12 @@ int main(int argc, char *argv[])
 		renderer->clearScreen();
 
 		//Update all objects
-		for (unsigned int i = 0; i < objectList.size(); i++)
-		{
-			objectList[i]->update(dt);
-		}
+	//	for (unsigned int i = 0; i < objectList.size(); i++)
+	//	{
+	//		objectList[i]->update(dt);
+//}
+
+		game->update(dt);
 
 		renderer->swapBuffers();
 
@@ -623,80 +634,3 @@ int main(int argc, char *argv[])
 	return 0;
 }
 
-
-
-//Models not currently getting used
-/*
-	GameObject *plainBuilding = new GameObject("old building");
-	plainBuilding->setTranslation(glm::vec3(-15.0f, 1.0f, 50.0f));
-	plainBuilding->setScaling(glm::vec3(5.0f, 5.0f, 5.0f));
-	plainBuilding->setRenderRotate(glm::vec3(0, 0, 0));
-
-	MeshComponent* plainBuildingMesh = new MeshComponent("test");
-	plainBuilding->addComponent(plainBuildingMesh);
-	plainBuildingMesh->setRenderer(renderer);
-	//testmesh1->loadObject("plainbuilding.obj");
-	
-	//ground
-	plainBuildingMesh->loadTexture("plainbuilding/brack.bmp");
-	//lower windows
-	plainBuildingMesh->loadTexture("plainbuilding/window1.bmp");
-	//main windows
-	plainBuildingMesh->loadTexture("plainbuilding/window2.bmp");
-	//upper windows
-	plainBuildingMesh->loadTexture("plainbuilding/window3.bmp");
-	//??
-	plainBuildingMesh->loadTexture("plainbuilding/wf.bmp");
-	//brick
-	plainBuildingMesh->loadTexture("plainbuilding/brack.bmp");
-	//??
-	plainBuildingMesh->loadTexture("plainbuilding/w2.bmp");
-	//?/
-	plainBuildingMesh->loadTexture("plainbuilding/store.bmp");
-	//roof
-	plainBuildingMesh->loadTexture("plainbuilding/top.bmp");
-	//roof rim
-	plainBuildingMesh->loadTexture("plainbuilding/top.bmp");
-	//door 1
-	plainBuildingMesh->loadTexture("plainbuilding/door.bmp");
-	//door 2
-	plainBuildingMesh->loadTexture("plainbuilding/door2.bmp");
-	//ac
-	plainBuildingMesh->loadTexture("plainbuilding/AC.bmp");
-	//gutter pipe
-	plainBuildingMesh->loadTexture("plainbuilding/iron.bmp");
-
-
-
-	//Large Habitat Scene
-	GameObject *habitat = new GameObject("test");
-	habitat->setTranslation(glm::vec3(0.0f, -100.0f, 0.0f));
-	habitat->setScaling(glm::vec3(1.0f, 1.0f, 1.0f));
-	habitat->setRenderRotate(glm::vec3(NULL, NULL, NULL));
-	MeshComponent* habitatMesh = new MeshComponent("test");
-	//testObject->addComponent(testMesh);
-	habitatMesh->setRenderer(renderer);
-	//testMesh->loadObject("habitat.obj");
-
-	//benches	
-	habitatMesh->loadTexture("tex/habitatWood.bmp");
-	//buildings
-	habitatMesh->loadTexture("tex/habitatBuilding2.bmp");
-	//leaves
-	habitatMesh->loadTexture("tex/habitatGrass.bmp");
-	//lamps bulbs
-	habitatMesh->loadTexture("tex/habitatBlack.bmp");
-	//lamp posts
-	habitatMesh->loadTexture("tex/habitatWeird.bmp");
-	//paths/bridge
-	habitatMesh->loadTexture("tex/habitatBuilding.bmp");
-	//terrain
-	habitatMesh->loadTexture("tex/habitatTerrain.bmp");
-	//trees
-	habitatMesh->loadTexture("tex/habitatWood2.bmp");
-	//water
-	habitatMesh->loadTexture("tex/habitatWater.bmp");
-	//windows
-	habitatMesh->loadTexture("tex/habitatWindow.bmp");
-
-	*/

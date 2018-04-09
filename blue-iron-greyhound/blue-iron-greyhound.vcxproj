@@ -22,7 +22,7 @@
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{B8EE99E2-97D5-4275-999D-1D7654EBB57A}</ProjectGuid>
     <RootNamespace>blueirongreyhound</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.15063.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -146,6 +146,7 @@
     <ClInclude Include="CollisionSystem.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="EnemyAIComponent.h" />
+    <ClInclude Include="Game.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="InputSystem.h" />
@@ -184,6 +185,7 @@
     <ClCompile Include="CollisionSystem.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="EnemyAIComponent.cpp" />
+    <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="InteractiveTestComponent.cpp" />
     <ClCompile Include="IronRiftsPhysicsSystem.cpp" />

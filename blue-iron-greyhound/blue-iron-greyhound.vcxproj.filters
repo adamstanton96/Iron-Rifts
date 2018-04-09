@@ -79,6 +79,7 @@
     <ClCompile Include="MD2Mesh.cpp">
       <Filter>MD2</Filter>
     </ClCompile>
+    <ClCompile Include="Game.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="OpenglUtils.h">
@@ -199,6 +200,7 @@
     <ClInclude Include="MD2Mesh.h">
       <Filter>MD2</Filter>
     </ClInclude>
+    <ClInclude Include="Game.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Utils">
