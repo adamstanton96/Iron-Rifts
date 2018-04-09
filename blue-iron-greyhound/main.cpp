@@ -178,7 +178,6 @@ int main(int argc, char *argv[])
 
 	//bullet itself
 	bulletParticle* bullet = new bulletParticle(glm::vec4(1, 0.5f, 0.5f,1.0f), 200, "../../assets/tex/rainTex.png", particleRender); //(colour, numOfParticles, texture, ParticleRenderer)
-	bullet->init();
 	Player->addComponent(bullet);
 	/*
 	//Raycast
@@ -292,7 +291,6 @@ int main(int argc, char *argv[])
 
 	//bullet itself
 	bulletParticle* bullet2 = new bulletParticle(glm::vec4(0.5, 1.0f, 0.5f, 1.0f), 200, "../../assets/tex/rainTex.png", particleRender); //(colour, numOfParticles, texture, ParticleRenderer)
-	bullet2->init();
 	Enemey->addComponent(bullet2);
 
 	EnemyAI->setParticleRenderer(bullet2);
@@ -315,6 +313,9 @@ int main(int argc, char *argv[])
 
 	objectList.push_back(Enemey);
 
+
+	bullet->init();
+	bullet2->init();
 
 	////////////////////////////////////////////////////
 	//Scene/////////////////////////////////////////////

@@ -71,7 +71,8 @@ void AIMechanicsComponent::fireWeapon(double dt)
 	glm::vec3 forward(0, 0, -1);
 	glm::vec3 up(0, 1, 0);
 
-	double theta = (this->getUser()->getRotationDegrees()* DEG_TO_RADIAN);	//The minus was an attempt to fix the collision inaccuracy
+	//double theta = (this->getUser()->getRotationDegrees()* DEG_TO_RADIAN);	//The minus was an attempt to fix the collision inaccuracy
+	double theta = -(this->getUser()->getRotationDegrees()* DEG_TO_RADIAN) - 90;
 
 	double cos_thetaf = cos(theta);
 	glm::vec3 cos_theta(cos(theta));
@@ -218,15 +219,19 @@ void AIMechanicsComponent::attack(double dt)
 
 			if (dist <= weaponRange + 5)
 			{
-				float angleInDegrees_ = atan2(temp->getUser()->getPosition().y, temp->getUser()->getPosition().x) - atan2(this->user->getPosition().y, this->user->getPosition().x);
-				angleInDegrees_ = glm::degrees(angleInDegrees_);
-				this->user->setRotationDegrees(angleInDegrees_);
+				glm::vec3 AIVec = this->user->getPosition() - temp->getUser()->getPosition();
 
-				//if (cooldownTimer > rateOfFire)
-				//{
-					//fireWeapon(dt);
-					//cooldownTimer = 0;
-				//}
+				glm::vec2 playerVec(0, 1);
+
+				double angleInDegrees = atan2(AIVec.x, AIVec.z) - atan2(playerVec.y, playerVec.x);
+				angleInDegrees = glm::degrees(angleInDegrees);
+				this->user->setRotationDegrees(angleInDegrees + 180);
+
+				if (cooldownTimer > rateOfFire)
+				{
+					fireWeapon(dt);
+					cooldownTimer = 0;
+				}
 			}	
 		}
 	}
