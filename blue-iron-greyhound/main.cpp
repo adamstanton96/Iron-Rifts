@@ -88,6 +88,8 @@ RenderingSystem* renderer = new openglRenderer();
 std::vector<GameObject*> objectList;
 std::vector<GameObject*> sceneObjects;
 
+std::vector<bulletParticle*> bullets;
+
 
 
 
@@ -162,9 +164,46 @@ void createGround(glm::vec3 pos)
 		sceneObjects.push_back(GroundPlane);
 }
 
-void createEnemy()
+void createEnemy(AISystem* aisys, ParticleRenderer* particleRender, std::vector<glm::vec3> targets)
 {
+	GameObject *Enemey = new GameObject("Enemy AI Cube");
+	Enemey->setPosition(glm::vec3(0.0f, 10.0f, 0.0f));
+	Enemey->setScaling(glm::vec3(0.3, 0.3, 0.3));
+	Enemey->setRotationAxis(glm::vec3(0, 0, 1));
+	Enemey->setRotationDegrees(0);
 
+	AIMechanicsComponent* EnemyAI = new AIMechanicsComponent("AIMechanicsComponent");
+	EnemyAI->setAIsystem(aisys);
+	EnemyAI->setAudio(audioSystem);
+	EnemyAI->setPhysics(collisionsystem);
+	EnemyAI->addTargets(targets);
+	
+
+	//bullet itself
+	bulletParticle* bullet2 = new bulletParticle(glm::vec4(0.5, 1.0f, 0.5f, 1.0f), 200, "../../assets/tex/rainTex.png", particleRender); //(colour, numOfParticles, texture, ParticleRenderer)
+	Enemey->addComponent(bullet2);
+	bullets.push_back(bullet2);
+
+	EnemyAI->setParticleRenderer(bullet2);
+	EnemyAI->init();
+
+	Enemey->addComponent(EnemyAI);
+
+	//Manually made because MD2 in use and assimp won't
+	//Automatically created a bounding volume (setboundingVolume()) is used for this)
+	RigidBodyComponent* EnemeyRigidBody = new RigidBodyComponent("Rigid Body");
+	Enemey->addComponent(EnemeyRigidBody);
+	EnemeyRigidBody->setCollisionSystem(collisionsystem);
+	EnemeyRigidBody->setBodyType("DYNAMIC");
+	EnemeyRigidBody->setBoundingType("OBB");
+	EnemeyRigidBody->setboundingVolume(glm::vec3(-2, -2, -2), glm::vec3(2, 2, 2));
+
+	MD2Mesh* Md2Mesh = new MD2Mesh();
+	Md2Mesh->init();
+	Md2Mesh->camera = cameraComponent;
+	Enemey->addComponent(Md2Mesh);
+
+	objectList.push_back(Enemey);
 }
 
 
@@ -311,55 +350,25 @@ int main(int argc, char *argv[])
 	AstarGraph* graph = new AstarGraph(names, locations, edges, weights, 45, 48);
 	AiSys->addPathGraph(graph);
 
-	////////////////////////////////////////////////////
-	//AI test object (enemy Player)
-	//Green Demo Cube
-	GameObject *Enemey = new GameObject("Enemy AI Cube");
-	Enemey->setPosition(glm::vec3(0.0f, 10.0f, 0.0f));
-	Enemey->setScaling(glm::vec3(0.3, 0.3, 0.3));
-	Enemey->setRotationAxis(glm::vec3(0, 0, 1));
-	Enemey->setRotationDegrees(0);
-
-	AIMechanicsComponent* EnemyAI = new AIMechanicsComponent("AIMechanicsComponent");
+	std::vector<glm::vec3> targets;
+	targets.push_back(glm::vec3(0, 0, 0));		//middle top
+	targets.push_back(glm::vec3(-80, 0, 0));		//middle left
+	targets.push_back(glm::vec3(-80, 0, -150));		//middle left
+	targets.push_back(glm::vec3(0, 0, -150));		//middle right
+	targets.push_back(glm::vec3(80, 0, -150));		//middle
+	targets.push_back(glm::vec3(80, 0, 0));		//middle
 
 
+	createEnemy(AiSys, particleRender, targets);
 
+	//Need to do this becaue for some reason the bulletParticle objects need
+	//to be initialised after all meshe objects
+	for (int i = 0; i < bullets.size(); i++)
+	bullets[i]->init();
 
-
-
-	EnemyAI->setAIsystem(AiSys);
-	EnemyAI->setAudio(audioSystem);
-	EnemyAI->setPhysics(collisionsystem);
-
-	//bullet itself
-	bulletParticle* bullet2 = new bulletParticle(glm::vec4(0.5, 1.0f, 0.5f, 1.0f), 200, "../../assets/tex/rainTex.png", particleRender); //(colour, numOfParticles, texture, ParticleRenderer)
-	Enemey->addComponent(bullet2);
-
-	EnemyAI->setParticleRenderer(bullet2);
-	EnemyAI->init();
-
-	Enemey->addComponent(EnemyAI);
-
-
-	//Manually made because MD2 in use and assimp won't
-	//Automatically created a bounding volume (setboundingVolume()) is used for this)
-	RigidBodyComponent* EnemeyRigidBody = new RigidBodyComponent("Rigid Body");
-	Enemey->addComponent(EnemeyRigidBody);
-	EnemeyRigidBody->setCollisionSystem(collisionsystem);
-	EnemeyRigidBody->setBodyType("DYNAMIC");
-	EnemeyRigidBody->setBoundingType("OBB");
-	EnemeyRigidBody->setboundingVolume(glm::vec3(-2, -2, -2), glm::vec3(2, 2, 2));
-
-	MD2Mesh* Md2Mesh = new MD2Mesh();
-	Md2Mesh->init();
-	Md2Mesh->camera = cameraComponent;
-	Enemey->addComponent(Md2Mesh);
-
-	objectList.push_back(Enemey);
-
-
+	//player bullet
 	bullet->init();
-	bullet2->init();
+	
 
 	////////////////////////////////////////////////////
 	//Scene/////////////////////////////////////////////

@@ -20,12 +20,12 @@ void AIMechanicsComponent::init()
 
 	//Inventives for where to go. These in the end should be things like
 	//the players psoition or a defensive position
-	targets.push_back(glm::vec3(0, 0, 0));		//middle top
-	targets.push_back(glm::vec3(-80, 0, 0));		//middle left
-	targets.push_back(glm::vec3(-80, 0, -150));		//middle left
-	targets.push_back(glm::vec3(0, 0, -150));		//middle right
-	targets.push_back(glm::vec3(80, 0, -150));		//middle
-	targets.push_back(glm::vec3(80, 0, 0));		//middle
+	//targets.push_back(glm::vec3(0, 0, 0));		//middle top
+	//targets.push_back(glm::vec3(-80, 0, 0));		//middle left
+	//targets.push_back(glm::vec3(-80, 0, -150));		//middle left
+	//targets.push_back(glm::vec3(0, 0, -150));		//middle right
+	//targets.push_back(glm::vec3(80, 0, -150));		//middle
+	//targets.push_back(glm::vec3(80, 0, 0));		//middle
 
 	//Pick one of the targets
 	targetIndex = 0;
@@ -38,6 +38,11 @@ void AIMechanicsComponent::init()
 
 	//Not at the final destination of currentRoute
 	atFinalDestination = false;
+}
+
+void AIMechanicsComponent::addTargets(std::vector<glm::vec3> targets)
+{
+	this->targets = targets;
 }
 
 void AIMechanicsComponent::update(double dt)
