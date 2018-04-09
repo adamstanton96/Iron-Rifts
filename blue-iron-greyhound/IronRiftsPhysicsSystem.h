@@ -30,6 +30,9 @@ public:
 	std::vector<GameObject*> checkRayCollision(Ray ray);
 	GameObject* checkClosest(GameObject* object, std::vector<GameObject*> objList);
 
+	std::vector<RigidBodyComponent*> getStaticBodies() { return staticBodies; }
+	std::vector<RigidBodyComponent*> getDynamicBodies() { return dynamicBodies; }
+
 private:
 	bool AABBtoAABB(AABB*, AABB*);
 	bool OBBtoOBB(OBB* box1, OBB* box2, RigidBodyComponent* rigidbody);

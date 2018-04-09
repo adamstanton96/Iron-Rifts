@@ -173,3 +173,4 @@ void EnemyAIComponent::setAIsystem(AISystem* ai)
 {
 	AIsystem = ai;
 }
+

@@ -71,6 +71,8 @@
     <ClCompile Include="OBB.cpp">
       <Filter>Physics\Bounding Volumes</Filter>
     </ClCompile>
+    <ClCompile Include="PlayerMechanicsComponent.cpp" />
+    <ClCompile Include="AIMechanicsComponent.cpp" />
     <ClCompile Include="md2model.cpp">
       <Filter>MD2</Filter>
     </ClCompile>
@@ -184,6 +186,10 @@
     <ClInclude Include="Sphere.h">
       <Filter>Physics\Bounding Volumes</Filter>
     </ClInclude>
+    <ClInclude Include="MechanicsComponent.h" />
+    <ClInclude Include="PlayerMechanicsComponent.h" />
+    <ClInclude Include="GameManager.h" />
+    <ClInclude Include="AIMechanicsComponent.h" />
     <ClInclude Include="md2model.h">
       <Filter>MD2</Filter>
     </ClInclude>

@@ -54,6 +54,10 @@
 #include <cstdlib>
 #include "time.h"
 
+//player mechs
+#include "PlayerMechanicsComponent.h"
+#include "AIMechanicsComponent.h"
+
 // The number of clock ticks per second
 #define CLOCKS_PER_SEC  ((clock_t)1000)
 std::clock_t start;
@@ -204,22 +208,32 @@ int main(int argc, char *argv[])
 	particleRender->init();
 
 	//bullet itself
-	bulletParticle* bullet = new bulletParticle(glm::vec4(0.5f, 0.5f, 0.5f,1.0f), 50, "../../assets/tex/rainTex.png", particleRender); //(colour, numOfParticles, texture, ParticleRenderer)
-	bullet->init();
-	Player->addComponent(bullet);
+	bulletParticle* bullet = new bulletParticle(glm::vec4(1, 0.5f, 0.5f,1.0f), 200, "../../assets/tex/rainTex.png", particleRender); //(colour, numOfParticles, texture, ParticleRenderer)
 
+	Player->addComponent(bullet);
+	/*
 	//Raycast
 	RayCastTestComponent *raycasttester = new RayCastTestComponent("Raycaster");
 	raycasttester->setRenderer(bullet);
 	raycasttester->setInput(inputSystem);
 	raycasttester->setPhysics(collisionsystem);
 	Player->addComponent(raycasttester);
+	*/
+	//PlayerMechanics
+	PlayerMechanicsComponent *playerMechanicsComponent = new PlayerMechanicsComponent("PlayerMechanicsComponent");
+	playerMechanicsComponent->init();
+	playerMechanicsComponent->setInput(inputSystem);
+	playerMechanicsComponent->setAudio(audioSystem);
+	playerMechanicsComponent->setPhysics(collisionsystem);
+	playerMechanicsComponent->setParticleRenderer(bullet);
+
+	Player->addComponent(playerMechanicsComponent);
 
 	objectList.push_back(Player);
 
 	////////////////////////////////////////////////////
 	//AI system and pathfinding/////////////////////////
-	EnemyAIComponent* EnemyAI = new EnemyAIComponent();
+	AIMechanicsComponent* EnemyAI = new AIMechanicsComponent("AIMechanicsComponent");
 
 	typedef std::pair<int, int> path;
 	int names[] = 
@@ -290,6 +304,7 @@ int main(int argc, char *argv[])
 	
 	};
 
+
 	AISystem* AiSys = new AISystem();
 	AstarGraph* graph = new AstarGraph(names, locations, edges, weights, 45, 54);
 
@@ -308,7 +323,6 @@ int main(int argc, char *argv[])
 
 	EnemyAI->setTargets(AItargets);
 
-
 	////////////////////////////////////////////////////
 	//AI test object (enemy Player)
 	//Green Demo Cube
@@ -318,7 +332,26 @@ int main(int argc, char *argv[])
 	Enemey->setRotationAxis(glm::vec3(0, 0, 1));
 	Enemey->setRotationDegrees(0);
 
+
+
+
+	AISystem* AiSys = new AISystem();
+	AstarGraph* graph = new AstarGraph(names, locations, edges, weights, 45, 48);
+
+	AiSys->addPathGraph(graph);
+	EnemyAI->setAIsystem(AiSys);
+	EnemyAI->setAudio(audioSystem);
+	EnemyAI->setPhysics(collisionsystem);
+
+	//bullet itself
+	bulletParticle* bullet2 = new bulletParticle(glm::vec4(0.5, 1.0f, 0.5f, 1.0f), 200, "../../assets/tex/rainTex.png", particleRender); //(colour, numOfParticles, texture, ParticleRenderer)
+	Enemey->addComponent(bullet2);
+
+	EnemyAI->setParticleRenderer(bullet2);
+	EnemyAI->init();
+
 	Enemey->addComponent(EnemyAI);
+
 
 	//Manually made because MD2 in use and assimp won't
 	//Automatically created a bounding volume (setboundingVolume()) is used for this)
@@ -336,6 +369,9 @@ int main(int argc, char *argv[])
 
 	objectList.push_back(Enemey);
 
+
+	bullet->init();
+	bullet2->init();
 
 	////////////////////////////////////////////////////
 	//Scene/////////////////////////////////////////////
