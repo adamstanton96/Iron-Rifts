@@ -46,7 +46,8 @@ void AIMechanicsComponent::update(double dt)
 
 	if (this->health <= 0)
 	{
-		std::cout << this->user->getName() << " Is Dead!" << std::endl; //Testing
+		this->user->isAlive = false;
+		//std::cout << this->user->getName() << " Is Dead!" << std::endl; //Testing
 	}
 	attack(dt);
 	move(dt);
@@ -61,7 +62,7 @@ void AIMechanicsComponent::setAIsystem(AISystem* ai)
 
 void AIMechanicsComponent::fireWeapon(double dt)
 {
-	printf("AI Shooty Shooty! \n"); //Testing
+	//printf("AI Shooty Shooty! \n"); //Testing
 
 	int bulletVelocity = 100;
 

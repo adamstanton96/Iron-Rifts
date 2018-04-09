@@ -162,6 +162,11 @@ void createGround(glm::vec3 pos)
 		sceneObjects.push_back(GroundPlane);
 }
 
+void createEnemy()
+{
+
+}
+
 
 
 int main(int argc, char *argv[])
@@ -217,14 +222,7 @@ int main(int argc, char *argv[])
 	bulletParticle* bullet = new bulletParticle(glm::vec4(1, 0.5f, 0.5f,1.0f), 200, "../../assets/tex/rainTex.png", particleRender); //(colour, numOfParticles, texture, ParticleRenderer)
 
 	Player->addComponent(bullet);
-	/*
-	//Raycast
-	RayCastTestComponent *raycasttester = new RayCastTestComponent("Raycaster");
-	raycasttester->setRenderer(bullet);
-	raycasttester->setInput(inputSystem);
-	raycasttester->setPhysics(collisionsystem);
-	Player->addComponent(raycasttester);
-	*/
+
 	//PlayerMechanics
 	PlayerMechanicsComponent *playerMechanicsComponent = new PlayerMechanicsComponent("PlayerMechanicsComponent");
 	playerMechanicsComponent->init();
@@ -239,8 +237,7 @@ int main(int argc, char *argv[])
 
 	////////////////////////////////////////////////////
 	//AI system and pathfinding/////////////////////////
-	AIMechanicsComponent* EnemyAI = new AIMechanicsComponent("AIMechanicsComponent");
-
+	
 	typedef std::pair<int, int> path;
 	int names[] = 
 	{ 
@@ -310,6 +307,10 @@ int main(int argc, char *argv[])
 	
 	};
 
+	AISystem* AiSys = new AISystem();
+	AstarGraph* graph = new AstarGraph(names, locations, edges, weights, 45, 48);
+	AiSys->addPathGraph(graph);
+
 	////////////////////////////////////////////////////
 	//AI test object (enemy Player)
 	//Green Demo Cube
@@ -319,13 +320,13 @@ int main(int argc, char *argv[])
 	Enemey->setRotationAxis(glm::vec3(0, 0, 1));
 	Enemey->setRotationDegrees(0);
 
+	AIMechanicsComponent* EnemyAI = new AIMechanicsComponent("AIMechanicsComponent");
 
 
 
-	AISystem* AiSys = new AISystem();
-	AstarGraph* graph = new AstarGraph(names, locations, edges, weights, 45, 48);
 
-	AiSys->addPathGraph(graph);
+
+
 	EnemyAI->setAIsystem(AiSys);
 	EnemyAI->setAudio(audioSystem);
 	EnemyAI->setPhysics(collisionsystem);

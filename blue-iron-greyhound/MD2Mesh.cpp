@@ -31,13 +31,13 @@ void MD2Mesh::update(double dt)
 	mvStack.top() = glm::lookAt(eye, at, up);
 
 
-	draw();
+	draw(dt);
 }
 
 
-void MD2Mesh::draw()
+void MD2Mesh::draw(double dt)
 {
-	model.Animate(currentAnim, 0.2);
+	model.Animate(currentAnim, 5 * dt);
 
 	OpenglUtils::updateMesh(meshID, 0, model.getAnimVerts(), model.getVertDataSize());
 

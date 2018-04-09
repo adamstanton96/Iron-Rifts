@@ -15,7 +15,7 @@ void PlayerMechanicsComponent::init()
 	this->health = 100;
 	this->damage = 5;
 	this->weaponRange = 50;
-	this->rateOfFire = 1;
+	this->rateOfFire = 0.1;
 	this->cooldownTimer = 0;
 }
 
@@ -41,8 +41,8 @@ void PlayerMechanicsComponent::update(double dt)
 
 void PlayerMechanicsComponent::fireWeapon(double dt)
 {
-	printf("Shooty Shooty! \n"); //Testing
-	audio->playAudio("../../assets/audio/bell.wav");
+	//printf("Shooty Shooty! \n"); //Testing
+	//audio->playAudio("../../assets/audio/bell.wav");
 
 	int bulletVelocity = 100;
 
