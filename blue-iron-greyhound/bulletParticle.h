@@ -1,4 +1,8 @@
 #pragma once
+/*============================================================================ =
+bulletParticle
+Author : Chloe Madden(B00286864) & Adam Stanton.
+============================================================================ =*/
 #include "Component.h"
 #include "glm\common.hpp"
 #include <GL/glew.h>

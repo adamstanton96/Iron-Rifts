@@ -73,6 +73,12 @@
     </ClCompile>
     <ClCompile Include="PlayerMechanicsComponent.cpp" />
     <ClCompile Include="AIMechanicsComponent.cpp" />
+    <ClCompile Include="md2model.cpp">
+      <Filter>MD2</Filter>
+    </ClCompile>
+    <ClCompile Include="MD2Mesh.cpp">
+      <Filter>MD2</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="OpenglUtils.h">
@@ -184,6 +190,15 @@
     <ClInclude Include="PlayerMechanicsComponent.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="AIMechanicsComponent.h" />
+    <ClInclude Include="md2model.h">
+      <Filter>MD2</Filter>
+    </ClInclude>
+    <ClInclude Include="anorms.h">
+      <Filter>MD2</Filter>
+    </ClInclude>
+    <ClInclude Include="MD2Mesh.h">
+      <Filter>MD2</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Utils">
@@ -215,6 +230,9 @@
     </Filter>
     <Filter Include="Audio">
       <UniqueIdentifier>{d35912bd-cc94-4ca2-aa59-57b42689af39}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MD2">
+      <UniqueIdentifier>{0f947270-c9f7-465b-8226-cae4d1cd87ed}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

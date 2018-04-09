@@ -1,3 +1,7 @@
+/*============================================================================ =
+RayCastTestComponent
+Author : Chloe Madden(B00286864)
+============================================================================ =*/
 #include "rayCastTestComponent.h"
 #define DEG_TO_RADIAN 0.017453293
 
@@ -6,6 +10,7 @@ RayCastTestComponent::RayCastTestComponent(std::string name)
 	this->name = name;
 
 	rayMagnitude = 50;
+
 	fireCoolOffTime = 0.2;
 	bulletVelocity = 30;
 
@@ -27,9 +32,13 @@ void RayCastTestComponent::init()
 void RayCastTestComponent::update(double dt)
 {
 	glm::vec3 userPos = this->getUser()->getPosition();
-	
-	dt = (std::clock() - start) / (double)CLOCKS_PER_SEC;
-	if (dt > fireCoolOffTime)
+	deltaTime = (std::clock() - start) / (double)CLOCKS_PER_SEC;
+
+
+if (deltaTime > fireCoolOffTime)
+{
+
+	if (this->input->keyPressed("R"))
 	{
 
 		if (this->input->keyPressed("R"))

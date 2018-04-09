@@ -10,8 +10,13 @@
 //Asset pathway:
 /// ../../assets/
 
+
+
 #include "SDL.h"
 #include <glm/glm.hpp>
+
+//MD2
+#include "MD2Mesh.h"
 
 //Graphics
 #include "OpenglRenderer.h"
@@ -104,6 +109,32 @@ void createWall(glm::vec3 pos, float rotation, float scale)
 	objectList.push_back(wall);
 }
 
+void createCornerWall(glm::vec3 pos, float rotation, glm::vec3 scale)
+{
+	//Wall Panel 1
+	GameObject *wall = new GameObject("wall");
+	wall->setPosition(glm::vec3(pos));
+	wall->setScaling(glm::vec3(scale));
+	wall->setRotationAxis(glm::vec3(0, 1, 0));
+	wall->setRotationDegrees(rotation);
+
+	RigidBodyComponent* wallBody = new RigidBodyComponent("Rigid Body");
+	wall->addComponent(wallBody);
+	wallBody->setCollisionSystem(collisionsystem);
+	wallBody->setBodyType("STATIC");
+	wallBody->setBoundingType("OBB");
+
+	MeshComponent* wallMesh = new MeshComponent("test");
+	wall->addComponent(wallMesh);
+	wallMesh->setRenderer(renderer);
+	wallMesh->loadObject("../../assets/cube_with_2UVs.DAE");
+	wallMesh->loadTexture("../../assets/Scene/wallCorner.bmp");
+
+	objectList.push_back(wall);
+}
+
+
+
 
 void createGround(glm::vec3 pos)
 {
@@ -178,6 +209,7 @@ int main(int argc, char *argv[])
 
 	//bullet itself
 	bulletParticle* bullet = new bulletParticle(glm::vec4(1, 0.5f, 0.5f,1.0f), 200, "../../assets/tex/rainTex.png", particleRender); //(colour, numOfParticles, texture, ParticleRenderer)
+
 	Player->addComponent(bullet);
 	/*
 	//Raycast
@@ -245,7 +277,7 @@ int main(int argc, char *argv[])
 	{ 
 		path(0,1),path(1,2),path(2,3),path(3,4), path(4,5), path(5,6), path(6,7),path(7,8),				//vertical corridor
 
-		path(4,12),path(12,11),path(11,10),path(10,9), path(4,13), path(13,14), path(14,15),path(15,16), //horicontal corridor
+		path(3,12),path(12,11),path(11,10),path(10,9), path(3,13), path(13,14), path(14,15),path(15,16), //horicontal corridor
 
 		path(17,18),path(18,19),path(19,20),path(20,9), path(9,21), path(21,22), path(22,23),path(23,24), //vertical left corridor
 
@@ -253,7 +285,9 @@ int main(int argc, char *argv[])
 
 		path(0,35),path(35,34),path(34,33),path(33,17), path(0,36), path(36,37), path(37,38),path(38,25), //horizontal bottom corridor
 
-		path(24,39),path(39,40),path(40,41),path(41,8), path(8,42), path(42,43), path(43,44),path(44,32) //horizontal top corridor
+		path(24,39),path(39,40),path(40,41),path(41,8), path(8,42), path(42,43), path(43,44),path(44,32), //horizontal top corridor
+
+		path(34,19), path(22,40), path(43,30),path(37,27), path(5,12),path(5,13) //extras
 	};
 
 
@@ -264,18 +298,38 @@ int main(int argc, char *argv[])
 	1,1,1,1,1,1,1,1,
 	1,1,1,1,1,1,1,1,
 	1,1,1,1,1,1,1,1,
-	1,1,1,1,1,1,1,1,1
+	1,1,1,1,1,1,1,1,1,
+
+	1,1,1,1,1,1 //extras
 	
 	};
 
+
+	AISystem* AiSys = new AISystem();
+	AstarGraph* graph = new AstarGraph(names, locations, edges, weights, 45, 54);
+
+	AiSys->addPathGraph(graph);
+	EnemyAI->setAIsystem(AiSys);
+	EnemyAI->init();
+
+	//AItargets - Places the AI will move to and from
+	std::vector<glm::vec3> AItargets;
+	AItargets.push_back(glm::vec3(0, 0, 0));		
+	AItargets.push_back(glm::vec3(-80, 0, 0));		
+	AItargets.push_back(glm::vec3(-80, 0, -150));		
+	AItargets.push_back(glm::vec3(0, 0, -150));		
+	AItargets.push_back(glm::vec3(80, 0, -150));	
+	AItargets.push_back(glm::vec3(80, 0, 0));		
+
+	EnemyAI->setTargets(AItargets);
 
 	////////////////////////////////////////////////////
 	//AI test object (enemy Player)
 	//Green Demo Cube
 	GameObject *Enemey = new GameObject("Enemy AI Cube");
-	Enemey->setPosition(glm::vec3(0.0f, 0.0f, 0.0f));
-	Enemey->setScaling(glm::vec3(0.05, 0.05, 0.05));
-	Enemey->setRotationAxis(glm::vec3(0, 1, 0));
+	Enemey->setPosition(glm::vec3(0.0f, 10.0f, 0.0f));
+	Enemey->setScaling(glm::vec3(0.3, 0.3, 0.3));
+	Enemey->setRotationAxis(glm::vec3(0, 0, 1));
 	Enemey->setRotationDegrees(0);
 
 
@@ -299,17 +353,19 @@ int main(int argc, char *argv[])
 	Enemey->addComponent(EnemyAI);
 
 
+	//Manually made because MD2 in use and assimp won't
+	//Automatically created a bounding volume (setboundingVolume()) is used for this)
 	RigidBodyComponent* EnemeyRigidBody = new RigidBodyComponent("Rigid Body");
 	Enemey->addComponent(EnemeyRigidBody);
 	EnemeyRigidBody->setCollisionSystem(collisionsystem);
 	EnemeyRigidBody->setBodyType("DYNAMIC");
 	EnemeyRigidBody->setBoundingType("OBB");
+	EnemeyRigidBody->setboundingVolume(glm::vec3(-2, -2, -2), glm::vec3(2, 2, 2));
 
-	MeshComponent* EnemeyMesh = new MeshComponent("test");
-	Enemey->addComponent(EnemeyMesh);
-	EnemeyMesh->setRenderer(renderer);
-	EnemeyMesh->loadObject("../../assets/duck_triangulate.DAE");
-	EnemeyMesh->loadTexture("../../assets/tex/habitatWood2.bmp");
+	MD2Mesh* Md2Mesh = new MD2Mesh();
+	Md2Mesh->init();
+	Md2Mesh->camera = cameraComponent;
+	Enemey->addComponent(Md2Mesh);
 
 	objectList.push_back(Enemey);
 
@@ -419,10 +475,38 @@ int main(int argc, char *argv[])
 	createWall(glm::vec3(-60.0f, -5.0f, 20.0f), 0, 10);//3
 	createWall(glm::vec3(-40.0f, -5.0f, 20.0f), 0, 10);//2
 	createWall(glm::vec3(-20.0f, -5.0f, 20.0f), 0, 10);//1
+
 	createWall(glm::vec3(0.0f, -5.0f, 20.0f), 0, 10);//0
+
 	createWall(glm::vec3(20.0f, -5.0f, 20.0f), 0, 10);//1
 	createWall(glm::vec3(40.0f, -5.0f, 20.0f), 0, 10);//2
 	createWall(glm::vec3(60.0f, -5.0f, 20.0f), 0, 10);//3
+
+
+
+													  //Wall Panel 1
+	//GameObject *wall = new GameObject("wall");
+	//wall->setPosition(glm::vec3(glm::vec3(0.0f, -5.0f, 20.0f)));
+	//wall->setScaling(glm::vec3(glm::vec3(10)));
+	//wall->setRotationAxis(glm::vec3(0, 1, 0));
+	//wall->setRotationDegrees(0);
+
+	//RigidBodyComponent* wallBody = new RigidBodyComponent("Rigid Body");
+	//wall->addComponent(wallBody);
+	//wallBody->setCollisionSystem(collisionsystem);
+	//wallBody->setBodyType("STATIC");
+	//wallBody->setBoundingType("AABB");
+
+	//MeshComponent* wallMesh = new MeshComponent("test");
+	//wall->addComponent(wallMesh);
+	//wallMesh->setRenderer(renderer);
+	//wallMesh->loadObject("../../assets/cube_with_2UVs.DAE");
+	//wallMesh->loadTexture("../../assets/Scene/wallCorner.bmp");
+
+	//objectList.push_back(wall);
+
+
+
 
 	//walss hub 1/3
 	createWall(glm::vec3(-100.0f, -5.0f, -20.0f), 0 , 10);//1
@@ -475,6 +559,24 @@ int main(int argc, char *argv[])
 	createWall(glm::vec3(40.0f, -5.0f, -100.0f), 0, 10);
 	createWall(glm::vec3(20.0f, -5.0f, -120.0f), 0, 10);
 	createWall(glm::vec3(20.0f, -5.0f, -140.0f), 0, 10);
+
+	//Rotated corner walls
+	//(outer)
+	createCornerWall(glm::vec3(-105.0f, -5.0f, 5.0f), 45, glm::vec3(15,10,20));
+	createCornerWall(glm::vec3(105.0f, -5.0f, 5.0f), -45, glm::vec3(15, 10, 20));
+
+	createCornerWall(glm::vec3(-108.0f, -5.0f, -178.0f), 45, glm::vec3(15, 10, 20));
+	createCornerWall(glm::vec3(108.0f, -5.0f, -178.0f), -45, glm::vec3(15, 10, 20));
+
+	//(Inner)
+	createCornerWall(glm::vec3(-40.0f, -4.9f, -50.0f), 45, glm::vec3(14, 10, 14));
+	createCornerWall(glm::vec3(20.0f, -4.9f, -50.0f), 45, glm::vec3(14, 10, 14));
+
+	createCornerWall(glm::vec3(-20.0f, -4.9f, -110.0f), -45, glm::vec3(14, 10, 14));
+	createCornerWall(glm::vec3(40.0f, -4.9f, -110.0f), -45, glm::vec3(14, 10, 14));
+
+
+
 
 	
 	
