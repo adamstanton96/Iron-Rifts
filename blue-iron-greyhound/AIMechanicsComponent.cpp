@@ -62,7 +62,6 @@ void AIMechanicsComponent::setAIsystem(AISystem* ai)
 void AIMechanicsComponent::fireWeapon(double dt)
 {
 	printf("AI Shooty Shooty! \n"); //Testing
-	audio->playAudio("../../assets/audio/bell.wav");
 
 	int bulletVelocity = 100;
 
@@ -229,6 +228,7 @@ void AIMechanicsComponent::attack(double dt)
 
 				if (cooldownTimer > rateOfFire)
 				{
+					audio->playAudio("../../assets/audio/bell.wav", false, this->user->getPosition(),temp->getUser()->getPosition());
 					fireWeapon(dt);
 					cooldownTimer = 0;
 				}
