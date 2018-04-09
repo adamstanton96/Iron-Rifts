@@ -43,6 +43,9 @@
 #include "AudioTestComponent.h"
 #include "IrrKlangAudioSystem.h"
 
+//HUD
+#include "HUD.h"
+
 
 //timer
 #include <ctime>
@@ -85,8 +88,9 @@ int main(int argc, char *argv[])
 	//Temporarily hold all objects so that main isn't so awkward
 	std::vector<GameObject*> objectList;
 	
-
-
+	//hud
+	HUD  *h = new HUD();
+	h->update();
 	////////////////////////////////////////////////////
 	//First Object - Acting as player (camera component / movement component)
 	GameObject *Player = new GameObject("player");

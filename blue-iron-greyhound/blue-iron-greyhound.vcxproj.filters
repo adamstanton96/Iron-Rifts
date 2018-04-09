@@ -71,6 +71,9 @@
     <ClCompile Include="OBB.cpp">
       <Filter>Physics\Bounding Volumes</Filter>
     </ClCompile>
+    <ClCompile Include="HUD.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="OpenglUtils.h">
@@ -177,6 +180,9 @@
     </ClInclude>
     <ClInclude Include="Sphere.h">
       <Filter>Physics\Bounding Volumes</Filter>
+    </ClInclude>
+    <ClInclude Include="HUD.h">
+      <Filter>Utils</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
