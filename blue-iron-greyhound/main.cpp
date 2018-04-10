@@ -169,10 +169,10 @@ void createGround(glm::vec3 pos)
 
 
 
-void createEnemy(AISystem* aisys, ParticleRenderer* particleRender, std::vector<glm::vec3> targets)
+void createEnemy(AISystem* aisys, ParticleRenderer* particleRender, std::vector<glm::vec3> targets, glm::vec3 spawnPos)
 {
 	GameObject *Enemey = new GameObject("Enemy AI Cube");
-	Enemey->setPosition(glm::vec3(-80.0f, 10.0f, -150.0f));
+	Enemey->setPosition(spawnPos);
 	Enemey->setScaling(glm::vec3(0.3, 0.3, 0.3));
 	Enemey->setRotationAxis(glm::vec3(0, 0, 1));
 	Enemey->setRotationDegrees(0);
@@ -182,7 +182,7 @@ void createEnemy(AISystem* aisys, ParticleRenderer* particleRender, std::vector<
 	EnemyAI->setAudio(audioSystem);
 	EnemyAI->setPhysics(collisionsystem);
 	EnemyAI->addTargets(targets);
-	
+	EnemyAI->setSpawnPos(spawnPos);
 
 	//bullet itself
 	bulletParticle* bullet2 = new bulletParticle(glm::vec4(0.5, 1.0f, 0.5f, 1.0f), 200, "../../assets/tex/rainTex.png", particleRender); //(colour, numOfParticles, texture, ParticleRenderer)
@@ -283,7 +283,7 @@ int main(int argc, char *argv[])
 
 	//PlayerMechanics
 	PlayerMechanicsComponent *playerMechanicsComponent = new PlayerMechanicsComponent("PlayerMechanicsComponent");
-	//playerMechanicsComponent->setSpawnPos(glm::vec3(-10, 0, -5));
+	playerMechanicsComponent->setSpawnPos(glm::vec3(-10, 0, -5));
 	playerMechanicsComponent->init();
 	playerMechanicsComponent->setInput(inputSystem);
 	playerMechanicsComponent->setAudio(audioSystem);
@@ -385,11 +385,11 @@ int main(int argc, char *argv[])
 
 
 
-	createEnemy(AiSys, particleRender, generateRandomPaths(targets));
-	createEnemy(AiSys, particleRender, generateRandomPaths(targets));
-	createEnemy(AiSys, particleRender, generateRandomPaths(targets));
-	createEnemy(AiSys, particleRender, generateRandomPaths(targets));
-	createEnemy(AiSys, particleRender, generateRandomPaths(targets));
+	createEnemy(AiSys, particleRender, generateRandomPaths(targets), glm::vec3(25, 0, 25));
+	createEnemy(AiSys, particleRender, generateRandomPaths(targets), glm::vec3(25, 0, 25));
+	createEnemy(AiSys, particleRender, generateRandomPaths(targets), glm::vec3(25, 0, 25));
+	//createEnemy(AiSys, particleRender, generateRandomPaths(targets));
+	//createEnemy(AiSys, particleRender, generateRandomPaths(targets));
 
 	//Need to do this becaue for some reason the bulletParticle objects need
 	//to be initialised after all meshe objects

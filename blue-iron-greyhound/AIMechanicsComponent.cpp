@@ -16,7 +16,8 @@ void AIMechanicsComponent::init()
 	this->rateOfFire = 1;
 	this->cooldownTimer = 0;
 	this->awaitingRespawn = false;
-	//this->user->setPosition(this->spawnPos);
+	if (this->getUser())
+		this->getUser()->setPosition(this->spawnPos);
 
 	velocity = glm::vec3(0, 0, 0);
 	previousPos = glm::vec3(10);

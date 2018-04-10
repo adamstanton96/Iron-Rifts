@@ -3,7 +3,7 @@
 PlayerMechanicsComponent::PlayerMechanicsComponent(std::string name)
 {
 	this->name = name;
-	this->spawnPos = glm::vec3(0);
+	this->spawnPos = glm::vec3(0, 0, 0);
 }
 
 PlayerMechanicsComponent::~PlayerMechanicsComponent()
@@ -19,7 +19,8 @@ void PlayerMechanicsComponent::init()
 	this->rateOfFire = 0.1;
 	this->cooldownTimer = 0;
 	this->awaitingRespawn = false;
-	//this->user->setPosition(this->spawnPos);
+	if(this->getUser())
+		this->getUser()->setPosition(this->spawnPos);
 }
 
 void PlayerMechanicsComponent::update(double dt)
