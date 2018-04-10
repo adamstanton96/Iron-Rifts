@@ -18,6 +18,7 @@ void PlayerMechanicsComponent::init()
 	this->weaponRange = 50;
 	this->rateOfFire = 0.1;
 	this->cooldownTimer = 0;
+	this->awaitingRespawn = false;
 	//this->user->setPosition(this->spawnPos);
 }
 

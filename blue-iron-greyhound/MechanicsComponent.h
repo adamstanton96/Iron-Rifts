@@ -26,6 +26,7 @@ public:
 	void setRateOfFire(int rateOfFire) { this->rateOfFire = rateOfFire; }
 
 	void setSpawnPos(glm::vec3 spawnPos) { this->spawnPos = spawnPos; }
+	void setAwaitingRespawn(bool awaitingRespawn) { this->awaitingRespawn = awaitingRespawn; }
 
 	void setAudio(AudioSystem *audio) { this->audio = audio; }
 	void setPhysics(PhysicsSystem *physics) { this->physics = physics; }
@@ -37,6 +38,7 @@ public:
 	int getRateOfFire() { return this->rateOfFire; }
 
 	glm::vec3 getSpawnPos() { return this->spawnPos; }
+	bool getAwaitingRespawn() { return this->awaitingRespawn; }
 
 	AudioSystem *getAudio() { return this->audio; }
 	PhysicsSystem *getPhysics() { return this->physics; }
@@ -45,6 +47,7 @@ public:
 protected:
 	int health, damage, weaponRange, rateOfFire;
 	glm::vec3 spawnPos;
+	bool awaitingRespawn;
 
 	AudioSystem *audio;
 	PhysicsSystem *physics;

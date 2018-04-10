@@ -1,7 +1,6 @@
 #include "Game.h"
 #include "MechanicsComponent.h"
 
-
 Game::Game(std::vector<GameObject*> scene)
 {
 	this->scene = scene;
@@ -28,6 +27,11 @@ void Game::update(double dt)
 		else
 		{
 			players[i]->setPosition(glm::vec3(-1000));
+			if (!players[i]->getComponent<MechanicsComponent>()->getAwaitingRespawn())
+			{
+				players[i]->update(dt);
+				players[i]->getComponent<MechanicsComponent>()->setAwaitingRespawn(true);
+			}
 		}
 		
 	}
@@ -46,6 +50,7 @@ void Game::update(double dt)
 				players[i]->setPosition(glm::vec3(0));
 				players[i]->isAlive = true;
 				players[i]->getComponent<MechanicsComponent>()->init();
+				players[i]->getComponent<MechanicsComponent>()->setAwaitingRespawn(false);
 			}
 
 		}
