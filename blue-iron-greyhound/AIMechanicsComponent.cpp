@@ -4,6 +4,7 @@
 AIMechanicsComponent::AIMechanicsComponent(std::string name)
 {
 	this->name = name;
+	this->spawnPos = glm::vec3(0);
 }
 
 
@@ -14,6 +15,7 @@ void AIMechanicsComponent::init()
 	this->weaponRange = 50;
 	this->rateOfFire = 1;
 	this->cooldownTimer = 0;
+	//this->user->setPosition(this->spawnPos);
 
 	velocity = glm::vec3(0, 0, 0);
 	previousPos = glm::vec3(10);

@@ -25,6 +25,8 @@ public:
 	void setWeaponRange(int weaponRange) { this->weaponRange = weaponRange; }
 	void setRateOfFire(int rateOfFire) { this->rateOfFire = rateOfFire; }
 
+	void setSpawnPos(glm::vec3 spawnPos) { this->spawnPos = spawnPos; }
+
 	void setAudio(AudioSystem *audio) { this->audio = audio; }
 	void setPhysics(PhysicsSystem *physics) { this->physics = physics; }
 	void setParticleRenderer(bulletParticle *particleRenderer) { this->particleRenderer = particleRenderer; }
@@ -34,12 +36,15 @@ public:
 	int getWeaponRange() { return this->weaponRange; }
 	int getRateOfFire() { return this->rateOfFire; }
 
+	glm::vec3 getSpawnPos() { return this->spawnPos; }
+
 	AudioSystem *getAudio() { return this->audio; }
 	PhysicsSystem *getPhysics() { return this->physics; }
 	bulletParticle *getParticleRenderer() { return this->particleRenderer; }
 
 protected:
 	int health, damage, weaponRange, rateOfFire;
+	glm::vec3 spawnPos;
 
 	AudioSystem *audio;
 	PhysicsSystem *physics;

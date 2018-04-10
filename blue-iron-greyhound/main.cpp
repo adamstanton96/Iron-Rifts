@@ -166,7 +166,8 @@ void createGround(glm::vec3 pos)
 
 #include <ctime>
 #include <cstdlib>
-
+
+
 
 void createEnemy(AISystem* aisys, ParticleRenderer* particleRender, std::vector<glm::vec3> targets)
 {
@@ -282,6 +283,7 @@ int main(int argc, char *argv[])
 
 	//PlayerMechanics
 	PlayerMechanicsComponent *playerMechanicsComponent = new PlayerMechanicsComponent("PlayerMechanicsComponent");
+	//playerMechanicsComponent->setSpawnPos(glm::vec3(-10, 0, -5));
 	playerMechanicsComponent->init();
 	playerMechanicsComponent->setInput(inputSystem);
 	playerMechanicsComponent->setAudio(audioSystem);

@@ -3,6 +3,7 @@
 PlayerMechanicsComponent::PlayerMechanicsComponent(std::string name)
 {
 	this->name = name;
+	this->spawnPos = glm::vec3(0);
 }
 
 PlayerMechanicsComponent::~PlayerMechanicsComponent()
@@ -13,10 +14,11 @@ PlayerMechanicsComponent::~PlayerMechanicsComponent()
 void PlayerMechanicsComponent::init()
 {
 	this->health = 100;
-	this->damage = 5;
+	this->damage = 50;
 	this->weaponRange = 50;
 	this->rateOfFire = 0.1;
 	this->cooldownTimer = 0;
+	//this->user->setPosition(this->spawnPos);
 }
 
 void PlayerMechanicsComponent::update(double dt)
