@@ -22,7 +22,7 @@
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{B8EE99E2-97D5-4275-999D-1D7654EBB57A}</ProjectGuid>
     <RootNamespace>blueirongreyhound</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.15063.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -140,6 +140,7 @@
     <ClInclude Include="aStarPathFinder.h" />
     <ClInclude Include="AudioSystem.h" />
     <ClInclude Include="AudioTestComponent.h" />
+    <ClInclude Include="BackgroundMusicComponent.h" />
     <ClInclude Include="boundingVolume.h" />
     <ClInclude Include="bulletParticle.h" />
     <ClInclude Include="CameraComponent.h" />
@@ -180,6 +181,7 @@
     <ClCompile Include="AISystem.cpp" />
     <ClCompile Include="AssimpLoader.cpp" />
     <ClCompile Include="AudioTestComponent.cpp" />
+    <ClCompile Include="BackgroundMusicComponent.cpp" />
     <ClCompile Include="bulletParticle.cpp" />
     <ClCompile Include="CameraComponent.cpp" />
     <ClCompile Include="CollisionSystem.cpp" />

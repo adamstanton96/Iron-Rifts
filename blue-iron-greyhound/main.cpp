@@ -61,6 +61,7 @@
 //Game
 #include "Game.h"
 
+#include "BackgroundMusicComponent.h"
 
 
 // The number of clock ticks per second
@@ -166,7 +167,8 @@ void createGround(glm::vec3 pos)
 
 #include <ctime>
 #include <cstdlib>
-
+
+
 
 void createEnemy(AISystem* aisys, ParticleRenderer* particleRender, std::vector<glm::vec3> targets)
 {
@@ -601,9 +603,12 @@ int main(int argc, char *argv[])
 	createCornerWall(glm::vec3(40.0f, -4.9f, -110.0f), -45, glm::vec3(14, 10, 14));
 
 
-
-
-
+	GameObject *musicBox = new GameObject("musicBox");
+	BackgroundMusicComponent *bgMusic = new BackgroundMusicComponent("bgMusic");
+	bgMusic->setAudio(audioSystem);
+	bgMusic->setAudioPath("../../assets/audio/Surreptitious.ogg");
+	musicBox->addComponent(bgMusic);
+	musicBox->init();
 
 	Game* game = new Game(sceneObjects);
 	game->addPlayers(objectList);
