@@ -44,6 +44,8 @@ public:
 	PhysicsSystem *getPhysics() { return this->physics; }
 	bulletParticle *getParticleRenderer() { return this->particleRenderer; }
 
+	int score;
+
 protected:
 	float health, damage, weaponRange, rateOfFire;
 	glm::vec3 spawnPos;

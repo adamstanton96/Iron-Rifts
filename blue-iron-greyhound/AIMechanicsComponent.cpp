@@ -5,6 +5,7 @@ AIMechanicsComponent::AIMechanicsComponent(std::string name)
 {
 	this->name = name;
 	this->spawnPos = glm::vec3(0);
+	this->score = 0;
 }
 
 
@@ -111,6 +112,9 @@ void AIMechanicsComponent::fireWeapon(double dt)
 		if (comp != nullptr)
 		{
 			comp->setHealth(comp->getHealth() - this->damage);
+			if (comp->getHealth() <= 0)
+				this->score++;
+
 			std::cout << comp->getUser()->getName() << "health: " << comp->getHealth();
 		}
 	}

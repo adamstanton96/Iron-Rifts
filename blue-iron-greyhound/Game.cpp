@@ -58,6 +58,14 @@ void Game::update(double dt)
 		cooldownTimer = 0;
 	}
 
+
+	//Sort the playerlist in order of score:
+
+
+
+
+
+
 }
 
 void Game::addPlayers(std::vector<GameObject*> players)
