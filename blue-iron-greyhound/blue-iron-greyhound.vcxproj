@@ -140,6 +140,7 @@
     <ClInclude Include="aStarPathFinder.h" />
     <ClInclude Include="AudioSystem.h" />
     <ClInclude Include="AudioTestComponent.h" />
+    <ClInclude Include="BackgroundMusicComponent.h" />
     <ClInclude Include="boundingVolume.h" />
     <ClInclude Include="bulletParticle.h" />
     <ClInclude Include="CameraComponent.h" />
@@ -180,6 +181,7 @@
     <ClCompile Include="AISystem.cpp" />
     <ClCompile Include="AssimpLoader.cpp" />
     <ClCompile Include="AudioTestComponent.cpp" />
+    <ClCompile Include="BackgroundMusicComponent.cpp" />
     <ClCompile Include="bulletParticle.cpp" />
     <ClCompile Include="CameraComponent.cpp" />
     <ClCompile Include="CollisionSystem.cpp" />

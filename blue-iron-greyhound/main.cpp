@@ -61,6 +61,8 @@
 //Game
 #include "Game.h"
 
+#include "BackgroundMusicComponent.h"
+
 
 
 // The number of clock ticks per second
@@ -169,10 +171,12 @@ void createGround(glm::vec3 pos)
 
 
 
+
 void createEnemy(AISystem* aisys, ParticleRenderer* particleRender, std::vector<glm::vec3> targets, glm::vec3 spawnPos, std::string name)
 {
 	GameObject *Enemey = new GameObject(name);
 	Enemey->setPosition(spawnPos);
+
 	Enemey->setScaling(glm::vec3(0.3, 0.3, 0.3));
 	Enemey->setRotationAxis(glm::vec3(0, 0, 1));
 	Enemey->setRotationDegrees(0);
@@ -182,6 +186,7 @@ void createEnemy(AISystem* aisys, ParticleRenderer* particleRender, std::vector<
 	EnemyAI->setAudio(audioSystem);
 	EnemyAI->setPhysics(collisionsystem);
 	EnemyAI->addTargets(targets);
+
 	EnemyAI->setSpawnPos(spawnPos);
 
 	//bullet itself
@@ -244,7 +249,9 @@ int main(int argc, char *argv[])
 
 	////////////////////////////////////////////////////
 	//First Object - Acting as player (camera component / movement component)
+
 	GameObject *Player = new GameObject("Player 1");
+
 	Player->setPosition(glm::vec3(0.0f, 0.0f, 0.0f));
 	Player->setScaling(glm::vec3(1.0f, 1.0f, 1.0f));
 	Player->setRotationAxis(glm::vec3(0, -1, 0));
@@ -283,7 +290,9 @@ int main(int argc, char *argv[])
 
 	//PlayerMechanics
 	PlayerMechanicsComponent *playerMechanicsComponent = new PlayerMechanicsComponent("PlayerMechanicsComponent");
+
 	playerMechanicsComponent->setSpawnPos(glm::vec3(-80, 0, 0));
+
 	playerMechanicsComponent->init();
 	playerMechanicsComponent->setInput(inputSystem);
 	playerMechanicsComponent->setAudio(audioSystem);
@@ -385,11 +394,13 @@ int main(int argc, char *argv[])
 
 
 
+
 	createEnemy(AiSys, particleRender, generateRandomPaths(targets), glm::vec3(80, 0, 0), "Player 2");		//P2
 	createEnemy(AiSys, particleRender, generateRandomPaths(targets), glm::vec3(80, 0, -140), "Player 3");	//P3
 	createEnemy(AiSys, particleRender, generateRandomPaths(targets), glm::vec3(-80, 0, -140), "Player 4");	//P4
 	//createEnemy(AiSys, particleRender, generateRandomPaths(targets));
 	//createEnemy(AiSys, particleRender, generateRandomPaths(targets));
+
 
 	//Need to do this becaue for some reason the bulletParticle objects need
 	//to be initialised after all meshe objects
@@ -604,8 +615,12 @@ int main(int argc, char *argv[])
 
 
 
-
-
+	GameObject *musicBox = new GameObject("musicBox");
+	BackgroundMusicComponent *bgMusic = new BackgroundMusicComponent("bgMusic");
+	bgMusic->setAudio(audioSystem);
+	bgMusic->setAudioPath("../../assets/audio/cautious-path-01.ogg");
+	musicBox->addComponent(bgMusic);
+	musicBox->init();
 
 	Game* game = new Game(sceneObjects);
 	game->addPlayers(objectList);
