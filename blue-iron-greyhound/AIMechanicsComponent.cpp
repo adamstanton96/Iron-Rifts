@@ -241,7 +241,7 @@ void AIMechanicsComponent::attack(double dt)
 
 				if (cooldownTimer > rateOfFire)
 				{
-					audio->playAudio("../../assets/audio/Laser-whiplash-01.wav", false, this->user->getPosition(),temp->getUser()->getPosition());
+					audio->playAudio("../../assets/audio/Laser-whiplash-01.wav", false, this->user->getPosition(),this->thePlayer->getPosition());
 					fireWeapon(dt);
 					cooldownTimer = 0;
 				}

@@ -172,7 +172,7 @@ void createGround(glm::vec3 pos)
 
 
 
-void createEnemy(AISystem* aisys, ParticleRenderer* particleRender, std::vector<glm::vec3> targets, glm::vec3 spawnPos, std::string name)
+void createEnemy(AISystem* aisys, ParticleRenderer* particleRender, std::vector<glm::vec3> targets, glm::vec3 spawnPos, std::string name, GameObject *thePlayer)
 {
 	GameObject *Enemey = new GameObject(name);
 	Enemey->setPosition(spawnPos);
@@ -187,6 +187,7 @@ void createEnemy(AISystem* aisys, ParticleRenderer* particleRender, std::vector<
 	EnemyAI->setPhysics(collisionsystem);
 	EnemyAI->addTargets(targets);
 
+	EnemyAI->setThePlayer(thePlayer);
 	EnemyAI->setSpawnPos(spawnPos);
 
 	//bullet itself
@@ -395,9 +396,9 @@ int main(int argc, char *argv[])
 
 
 
-	createEnemy(AiSys, particleRender, generateRandomPaths(targets), glm::vec3(80, 0, 0), "Player 2");		//P2
-	createEnemy(AiSys, particleRender, generateRandomPaths(targets), glm::vec3(80, 0, -140), "Player 3");	//P3
-	createEnemy(AiSys, particleRender, generateRandomPaths(targets), glm::vec3(-80, 0, -140), "Player 4");	//P4
+	createEnemy(AiSys, particleRender, generateRandomPaths(targets), glm::vec3(80, 0, 0), "Player 2", Player);		//P2
+	createEnemy(AiSys, particleRender, generateRandomPaths(targets), glm::vec3(80, 0, -140), "Player 3", Player);	//P3
+	createEnemy(AiSys, particleRender, generateRandomPaths(targets), glm::vec3(-80, 0, -140), "Player 4", Player);	//P4
 	//createEnemy(AiSys, particleRender, generateRandomPaths(targets));
 	//createEnemy(AiSys, particleRender, generateRandomPaths(targets));
 
