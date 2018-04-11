@@ -8,22 +8,13 @@
     <ClCompile Include="AssimpLoader.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
-    <ClCompile Include="bulletParticle.cpp">
-      <Filter>Graphics</Filter>
-    </ClCompile>
     <ClCompile Include="MeshComponent.cpp">
       <Filter>Graphics</Filter>
     </ClCompile>
     <ClCompile Include="openglRenderer.cpp">
       <Filter>Graphics</Filter>
     </ClCompile>
-    <ClCompile Include="ParticleRenderer.cpp">
-      <Filter>Graphics</Filter>
-    </ClCompile>
     <ClCompile Include="IronRiftsPhysicsSystem.cpp">
-      <Filter>Physics</Filter>
-    </ClCompile>
-    <ClCompile Include="rayCastTestComponent.cpp">
       <Filter>Physics</Filter>
     </ClCompile>
     <ClCompile Include="RigidBodyComponent.cpp">
@@ -32,17 +23,11 @@
     <ClCompile Include="AISystem.cpp">
       <Filter>AI</Filter>
     </ClCompile>
-    <ClCompile Include="EnemyAIComponent.cpp">
-      <Filter>AI</Filter>
-    </ClCompile>
     <ClCompile Include="MovementComponent.cpp">
       <Filter>Input/Movement</Filter>
     </ClCompile>
     <ClCompile Include="SDLInputSystem.cpp">
       <Filter>Input/Movement</Filter>
-    </ClCompile>
-    <ClCompile Include="AudioTestComponent.cpp">
-      <Filter>Audio</Filter>
     </ClCompile>
     <ClCompile Include="IrrKlangAudioSystem.cpp">
       <Filter>Audio</Filter>
@@ -74,13 +59,30 @@
     <ClCompile Include="PlayerMechanicsComponent.cpp" />
     <ClCompile Include="AIMechanicsComponent.cpp" />
     <ClCompile Include="md2model.cpp">
-      <Filter>MD2</Filter>
+      <Filter>Graphics\MD2</Filter>
     </ClCompile>
     <ClCompile Include="MD2Mesh.cpp">
-      <Filter>MD2</Filter>
+      <Filter>Graphics\MD2</Filter>
     </ClCompile>
     <ClCompile Include="Game.cpp" />
-    <ClCompile Include="BackgroundMusicComponent.cpp" />
+    <ClCompile Include="rayCastTestComponent.cpp">
+      <Filter>Depricated</Filter>
+    </ClCompile>
+    <ClCompile Include="AudioTestComponent.cpp">
+      <Filter>Depricated</Filter>
+    </ClCompile>
+    <ClCompile Include="BackgroundMusicComponent.cpp">
+      <Filter>Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyAIComponent.cpp">
+      <Filter>Depricated</Filter>
+    </ClCompile>
+    <ClCompile Include="bulletParticle.cpp">
+      <Filter>Graphics\Particles</Filter>
+    </ClCompile>
+    <ClCompile Include="ParticleRenderer.cpp">
+      <Filter>Graphics\Particles</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="OpenglUtils.h">
@@ -89,16 +91,10 @@
     <ClInclude Include="AssimpLoader.h">
       <Filter>Utils</Filter>
     </ClInclude>
-    <ClInclude Include="bulletParticle.h">
-      <Filter>Graphics</Filter>
-    </ClInclude>
     <ClInclude Include="MeshComponent.h">
       <Filter>Graphics</Filter>
     </ClInclude>
     <ClInclude Include="openglRenderer.h">
-      <Filter>Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="ParticleRenderer.h">
       <Filter>Graphics</Filter>
     </ClInclude>
     <ClInclude Include="RenderingSystem.h">
@@ -108,9 +104,6 @@
       <Filter>Physics</Filter>
     </ClInclude>
     <ClInclude Include="PhysicsSystem.h">
-      <Filter>Physics</Filter>
-    </ClInclude>
-    <ClInclude Include="rayCastTestComponent.h">
       <Filter>Physics</Filter>
     </ClInclude>
     <ClInclude Include="RigidBodyComponent.h">
@@ -125,9 +118,6 @@
     <ClInclude Include="aStarPathFinder.h">
       <Filter>AI</Filter>
     </ClInclude>
-    <ClInclude Include="EnemyAIComponent.h">
-      <Filter>AI</Filter>
-    </ClInclude>
     <ClInclude Include="InputSystem.h">
       <Filter>Input/Movement</Filter>
     </ClInclude>
@@ -135,9 +125,6 @@
       <Filter>Input/Movement</Filter>
     </ClInclude>
     <ClInclude Include="AudioSystem.h">
-      <Filter>Audio</Filter>
-    </ClInclude>
-    <ClInclude Include="AudioTestComponent.h">
       <Filter>Audio</Filter>
     </ClInclude>
     <ClInclude Include="IrrKlangAudioSystem.h">
@@ -193,16 +180,33 @@
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="AIMechanicsComponent.h" />
     <ClInclude Include="md2model.h">
-      <Filter>MD2</Filter>
+      <Filter>Graphics\MD2</Filter>
     </ClInclude>
     <ClInclude Include="anorms.h">
-      <Filter>MD2</Filter>
+      <Filter>Graphics\MD2</Filter>
     </ClInclude>
     <ClInclude Include="MD2Mesh.h">
-      <Filter>MD2</Filter>
+      <Filter>Graphics\MD2</Filter>
     </ClInclude>
     <ClInclude Include="Game.h" />
-    <ClInclude Include="BackgroundMusicComponent.h" />
+    <ClInclude Include="rayCastTestComponent.h">
+      <Filter>Depricated</Filter>
+    </ClInclude>
+    <ClInclude Include="AudioTestComponent.h">
+      <Filter>Depricated</Filter>
+    </ClInclude>
+    <ClInclude Include="BackgroundMusicComponent.h">
+      <Filter>Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyAIComponent.h">
+      <Filter>Depricated</Filter>
+    </ClInclude>
+    <ClInclude Include="bulletParticle.h">
+      <Filter>Graphics\Particles</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleRenderer.h">
+      <Filter>Graphics\Particles</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Utils">
@@ -235,8 +239,11 @@
     <Filter Include="Audio">
       <UniqueIdentifier>{d35912bd-cc94-4ca2-aa59-57b42689af39}</UniqueIdentifier>
     </Filter>
-    <Filter Include="MD2">
+    <Filter Include="Graphics\MD2">
       <UniqueIdentifier>{0f947270-c9f7-465b-8226-cae4d1cd87ed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\Particles">
+      <UniqueIdentifier>{174921ac-3048-434a-8dfa-7983d14e50c5}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

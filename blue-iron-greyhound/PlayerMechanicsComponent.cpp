@@ -29,7 +29,7 @@ void PlayerMechanicsComponent::update(double dt)
 
 	if (this->health <= 0)
 	{
-		std::cout << this->user->getName() << " Is Dead!" << std::endl; //Testing
+		this->user->isAlive = false;
 	}
 	
 	//Check for input... Change input to mouse click once inputsystem is updated.
