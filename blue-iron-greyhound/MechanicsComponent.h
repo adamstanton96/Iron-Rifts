@@ -20,10 +20,10 @@ public:
 	virtual void init() = 0;
 	virtual void update(double dt) = 0;
 
-	void setHealth(int health) { this->health = health; }
-	void setDamage(int damage) { this->damage = damage; }
-	void setWeaponRange(int weaponRange) { this->weaponRange = weaponRange; }
-	void setRateOfFire(int rateOfFire) { this->rateOfFire = rateOfFire; }
+	void setHealth(float health) { this->health = health; }
+	void setDamage(float damage) { this->damage = damage; }
+	void setWeaponRange(float weaponRange) { this->weaponRange = weaponRange; }
+	void setRateOfFire(float rateOfFire) { this->rateOfFire = rateOfFire; }
 
 	void setSpawnPos(glm::vec3 spawnPos) { this->spawnPos = spawnPos; }
 	void setAwaitingRespawn(bool awaitingRespawn) { this->awaitingRespawn = awaitingRespawn; }
@@ -32,10 +32,10 @@ public:
 	void setPhysics(PhysicsSystem *physics) { this->physics = physics; }
 	void setParticleRenderer(bulletParticle *particleRenderer) { this->particleRenderer = particleRenderer; }
 
-	int getHealth() { return this->health; }
-	int getDamage() { return this->damage; }
-	int getWeaponRange() { return this->weaponRange; }
-	int getRateOfFire() { return this->rateOfFire; }
+	float getHealth() { return this->health; }
+	float getDamage() { return this->damage; }
+	float getWeaponRange() { return this->weaponRange; }
+	float getRateOfFire() { return this->rateOfFire; }
 
 	glm::vec3 getSpawnPos() { return this->spawnPos; }
 	bool getAwaitingRespawn() { return this->awaitingRespawn; }
@@ -45,7 +45,7 @@ public:
 	bulletParticle *getParticleRenderer() { return this->particleRenderer; }
 
 protected:
-	int health, damage, weaponRange, rateOfFire;
+	float health, damage, weaponRange, rateOfFire;
 	glm::vec3 spawnPos;
 	bool awaitingRespawn;
 

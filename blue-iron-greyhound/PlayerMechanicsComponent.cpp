@@ -14,9 +14,9 @@ PlayerMechanicsComponent::~PlayerMechanicsComponent()
 void PlayerMechanicsComponent::init()
 {
 	this->health = 100;
-	this->damage = 50;
-	this->weaponRange = 50;
-	this->rateOfFire = 0.1;
+	this->damage = 20;
+	this->weaponRange = 40;
+	this->rateOfFire = 0.9;
 	this->cooldownTimer = 0;
 	this->awaitingRespawn = false;
 	if(this->getUser())
@@ -46,7 +46,7 @@ void PlayerMechanicsComponent::update(double dt)
 void PlayerMechanicsComponent::fireWeapon(double dt)
 {
 	//printf("Shooty Shooty! \n"); //Testing
-	//audio->playAudio("../../assets/audio/bell.wav");
+	audio->playAudio("../../assets/audio/Laser-whiplash-01.wav");
 
 	int bulletVelocity = 100;
 
