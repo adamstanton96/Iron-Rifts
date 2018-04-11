@@ -13,6 +13,7 @@ A node represents a vertex/destination in the map pathways
 class node
 {
 public:
+	node(){}
 	node(int name, glm::vec2 loc)
 	{
 		//The identifier and position of the node.
