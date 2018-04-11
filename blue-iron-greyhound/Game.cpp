@@ -33,6 +33,16 @@ void Game::update(double dt)
 				players[i]->getComponent<MechanicsComponent>()->setAwaitingRespawn(true);
 			}
 		}
+
+
+		if (players[i]->getComponent<MechanicsComponent>()->score >= 5)
+		{
+			std::cout << players[i]->getName() << " is the winner!!!";
+		}
+
+
+
+
 		
 	}
 
