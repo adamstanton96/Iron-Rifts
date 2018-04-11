@@ -3,6 +3,7 @@
 PlayerMechanicsComponent::PlayerMechanicsComponent(std::string name)
 {
 	this->name = name;
+	this->spawnPos = glm::vec3(0, 0, 0);
 }
 
 PlayerMechanicsComponent::~PlayerMechanicsComponent()
@@ -13,10 +14,13 @@ PlayerMechanicsComponent::~PlayerMechanicsComponent()
 void PlayerMechanicsComponent::init()
 {
 	this->health = 100;
-	this->damage = 5;
-	this->weaponRange = 50;
-	this->rateOfFire = 1;
+	this->damage = 20;
+	this->weaponRange = 40;
+	this->rateOfFire = 0.9;
 	this->cooldownTimer = 0;
+	this->awaitingRespawn = false;
+	if(this->getUser())
+		this->getUser()->setPosition(this->spawnPos);
 }
 
 void PlayerMechanicsComponent::update(double dt)
@@ -41,8 +45,8 @@ void PlayerMechanicsComponent::update(double dt)
 
 void PlayerMechanicsComponent::fireWeapon(double dt)
 {
-	printf("Shooty Shooty! \n"); //Testing
-	audio->playAudio("../../assets/audio/bell.wav");
+	//printf("Shooty Shooty! \n"); //Testing
+	audio->playAudio("../../assets/audio/Laser-whiplash-01.wav");
 
 	int bulletVelocity = 100;
 

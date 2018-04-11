@@ -35,7 +35,9 @@ public:
 	float getRotationDegrees() { return rotationDegrees; }			
 
 	void setScaling(glm::vec3 scale) { scaling = scale; }	
-	glm::vec3 getScaling() { return scaling; }				
+	glm::vec3 getScaling() { return scaling; }
+
+	bool isAlive;
 
 protected:
 	std::vector<Component *> componentList;
@@ -45,6 +47,7 @@ private:
 	glm::vec3 scaling;
 	glm::vec3 rotationAxis;			
 	float rotationDegrees;
+	
 };
 
 template<class genericComponent>

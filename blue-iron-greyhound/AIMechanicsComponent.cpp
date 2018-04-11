@@ -4,28 +4,32 @@
 AIMechanicsComponent::AIMechanicsComponent(std::string name)
 {
 	this->name = name;
+	this->spawnPos = glm::vec3(0);
 }
 
 
 void AIMechanicsComponent::init()
 {
 	this->health = 100;
-	this->damage = 5;
-	this->weaponRange = 50;
+	this->damage = 15;
+	this->weaponRange = 40;
 	this->rateOfFire = 1;
 	this->cooldownTimer = 0;
+	this->awaitingRespawn = false;
+	if (this->getUser())
+		this->getUser()->setPosition(this->spawnPos);
 
 	velocity = glm::vec3(0, 0, 0);
 	previousPos = glm::vec3(10);
 
 	//Inventives for where to go. These in the end should be things like
 	//the players psoition or a defensive position
-	targets.push_back(glm::vec3(0, 0, 0));		//middle top
-	targets.push_back(glm::vec3(-80, 0, 0));		//middle left
-	targets.push_back(glm::vec3(-80, 0, -150));		//middle left
-	targets.push_back(glm::vec3(0, 0, -150));		//middle right
-	targets.push_back(glm::vec3(80, 0, -150));		//middle
-	targets.push_back(glm::vec3(80, 0, 0));		//middle
+	//targets.push_back(glm::vec3(0, 0, 0));		//middle top
+	//targets.push_back(glm::vec3(-80, 0, 0));		//middle left
+	//targets.push_back(glm::vec3(-80, 0, -150));		//middle left
+	//targets.push_back(glm::vec3(0, 0, -150));		//middle right
+	//targets.push_back(glm::vec3(80, 0, -150));		//middle
+	//targets.push_back(glm::vec3(80, 0, 0));		//middle
 
 	//Pick one of the targets
 	targetIndex = 0;
@@ -40,13 +44,19 @@ void AIMechanicsComponent::init()
 	atFinalDestination = false;
 }
 
+void AIMechanicsComponent::addTargets(std::vector<glm::vec3> targets)
+{
+	this->targets = targets;
+}
+
 void AIMechanicsComponent::update(double dt)
 {
 	cooldownTimer += dt;
 
 	if (this->health <= 0)
 	{
-		std::cout << this->user->getName() << " Is Dead!" << std::endl; //Testing
+		this->user->isAlive = false;
+		//std::cout << this->user->getName() << " Is Dead!" << std::endl; //Testing
 	}
 	attack(dt);
 	move(dt);
@@ -61,7 +71,7 @@ void AIMechanicsComponent::setAIsystem(AISystem* ai)
 
 void AIMechanicsComponent::fireWeapon(double dt)
 {
-	printf("AI Shooty Shooty! \n"); //Testing
+	//printf("AI Shooty Shooty! \n"); //Testing
 
 	int bulletVelocity = 100;
 
@@ -210,16 +220,19 @@ void AIMechanicsComponent::attack(double dt)
 	for (int i = 0; i <= possibleTargets.size() -1; i++)
 	{
 		RigidBodyComponent *temp = possibleTargets[i];
+		std::vector<RigidBodyComponent*> inRangeTargets;
+
 		if (temp->getUser() != this->getUser())
 		{
 			float dist = sqrt((((this->user->getPosition().x - temp->getUser()->getPosition().x) * (this->user->getPosition().x - temp->getUser()->getPosition().x)) +
 				((this->user->getPosition().y - temp->getUser()->getPosition().y) * (this->user->getPosition().y - temp->getUser()->getPosition().y)) +
 				((this->user->getPosition().z - temp->getUser()->getPosition().z) * (this->user->getPosition().z - temp->getUser()->getPosition().z))));
 
-			if (dist <= weaponRange + 5)
+			if (dist <= weaponRange - 5)
 			{
-				glm::vec3 AIVec = this->user->getPosition() - temp->getUser()->getPosition();
 
+
+				glm::vec3 AIVec = this->user->getPosition() - temp->getUser()->getPosition();
 				glm::vec2 playerVec(0, 1);
 
 				double angleInDegrees = atan2(AIVec.x, AIVec.z) - atan2(playerVec.y, playerVec.x);
@@ -228,7 +241,7 @@ void AIMechanicsComponent::attack(double dt)
 
 				if (cooldownTimer > rateOfFire)
 				{
-					audio->playAudio("../../assets/audio/bell.wav", false, this->user->getPosition(),temp->getUser()->getPosition());
+					audio->playAudio("../../assets/audio/Laser-whiplash-01.wav", false, this->user->getPosition(),temp->getUser()->getPosition());
 					fireWeapon(dt);
 					cooldownTimer = 0;
 				}

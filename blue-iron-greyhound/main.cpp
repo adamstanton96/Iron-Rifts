@@ -58,6 +58,11 @@
 #include "PlayerMechanicsComponent.h"
 #include "AIMechanicsComponent.h"
 
+//Game
+#include "Game.h"
+
+
+
 // The number of clock ticks per second
 #define CLOCKS_PER_SEC  ((clock_t)1000)
 std::clock_t start;
@@ -81,6 +86,9 @@ RenderingSystem* renderer = new openglRenderer();
 
 //Temporarily hold all objects so that main isn't so awkward
 std::vector<GameObject*> objectList;
+std::vector<GameObject*> sceneObjects;
+
+std::vector<bulletParticle*> bullets;
 
 
 
@@ -106,7 +114,7 @@ void createWall(glm::vec3 pos, float rotation, float scale)
 	wallMesh->loadObject("../../assets/cube_with_2UVs.DAE");
 	wallMesh->loadTexture("../../assets/Scene/wall.bmp");
 
-	objectList.push_back(wall);
+	sceneObjects.push_back(wall);
 }
 
 void createCornerWall(glm::vec3 pos, float rotation, glm::vec3 scale)
@@ -130,7 +138,7 @@ void createCornerWall(glm::vec3 pos, float rotation, glm::vec3 scale)
 	wallMesh->loadObject("../../assets/cube_with_2UVs.DAE");
 	wallMesh->loadTexture("../../assets/Scene/wallCorner.bmp");
 
-	objectList.push_back(wall);
+	sceneObjects.push_back(wall);
 }
 
 
@@ -153,7 +161,68 @@ void createGround(glm::vec3 pos)
 		secondMesh->loadObject("../../assets/cube_with_2UVs.DAE");
 		secondMesh->loadTexture("../../assets/tex/scifiFloor.bmp");
 		
-		objectList.push_back(GroundPlane);
+		sceneObjects.push_back(GroundPlane);
+}
+
+#include <ctime>
+#include <cstdlib>
+
+
+
+void createEnemy(AISystem* aisys, ParticleRenderer* particleRender, std::vector<glm::vec3> targets, glm::vec3 spawnPos)
+{
+	GameObject *Enemey = new GameObject("Enemy AI Cube");
+	Enemey->setPosition(spawnPos);
+	Enemey->setScaling(glm::vec3(0.3, 0.3, 0.3));
+	Enemey->setRotationAxis(glm::vec3(0, 0, 1));
+	Enemey->setRotationDegrees(0);
+
+	AIMechanicsComponent* EnemyAI = new AIMechanicsComponent("AIMechanicsComponent");
+	EnemyAI->setAIsystem(aisys);
+	EnemyAI->setAudio(audioSystem);
+	EnemyAI->setPhysics(collisionsystem);
+	EnemyAI->addTargets(targets);
+	EnemyAI->setSpawnPos(spawnPos);
+
+	//bullet itself
+	bulletParticle* bullet2 = new bulletParticle(glm::vec4(0.5, 1.0f, 0.5f, 1.0f), 200, "../../assets/tex/rainTex.png", particleRender); //(colour, numOfParticles, texture, ParticleRenderer)
+	Enemey->addComponent(bullet2);
+	bullets.push_back(bullet2);
+
+	EnemyAI->setParticleRenderer(bullet2);
+	EnemyAI->init();
+
+	Enemey->addComponent(EnemyAI);
+
+	//Manually made because MD2 in use and assimp won't
+	//Automatically created a bounding volume (setboundingVolume()) is used for this)
+	RigidBodyComponent* EnemeyRigidBody = new RigidBodyComponent("Rigid Body");
+	Enemey->addComponent(EnemeyRigidBody);
+	EnemeyRigidBody->setCollisionSystem(collisionsystem);
+	EnemeyRigidBody->setBodyType("DYNAMIC");
+	EnemeyRigidBody->setBoundingType("OBB");
+	EnemeyRigidBody->setboundingVolume(glm::vec3(-2, -2, -2), glm::vec3(2, 2, 2));
+
+	MD2Mesh* Md2Mesh = new MD2Mesh();
+	Md2Mesh->init();
+	Md2Mesh->camera = cameraComponent;
+	Enemey->addComponent(Md2Mesh);
+
+	objectList.push_back(Enemey);
+}
+
+std::vector<glm::vec3> generateRandomPaths(std::vector<glm::vec3> targets)
+{
+	std::vector<glm::vec3> randomTargets;
+	
+	for (int i = 0; i < targets.size() - 1; i++)
+	{
+		int random = (rand() % targets.size());
+		randomTargets.push_back(targets[random]);
+	}
+		//	int random = (std::rand() % targets.size());
+	
+	return randomTargets;
 }
 
 
@@ -211,16 +280,10 @@ int main(int argc, char *argv[])
 	bulletParticle* bullet = new bulletParticle(glm::vec4(1, 0.5f, 0.5f,1.0f), 200, "../../assets/tex/rainTex.png", particleRender); //(colour, numOfParticles, texture, ParticleRenderer)
 
 	Player->addComponent(bullet);
-	/*
-	//Raycast
-	RayCastTestComponent *raycasttester = new RayCastTestComponent("Raycaster");
-	raycasttester->setRenderer(bullet);
-	raycasttester->setInput(inputSystem);
-	raycasttester->setPhysics(collisionsystem);
-	Player->addComponent(raycasttester);
-	*/
+
 	//PlayerMechanics
 	PlayerMechanicsComponent *playerMechanicsComponent = new PlayerMechanicsComponent("PlayerMechanicsComponent");
+	playerMechanicsComponent->setSpawnPos(glm::vec3(-10, 0, -5));
 	playerMechanicsComponent->init();
 	playerMechanicsComponent->setInput(inputSystem);
 	playerMechanicsComponent->setAudio(audioSystem);
@@ -233,8 +296,7 @@ int main(int argc, char *argv[])
 
 	////////////////////////////////////////////////////
 	//AI system and pathfinding/////////////////////////
-	AIMechanicsComponent* EnemyAI = new AIMechanicsComponent("AIMechanicsComponent");
-
+	
 	typedef std::pair<int, int> path;
 	int names[] = 
 	{ 
@@ -260,13 +322,13 @@ int main(int argc, char *argv[])
 
 		{ -80,-75 },{ -60,-75 },{ -40,-75 },{ -20,-75 },{ 20,-75 },{ 40,-75 },{ 60,-75 },{ 80,-75 },				//horizontal corridor 9-16 (8)
 	
-		{ -80, 0 },{ -80,-20 },{ -80,-40 },{ -80,-60 },{ -80,-100 },{ -80,-120 },{ -80,-140 },{ -80,-150 },			//vertical left corridor 17-24 (8)
+		{ -80, 0 },{ -80,-20 },{ -80,-40 },{ -80,-60 },{ -80,-100 },{ -80,-120 },{ -80,-140 },{ -80,-140 },			//vertical left corridor 17-24 (8)
 
-		{ 80, 0 },{ 80,-20 },{ 80,-40 },{ 80,-60 },{ 80,-100 },{ 80,-120 },{ 80,-140 },{ 80,-150 },				//vertical Right corridor 25-32 (8)
+		{ 80, 0 },{ 80,-20 },{ 80,-40 },{ 80,-60 },{ 80,-100 },{ 80,-120 },{ 80,-140 },{ 80,-140 },				//vertical Right corridor 25-32 (8)
 
 		{ -60, 5 },{ -40, 5 },{ -20, 5 },{ 20, 5 },{ 40, 5 },{ 60, 5 },		//horizontal bottom corridor 33 - 38 (6)
 
-	   { -60, -150 },{ -40, -150 },{ -20, -150 },{ 20, -150 },{ 40, -150 },{ 60, -150 }		//horizontal top corridor 39 - 34(6)
+	   { -60, -140 },{ -40, -145 },{ -20, -145 },{ 20, -145 },{ 40, -145 },{ 60, -145 }		//horizontal top corridor 39 - 34(6)
 
 
 	
@@ -304,55 +366,39 @@ int main(int argc, char *argv[])
 	
 	};
 
-	////////////////////////////////////////////////////
-	//AI test object (enemy Player)
-	//Green Demo Cube
-	GameObject *Enemey = new GameObject("Enemy AI Cube");
-	Enemey->setPosition(glm::vec3(0.0f, 10.0f, 0.0f));
-	Enemey->setScaling(glm::vec3(0.3, 0.3, 0.3));
-	Enemey->setRotationAxis(glm::vec3(0, 0, 1));
-	Enemey->setRotationDegrees(0);
-
-
-
-
 	AISystem* AiSys = new AISystem();
 	AstarGraph* graph = new AstarGraph(names, locations, edges, weights, 45, 48);
-
 	AiSys->addPathGraph(graph);
-	EnemyAI->setAIsystem(AiSys);
-	EnemyAI->setAudio(audioSystem);
-	EnemyAI->setPhysics(collisionsystem);
 
-	//bullet itself
-	bulletParticle* bullet2 = new bulletParticle(glm::vec4(0.5, 1.0f, 0.5f, 1.0f), 200, "../../assets/tex/rainTex.png", particleRender); //(colour, numOfParticles, texture, ParticleRenderer)
-	Enemey->addComponent(bullet2);
-
-	EnemyAI->setParticleRenderer(bullet2);
-	EnemyAI->init();
-
-	Enemey->addComponent(EnemyAI);
-
-
-	//Manually made because MD2 in use and assimp won't
-	//Automatically created a bounding volume (setboundingVolume()) is used for this)
-	RigidBodyComponent* EnemeyRigidBody = new RigidBodyComponent("Rigid Body");
-	Enemey->addComponent(EnemeyRigidBody);
-	EnemeyRigidBody->setCollisionSystem(collisionsystem);
-	EnemeyRigidBody->setBodyType("DYNAMIC");
-	EnemeyRigidBody->setBoundingType("OBB");
-	EnemeyRigidBody->setboundingVolume(glm::vec3(-2, -2, -2), glm::vec3(2, 2, 2));
-
-	MD2Mesh* Md2Mesh = new MD2Mesh();
-	Md2Mesh->init();
-	Md2Mesh->camera = cameraComponent;
-	Enemey->addComponent(Md2Mesh);
-
-	objectList.push_back(Enemey);
+	std::vector<glm::vec3> targets;
+	targets.push_back(glm::vec3(0, 0, 0));		
+	targets.push_back(glm::vec3(-80, 0, 0));		
+	targets.push_back(glm::vec3(80, 0, 0));		
+	targets.push_back(glm::vec3(-80, 0, -140));		
+	targets.push_back(glm::vec3(80, 0, -140));		
+	targets.push_back(glm::vec3(0, 0, -80));	
+	targets.push_back(glm::vec3(0, 0, -140));		
+	targets.push_back(glm::vec3(80, 0, -80));
+	targets.push_back(glm::vec3(80, 0, -140));
+	targets.push_back(glm::vec3(-80, 0, -80));
+	
 
 
+
+	createEnemy(AiSys, particleRender, generateRandomPaths(targets), glm::vec3(25, 0, 25));
+	createEnemy(AiSys, particleRender, generateRandomPaths(targets), glm::vec3(25, 0, 25));
+	createEnemy(AiSys, particleRender, generateRandomPaths(targets), glm::vec3(25, 0, 25));
+	//createEnemy(AiSys, particleRender, generateRandomPaths(targets));
+	//createEnemy(AiSys, particleRender, generateRandomPaths(targets));
+
+	//Need to do this becaue for some reason the bulletParticle objects need
+	//to be initialised after all meshe objects
+	for (int i = 0; i < bullets.size(); i++)
+	bullets[i]->init();
+
+	//player bullet
 	bullet->init();
-	bullet2->init();
+	
 
 	////////////////////////////////////////////////////
 	//Scene/////////////////////////////////////////////
@@ -559,7 +605,10 @@ int main(int argc, char *argv[])
 
 
 
-	
+
+
+	Game* game = new Game(sceneObjects);
+	game->addPlayers(objectList);
 	
 	
 	int frameRate = 0;
@@ -587,10 +636,12 @@ int main(int argc, char *argv[])
 		renderer->clearScreen();
 
 		//Update all objects
-		for (unsigned int i = 0; i < objectList.size(); i++)
-		{
-			objectList[i]->update(dt);
-		}
+	//	for (unsigned int i = 0; i < objectList.size(); i++)
+	//	{
+	//		objectList[i]->update(dt);
+//}
+
+		game->update(dt);
 
 		renderer->swapBuffers();
 
@@ -623,80 +674,3 @@ int main(int argc, char *argv[])
 	return 0;
 }
 
-
-
-//Models not currently getting used
-/*
-	GameObject *plainBuilding = new GameObject("old building");
-	plainBuilding->setTranslation(glm::vec3(-15.0f, 1.0f, 50.0f));
-	plainBuilding->setScaling(glm::vec3(5.0f, 5.0f, 5.0f));
-	plainBuilding->setRenderRotate(glm::vec3(0, 0, 0));
-
-	MeshComponent* plainBuildingMesh = new MeshComponent("test");
-	plainBuilding->addComponent(plainBuildingMesh);
-	plainBuildingMesh->setRenderer(renderer);
-	//testmesh1->loadObject("plainbuilding.obj");
-	
-	//ground
-	plainBuildingMesh->loadTexture("plainbuilding/brack.bmp");
-	//lower windows
-	plainBuildingMesh->loadTexture("plainbuilding/window1.bmp");
-	//main windows
-	plainBuildingMesh->loadTexture("plainbuilding/window2.bmp");
-	//upper windows
-	plainBuildingMesh->loadTexture("plainbuilding/window3.bmp");
-	//??
-	plainBuildingMesh->loadTexture("plainbuilding/wf.bmp");
-	//brick
-	plainBuildingMesh->loadTexture("plainbuilding/brack.bmp");
-	//??
-	plainBuildingMesh->loadTexture("plainbuilding/w2.bmp");
-	//?/
-	plainBuildingMesh->loadTexture("plainbuilding/store.bmp");
-	//roof
-	plainBuildingMesh->loadTexture("plainbuilding/top.bmp");
-	//roof rim
-	plainBuildingMesh->loadTexture("plainbuilding/top.bmp");
-	//door 1
-	plainBuildingMesh->loadTexture("plainbuilding/door.bmp");
-	//door 2
-	plainBuildingMesh->loadTexture("plainbuilding/door2.bmp");
-	//ac
-	plainBuildingMesh->loadTexture("plainbuilding/AC.bmp");
-	//gutter pipe
-	plainBuildingMesh->loadTexture("plainbuilding/iron.bmp");
-
-
-
-	//Large Habitat Scene
-	GameObject *habitat = new GameObject("test");
-	habitat->setTranslation(glm::vec3(0.0f, -100.0f, 0.0f));
-	habitat->setScaling(glm::vec3(1.0f, 1.0f, 1.0f));
-	habitat->setRenderRotate(glm::vec3(NULL, NULL, NULL));
-	MeshComponent* habitatMesh = new MeshComponent("test");
-	//testObject->addComponent(testMesh);
-	habitatMesh->setRenderer(renderer);
-	//testMesh->loadObject("habitat.obj");
-
-	//benches	
-	habitatMesh->loadTexture("tex/habitatWood.bmp");
-	//buildings
-	habitatMesh->loadTexture("tex/habitatBuilding2.bmp");
-	//leaves
-	habitatMesh->loadTexture("tex/habitatGrass.bmp");
-	//lamps bulbs
-	habitatMesh->loadTexture("tex/habitatBlack.bmp");
-	//lamp posts
-	habitatMesh->loadTexture("tex/habitatWeird.bmp");
-	//paths/bridge
-	habitatMesh->loadTexture("tex/habitatBuilding.bmp");
-	//terrain
-	habitatMesh->loadTexture("tex/habitatTerrain.bmp");
-	//trees
-	habitatMesh->loadTexture("tex/habitatWood2.bmp");
-	//water
-	habitatMesh->loadTexture("tex/habitatWater.bmp");
-	//windows
-	habitatMesh->loadTexture("tex/habitatWindow.bmp");
-
-	*/

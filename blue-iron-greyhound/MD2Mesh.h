@@ -31,7 +31,7 @@ public:
 	void init();
 	void update(double dt);
 
-	void draw();
+	void draw(double dt);
 
 	Camera* camera;
 private:

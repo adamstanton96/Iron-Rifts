@@ -11,6 +11,7 @@
 GameObject::GameObject(std::string name)
 {
 	Object::name = name;
+	isAlive = true;
 	//GameObject::gameObjects.push_back(this);
 }
 

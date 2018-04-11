@@ -35,6 +35,7 @@ public:
 	void setAIsystem(AISystem*);
 
 	void fireWeapon(double dt);
+	void addTargets(std::vector<glm::vec3> targets);
 
 private:
 	//The AI system deals with directing this class. You can pass in any 
