@@ -169,9 +169,9 @@ void createGround(glm::vec3 pos)
 
 
 
-void createEnemy(AISystem* aisys, ParticleRenderer* particleRender, std::vector<glm::vec3> targets, glm::vec3 spawnPos)
+void createEnemy(AISystem* aisys, ParticleRenderer* particleRender, std::vector<glm::vec3> targets, glm::vec3 spawnPos, std::string name)
 {
-	GameObject *Enemey = new GameObject("Enemy AI Cube");
+	GameObject *Enemey = new GameObject(name);
 	Enemey->setPosition(spawnPos);
 	Enemey->setScaling(glm::vec3(0.3, 0.3, 0.3));
 	Enemey->setRotationAxis(glm::vec3(0, 0, 1));
@@ -244,7 +244,7 @@ int main(int argc, char *argv[])
 
 	////////////////////////////////////////////////////
 	//First Object - Acting as player (camera component / movement component)
-	GameObject *Player = new GameObject("player");
+	GameObject *Player = new GameObject("Player 1");
 	Player->setPosition(glm::vec3(0.0f, 0.0f, 0.0f));
 	Player->setScaling(glm::vec3(1.0f, 1.0f, 1.0f));
 	Player->setRotationAxis(glm::vec3(0, -1, 0));
@@ -283,7 +283,7 @@ int main(int argc, char *argv[])
 
 	//PlayerMechanics
 	PlayerMechanicsComponent *playerMechanicsComponent = new PlayerMechanicsComponent("PlayerMechanicsComponent");
-	playerMechanicsComponent->setSpawnPos(glm::vec3(-10, 0, -5));
+	playerMechanicsComponent->setSpawnPos(glm::vec3(-80, 0, 0));
 	playerMechanicsComponent->init();
 	playerMechanicsComponent->setInput(inputSystem);
 	playerMechanicsComponent->setAudio(audioSystem);
@@ -385,9 +385,9 @@ int main(int argc, char *argv[])
 
 
 
-	createEnemy(AiSys, particleRender, generateRandomPaths(targets), glm::vec3(25, 0, 25));
-	createEnemy(AiSys, particleRender, generateRandomPaths(targets), glm::vec3(25, 0, 25));
-	createEnemy(AiSys, particleRender, generateRandomPaths(targets), glm::vec3(25, 0, 25));
+	createEnemy(AiSys, particleRender, generateRandomPaths(targets), glm::vec3(80, 0, 0), "Player 2");		//P2
+	createEnemy(AiSys, particleRender, generateRandomPaths(targets), glm::vec3(80, 0, -140), "Player 3");	//P3
+	createEnemy(AiSys, particleRender, generateRandomPaths(targets), glm::vec3(-80, 0, -140), "Player 4");	//P4
 	//createEnemy(AiSys, particleRender, generateRandomPaths(targets));
 	//createEnemy(AiSys, particleRender, generateRandomPaths(targets));
 
