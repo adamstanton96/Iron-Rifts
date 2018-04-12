@@ -19,5 +19,6 @@ private:
 	double cooldownTimer, respawnTime;
 	std::vector<GameObject*> scene;
 	std::vector<GameObject*> players;
-	
+
+	void sortLeaderboard();
 };

@@ -625,7 +625,7 @@ int main(int argc, char *argv[])
 
 	Game* game = new Game(sceneObjects);
 	game->addPlayers(objectList);
-	
+	game->init();
 	
 	int frameRate = 0;
 	float timeSoFar = 0;
