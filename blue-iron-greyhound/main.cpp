@@ -89,8 +89,7 @@ int main(int argc, char *argv[])
 	std::vector<GameObject*> objectList;
 	
 	//hud
-	HUD  *h = new HUD();
-	h->update();
+	renderer->drawBillboardedText();
 	////////////////////////////////////////////////////
 	//First Object - Acting as player (camera component / movement component)
 	GameObject *Player = new GameObject("player");

@@ -6,6 +6,7 @@ This is a complete rip off of rt3d
 #define OPENGLUTILS
 
 #include <GL/glew.h>
+#include"SDL_ttf.h"
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -13,13 +14,14 @@ using namespace std;
 
 namespace OpenglUtils
 {
+
 	struct materialStruct {
 		GLfloat ambient[4];
 		GLfloat diffuse[4];
 		GLfloat specular[4];
 		GLfloat shininess;
 	};
-
+ 
 	struct lightStruct {
 		GLfloat ambient[4];
 		GLfloat diffuse[4];
@@ -43,9 +45,12 @@ namespace OpenglUtils
 
 	void setLightPos(const GLuint program, const GLfloat *lightPos);
 	void setMaterial(const GLuint program, const materialStruct material);
+	GLuint textToTexture(const char * str, GLuint textID, TTF_Font *textFont);
+ 
+
 
 	void drawIndexedMesh(const GLuint mesh, const GLuint indexCount, const GLuint primitive);
 	void drawMesh(const GLuint mesh, const GLuint numVerts, const GLuint primitive);
 }
-
+ 
 #endif

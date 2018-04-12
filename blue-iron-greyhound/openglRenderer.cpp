@@ -54,9 +54,34 @@ void openglRenderer::init()
 
 	shaderProgram = OpenglUtils::initShaders("minimal.vert", "minimal.frag");
 
+	hudShaderProgram = OpenglUtils::initShaders("phong-tex.vert", "phong-tex.frag");
+
 	lightPos = glm::vec4(0.0f, 5.0f, 0.0f, 0.0f);
 
 
+	// set up TrueType / SDL_ttf
+	if (TTF_Init() == -1)
+		cout << "TTF failed to initialise." << endl;
+
+	textFont = TTF_OpenFont("../../assets/MavenPro-Regular.ttf", 48);
+	if (textFont == NULL)
+		cout << "Failed to open font." << endl;
+	
+
+	labels[0] = 0;
+	labels[0] = OpenglUtils::textToTexture(" Player health ", labels[0], textFont);//Actual set up of label. If dynamic, this should go in draw function
+
+
+	meshIndexCount = 0;
+	vector<GLfloat> verts;
+	vector<GLfloat> norms;
+	vector<GLfloat> tex_coords;
+	vector<GLuint> indices;
+	//OpenglUtils::loadObj("cube.obj", verts, norms, tex_coords, indices);
+	meshIndexCount = indices.size();
+	//textures[0] = loadBitmap("fabric.bmp");
+
+	meshObjects[0] = OpenglUtils::createMesh(verts.size() / 3, verts.data(), nullptr, norms.data(), tex_coords.data(), NULL, meshIndexCount, indices.data());
 }
 
 //for testing
@@ -153,12 +178,44 @@ void openglRenderer::draw(MeshComponent* mesh)
 
 }
 
+void openglRenderer ::drawBillboardedText()
+{
+
+	// clear the screen
+	glEnable(GL_CULL_FACE);
+	glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 
+
+	glm::mat4 modelview(1.0);
+	mvStack.push(modelview);
+
+	 
+
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, labels[0]);
+
+	modelview = glm::translate(modelview, glm::vec3(5.0f, 10.0f, 0.0f));
+	modelview = glm::scale(modelview, glm::vec3(0.5f, 0.5f, 0.0f));
+	OpenglUtils::setUniformMatrix4fv(hudShaderProgram, "modelview", glm::value_ptr(modelview));
+	mvStack.pop();
+	glDisable(GL_CULL_FACE);
+	glDisable(GL_DEPTH_TEST);
+	OpenglUtils::drawIndexedMesh(meshObjects[0], meshIndexCount, GL_TRIANGLES);
+	glEnable(GL_CULL_FACE);
+	glEnable(GL_DEPTH_TEST);
+
+
+}
+
+void openglRenderer::drawBillboardedTexture(glm::vec3 position, glm::vec3 scale, char* filepath) {
+
+}
 
 
 //Generates a texture ID for a given filename
-void openglRenderer::loadTexture(MeshComponent* mesh, char * filename)
+void openglRenderer::loadTexture(MeshComponent* mesh, char * filename) 
 {
 	mesh->addTexture(SDLGLTextureLoader::loadBitmap(filename));
 }

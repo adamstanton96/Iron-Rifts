@@ -6,6 +6,7 @@
 #include <glm/gtc/type_ptr.hpp>
 #include <stack>
 #include <SDL.h>
+#include"SDL_ttf.h"
 #include <GL/glew.h>
 #include <iostream>
 
@@ -34,7 +35,8 @@ public:
 
 	void createWindow();
 	void setupRenderContext();
-
+	void drawBillboardedText();
+	void drawBillboardedTexture(glm::vec3 position, glm::vec3 scale, char* filepath);
 	void destroyWindow();
 	void swapBuffers();
 	void clearScreen();
@@ -52,7 +54,7 @@ private:
 	SDL_GLContext glContext;										//Context Handle
 
 	GLuint shaderProgram;
-
+	GLuint hudShaderProgram;
 	// Camera/View data
 	GLfloat r;
 	glm::vec3 eye;
@@ -60,6 +62,10 @@ private:
 	glm::vec3 up;
 	glm::mat4 projection;
 	stack<glm::mat4> mvStack;
+	GLuint labels[1];
+	TTF_Font * textFont;
+	GLuint meshIndexCount;
+	GLuint meshObjects[1];
 
 };
 #endif
