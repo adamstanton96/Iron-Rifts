@@ -12,10 +12,7 @@ Game::Game(std::vector<GameObject*> scene)
 
 void Game::init()
 {
-	players[0]->getComponent<MechanicsComponent>()->score = 0;
-	players[1]->getComponent<MechanicsComponent>()->score = 12;
-	players[2]->getComponent<MechanicsComponent>()->score = 44;
-	players[3]->getComponent<MechanicsComponent>()->score = 2;
+
 }
 
 void Game::update(double dt)
@@ -38,9 +35,9 @@ void Game::update(double dt)
 		}
 
 
-		if (players[i]->getComponent<MechanicsComponent>()->score >= 5)
+		if (players[0]->getComponent<MechanicsComponent>()->score >= 10)
 		{
-			//std::cout << players[i]->getName() << " is the winner!!!";
+			std::cout << players[0]->getName() << " is the winner!!!" <<std::endl;
 		}
 
 
