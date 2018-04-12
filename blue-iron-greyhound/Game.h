@@ -1,8 +1,13 @@
+/*=============================================================================
+* Game.h
+* Author: Adam Stanton (B00266256) & Chloe Madden (B00286864) 
+* Defines each update of our game loop
+=============================================================================*/
+
 #pragma once
 #include <vector>
 #include "System.h"
 #include "GameObject.h"
-
 
 class Game : public System
 {

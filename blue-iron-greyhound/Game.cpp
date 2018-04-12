@@ -4,8 +4,8 @@
 Game::Game(std::vector<GameObject*> scene)
 {
 	this->scene = scene;
-	this->respawnTime = 45;
-	this->cooldownTimer = 46;
+	this->respawnTime = 30;
+	this->cooldownTimer = 31;
 }
 
 
