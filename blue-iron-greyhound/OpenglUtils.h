@@ -9,6 +9,8 @@ This is a complete rip off of rt3d
 #include <iostream>
 #include <fstream>
 #include <string>
+#include"SDL_ttf.h"
+#include"SDL.h"
 using namespace std;
 
 namespace OpenglUtils
@@ -26,6 +28,8 @@ namespace OpenglUtils
 		GLfloat specular[4];
 		GLfloat position[4];
 	};
+
+	GLuint textToTexture(const char * str, GLuint textID, TTF_Font *textFont);
 
 	void printShaderError(const GLint shader);
 
@@ -54,6 +58,9 @@ namespace OpenglUtils
 	void drawMesh(const GLuint mesh, const GLuint numVerts, const GLuint primitive);
 
 	void updateMesh(const GLuint mesh, const unsigned int bufferType, const GLfloat *data, const GLuint size);
+
+	
+
 }
 
 #endif

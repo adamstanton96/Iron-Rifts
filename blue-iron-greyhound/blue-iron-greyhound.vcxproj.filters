@@ -207,6 +207,9 @@
     <ClInclude Include="ParticleRenderer.h">
       <Filter>Graphics\Particles</Filter>
     </ClInclude>
+    <ClInclude Include="HUDmesh.h">
+      <Filter>HUD</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Utils">
@@ -244,6 +247,9 @@
     </Filter>
     <Filter Include="Graphics\Particles">
       <UniqueIdentifier>{174921ac-3048-434a-8dfa-7983d14e50c5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="HUD">
+      <UniqueIdentifier>{c9075f0d-69c5-4d6d-9d45-87afc3542064}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

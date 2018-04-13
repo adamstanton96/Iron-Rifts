@@ -3,6 +3,7 @@
 
 #include "System.h"
 class MeshComponent;
+class HUDmesh;
 class Camera;
 
 
@@ -19,6 +20,7 @@ public:
 	virtual void clearScreen() = 0;
 
 	virtual void draw(MeshComponent* mesh) = 0;
+	virtual void drawBillboardedText(HUDmesh* mesh) = 0;
 	virtual void loadTexture(MeshComponent* meshComponent, char * fileName) = 0;
 	virtual void loadObject(MeshComponent* mesh, const char * filename) = 0;
 

@@ -150,6 +150,7 @@
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="GameObject.h" />
+    <ClInclude Include="HUDmesh.h" />
     <ClInclude Include="InputSystem.h" />
     <ClInclude Include="IronRiftsPhysicsSystem.h" />
     <ClInclude Include="IrrKlangAudioSystem.h" />

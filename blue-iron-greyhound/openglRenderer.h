@@ -13,6 +13,7 @@ Author : Chloe Madden(B00286864)
 #include <SDL.h>
 #include <GL/glew.h>
 #include <iostream>
+#include "HUDmesh.h"
 
 #include "RenderingSystem.h"
 #include "MeshComponent.h"
@@ -22,6 +23,8 @@ Author : Chloe Madden(B00286864)
 #include "AssimpLoader.h"
 #include "OpenglUtils.h"
 #include "SDLGLTextureLoader.h"
+
+
 
 #define DEG_TO_RADIAN 0.017453293
 
@@ -44,6 +47,7 @@ public:
 	void swapBuffers();
 	void clearScreen();
 
+	void drawBillboardedText(HUDmesh* mesh);
 	void setSceneLights();
 
 	//for testing
