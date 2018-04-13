@@ -1,3 +1,4 @@
+#pragma once
 /* 
 This is a complete rip off of rt3d
 */
@@ -5,13 +6,15 @@ This is a complete rip off of rt3d
 #ifndef OPENGLUTILS
 #define OPENGLUTILS
 
+#include "SDL_ttf.h"
 #include <GL/glew.h>
 #include <iostream>
 #include <fstream>
 #include <string>
-#include"SDL_ttf.h"
-#include"SDL.h"
+//#include"SDL.h"
+
 using namespace std;
+
 
 namespace OpenglUtils
 {

@@ -5,13 +5,13 @@
 #include <iostream>
 #include <vector>
 #include <glm/glm.hpp>
-#include "OpenglUtils.h"
+//#include "OpenglUtils.h"
 #include "AssimpLoader.h"
 
 #include "RenderingSystem.h"
-//class openglRenderer;
 
-class HUDmesh : public Component
+
+class HUDmesh// : public Component
 {
 public:
 	HUDmesh(){}
@@ -67,11 +67,11 @@ public:
 
 	glm::vec3 pos;
 	glm::vec3 rot;
-	
-
-	
-private:
-	//openglRenderer* renderer;
-
-	
+//	
+//
+//	
+//private:
+//	//openglRenderer* renderer;
+//
+//	
 };
