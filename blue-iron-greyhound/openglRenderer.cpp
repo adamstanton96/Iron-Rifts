@@ -162,7 +162,7 @@ void openglRenderer::drawBillboardedText(HUDmesh* mesh)
 {
 	cameraUpdate();
 
-	glUseProgram(shaderProgram);
+	glUseProgram(mesh->shaderID);
 
 	glBindTexture(GL_TEXTURE_2D, mesh->textureID);
 
@@ -174,9 +174,9 @@ void openglRenderer::drawBillboardedText(HUDmesh* mesh)
 
 	mvStack.top() = glm::rotate(mvStack.top(), float(180 * DEG_TO_RADIAN), glm::vec3(1, 0, 0));
 
-	OpenglUtils::setUniformMatrix4fv(shaderProgram, "projection", glm::value_ptr(projection));
+	OpenglUtils::setUniformMatrix4fv(mesh->shaderID, "projection", glm::value_ptr(projection));
 
-	OpenglUtils::setUniformMatrix4fv(shaderProgram, "modelview", glm::value_ptr(mvStack.top()));
+	OpenglUtils::setUniformMatrix4fv(mesh->shaderID, "modelview", glm::value_ptr(mvStack.top()));
 
 	glDisable(GL_DEPTH_TEST);
 	OpenglUtils::drawIndexedMesh(mesh->meshObject, mesh->meshIndexCount, GL_TRIANGLES);
