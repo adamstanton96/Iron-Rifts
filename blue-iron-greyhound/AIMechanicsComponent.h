@@ -37,6 +37,8 @@ public:
 	void fireWeapon(double dt);
 	void addTargets(std::vector<glm::vec3> targets);
 
+	void setThePlayer(GameObject *thePlayer) { this->thePlayer = thePlayer; }
+	GameObject *getThePlayer() { return this->thePlayer; }
 private:
 	//The AI system deals with directing this class. You can pass in any 
 	//world space coordinate as a target and it will return a vector of positions 
@@ -71,4 +73,6 @@ private:
 	void attack(double dt);
 
 	double cooldownTimer;
+
+	GameObject *thePlayer;
 };

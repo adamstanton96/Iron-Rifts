@@ -177,7 +177,6 @@
     </ClInclude>
     <ClInclude Include="MechanicsComponent.h" />
     <ClInclude Include="PlayerMechanicsComponent.h" />
-    <ClInclude Include="GameManager.h" />
     <ClInclude Include="AIMechanicsComponent.h" />
     <ClInclude Include="md2model.h">
       <Filter>Graphics\MD2</Filter>
@@ -206,6 +205,9 @@
     </ClInclude>
     <ClInclude Include="ParticleRenderer.h">
       <Filter>Graphics\Particles</Filter>
+    </ClInclude>
+    <ClInclude Include="GameManager.h">
+      <Filter>Depricated</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

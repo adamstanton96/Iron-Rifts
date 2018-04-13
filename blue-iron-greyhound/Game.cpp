@@ -4,8 +4,8 @@
 Game::Game(std::vector<GameObject*> scene)
 {
 	this->scene = scene;
-	this->respawnTime = 45;
-	this->cooldownTimer = 46;
+	this->respawnTime = 20;
+	this->cooldownTimer = 21;
 }
 
 
@@ -33,6 +33,16 @@ void Game::update(double dt)
 				players[i]->getComponent<MechanicsComponent>()->setAwaitingRespawn(true);
 			}
 		}
+
+
+		if (players[0]->getComponent<MechanicsComponent>()->score >= 10)
+		{
+			std::cout << players[0]->getName() << " is the winner!!!" <<std::endl;
+		}
+
+
+
+
 		
 	}
 
@@ -51,6 +61,7 @@ void Game::update(double dt)
 				players[i]->isAlive = true;
 				players[i]->getComponent<MechanicsComponent>()->init();
 				players[i]->getComponent<MechanicsComponent>()->setAwaitingRespawn(false);
+			
 			}
 
 		}
@@ -58,9 +69,41 @@ void Game::update(double dt)
 		cooldownTimer = 0;
 	}
 
+
+	//Sort the playerlist in order of score:
+
+	sortLeaderboard();
+
+	for (int i = 0; i < players.size(); i++)
+	{
+		//std::cout << players[i]->getName() << " - Score: " << players[i]->getComponent<MechanicsComponent>()->score << std::endl;
+	}
+
+
 }
 
 void Game::addPlayers(std::vector<GameObject*> players)
 {
 	this->players = players;
+}
+
+void Game::sortLeaderboard()
+{
+	//perform a sort on the leaderboard vector based on their mechanicscomponent score value:
+	bool swapped = true;
+	int j = 0;
+	GameObject* tmp;
+	while (swapped) {
+		swapped = false;
+		j++;
+		for (int i = 0; i < players.size() - j; i++) {
+			if (players[i]->getComponent<MechanicsComponent>()->score < players[i + 1]->getComponent<MechanicsComponent>()->score)
+			{
+				tmp = players[i];
+				players[i] = players[i + 1];
+				players[i + 1] = tmp;
+				swapped = true;
+			}
+		}
+	}
 }

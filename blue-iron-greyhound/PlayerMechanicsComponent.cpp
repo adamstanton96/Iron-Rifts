@@ -4,6 +4,7 @@ PlayerMechanicsComponent::PlayerMechanicsComponent(std::string name)
 {
 	this->name = name;
 	this->spawnPos = glm::vec3(0, 0, 0);
+	this->score = 0;
 }
 
 PlayerMechanicsComponent::~PlayerMechanicsComponent()
@@ -16,7 +17,8 @@ void PlayerMechanicsComponent::init()
 	this->health = 100;
 	this->damage = 20;
 	this->weaponRange = 40;
-	this->rateOfFire = 0.9;
+	//this->rateOfFire = 0.9;
+	this->rateOfFire = 0.1;
 	this->cooldownTimer = 0;
 	this->awaitingRespawn = false;
 	if(this->getUser())
@@ -79,18 +81,16 @@ void PlayerMechanicsComponent::fireWeapon(double dt)
 	//Debug - print the closest object name
 	if (obj != nullptr)
 	{
-		std::cout << "closest: " << obj->getName() << std::endl;
-
 		MechanicsComponent * comp = obj->getComponent<MechanicsComponent>();
 		if (comp != nullptr)
 		{
 			comp->setHealth(comp->getHealth() - this->damage);
-			std::cout << comp->getUser()->getName() << "health: " << comp->getHealth();
+			if (comp->getHealth() <= 0)
+				this->score++;
+			//Debug:
+			//std::cout << "closest: " << obj->getName() << std::endl;
+			//std::cout << comp->getUser()->getName() << "health: " << comp->getHealth();
 		}
-	}
-	else
-	{
-		std::cout << "No Collision: " << std::endl;
 	}
 
 	//Emit bullet - If its going to hit something, set the distance so it stops when it hits.

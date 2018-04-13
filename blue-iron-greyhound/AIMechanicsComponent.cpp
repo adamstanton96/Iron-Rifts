@@ -5,6 +5,7 @@ AIMechanicsComponent::AIMechanicsComponent(std::string name)
 {
 	this->name = name;
 	this->spawnPos = glm::vec3(0);
+	this->score = 0;
 }
 
 
@@ -16,20 +17,11 @@ void AIMechanicsComponent::init()
 	this->rateOfFire = 1;
 	this->cooldownTimer = 0;
 	this->awaitingRespawn = false;
-	if (this->getUser())
-		this->getUser()->setPosition(this->spawnPos);
+
 
 	velocity = glm::vec3(0, 0, 0);
 	previousPos = glm::vec3(10);
 
-	//Inventives for where to go. These in the end should be things like
-	//the players psoition or a defensive position
-	//targets.push_back(glm::vec3(0, 0, 0));		//middle top
-	//targets.push_back(glm::vec3(-80, 0, 0));		//middle left
-	//targets.push_back(glm::vec3(-80, 0, -150));		//middle left
-	//targets.push_back(glm::vec3(0, 0, -150));		//middle right
-	//targets.push_back(glm::vec3(80, 0, -150));		//middle
-	//targets.push_back(glm::vec3(80, 0, 0));		//middle
 
 	//Pick one of the targets
 	targetIndex = 0;
@@ -40,8 +32,17 @@ void AIMechanicsComponent::init()
 	//Set currentRoute[0] as the first destination to head to 
 	goalNodeIndex = 0;
 
+
 	//Not at the final destination of currentRoute
 	atFinalDestination = false;
+
+	if (this->getUser())
+	{
+		this->getUser()->setPosition(this->spawnPos);
+
+		//Reset Route
+		currentRoute = AIsystem->findPath(this->spawnPos, currentGoalPosition);
+	}
 }
 
 void AIMechanicsComponent::addTargets(std::vector<glm::vec3> targets)
@@ -71,8 +72,6 @@ void AIMechanicsComponent::setAIsystem(AISystem* ai)
 
 void AIMechanicsComponent::fireWeapon(double dt)
 {
-	//printf("AI Shooty Shooty! \n"); //Testing
-
 	int bulletVelocity = 100;
 
 
@@ -81,7 +80,8 @@ void AIMechanicsComponent::fireWeapon(double dt)
 	glm::vec3 up(0, 1, 0);
 
 	//double theta = (this->getUser()->getRotationDegrees()* DEG_TO_RADIAN);	//The minus was an attempt to fix the collision inaccuracy
-	double theta = -(this->getUser()->getRotationDegrees()* DEG_TO_RADIAN) - 90;
+	//double theta = -(this->getUser()->getRotationDegrees()* DEG_TO_RADIAN) + 135 * DEG_TO_RADIAN;
+	double theta = (-((this->getUser()->getRotationDegrees()* DEG_TO_RADIAN) *2 ) -90 * DEG_TO_RADIAN);
 
 	double cos_thetaf = cos(theta);
 	glm::vec3 cos_theta(cos(theta));
@@ -105,18 +105,19 @@ void AIMechanicsComponent::fireWeapon(double dt)
 	//Debug - print the closest object name
 	if (obj != nullptr)
 	{
-		std::cout << "closest: " << obj->getName() << std::endl;
+		
 
 		MechanicsComponent * comp = obj->getComponent<MechanicsComponent>();
 		if (comp != nullptr)
 		{
 			comp->setHealth(comp->getHealth() - this->damage);
-			std::cout << comp->getUser()->getName() << "health: " << comp->getHealth();
+			if (comp->getHealth() <= 0)
+				this->score++;
+			
+			//Debug:
+			//std::cout << "closest: " << obj->getName() << std::endl;
+			//std::cout << comp->getUser()->getName() << "health: " << comp->getHealth();
 		}
-	}
-	else
-	{
-		std::cout << "No Collision: " << std::endl;
 	}
 
 	//Emit bullet - If its going to hit something, set the distance so it stops when it hits.
@@ -131,6 +132,7 @@ void AIMechanicsComponent::fireWeapon(double dt)
 void AIMechanicsComponent::move(double dt)
 {
 	glm::vec3 currPosition = this->getUser()->getPosition();
+
 
 	//Stops vector subscript out of range errors
 	if (goalNodeIndex > currentRoute.size() - 1)
@@ -158,7 +160,7 @@ void AIMechanicsComponent::move(double dt)
 	if (!atFinalDestination)
 	{
 		// If still travelling to next position
-		if (glm::distance(currPosition, currentRoute[goalNodeIndex]) > 1)
+		if (glm::distance(currPosition, currentRoute[goalNodeIndex]) > 0.5)
 		{
 			velocity = glm::normalize(currentRoute[goalNodeIndex] - currPosition);
 			velocity *= 15 * dt;
@@ -166,7 +168,7 @@ void AIMechanicsComponent::move(double dt)
 		else
 		{
 			//If at the position of the last node in the current path
-			if (glm::distance(currPosition, currentRoute[currentRoute.size() - 1]) < 1)
+			if (glm::distance(currPosition, currentRoute[currentRoute.size() - 1]) < 0.5)
 			{
 				atFinalDestination = true;
 				velocity = glm::vec3(0);
@@ -230,18 +232,17 @@ void AIMechanicsComponent::attack(double dt)
 
 			if (dist <= weaponRange - 5)
 			{
-
-
 				glm::vec3 AIVec = this->user->getPosition() - temp->getUser()->getPosition();
 				glm::vec2 playerVec(0, 1);
 
 				double angleInDegrees = atan2(AIVec.x, AIVec.z) - atan2(playerVec.y, playerVec.x);
 				angleInDegrees = glm::degrees(angleInDegrees);
-				this->user->setRotationDegrees(angleInDegrees + 180);
+				//this->user->setRotationDegrees(angleInDegrees + 180);
+				this->user->setRotationDegrees(((angleInDegrees)*0.5) - 90);
 
 				if (cooldownTimer > rateOfFire)
 				{
-					audio->playAudio("../../assets/audio/Laser-whiplash-01.wav", false, this->user->getPosition(),temp->getUser()->getPosition());
+					audio->playAudio("../../assets/audio/Laser-whiplash-01.wav", false, this->user->getPosition(),this->thePlayer->getPosition());
 					fireWeapon(dt);
 					cooldownTimer = 0;
 				}

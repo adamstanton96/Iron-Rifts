@@ -172,7 +172,7 @@ void createGround(glm::vec3 pos)
 
 
 
-void createEnemy(AISystem* aisys, ParticleRenderer* particleRender, std::vector<glm::vec3> targets, glm::vec3 spawnPos, std::string name)
+void createEnemy(AISystem* aisys, ParticleRenderer* particleRender, std::vector<glm::vec3> targets, glm::vec3 spawnPos, std::string name, GameObject *thePlayer)
 {
 	GameObject *Enemey = new GameObject(name);
 	Enemey->setPosition(spawnPos);
@@ -187,6 +187,7 @@ void createEnemy(AISystem* aisys, ParticleRenderer* particleRender, std::vector<
 	EnemyAI->setPhysics(collisionsystem);
 	EnemyAI->addTargets(targets);
 
+	EnemyAI->setThePlayer(thePlayer);
 	EnemyAI->setSpawnPos(spawnPos);
 
 	//bullet itself
@@ -252,7 +253,7 @@ int main(int argc, char *argv[])
 
 	GameObject *Player = new GameObject("Player 1");
 
-	Player->setPosition(glm::vec3(0.0f, 0.0f, 0.0f));
+	Player->setPosition(glm::vec3(-60, 0, -5));
 	Player->setScaling(glm::vec3(1.0f, 1.0f, 1.0f));
 	Player->setRotationAxis(glm::vec3(0, -1, 0));
 	Player->setRotationDegrees(0);
@@ -291,7 +292,7 @@ int main(int argc, char *argv[])
 	//PlayerMechanics
 	PlayerMechanicsComponent *playerMechanicsComponent = new PlayerMechanicsComponent("PlayerMechanicsComponent");
 
-	playerMechanicsComponent->setSpawnPos(glm::vec3(-80, 0, 0));
+	playerMechanicsComponent->setSpawnPos(glm::vec3(-60, 0, -5));
 
 	playerMechanicsComponent->init();
 	playerMechanicsComponent->setInput(inputSystem);
@@ -331,7 +332,7 @@ int main(int argc, char *argv[])
 
 		{ -80,-75 },{ -60,-75 },{ -40,-75 },{ -20,-75 },{ 20,-75 },{ 40,-75 },{ 60,-75 },{ 80,-75 },				//horizontal corridor 9-16 (8)
 	
-		{ -80, 0 },{ -80,-20 },{ -80,-40 },{ -80,-60 },{ -80,-100 },{ -80,-120 },{ -80,-140 },{ -80,-140 },			//vertical left corridor 17-24 (8)
+		{ -85, 0 },{ -85,-20 },{ -85,-40 },{ -85,-60 },{ -85,-100 },{ -85,-120 },{ -85,-140 },{ -85,-140 },			//vertical left corridor 17-24 (8)
 
 		{ 80, 0 },{ 80,-20 },{ 80,-40 },{ 80,-60 },{ 80,-100 },{ 80,-120 },{ 80,-140 },{ 80,-140 },				//vertical Right corridor 25-32 (8)
 
@@ -395,11 +396,10 @@ int main(int argc, char *argv[])
 
 
 
-	createEnemy(AiSys, particleRender, generateRandomPaths(targets), glm::vec3(80, 0, 0), "Player 2");		//P2
-	createEnemy(AiSys, particleRender, generateRandomPaths(targets), glm::vec3(80, 0, -140), "Player 3");	//P3
-	createEnemy(AiSys, particleRender, generateRandomPaths(targets), glm::vec3(-80, 0, -140), "Player 4");	//P4
-	//createEnemy(AiSys, particleRender, generateRandomPaths(targets));
-	//createEnemy(AiSys, particleRender, generateRandomPaths(targets));
+	createEnemy(AiSys, particleRender, generateRandomPaths(targets), glm::vec3(60, 0, -5), "Player 2", Player);		//P2
+	createEnemy(AiSys, particleRender, generateRandomPaths(targets), glm::vec3(60, 0, -125), "Player 3", Player);	//P3
+	createEnemy(AiSys, particleRender, generateRandomPaths(targets), glm::vec3(-60, 0, -125), "Player 4", Player);	//P4
+
 
 
 	//Need to do this becaue for some reason the bulletParticle objects need
@@ -624,7 +624,7 @@ int main(int argc, char *argv[])
 
 	Game* game = new Game(sceneObjects);
 	game->addPlayers(objectList);
-	
+	game->init();
 	
 	int frameRate = 0;
 	float timeSoFar = 0;
