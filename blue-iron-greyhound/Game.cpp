@@ -26,7 +26,7 @@ void Game::update(double dt)
 			players[i]->update(dt);
 		else
 		{
-			players[i]->setPosition(glm::vec3(-1000));
+			players[i]->setPosition(glm::vec3(-10000));
 			if (!players[i]->getComponent<MechanicsComponent>()->getAwaitingRespawn())
 			{
 				players[i]->update(dt);

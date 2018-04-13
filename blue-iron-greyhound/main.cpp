@@ -166,6 +166,25 @@ void createGround(glm::vec3 pos)
 		sceneObjects.push_back(GroundPlane);
 }
 
+void createRespawnNote(glm::vec3 pos, float rotation, float scale)
+{
+	//TexCube
+	GameObject *TexCube = new GameObject("wall");
+	TexCube->setPosition(glm::vec3(pos));
+	TexCube->setScaling(glm::vec3(scale));
+	TexCube->setRotationAxis(glm::vec3(0, 1, 0));
+	TexCube->setRotationDegrees(rotation);
+
+	MeshComponent* respawnMesh = new MeshComponent("respawnMesh");
+	TexCube->addComponent(respawnMesh);
+	respawnMesh->setRenderer(renderer);
+	respawnMesh->loadObject("../../assets/cube_with_2UVs.DAE");
+	respawnMesh->loadTexture("../../assets/awaitingRespawn.bmp");
+
+	sceneObjects.push_back(TexCube);
+}
+
+
 #include <ctime>
 #include <cstdlib>
 
@@ -613,7 +632,7 @@ int main(int argc, char *argv[])
 	createCornerWall(glm::vec3(-20.0f, -4.9f, -110.0f), -45, glm::vec3(14, 10, 14));
 	createCornerWall(glm::vec3(40.0f, -4.9f, -110.0f), -45, glm::vec3(14, 10, 14));
 
-
+	createRespawnNote(glm::vec3(-10000 , -10000, -9980), 180.0f, 15);
 
 	GameObject *musicBox = new GameObject("musicBox");
 	BackgroundMusicComponent *bgMusic = new BackgroundMusicComponent("bgMusic");
