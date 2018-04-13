@@ -4,8 +4,8 @@
 Game::Game(std::vector<GameObject*> scene)
 {
 	this->scene = scene;
-	this->respawnTime = 30;
-	this->cooldownTimer = 31;
+	this->respawnTime = 20;
+	this->cooldownTimer = 21;
 }
 
 
@@ -76,7 +76,7 @@ void Game::update(double dt)
 
 	for (int i = 0; i < players.size(); i++)
 	{
-		std::cout << players[i]->getName() << " - Score: " << players[i]->getComponent<MechanicsComponent>()->score << std::endl;
+		//std::cout << players[i]->getName() << " - Score: " << players[i]->getComponent<MechanicsComponent>()->score << std::endl;
 	}
 
 

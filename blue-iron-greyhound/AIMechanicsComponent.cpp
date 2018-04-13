@@ -80,7 +80,8 @@ void AIMechanicsComponent::fireWeapon(double dt)
 	glm::vec3 up(0, 1, 0);
 
 	//double theta = (this->getUser()->getRotationDegrees()* DEG_TO_RADIAN);	//The minus was an attempt to fix the collision inaccuracy
-	double theta = -(this->getUser()->getRotationDegrees()* DEG_TO_RADIAN) - 90;
+	//double theta = -(this->getUser()->getRotationDegrees()* DEG_TO_RADIAN) + 135 * DEG_TO_RADIAN;
+	double theta = (-((this->getUser()->getRotationDegrees()* DEG_TO_RADIAN) *2 ) -90 * DEG_TO_RADIAN);
 
 	double cos_thetaf = cos(theta);
 	glm::vec3 cos_theta(cos(theta));
@@ -104,7 +105,7 @@ void AIMechanicsComponent::fireWeapon(double dt)
 	//Debug - print the closest object name
 	if (obj != nullptr)
 	{
-		std::cout << "closest: " << obj->getName() << std::endl;
+		
 
 		MechanicsComponent * comp = obj->getComponent<MechanicsComponent>();
 		if (comp != nullptr)
@@ -112,13 +113,11 @@ void AIMechanicsComponent::fireWeapon(double dt)
 			comp->setHealth(comp->getHealth() - this->damage);
 			if (comp->getHealth() <= 0)
 				this->score++;
-
-			std::cout << comp->getUser()->getName() << "health: " << comp->getHealth();
+			
+			//Debug:
+			//std::cout << "closest: " << obj->getName() << std::endl;
+			//std::cout << comp->getUser()->getName() << "health: " << comp->getHealth();
 		}
-	}
-	else
-	{
-		std::cout << "No Collision: " << std::endl;
 	}
 
 	//Emit bullet - If its going to hit something, set the distance so it stops when it hits.
@@ -240,7 +239,8 @@ void AIMechanicsComponent::attack(double dt)
 
 				double angleInDegrees = atan2(AIVec.x, AIVec.z) - atan2(playerVec.y, playerVec.x);
 				angleInDegrees = glm::degrees(angleInDegrees);
-				this->user->setRotationDegrees(angleInDegrees + 180);
+				//this->user->setRotationDegrees(angleInDegrees + 180);
+				this->user->setRotationDegrees(((angleInDegrees)*0.5) - 90);
 
 				if (cooldownTimer > rateOfFire)
 				{

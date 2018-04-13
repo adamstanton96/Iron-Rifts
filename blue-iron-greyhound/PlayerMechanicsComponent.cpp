@@ -43,6 +43,8 @@ void PlayerMechanicsComponent::update(double dt)
 			cooldownTimer = 0;
 		}	
 	}	
+
+	std::cout << this->getUser()->getPosition().x << "/" << this->getUser()->getPosition().z << std::endl;
 }
 
 void PlayerMechanicsComponent::fireWeapon(double dt)
@@ -81,21 +83,16 @@ void PlayerMechanicsComponent::fireWeapon(double dt)
 	//Debug - print the closest object name
 	if (obj != nullptr)
 	{
-		std::cout << "closest: " << obj->getName() << std::endl;
-
 		MechanicsComponent * comp = obj->getComponent<MechanicsComponent>();
 		if (comp != nullptr)
 		{
 			comp->setHealth(comp->getHealth() - this->damage);
 			if (comp->getHealth() <= 0)
 				this->score++;
-
-			std::cout << comp->getUser()->getName() << "health: " << comp->getHealth();
+			//Debug:
+			//std::cout << "closest: " << obj->getName() << std::endl;
+			//std::cout << comp->getUser()->getName() << "health: " << comp->getHealth();
 		}
-	}
-	else
-	{
-		std::cout << "No Collision: " << std::endl;
 	}
 
 	//Emit bullet - If its going to hit something, set the distance so it stops when it hits.
