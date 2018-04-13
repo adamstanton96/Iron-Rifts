@@ -71,12 +71,13 @@ void Game::update(double dt)
 
 
 	//Sort the playerlist in order of score:
-
 	sortLeaderboard();
 
+	std::cout << "Leaderbaord" << std::endl;
+	//Print it...
 	for (int i = 0; i < players.size(); i++)
 	{
-		//std::cout << players[i]->getName() << " - Score: " << players[i]->getComponent<MechanicsComponent>()->score << std::endl;
+		std::cout << i << ") " << players[i]->getName() << " - Score: " << players[i]->getComponent<MechanicsComponent>()->score << std::endl;
 	}
 
 

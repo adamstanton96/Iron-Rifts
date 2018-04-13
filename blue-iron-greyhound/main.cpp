@@ -685,15 +685,6 @@ int main(int argc, char *argv[])
 		dt = (std::clock() - start) / (double)CLOCKS_PER_SEC;
 
 
-		//Show frame rate
-		if (timeSoFar >= 1)
-		{
-			cout << frameRate << endl;
-
-			timeSoFar = 0;
-			frameRate = 0;
-		}
-
 
 	
 	} while (running);
