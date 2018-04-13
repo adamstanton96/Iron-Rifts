@@ -332,7 +332,7 @@ int main(int argc, char *argv[])
 
 		{ -80,-75 },{ -60,-75 },{ -40,-75 },{ -20,-75 },{ 20,-75 },{ 40,-75 },{ 60,-75 },{ 80,-75 },				//horizontal corridor 9-16 (8)
 	
-		{ -80, 0 },{ -80,-20 },{ -80,-40 },{ -80,-60 },{ -80,-100 },{ -80,-120 },{ -80,-140 },{ -80,-140 },			//vertical left corridor 17-24 (8)
+		{ -85, 0 },{ -85,-20 },{ -85,-40 },{ -85,-60 },{ -85,-100 },{ -85,-120 },{ -85,-140 },{ -85,-140 },			//vertical left corridor 17-24 (8)
 
 		{ 80, 0 },{ 80,-20 },{ 80,-40 },{ 80,-60 },{ 80,-100 },{ 80,-120 },{ 80,-140 },{ 80,-140 },				//vertical Right corridor 25-32 (8)
 
@@ -399,8 +399,7 @@ int main(int argc, char *argv[])
 	createEnemy(AiSys, particleRender, generateRandomPaths(targets), glm::vec3(80, 0, 0), "Player 2", Player);		//P2
 	createEnemy(AiSys, particleRender, generateRandomPaths(targets), glm::vec3(80, 0, -140), "Player 3", Player);	//P3
 	createEnemy(AiSys, particleRender, generateRandomPaths(targets), glm::vec3(-80, 0, -140), "Player 4", Player);	//P4
-	//createEnemy(AiSys, particleRender, generateRandomPaths(targets));
-	//createEnemy(AiSys, particleRender, generateRandomPaths(targets));
+
 
 
 	//Need to do this becaue for some reason the bulletParticle objects need

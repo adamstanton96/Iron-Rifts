@@ -17,7 +17,8 @@ void PlayerMechanicsComponent::init()
 	this->health = 100;
 	this->damage = 20;
 	this->weaponRange = 40;
-	this->rateOfFire = 0.9;
+	//this->rateOfFire = 0.9;
+	this->rateOfFire = 0.1;
 	this->cooldownTimer = 0;
 	this->awaitingRespawn = false;
 	if(this->getUser())

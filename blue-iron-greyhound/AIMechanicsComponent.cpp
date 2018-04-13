@@ -17,20 +17,11 @@ void AIMechanicsComponent::init()
 	this->rateOfFire = 1;
 	this->cooldownTimer = 0;
 	this->awaitingRespawn = false;
-	if (this->getUser())
-		this->getUser()->setPosition(this->spawnPos);
+
 
 	velocity = glm::vec3(0, 0, 0);
 	previousPos = glm::vec3(10);
 
-	//Inventives for where to go. These in the end should be things like
-	//the players psoition or a defensive position
-	//targets.push_back(glm::vec3(0, 0, 0));		//middle top
-	//targets.push_back(glm::vec3(-80, 0, 0));		//middle left
-	//targets.push_back(glm::vec3(-80, 0, -150));		//middle left
-	//targets.push_back(glm::vec3(0, 0, -150));		//middle right
-	//targets.push_back(glm::vec3(80, 0, -150));		//middle
-	//targets.push_back(glm::vec3(80, 0, 0));		//middle
 
 	//Pick one of the targets
 	targetIndex = 0;
@@ -41,8 +32,17 @@ void AIMechanicsComponent::init()
 	//Set currentRoute[0] as the first destination to head to 
 	goalNodeIndex = 0;
 
+
 	//Not at the final destination of currentRoute
 	atFinalDestination = false;
+
+	if (this->getUser())
+	{
+		this->getUser()->setPosition(this->spawnPos);
+
+		//Reset Route
+		currentRoute = AIsystem->findPath(this->spawnPos, currentGoalPosition);
+	}
 }
 
 void AIMechanicsComponent::addTargets(std::vector<glm::vec3> targets)
@@ -72,8 +72,6 @@ void AIMechanicsComponent::setAIsystem(AISystem* ai)
 
 void AIMechanicsComponent::fireWeapon(double dt)
 {
-	//printf("AI Shooty Shooty! \n"); //Testing
-
 	int bulletVelocity = 100;
 
 
@@ -136,6 +134,7 @@ void AIMechanicsComponent::move(double dt)
 {
 	glm::vec3 currPosition = this->getUser()->getPosition();
 
+
 	//Stops vector subscript out of range errors
 	if (goalNodeIndex > currentRoute.size() - 1)
 		goalNodeIndex = 0;
@@ -162,7 +161,7 @@ void AIMechanicsComponent::move(double dt)
 	if (!atFinalDestination)
 	{
 		// If still travelling to next position
-		if (glm::distance(currPosition, currentRoute[goalNodeIndex]) > 1)
+		if (glm::distance(currPosition, currentRoute[goalNodeIndex]) > 0.5)
 		{
 			velocity = glm::normalize(currentRoute[goalNodeIndex] - currPosition);
 			velocity *= 15 * dt;
@@ -170,7 +169,7 @@ void AIMechanicsComponent::move(double dt)
 		else
 		{
 			//If at the position of the last node in the current path
-			if (glm::distance(currPosition, currentRoute[currentRoute.size() - 1]) < 1)
+			if (glm::distance(currPosition, currentRoute[currentRoute.size() - 1]) < 0.5)
 			{
 				atFinalDestination = true;
 				velocity = glm::vec3(0);

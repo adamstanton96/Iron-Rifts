@@ -61,6 +61,7 @@ void Game::update(double dt)
 				players[i]->isAlive = true;
 				players[i]->getComponent<MechanicsComponent>()->init();
 				players[i]->getComponent<MechanicsComponent>()->setAwaitingRespawn(false);
+			
 			}
 
 		}
