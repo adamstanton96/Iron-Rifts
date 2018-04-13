@@ -65,7 +65,7 @@ void openglRenderer::init()
 	if (TTF_Init() == -1)
 		cout << "TTF failed to initialise." << endl;
 
-	textFont = TTF_OpenFont("../../assets/MavenPro-Regular.ttf", 48);
+	textFont = TTF_OpenFont("../../assets/MavenPro-Regular.ttf", 810);
 	if (textFont == NULL)
 		cout << "Failed to open font." << endl;
 	
@@ -186,13 +186,13 @@ void openglRenderer ::drawBillboardedText()
 	
 	glBindTexture(GL_TEXTURE_2D, label);
 
-	glm::mat4 newOrthoProjection = glm::ortho(0.0f, 1200.0f, 0.0f, 600.0f);
-
 
 	mvStack.push(mvStack.top());
 	
-	mvStack.top() = glm::translate(mvStack.top(), glm::vec3(-40.0f, 0.0f, 60.0f));
-	mvStack.top() = glm::scale(mvStack.top(), glm::vec3(5.0f, 5.0f, 5.0f));
+	mvStack.top() = glm::translate(mvStack.top(), glm::vec3(eye.x - 10, eye.y-10, eye.z - 4));
+	mvStack.top() = glm::scale(mvStack.top(), glm::vec3(1.0f, 0.00001f, 1.0f));
+
+	mvStack.top() = glm::rotate(mvStack.top(), float(180 * DEG_TO_RADIAN), glm::vec3(1,0,0));
 
 	OpenglUtils::setUniformMatrix4fv(shaderProgram, "projection", glm::value_ptr(projection));
 

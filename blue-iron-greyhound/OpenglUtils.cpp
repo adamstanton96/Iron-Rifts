@@ -149,7 +149,7 @@ char * texFrag =
 "	// Fragment colour												\n"
 "	out_Color=(diffuseI + specularI +ambientI)* texture(textureUnit0, ex_TexCoord);			\n"
 
-"	if (out_Color.w < 0.5)			\n"
+"	if (out_Color.w < 0.2)			\n"
 "		discard;					\n"
 "	//out_Color = texture(textureUnit0, ex_TexCoord);;					\n"
 "}																							\n"
