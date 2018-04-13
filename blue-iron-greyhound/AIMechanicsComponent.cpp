@@ -232,8 +232,6 @@ void AIMechanicsComponent::attack(double dt)
 
 			if (dist <= weaponRange - 5)
 			{
-
-
 				glm::vec3 AIVec = this->user->getPosition() - temp->getUser()->getPosition();
 				glm::vec2 playerVec(0, 1);
 

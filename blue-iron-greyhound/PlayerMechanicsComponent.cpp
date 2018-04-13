@@ -43,8 +43,6 @@ void PlayerMechanicsComponent::update(double dt)
 			cooldownTimer = 0;
 		}	
 	}	
-
-	std::cout << this->getUser()->getPosition().x << "/" << this->getUser()->getPosition().z << std::endl;
 }
 
 void PlayerMechanicsComponent::fireWeapon(double dt)
