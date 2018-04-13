@@ -88,12 +88,11 @@ int main(int argc, char *argv[])
 	//Temporarily hold all objects so that main isn't so awkward
 	std::vector<GameObject*> objectList;
 	
-	//hud
-	renderer->drawBillboardedText();
+	
 	////////////////////////////////////////////////////
 	//First Object - Acting as player (camera component / movement component)
 	GameObject *Player = new GameObject("player");
-	Player->setPosition(glm::vec3(5.0f, 0.0f, 60.0f));
+	Player->setPosition(glm::vec3(-40.0f, 0.0f, 60.0f));
 	Player->setScaling(glm::vec3(1.0f, 1.0f, 1.0f));
 	Player->setRotationAxis(glm::vec3(0, -1, 0));
 	Player->setRotationDegrees(0);
@@ -335,6 +334,9 @@ int main(int argc, char *argv[])
 		{
 			objectList[i]->update();
 		}
+
+		//hud
+		renderer->drawBillboardedText();
 
 		renderer->swapBuffers();
 

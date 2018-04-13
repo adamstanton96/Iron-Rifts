@@ -146,8 +146,11 @@ char * texFrag =
 "	vec4 amb = min(ambientI,vec4(1.0f));													\n"
 "																							\n"
 "	//out_Color = (diffuseI + specularI) + ambientI*texture(textureUnit0, ex_TexCoord),vec4(1.0f); \n"
-"	// Fragment colour																		\n"
-"	out_Color= (diffuseI + specularI +ambientI)*texture(textureUnit0, ex_TexCoord);			\n"
+"	// Fragment colour												\n"
+"	out_Color=(diffuseI + specularI +ambientI)* texture(textureUnit0, ex_TexCoord);			\n"
+
+"	if (out_Color.w < 0.5)			\n"
+"		discard;					\n"
 "	//out_Color = texture(textureUnit0, ex_TexCoord);;					\n"
 "}																							\n"
 };
@@ -502,7 +505,6 @@ GLuint OpenglUtils::textToTexture(const char * str, GLuint textID, TTF_Font *tex
 	stringImage = TTF_RenderText_Blended(font, str, colour);
 
 	if (stringImage == NULL)
-		//exitFatalError("String surface not created.");
 		std::cout << "String surface not created." << std::endl;
 
 	GLuint w = stringImage->w;

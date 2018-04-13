@@ -62,10 +62,10 @@ private:
 	glm::vec3 up;
 	glm::mat4 projection;
 	stack<glm::mat4> mvStack;
-	GLuint labels[1];
+	GLuint label;
 	TTF_Font * textFont;
 	GLuint meshIndexCount;
-	GLuint meshObjects[1];
+	GLuint meshObject;
 
 };
 #endif

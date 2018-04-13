@@ -43,6 +43,8 @@ void openglRenderer::init()
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_SMOOTH);
 
+	
+
 	projection = glm::perspective(float(60.0f*DEG_TO_RADIAN), 1200.0f / 600.0f, 0.5f, 2000.0f);
 
 	glm::mat4 modelview(1.0);
@@ -59,7 +61,7 @@ void openglRenderer::init()
 	lightPos = glm::vec4(0.0f, 5.0f, 0.0f, 0.0f);
 
 
-	// set up TrueType / SDL_ttf
+	//Text on screen set ups
 	if (TTF_Init() == -1)
 		cout << "TTF failed to initialise." << endl;
 
@@ -68,20 +70,18 @@ void openglRenderer::init()
 		cout << "Failed to open font." << endl;
 	
 
-	labels[0] = 0;
-	labels[0] = OpenglUtils::textToTexture(" Player health ", labels[0], textFont);//Actual set up of label. If dynamic, this should go in draw function
+	label = 0;
+	label= OpenglUtils::textToTexture("Player health: ", label, textFont);//Actual set up of label. If dynamic, this should go in draw function
 
+	vector<int> meshIDs;
+	vector<int> indexCounts;
+	vector<glm::vec3> minmax;
 
-	meshIndexCount = 0;
-	vector<GLfloat> verts;
-	vector<GLfloat> norms;
-	vector<GLfloat> tex_coords;
-	vector<GLuint> indices;
-	//OpenglUtils::loadObj("cube.obj", verts, norms, tex_coords, indices);
-	meshIndexCount = indices.size();
-	//textures[0] = loadBitmap("fabric.bmp");
+	//Load objects into temporary containers
+	AssimpLoader::loadObjectData("../../assets/cube_with_2UVs.DAE", meshIDs, indexCounts, minmax);
 
-	meshObjects[0] = OpenglUtils::createMesh(verts.size() / 3, verts.data(), nullptr, norms.data(), tex_coords.data(), NULL, meshIndexCount, indices.data());
+	meshIndexCount = indexCounts[0];
+	meshObject = meshIDs[0];
 }
 
 //for testing
@@ -180,33 +180,29 @@ void openglRenderer::draw(MeshComponent* mesh)
 
 void openglRenderer ::drawBillboardedText()
 {
+	cameraUpdate();
 
-	// clear the screen
-	glEnable(GL_CULL_FACE);
-	glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glUseProgram(shaderProgram);	
+	
+	glBindTexture(GL_TEXTURE_2D, label);
+
+	glm::mat4 newOrthoProjection = glm::ortho(0.0f, 1200.0f, 0.0f, 600.0f);
 
 
+	mvStack.push(mvStack.top());
+	
+	mvStack.top() = glm::translate(mvStack.top(), glm::vec3(-40.0f, 0.0f, 60.0f));
+	mvStack.top() = glm::scale(mvStack.top(), glm::vec3(5.0f, 5.0f, 5.0f));
 
-	glm::mat4 modelview(1.0);
-	mvStack.push(modelview);
+	OpenglUtils::setUniformMatrix4fv(shaderProgram, "projection", glm::value_ptr(projection));
 
-	 
-
-	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, labels[0]);
-
-	modelview = glm::translate(modelview, glm::vec3(5.0f, 10.0f, 0.0f));
-	modelview = glm::scale(modelview, glm::vec3(0.5f, 0.5f, 0.0f));
-	OpenglUtils::setUniformMatrix4fv(hudShaderProgram, "modelview", glm::value_ptr(modelview));
-	mvStack.pop();
-	glDisable(GL_CULL_FACE);
+	OpenglUtils::setUniformMatrix4fv(shaderProgram, "modelview", glm::value_ptr(mvStack.top()));
+	
 	glDisable(GL_DEPTH_TEST);
-	OpenglUtils::drawIndexedMesh(meshObjects[0], meshIndexCount, GL_TRIANGLES);
-	glEnable(GL_CULL_FACE);
+	OpenglUtils::drawIndexedMesh(meshObject, meshIndexCount, GL_TRIANGLES);
 	glEnable(GL_DEPTH_TEST);
 
-
+	mvStack.pop();
 }
 
 void openglRenderer::drawBillboardedTexture(glm::vec3 position, glm::vec3 scale, char* filepath) {
@@ -223,7 +219,6 @@ void openglRenderer::loadTexture(MeshComponent* mesh, char * filename)
 //Uses assimp to all the object data we need for creating a mesh VBO
 void openglRenderer::loadObject(MeshComponent* mesh, const char * filename)
 {
-
 	vector<int> meshIDs;
 	vector<int> indexCounts;
 	vector<glm::vec3> minmax;
@@ -234,7 +229,6 @@ void openglRenderer::loadObject(MeshComponent* mesh, const char * filename)
 	mesh->setMeshes(meshIDs);
 	mesh->setIndexCounts(indexCounts);
 	mesh->setMinMax(minmax);
-
 }
 
 
@@ -251,7 +245,6 @@ void openglRenderer::setSceneLights()
 
 	OpenglUtils::setLight(shaderProgram, globalLight);
 	OpenglUtils::setMaterial(shaderProgram, material1);
-
 }
 
 
