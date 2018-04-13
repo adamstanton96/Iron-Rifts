@@ -615,12 +615,33 @@ int main(int argc, char *argv[])
 
 
 
+
+
+
 	GameObject *musicBox = new GameObject("musicBox");
 	BackgroundMusicComponent *bgMusic = new BackgroundMusicComponent("bgMusic");
 	bgMusic->setAudio(audioSystem);
 	bgMusic->setAudioPath("../../assets/audio/cautious-path-01.ogg");
 	musicBox->addComponent(bgMusic);
 	musicBox->init();
+
+#include "HUDmesh.h"
+
+	//HUD item
+	GameObject *HUD = new GameObject("hud");
+	HUD->setPosition(glm::vec3(-10, -10 , -7));		//this position will act as an offset to the camera position
+	HUD->setScaling(glm::vec3(1.0f, 0.0001f, 1.0f));
+	HUD->setRotationAxis(glm::vec3(1, 0, 0));			// The rotation is actually hardcoded in the render function
+	HUD->setRotationDegrees(0);
+
+	HUDmesh* hudMesh = new HUDmesh();
+	hudMesh->setText("Health: ");
+	hudMesh->init();
+	
+	HUD->addComponent(hudMesh);
+	hudMesh->render = renderer;
+	sceneObjects.push_back(HUD);
+
 
 	Game* game = new Game(sceneObjects);
 	game->addPlayers(objectList);

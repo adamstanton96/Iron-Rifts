@@ -169,8 +169,8 @@ void openglRenderer::drawBillboardedText(HUDmesh* mesh)
 
 	mvStack.push(mvStack.top());
 
-	mvStack.top() = glm::translate(mvStack.top(), mesh->pos);
-	//mvStack.top() = glm::scale(mvStack.top(), mesh->scale);
+	mvStack.top() = glm::translate(mvStack.top(), eye + mesh->pos);
+	mvStack.top() = glm::scale(mvStack.top(), mesh->scale);
 
 	mvStack.top() = glm::rotate(mvStack.top(), float(180 * DEG_TO_RADIAN), glm::vec3(1, 0, 0));
 

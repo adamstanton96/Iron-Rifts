@@ -5,21 +5,24 @@
 
 
 
-/*
+
 char * minimalVert =
 {	
 	"//vertex shader							\n"
 	"											\n"
 	"#version 330								\n"
 	"											\n"
-	"in vec3 in_position;						\n"
-	"in vec3 in_Color;							\n"
-	"out vec3 ex_Color;							\n"
+	"in vec3 in_Position;						\n"
+	"in vec4 in_Color;							\n"
+	"out vec4 ex_Color;							\n"
 	"											\n"
+	"	uniform mat4 modelview;											\n"
+	"uniform mat4 projection;											\n"
 	"void main(void)							\n"
 	"{											\n"
+	"	vec4 vertexPosition = modelview * vec4(in_Position,1.0);		\n"
 	"	ex_Color = in_Color;					\n"
-	"	gl_Position = vec4(in_position, 1.0);	\n"
+	"	gl_Position = projection * vertexPosition;						\n"
 	"}                                          \n"
 };
 
@@ -27,21 +30,24 @@ char * minimalFrag =
 {
 "									\n"
 "	#version 330					\n"
-"									\n"
+"layout(location = 0) out vec4 out_Color;					\n"
 "	precision highp float;			\n"
 "									\n"
-"	in  vec3 ex_Color;				\n"
-"	out vec4 out_Color;				\n"
+"	in  vec4 ex_Color;				\n"
+"	//out vec4 out_Color;				\n"
 "									\n"
 "	void main(void)					\n"
 "	{								\n"
-"	out_Color = vec4(ex_Color,1.0); \n"
+"	out_Color = ex_Color; \n"
+"									\n"
+"	if(	out_Color.w < 0.3)							\n"
+"				discard;					\n"
 "									\n"
 "	}								\n"
 
 };
 
-*/
+
 
 char * texVert =
 {
@@ -153,6 +159,9 @@ char * texFrag =
 "	//out_Color = (diffuseI + specularI) + ambientI*texture(textureUnit0, ex_TexCoord),vec4(1.0f); \n"
 "	// Fragment colour																		\n"
 "	out_Color= (diffuseI + specularI +ambientI)*texture(textureUnit0, ex_TexCoord);			\n"
+"																							\n"
+"				if(out_Color.w < 0.3)																			\n"
+"					discard;		\n"
 "	//out_Color = texture(textureUnit0, ex_TexCoord);;					\n"
 "}																							\n"
 };
@@ -292,6 +301,72 @@ namespace OpenglUtils
 
 		return p;
 	}
+
+	GLuint initHUDShaders()
+	{
+		GLuint p, f, v;
+
+		char *vs, *fs;
+
+		v = glCreateShader(GL_VERTEX_SHADER);
+		f = glCreateShader(GL_FRAGMENT_SHADER);
+
+		// load shaders & get length of each
+		GLint vlen;
+		GLint flen;
+
+		//vs = loadFile(vertFile, vlen);
+		//fs = loadFile(fragFile, flen);
+
+		vs = minimalVert;
+		fs = minimalFrag;
+
+
+
+		const char * vv = vs;
+		const char * ff = fs;
+
+		//glShaderSource(v, 1, &vv, &vlen);
+		//glShaderSource(f, 1, &ff, &flen);
+
+		glShaderSource(v, 1, &vv, NULL);
+		glShaderSource(f, 1, &ff, NULL);
+
+		GLint compiled;
+
+		glCompileShader(v);
+		glGetShaderiv(v, GL_COMPILE_STATUS, &compiled);
+		if (!compiled) {
+			cout << "Vertex shader not compiled." << endl;
+			OpenglUtils::printShaderError(v);
+		}
+
+		glCompileShader(f);
+		glGetShaderiv(f, GL_COMPILE_STATUS, &compiled);
+		if (!compiled) {
+			cout << "Fragment shader not compiled." << endl;
+			OpenglUtils::printShaderError(f);
+		}
+
+		p = glCreateProgram();
+
+		glAttachShader(p, v);
+		glAttachShader(p, f);
+
+		glBindAttribLocation(p, RT3D_VERTEX, "in_Position");
+		glBindAttribLocation(p, RT3D_COLOUR, "in_Color");
+		glBindAttribLocation(p, RT3D_NORMAL, "in_Normal");
+		glBindAttribLocation(p, RT3D_TEXCOORD, "in_TexCoord");
+
+		glLinkProgram(p);
+		glUseProgram(p);
+
+		//delete[] vs; // dont forget to free allocated memory
+		//delete[] fs; // we allocated this in the loadFile function...
+
+		return p;
+	}
+
 
 
 	GLuint initParticleShaders(char *vertFile,char *fragFile)
@@ -592,59 +667,6 @@ namespace OpenglUtils
 	}
 
 
-	// textToTexture
-	GLuint textToTexture(const char * str, GLuint textID, TTF_Font *textFont) {
-
-
-
-		TTF_Font *font = textFont;
-		SDL_Color colour = { 255, 255, 255 };
-		SDL_Color bg = { 0, 0, 0 };
-
-
-		SDL_Surface *stringImage;
-		stringImage = TTF_RenderText_Blended(font, str, colour);
-
-		if (stringImage == NULL)
-			std::cout << "String surface not created." << std::endl;
-
-		GLuint w = stringImage->w;
-		GLuint h = stringImage->h;
-		GLuint colours = stringImage->format->BytesPerPixel;
-
-		GLuint format, internalFormat;
-		if (colours == 4) {   // alpha
-			if (stringImage->format->Rmask == 0x000000ff)
-				format = GL_RGBA;
-			else
-				format = GL_BGRA;
-		}
-		else {             // no alpha
-			if (stringImage->format->Rmask == 0x000000ff)
-				format = GL_RGB;
-			else
-				format = GL_BGR;
-		}
-		internalFormat = (colours == 4) ? GL_RGBA : GL_RGB;
-
-		GLuint texture = textID;
-
-		if (texture == 0) {
-			glGenTextures(1, &texture);
-			glBindTexture(GL_TEXTURE_2D, texture);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-		} //Do this only when you initialise the texture to avoid memory leakage
-
-		glBindTexture(GL_TEXTURE_2D, texture);
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, stringImage->w, stringImage->h, 0, GL_RGBA, GL_UNSIGNED_BYTE, stringImage->pixels);
-		glBindTexture(GL_TEXTURE_2D, NULL);
-
-		SDL_FreeSurface(stringImage);
-		return texture;
-	}
 
 
 

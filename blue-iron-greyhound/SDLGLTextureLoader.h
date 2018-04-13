@@ -7,6 +7,7 @@
 #include "SDL.h"
 #include <SDL_image.h>
 #include <iostream>
+#include "SDL_ttf.h"
 
 
 namespace SDLGLTextureLoader {
@@ -22,6 +23,7 @@ namespace SDLGLTextureLoader {
 
 	GLuint loadMd2Bitmap(char *fname);
 
+	GLuint textToTexture(const char * str, GLuint textID, TTF_Font *textFont);
 
 	
 }

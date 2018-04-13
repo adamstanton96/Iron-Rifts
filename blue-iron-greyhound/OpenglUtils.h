@@ -6,12 +6,13 @@ This is a complete rip off of rt3d
 #ifndef OPENGLUTILS
 #define OPENGLUTILS
 
-#include "SDL_ttf.h"
+#include"SDL.h"
+
 #include <GL/glew.h>
 #include <iostream>
 #include <fstream>
 #include <string>
-//#include"SDL.h"
+//
 
 using namespace std;
 
@@ -32,7 +33,7 @@ namespace OpenglUtils
 		GLfloat position[4];
 	};
 
-	GLuint textToTexture(const char * str, GLuint textID, TTF_Font *textFont);
+	
 
 	void printShaderError(const GLint shader);
 
@@ -40,6 +41,7 @@ namespace OpenglUtils
 
 	GLuint initShaders(const char *vertFile, const char *fragFile);
 	GLuint initParticleShaders( char *vertFile,  char *fragFile);
+	GLuint initHUDShaders();
 
 	GLuint createMesh(const GLuint numVerts, const GLfloat* vertices, const GLfloat* colours, const GLfloat* normals,
 		const GLfloat* texcoords,const GLuint texCount, const GLuint indexCount, const GLuint* indices);
