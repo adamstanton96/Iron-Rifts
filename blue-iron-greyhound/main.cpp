@@ -295,7 +295,7 @@ int main(int argc, char *argv[])
 	audioTester->setAudio(audioSystem);
 	audioTester->setInput(inputSystem);
 
-	Player->addComponent(audioTester);
+	///Player->addComponent(audioTester);
 	Player->addComponent(cameraComponent);
 	Player->addComponent(moveComponent);
 

@@ -21,15 +21,33 @@ void MovementComponent::update(double dt)
 
 	//Reset the movement vector...
 	moveVector = glm::vec3(0.0f, 0.0f, 0.0f);
+
+	//If both of these are active player is moving at an angle and must be slowed down.
+	bool verticalMove = false;
+	bool horizMove = false;
+
 	//Check for input...
 	if (this->input->keyPressed("W"))
-		moveForward(40*dt);
+	{
+		verticalMove = true;
+		moveForward(40 * dt);
+	}
 	if (this->input->keyPressed("S"))
-		moveBackwards(40*dt);
+	{
+		verticalMove = true;
+		moveBackwards(40 * dt);
+	}
 	if (this->input->keyPressed("A"))
-		moveLeft(40*dt);
+	{
+		horizMove = true;
+		moveLeft(40 * dt);
+	}
 	if (this->input->keyPressed("D"))
-		moveRight(40*dt);
+	{
+		horizMove = true;
+		moveRight(40 * dt);
+	}
+	
 
 	//Get current mouseposition
 	glm::vec2 mousePosition = this->input->getMousePosition();
@@ -39,8 +57,10 @@ void MovementComponent::update(double dt)
 	glm::vec2 playerVec(0,1);
 
 	//Mouse position and an x, y representing the center of the screen (where the player should be)
+	//Ideally the values given to set up the game window would be accessible and then no matter the
+	//size of screen this would work fine, as of now if we change screen size it will fuck the gameplay up
 	glm::vec2 mouseVec = mousePosition - glm::vec2(600,300);		
-	//cout << mousePosition.x << ", " << mousePosition.y << ", " << endl;
+
 
 	float angleInDegrees_ = atan2(mouseVec.y, mouseVec.x) - atan2(playerVec.y, playerVec.x);
 	angleInDegrees_ = glm::degrees(angleInDegrees_);
@@ -50,8 +70,12 @@ void MovementComponent::update(double dt)
 	//Set players rotation based on where the mouse is!
 	this->user->setRotationDegrees(angleInDegrees_);
 
+
 	//Update the user's position by the movement vector...
-	this->user->setPosition(userPos + moveVector);
+	if(verticalMove && horizMove)
+		this->user->setPosition(userPos + moveVector/glm::vec3(1.5));
+	else
+		this->user->setPosition(userPos + moveVector);
 }
 
 void MovementComponent::moveForward() { moveForward(0.5f); }
