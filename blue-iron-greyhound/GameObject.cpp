@@ -13,7 +13,7 @@ GameObject::GameObject(std::string name)
 	Object::name = name;
 	isAlive = true;
 
-	deacceleration = 100;
+	deacceleration = 0.94; //0.9 -> ~1.0 for noticable deacceleration
 
 	velocity = glm::vec3(0);
 	//GameObject::gameObjects.push_back(this);
@@ -42,7 +42,7 @@ void GameObject::update(double dt)
 
 	
 	if(glm::length(velocity) > 0)
-	velocity *= glm::vec3(deacceleration*dt, 0, deacceleration*dt);
+	velocity *= glm::vec3(deacceleration, 0, deacceleration);
 
 	position += velocity;
 

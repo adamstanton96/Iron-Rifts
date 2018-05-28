@@ -61,32 +61,30 @@ bool SDLInputSystem::keyPressed(std::string key)
 }
 
 bool SDLInputSystem::mousePressLeft() {
-	int i = 1;
+
 	SDL_Event sdlEvent;
+
 	while (SDL_PollEvent(&sdlEvent))
 	{
-		if (sdlEvent.type == SDL_QUIT)	//If the user quits:
-			i = 0;			//End the loop.
-
-		if (sdlEvent.type == SDL_MOUSEMOTION && sdlEvent.button.button == SDL_BUTTON_LEFT)
+		if (sdlEvent.button.button == SDL_BUTTON_LEFT)
 		{
 			cout << "Mouse Left " << endl;
+			return true;
 		}
 		return false;
 	}
 }
 
 bool SDLInputSystem::mousePressRight() {
-	int i = 1;
+	
 	SDL_Event sdlEvent;
+
 	while (SDL_PollEvent(&sdlEvent))
 	{
-		if (sdlEvent.type == SDL_QUIT)	//If the user quits:
-			i = 0;			//End the loop.
-
 		if (sdlEvent.type == SDL_MOUSEMOTION && sdlEvent.button.button == SDL_BUTTON_RIGHT)
 		{
 			cout << "Mouse Right" << endl;
+			return true;
 		}
 		return false;
 	}

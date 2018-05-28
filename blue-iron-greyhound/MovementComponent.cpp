@@ -30,22 +30,22 @@ void MovementComponent::update(double dt)
 	if (this->input->keyPressed("W"))
 	{
 		verticalMove = true;
-		moveForward(40 * dt);
+		moveForward(70 * dt);
 	}
 	if (this->input->keyPressed("S"))
 	{
 		verticalMove = true;
-		moveBackwards(40 * dt);
+		moveBackwards(70 * dt);
 	}
 	if (this->input->keyPressed("A"))
 	{
 		horizMove = true;
-		moveLeft(40 * dt);
+		moveLeft(70 * dt);
 	}
 	if (this->input->keyPressed("D"))
 	{
 		horizMove = true;
-		moveRight(40 * dt);
+		moveRight(70 * dt);
 	}
 	
 
@@ -73,7 +73,7 @@ void MovementComponent::update(double dt)
 
 	//Update the user's position by the movement vector... gets squshed if moving at an angle
 	if (verticalMove && horizMove)
-		this->user->setVelocity( moveVector / glm::vec3(150 * dt));
+		this->user->setVelocity( moveVector / glm::vec3(1.5));
 	else if(verticalMove | horizMove)
 		this->user->setVelocity( moveVector);
 
