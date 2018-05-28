@@ -30,22 +30,22 @@ void MovementComponent::update(double dt)
 	if (this->input->keyPressed("W"))
 	{
 		verticalMove = true;
-		moveForward(70 * dt);
+		moveForward(60 * dt);
 	}
 	if (this->input->keyPressed("S"))
 	{
 		verticalMove = true;
-		moveBackwards(70 * dt);
+		moveBackwards(60 * dt);
 	}
 	if (this->input->keyPressed("A"))
 	{
 		horizMove = true;
-		moveLeft(70 * dt);
+		moveLeft(60 * dt);
 	}
 	if (this->input->keyPressed("D"))
 	{
 		horizMove = true;
-		moveRight(70 * dt);
+		moveRight(60 * dt);
 	}
 	
 
