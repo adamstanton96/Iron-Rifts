@@ -2,6 +2,7 @@
 * Project: Blue Iron Greyhound
 * Adam Stanton, Chloe Madden, Paul McLaughlin, Thomas Mackrell.
 =============================================================================*/
+//Iron Rifts Version 1 
 
 #if _DEBUG
 #pragma comment(linker, "/subsystem:\"console\" /entry:\"WinMainCRTStartup\"")
