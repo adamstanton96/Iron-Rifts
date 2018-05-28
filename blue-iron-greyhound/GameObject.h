@@ -28,6 +28,9 @@ public:
 	void setPosition(glm::vec3 iposition);
 	glm::vec3 getPosition() { return position; }
 
+	void setVelocity(glm::vec3 ivel) { velocity = ivel; }
+	glm::vec3 getVelocity() { return velocity; }
+
 	void setRotationAxis(glm::vec3 rot) { rotationAxis = rot; }	
 	glm::vec3 getRotationAxis() { return rotationAxis; }				
 															
@@ -44,9 +47,12 @@ protected:
 
 private:
 	glm::vec3 position;
+	glm::vec3 velocity;
 	glm::vec3 scaling;
 	glm::vec3 rotationAxis;			
 	float rotationDegrees;
+
+	float deacceleration;
 	
 };
 

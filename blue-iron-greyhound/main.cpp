@@ -304,7 +304,7 @@ int main(int argc, char *argv[])
 	particleRender->init();
 
 	//bullet itself
-	bulletParticle* bullet = new bulletParticle(glm::vec4(1, 0.5f, 0.5f,1.0f), 200, "../../assets/tex/rainTex.png", particleRender); //(colour, numOfParticles, texture, ParticleRenderer)
+	bulletParticle* bullet = new bulletParticle(glm::vec4(1.0f, 1.0f, 1.0f, 1.0f), 200, "../../assets/tex/rainTex.png", particleRender); //(colour, numOfParticles, texture, ParticleRenderer)
 
 	Player->addComponent(bullet);
 
@@ -634,12 +634,12 @@ int main(int argc, char *argv[])
 
 	createRespawnNote(glm::vec3(-10000 , -10000, -9980), 180.0f, 15);
 
-	GameObject *musicBox = new GameObject("musicBox");
+	/*GameObject *musicBox = new GameObject("musicBox");
 	BackgroundMusicComponent *bgMusic = new BackgroundMusicComponent("bgMusic");
 	bgMusic->setAudio(audioSystem);
 	bgMusic->setAudioPath("../../assets/audio/cautious-path-01.ogg");
 	musicBox->addComponent(bgMusic);
-	musicBox->init();
+	musicBox->init();*/
 
 	Game* game = new Game(sceneObjects);
 	game->addPlayers(objectList);
@@ -659,9 +659,16 @@ int main(int argc, char *argv[])
 
 		while (SDL_PollEvent(&sdlEvent)) //This poll event should not be here since it couples the main to SDL. 
 		{
+
 			if (sdlEvent.type == SDL_QUIT)
 			{
 				running = false;
+			}
+
+			if (sdlEvent.button.button == SDL_BUTTON_LEFT)
+			{
+				//cout << "Mouse Left " << endl;
+				playerMechanicsComponent->fireWeapon(dt);
 			}
 		}
 

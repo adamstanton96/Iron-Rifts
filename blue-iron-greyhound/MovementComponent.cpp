@@ -30,22 +30,22 @@ void MovementComponent::update(double dt)
 	if (this->input->keyPressed("W"))
 	{
 		verticalMove = true;
-		moveForward(40 * dt);
+		moveForward(60 * dt);
 	}
 	if (this->input->keyPressed("S"))
 	{
 		verticalMove = true;
-		moveBackwards(40 * dt);
+		moveBackwards(60 * dt);
 	}
 	if (this->input->keyPressed("A"))
 	{
 		horizMove = true;
-		moveLeft(40 * dt);
+		moveLeft(60 * dt);
 	}
 	if (this->input->keyPressed("D"))
 	{
 		horizMove = true;
-		moveRight(40 * dt);
+		moveRight(60 * dt);
 	}
 	
 
@@ -65,17 +65,18 @@ void MovementComponent::update(double dt)
 	float angleInDegrees_ = atan2(mouseVec.y, mouseVec.x) - atan2(playerVec.y, playerVec.x);
 	angleInDegrees_ = glm::degrees(angleInDegrees_);
 
-	//angleInDegrees_ = angleInDegrees_  *DEG_TO_RADIAN;
 
 	//Set players rotation based on where the mouse is!
 	this->user->setRotationDegrees(angleInDegrees_);
 
 
-	//Update the user's position by the movement vector...
-	if(verticalMove && horizMove)
-		this->user->setPosition(userPos + moveVector/glm::vec3(1.5));
-	else
-		this->user->setPosition(userPos + moveVector);
+
+	//Update the user's position by the movement vector... gets squshed if moving at an angle
+	if (verticalMove && horizMove)
+		this->user->setVelocity( moveVector / glm::vec3(1.5));
+	else if(verticalMove | horizMove)
+		this->user->setVelocity( moveVector);
+
 }
 
 void MovementComponent::moveForward() { moveForward(0.5f); }
