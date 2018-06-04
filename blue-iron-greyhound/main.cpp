@@ -649,6 +649,19 @@ int main(int argc, char *argv[])
 	float timeSoFar = 0;
 	bool running = true;
 
+
+	////////////////
+	////HUD TEST////
+	////////////////
+
+	#include "HUDitem.h"
+
+	HUDitem* hud = new HUDitem();
+
+
+
+	//////////////
+
 	SDL_Event sdlEvent;
 	do
 	{

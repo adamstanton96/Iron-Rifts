@@ -83,6 +83,15 @@
     <ClCompile Include="ParticleRenderer.cpp">
       <Filter>Graphics\Particles</Filter>
     </ClCompile>
+    <ClCompile Include="HUDitem.cpp">
+      <Filter>Graphics\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerHUD.cpp">
+      <Filter>Graphics\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="OrthoRenderer.cpp">
+      <Filter>Graphics\UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="OpenglUtils.h">
@@ -209,6 +218,15 @@
     <ClInclude Include="GameManager.h">
       <Filter>Depricated</Filter>
     </ClInclude>
+    <ClInclude Include="HUDitem.h">
+      <Filter>Graphics\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerHUD.h">
+      <Filter>Graphics\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="OrthoRenderer.h">
+      <Filter>Graphics\UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Utils">
@@ -246,6 +264,9 @@
     </Filter>
     <Filter Include="Graphics\Particles">
       <UniqueIdentifier>{174921ac-3048-434a-8dfa-7983d14e50c5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\UI">
+      <UniqueIdentifier>{4dbb2a57-5263-4840-85c3-12c8bba366c4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
