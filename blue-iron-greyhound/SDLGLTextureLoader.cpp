@@ -3,8 +3,8 @@
 namespace SDLGLTextureLoader {
 
 
-	static char* TexturePaths[10];
-	static int TextureIDs[10];
+	static char* TexturePaths[30];
+	static int TextureIDs[30];
 	static int texCount;
 
 	GLuint checkTextures(char* fileName)
@@ -197,7 +197,7 @@ namespace SDLGLTextureLoader {
 		////
 		////
 		GLuint externalFormat, internalFormat;
-		if (format->Amask) {
+ 		if (format->Amask) {
 			internalFormat = GL_RGBA;
 			externalFormat = (format->Rmask < format->Bmask) ? GL_RGBA : GL_BGRA;
 		}

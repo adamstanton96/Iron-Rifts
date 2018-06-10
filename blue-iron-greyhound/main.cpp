@@ -10,6 +10,9 @@
 //Asset pathway:
 /// ../../assets/
 
+#include "HUDitem.h"
+
+#include "PlayerHUD.h"
 
 
 #include "SDL.h"
@@ -654,12 +657,18 @@ int main(int argc, char *argv[])
 	////HUD TEST////
 	////////////////
 
-	#include "HUDitem.h"
 
-	HUDitem* hud = new HUDitem();
+	//OrthoRenderer* orthoRend = new OrthoRenderer();
 
+	HUDitem* item = new HUDitem("../../assets/tex/HUDfull.png", glm::vec3(-0.9, 0.5f, -1.0f), glm::vec3(0.2, 0.05, 0.0001));
+	Player->addComponent(item);
 
+	/*PlayerHUD* HUD = new PlayerHUD();
+	HUD->addHudComponent(item);
+	HUD->setRenderer(orthoRend);
+	HUD->init();*/
 
+	//////////////
 	//////////////
 
 	SDL_Event sdlEvent;
@@ -689,13 +698,11 @@ int main(int argc, char *argv[])
 		
 		renderer->clearScreen();
 
-		//Update all objects
-	//	for (unsigned int i = 0; i < objectList.size(); i++)
-	//	{
-	//		objectList[i]->update(dt);
-//}
-
 		game->update(dt);
+
+		//////////////////
+		///HUD->update(dt);
+		///////////////////
 
 		renderer->swapBuffers();
 

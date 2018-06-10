@@ -1,17 +1,33 @@
 #include "PlayerHUD.h"
+#include "CameraComponent.h"
 
-
-void PlayerHUd::init()
+void PlayerHUD::init()
 {
-
+	renderer->init();
 }
 
-void PlayerHUd::update(double dt)
+void PlayerHUD::setRenderer(OrthoRenderer* r)
+{
+	renderer = r;
+}
+
+
+
+void PlayerHUD::update(double dt)
 {
 	//Update huditems
-	///Loop through hud items
+	for (int i = 0; i < HudElements.size(); i++)
+		HudElements[i]->update(dt);
 
 
-	//then render hud items
-	///Renderer system call
+	//Then render all hud items
+	for(int i = 0; i < HudElements.size(); i++)
+	renderer->render(HudElements[i]);
 }
+
+void PlayerHUD::addHudComponent(HUDitem* item)
+{
+	HudElements.push_back(item);
+
+}
+
