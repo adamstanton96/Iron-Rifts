@@ -655,7 +655,7 @@ int main(int argc, char *argv[])
 
 	////HUD/////////
 	HudLogic* healthLogic = new HUD_Health();
-	HudComponent* HelathBar = new HudComponent(glm::vec3(-0.9, 0.5f, -1.0f), glm::vec3(0.2, 0.01, 0.0001), healthLogic);
+	HudComponent* HelathBar = new HudComponent(glm::vec3(-0.9, 0.5f, -1.0f), glm::vec3(0.2, 0.03, 0.0001), healthLogic);
 	Player->addComponent(HelathBar);
 	//////////////
 

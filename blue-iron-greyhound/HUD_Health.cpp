@@ -21,7 +21,7 @@ void HUD_Health::init(GameObject* _user)
 {
 	this->user = _user;
 
-	playerMech = user->getComponent<PlayerMechanicsComponent>();
+	playerMech = user->getComponent<MechanicsComponent>();
 
 	initialised = true;
 }

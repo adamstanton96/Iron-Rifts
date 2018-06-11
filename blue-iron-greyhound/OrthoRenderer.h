@@ -62,8 +62,6 @@ private:
 		"uniform mat4 projection;											\n"
 		"																	\n"
 		"in  vec3 in_Position;												\n"
-		"in  vec3 in_Normal;												\n"
-
 		"in vec2 in_TexCoord;												\n"
 		"out vec2 ex_TexCoord;												\n"
 		"																	\n"
@@ -88,22 +86,22 @@ private:
 		"// Some drivers require the following						\n"
 		"precision highp float;										\n"
 		"															\n"
-		"	in vec3 ex_N;											\n"
-		"	in vec3 ex_V;											\n"						
 		"															\n"
 		"	uniform sampler2D textureUnit0;							\n"
 		"															\n"
 		"	in vec2 ex_TexCoord;									\n"
 		"															\n"
-		"	void main(void) {										\n"
+		"	void main(void) {		\n"
 		
+		"	vec4 colour =	texture(textureUnit0, ex_TexCoord);		/n"
+		
+		"	if(	colour.a == 0.2)									\n"
+		"		{	discard;	}									\n"
 		"															\n"
 		"															\n"
 		"	// Fragment colour										\n"
-		"	out_Color = texture(textureUnit0, ex_TexCoord);		\n"
-		"															\n"
-		"	if(	out_Color.a < 0.9)									\n"
-		"			discard;										\n"
+		"	out_Color = colour;		\n"
+		"															\n"	
 		"}															\n"
 	};
 
