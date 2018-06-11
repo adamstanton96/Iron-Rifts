@@ -652,14 +652,11 @@ int main(int argc, char *argv[])
 	bool running = true;
 
 
-	////////////////
-	////HUD TEST////
-	////////////////
-	HudLogic* healthLogic = new HUD_Health();
-	HudComponent* HelathBar = new HudComponent("../../assets/tex/HUDfull.png", glm::vec3(-0.9, 0.5f, -1.0f), glm::vec3(0.2, 0.05, 0.0001), healthLogic);
-	Player->addComponent(HelathBar);
 
-	//////////////
+	////HUD/////////
+	HudLogic* healthLogic = new HUD_Health();
+	HudComponent* HelathBar = new HudComponent(glm::vec3(-0.9, 0.5f, -1.0f), glm::vec3(0.2, 0.01, 0.0001), healthLogic);
+	Player->addComponent(HelathBar);
 	//////////////
 
 	SDL_Event sdlEvent;

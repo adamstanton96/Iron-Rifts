@@ -24,7 +24,7 @@ class OrthoRenderer;
 class HudComponent : public Component
 {
 public:
-	HudComponent(char* textureFile, glm::vec3 pos, glm::vec3 scale, HudLogic* _logic);
+	HudComponent(glm::vec3 pos, glm::vec3 scale, HudLogic* _logic);
 	~HudComponent(){}
 
 	void update(double dt);

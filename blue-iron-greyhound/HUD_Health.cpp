@@ -30,7 +30,7 @@ GLuint HUD_Health::textureUpdate()
 {
 	int health = playerMech->getHealth();
 
-
+	
 	if (health == 100)
 		activeTexture = textures[0];
 	else if (health > 90 && health < 100)

@@ -4,9 +4,8 @@
 
 OrthoRenderer renderer;
 
-HudComponent::HudComponent(char* textureFile, glm::vec3 pos, glm::vec3 _scale, HudLogic* _logic)
+HudComponent::HudComponent(glm::vec3 pos, glm::vec3 _scale, HudLogic* _logic)
 {
-	
 	position = pos;
 	scale = _scale;
 
