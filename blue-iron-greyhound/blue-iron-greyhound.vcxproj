@@ -150,9 +150,10 @@
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="GameObject.h" />
+    <ClInclude Include="HudLogic.h" />
+    <ClInclude Include="HUD_Health.h" />
     <ClInclude Include="OrthoRenderer.h" />
-    <ClInclude Include="PlayerHUD.h" />
-    <ClInclude Include="HUDitem.h" />
+    <ClInclude Include="HudComponent.h" />
     <ClInclude Include="InputSystem.h" />
     <ClInclude Include="IronRiftsPhysicsSystem.h" />
     <ClInclude Include="IrrKlangAudioSystem.h" />
@@ -192,9 +193,9 @@
     <ClCompile Include="EnemyAIComponent.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameObject.cpp" />
+    <ClCompile Include="HUD_Health.cpp" />
     <ClCompile Include="OrthoRenderer.cpp" />
-    <ClCompile Include="PlayerHUD.cpp" />
-    <ClCompile Include="HUDitem.cpp" />
+    <ClCompile Include="HudComponent.cpp" />
     <ClCompile Include="InteractiveTestComponent.cpp" />
     <ClCompile Include="IronRiftsPhysicsSystem.cpp" />
     <ClCompile Include="IrrKlangAudioSystem.cpp" />

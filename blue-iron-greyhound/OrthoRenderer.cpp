@@ -32,7 +32,7 @@ void OrthoRenderer::init()
 }
 
 
-void OrthoRenderer::render(HUDitem* item)
+void OrthoRenderer::render(HudComponent* item)
 {
 
 	//glDepthMask(GL_FALSE);

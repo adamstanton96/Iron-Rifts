@@ -10,10 +10,9 @@
 //Asset pathway:
 /// ../../assets/
 
-#include "HUDitem.h"
-
-#include "PlayerHUD.h"
-
+//HUD
+#include "HudComponent.h"
+#include "HUD_Health.h"
 
 #include "SDL.h"
 #include <glm/glm.hpp>
@@ -656,17 +655,9 @@ int main(int argc, char *argv[])
 	////////////////
 	////HUD TEST////
 	////////////////
-
-
-	//OrthoRenderer* orthoRend = new OrthoRenderer();
-
-	HUDitem* item = new HUDitem("../../assets/tex/HUDfull.png", glm::vec3(-0.9, 0.5f, -1.0f), glm::vec3(0.2, 0.05, 0.0001));
-	Player->addComponent(item);
-
-	/*PlayerHUD* HUD = new PlayerHUD();
-	HUD->addHudComponent(item);
-	HUD->setRenderer(orthoRend);
-	HUD->init();*/
+	HudLogic* healthLogic = new HUD_Health();
+	HudComponent* HelathBar = new HudComponent("../../assets/tex/HUDfull.png", glm::vec3(-0.9, 0.5f, -1.0f), glm::vec3(0.2, 0.05, 0.0001), healthLogic);
+	Player->addComponent(HelathBar);
 
 	//////////////
 	//////////////

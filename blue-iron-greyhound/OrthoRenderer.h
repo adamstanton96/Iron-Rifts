@@ -1,5 +1,15 @@
 #pragma once
-class HUDitem;
+/*============================================================================ =
+IronRiftsPhysicsSystem
+Author : Chloe Madden(B00286864)
+
+This class simply renders Hud Components. All hud Items have an OrthoRenderer
+of their own to use and upon update they just send themselves into the renderer
+to display on screen.
+============================================================================ =*/
+class HudComponent;
+#include "HudComponent.h"
+
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
@@ -12,7 +22,6 @@ class HUDitem;
 #include "AssimpLoader.h"
 
 
-#include "HUDitem.h"
 
 
 
@@ -27,12 +36,12 @@ public:
 	~OrthoRenderer() {};
 
 	void init();
-	void render(HUDitem* item);
+	void render(HudComponent* item);
 
 private:
 
 	glm::mat4 projection;
-	glm::mat4 modelveiw;
+	glm::mat4 Identity;
 
 	std::stack<glm::mat4> mvStack;
 
