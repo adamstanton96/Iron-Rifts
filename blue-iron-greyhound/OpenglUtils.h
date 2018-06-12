@@ -1,5 +1,5 @@
 /* 
-This is a complete rip off of rt3d
+This is a complete rip off of rt3d supplied in the real time 3D class 
 */
 
 #ifndef OPENGLUTILS

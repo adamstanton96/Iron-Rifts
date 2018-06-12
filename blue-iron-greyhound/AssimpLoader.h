@@ -3,7 +3,7 @@
 
 #include <assimp/Importer.hpp>      // C++ importer interface
 #include <assimp/scene.h>           // Output data structure
-#include <assimp/postprocess.h>     // Post processing fla
+#include <assimp/postprocess.h>     // Post processing flags
 #include <glm/glm.hpp>
 #include <vector>
 using namespace std;

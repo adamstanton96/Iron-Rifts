@@ -10,7 +10,9 @@
 //Asset pathway:
 /// ../../assets/
 
-
+//HUD
+#include "HudComponent.h"
+#include "HUD_Health.h"
 
 #include "SDL.h"
 #include <glm/glm.hpp>
@@ -649,6 +651,14 @@ int main(int argc, char *argv[])
 	float timeSoFar = 0;
 	bool running = true;
 
+
+
+	////HUD/////////
+	HudLogic* healthLogic = new HUD_Health();
+	HudComponent* HelathBar = new HudComponent(glm::vec3(-0.9, 0.5f, -1.0f), glm::vec3(0.2, 0.03, 0.0001), healthLogic);
+	Player->addComponent(HelathBar);
+	//////////////
+
 	SDL_Event sdlEvent;
 	do
 	{
@@ -676,13 +686,11 @@ int main(int argc, char *argv[])
 		
 		renderer->clearScreen();
 
-		//Update all objects
-	//	for (unsigned int i = 0; i < objectList.size(); i++)
-	//	{
-	//		objectList[i]->update(dt);
-//}
-
 		game->update(dt);
+
+		//////////////////
+		///HUD->update(dt);
+		///////////////////
 
 		renderer->swapBuffers();
 

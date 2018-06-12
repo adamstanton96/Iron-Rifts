@@ -12,7 +12,7 @@ AIMechanicsComponent::AIMechanicsComponent(std::string name)
 void AIMechanicsComponent::init()
 {
 	this->health = 100;
-	this->damage = 15;
+	this->damage = 5;
 	this->weaponRange = 40;
 	this->rateOfFire = 1;
 	this->cooldownTimer = 0;
