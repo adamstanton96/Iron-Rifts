@@ -6,6 +6,8 @@ Game::Game(std::vector<GameObject*> scene)
 	this->scene = scene;
 	this->respawnTime = 20;
 	this->cooldownTimer = 21;
+
+	this->GameWinningScore = 10;
 }
 
 
@@ -19,7 +21,7 @@ void Game::update(double dt)
 {
 	cooldownTimer += dt;
 
-	//Update all objects
+	//Update character objects
 	for (unsigned int i = 0; i < players.size(); i++)
 	{
 		if(players[i]->isAlive == true)
@@ -35,7 +37,8 @@ void Game::update(double dt)
 		}
 
 
-		if (players[0]->getComponent<MechanicsComponent>()->score >= 10)
+		//Flag the winner if there is one
+		if (players[0]->getComponent<MechanicsComponent>()->score >= GameWinningScore)
 		{
 			std::cout << players[0]->getName() << " is the winner!!!" <<std::endl;
 		}
@@ -46,10 +49,13 @@ void Game::update(double dt)
 		
 	}
 
+	//Update scene objects
 	for (unsigned int i = 0; i < scene.size(); i++)
 	{
 		scene[i]->update(dt);
 	}
+
+
 
 	if (cooldownTimer > respawnTime)
 	{

@@ -664,7 +664,6 @@ int main(int argc, char *argv[])
 	{
 		frameRate++;
 		timeSoFar += dt;
-		//start timer 
 		start = std::clock();
 
 		while (SDL_PollEvent(&sdlEvent)) //This poll event should not be here since it couples the main to SDL. 
@@ -677,10 +676,11 @@ int main(int argc, char *argv[])
 
 			if (sdlEvent.button.button == SDL_BUTTON_LEFT)
 			{
-				//cout << "Mouse Left " << endl;
 				playerMechanicsComponent->fireWeapon(dt);
 			}
 		}
+
+
 
 
 		
@@ -688,14 +688,12 @@ int main(int argc, char *argv[])
 
 		game->update(dt);
 
-		//////////////////
-		///HUD->update(dt);
-		///////////////////
-
 		renderer->swapBuffers();
 
 
  
+
+
 		//Stores the time past the frame has taken to complete
 		dt = (std::clock() - start) / (double)CLOCKS_PER_SEC;
 

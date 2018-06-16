@@ -4,17 +4,17 @@ HUD_Health::HUD_Health()
 {
 	initialised = false;
 
-	textures.push_back(SDLGLTextureLoader::loadPNG("../../assets/tex/HUDfull.png"));
-	textures.push_back(SDLGLTextureLoader::loadPNG("../../assets/tex/HUD9.png"));
-	textures.push_back(SDLGLTextureLoader::loadPNG("../../assets/tex/HUD8.png"));
-	textures.push_back(SDLGLTextureLoader::loadPNG("../../assets/tex/HUD7.png"));
-	textures.push_back(SDLGLTextureLoader::loadPNG("../../assets/tex/HUD6.png"));
-	textures.push_back(SDLGLTextureLoader::loadPNG("../../assets/tex/HUD5.png"));
-	textures.push_back(SDLGLTextureLoader::loadPNG("../../assets/tex/HUD4.png"));
-	textures.push_back(SDLGLTextureLoader::loadPNG("../../assets/tex/HUD3.png"));
-	textures.push_back(SDLGLTextureLoader::loadPNG("../../assets/tex/HUD2.png"));
-	textures.push_back(SDLGLTextureLoader::loadPNG("../../assets/tex/HUD1.png"));
-	textures.push_back(SDLGLTextureLoader::loadPNG("../../assets/tex/HUD0.png"));
+	textures.push_back(SDLGLTextureLoader::loadPNG("../../assets/tex/HealthBar/HUDfull.png"));
+	textures.push_back(SDLGLTextureLoader::loadPNG("../../assets/tex/HealthBar/HUD9.png"));
+	textures.push_back(SDLGLTextureLoader::loadPNG("../../assets/tex/HealthBar/HUD8.png"));
+	textures.push_back(SDLGLTextureLoader::loadPNG("../../assets/tex/HealthBar/HUD7.png"));
+	textures.push_back(SDLGLTextureLoader::loadPNG("../../assets/tex/HealthBar/HUD6.png"));
+	textures.push_back(SDLGLTextureLoader::loadPNG("../../assets/tex/HealthBar/HUD5.png"));
+	textures.push_back(SDLGLTextureLoader::loadPNG("../../assets/tex/HealthBar/HUD4.png"));
+	textures.push_back(SDLGLTextureLoader::loadPNG("../../assets/tex/HealthBar/HUD3.png"));
+	textures.push_back(SDLGLTextureLoader::loadPNG("../../assets/tex/HealthBar/HUD2.png"));
+	textures.push_back(SDLGLTextureLoader::loadPNG("../../assets/tex/HealthBar/HUD1.png"));
+	textures.push_back(SDLGLTextureLoader::loadPNG("../../assets/tex/HealthBar/HUD0.png"));
 }
 
 void HUD_Health::init(GameObject* _user)

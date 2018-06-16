@@ -86,11 +86,11 @@
     <ClCompile Include="OrthoRenderer.cpp">
       <Filter>Graphics\UI</Filter>
     </ClCompile>
-    <ClCompile Include="HudComponent.cpp">
-      <Filter>Graphics\UI</Filter>
-    </ClCompile>
     <ClCompile Include="HUD_Health.cpp">
-      <Filter>Graphics\UI\Unique HUD Logic</Filter>
+      <Filter>Graphics\UI\HUD\Unique HUD Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="HudComponent.cpp">
+      <Filter>Graphics\UI\HUD</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -221,14 +221,17 @@
     <ClInclude Include="OrthoRenderer.h">
       <Filter>Graphics\UI</Filter>
     </ClInclude>
-    <ClInclude Include="HudComponent.h">
-      <Filter>Graphics\UI</Filter>
-    </ClInclude>
     <ClInclude Include="HUD_Health.h">
-      <Filter>Graphics\UI\Unique HUD Logic</Filter>
+      <Filter>Graphics\UI\HUD\Unique HUD Logic</Filter>
     </ClInclude>
     <ClInclude Include="HudLogic.h">
-      <Filter>Graphics\UI\Unique HUD Logic</Filter>
+      <Filter>Graphics\UI\HUD\Unique HUD Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="HudComponent.h">
+      <Filter>Graphics\UI\HUD</Filter>
+    </ClInclude>
+    <ClInclude Include="GameMenu.h">
+      <Filter>Graphics\UI\Menus</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -271,8 +274,14 @@
     <Filter Include="Graphics\UI">
       <UniqueIdentifier>{4dbb2a57-5263-4840-85c3-12c8bba366c4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Graphics\UI\Unique HUD Logic">
+    <Filter Include="Graphics\UI\HUD">
+      <UniqueIdentifier>{eed4dacd-02ad-4f4d-a96c-706761369464}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\UI\HUD\Unique HUD Logic">
       <UniqueIdentifier>{c3e2aa53-c74c-41d1-b746-e0b1896bc621}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\UI\Menus">
+      <UniqueIdentifier>{db604399-4777-40d7-9f62-899dff6e0b64}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

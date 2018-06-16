@@ -166,6 +166,7 @@
     <ClInclude Include="ParticleRenderer.h" />
     <ClInclude Include="PhysicsSystem.h" />
     <ClInclude Include="PlayerMechanicsComponent.h" />
+    <ClInclude Include="GameMenu.h" />
     <ClInclude Include="rayCastTestComponent.h" />
     <ClInclude Include="RigidBodyComponent.h" />
     <ClInclude Include="SDLGLTextureLoader.h" />

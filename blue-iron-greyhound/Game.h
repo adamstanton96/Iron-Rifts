@@ -26,4 +26,6 @@ private:
 	std::vector<GameObject*> players;
 
 	void sortLeaderboard();
+
+	int GameWinningScore;
 };

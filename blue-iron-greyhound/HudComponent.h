@@ -11,7 +11,7 @@ textures and will have set conditions which will select the correct texture and 
 
 
 class OrthoRenderer;
-#include "SDLGLTextureLoader.h"
+//#include "SDLGLTextureLoader.h"
 #include <glm/glm.hpp>
 #include<vector>
 #include "OrthoRenderer.h"
