@@ -63,6 +63,9 @@
 //Game
 #include "Game.h"
 
+#include "InfiniteDeathmatchState.h"
+#include "IronRifts.h"
+
 #include "BackgroundMusicComponent.h"
 
 
@@ -643,9 +646,16 @@ int main(int argc, char *argv[])
 	musicBox->addComponent(bgMusic);
 	musicBox->init();*/
 
-	Game* game = new Game(sceneObjects);
-	game->addPlayers(objectList);
-	game->init();
+	///Game* game = new Game(sceneObjects);
+	///game->addPlayers(objectList);
+	///game->init();
+
+	InfiniteDeathmatchState* playState = new InfiniteDeathmatchState(sceneObjects, objectList);
+	//playState->addPlayers(objectList);
+	playState->init();
+
+	IronRifts game;
+	game.addState(playState);
 	
 	int frameRate = 0;
 	float timeSoFar = 0;
@@ -686,7 +696,7 @@ int main(int argc, char *argv[])
 		
 		renderer->clearScreen();
 
-		game->update(dt);
+		game.update(dt);
 
 		renderer->swapBuffers();
 

@@ -132,6 +132,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="AABB.h" />
+    <ClInclude Include="AbstractState.h" />
     <ClInclude Include="AIMechanicsComponent.h" />
     <ClInclude Include="AISystem.h" />
     <ClInclude Include="anorms.h" />
@@ -152,6 +153,8 @@
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="HudLogic.h" />
     <ClInclude Include="HUD_Health.h" />
+    <ClInclude Include="InfiniteDeathmatchState.h" />
+    <ClInclude Include="IronRifts.h" />
     <ClInclude Include="OrthoRenderer.h" />
     <ClInclude Include="HudComponent.h" />
     <ClInclude Include="InputSystem.h" />
@@ -195,6 +198,8 @@
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="HUD_Health.cpp" />
+    <ClCompile Include="InfiniteDeathmatchState.cpp" />
+    <ClCompile Include="IronRifts.cpp" />
     <ClCompile Include="OrthoRenderer.cpp" />
     <ClCompile Include="HudComponent.cpp" />
     <ClCompile Include="InteractiveTestComponent.cpp" />

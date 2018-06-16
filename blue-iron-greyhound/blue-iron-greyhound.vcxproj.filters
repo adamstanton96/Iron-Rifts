@@ -56,8 +56,6 @@
     <ClCompile Include="OBB.cpp">
       <Filter>Physics\Bounding Volumes</Filter>
     </ClCompile>
-    <ClCompile Include="PlayerMechanicsComponent.cpp" />
-    <ClCompile Include="AIMechanicsComponent.cpp" />
     <ClCompile Include="md2model.cpp">
       <Filter>Graphics\MD2</Filter>
     </ClCompile>
@@ -92,6 +90,16 @@
     <ClCompile Include="HudComponent.cpp">
       <Filter>Graphics\UI\HUD</Filter>
     </ClCompile>
+    <ClCompile Include="PlayerMechanicsComponent.cpp">
+      <Filter>Mechanics</Filter>
+    </ClCompile>
+    <ClCompile Include="AIMechanicsComponent.cpp">
+      <Filter>Mechanics</Filter>
+    </ClCompile>
+    <ClCompile Include="InfiniteDeathmatchState.cpp">
+      <Filter>State Machine</Filter>
+    </ClCompile>
+    <ClCompile Include="IronRifts.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="OpenglUtils.h">
@@ -184,9 +192,6 @@
     <ClInclude Include="Sphere.h">
       <Filter>Physics\Bounding Volumes</Filter>
     </ClInclude>
-    <ClInclude Include="MechanicsComponent.h" />
-    <ClInclude Include="PlayerMechanicsComponent.h" />
-    <ClInclude Include="AIMechanicsComponent.h" />
     <ClInclude Include="md2model.h">
       <Filter>Graphics\MD2</Filter>
     </ClInclude>
@@ -233,6 +238,22 @@
     <ClInclude Include="GameMenu.h">
       <Filter>Graphics\UI\Menus</Filter>
     </ClInclude>
+    <ClInclude Include="PlayerMechanicsComponent.h">
+      <Filter>Mechanics</Filter>
+    </ClInclude>
+    <ClInclude Include="MechanicsComponent.h">
+      <Filter>Mechanics</Filter>
+    </ClInclude>
+    <ClInclude Include="AIMechanicsComponent.h">
+      <Filter>Mechanics</Filter>
+    </ClInclude>
+    <ClInclude Include="AbstractState.h">
+      <Filter>State Machine</Filter>
+    </ClInclude>
+    <ClInclude Include="InfiniteDeathmatchState.h">
+      <Filter>State Machine</Filter>
+    </ClInclude>
+    <ClInclude Include="IronRifts.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Utils">
@@ -282,6 +303,12 @@
     </Filter>
     <Filter Include="Graphics\UI\Menus">
       <UniqueIdentifier>{db604399-4777-40d7-9f62-899dff6e0b64}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Mechanics">
+      <UniqueIdentifier>{b17544fc-b6a0-43da-92fd-077e62cb6374}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="State Machine">
+      <UniqueIdentifier>{81a0eead-b424-4857-92f3-6968b7c591b4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
