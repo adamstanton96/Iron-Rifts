@@ -1,6 +1,15 @@
 #pragma once
+/*============================================================================ =
+Iron Rifts (State Manager)
+
+This class holds the possible 
+============================================================================ =*/
+
+
+
 #include "AbstractState.h"
 #include <vector>
+#include "InputSystem.h"
 
 class IronRifts
 {
@@ -11,7 +20,11 @@ public:
 
 	void addState(AbstractState*);
 
-private:
+
 	AbstractState* activeState;
+	InputSystem* input;
+private:
+
+
 	std::vector<AbstractState*> states;
 };

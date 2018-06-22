@@ -11,6 +11,8 @@
 #include <map>
 #include <iostream>
 
+
+
 using namespace std;
 
 typedef std::pair<std::string, unsigned int> keys;
@@ -26,15 +28,15 @@ public:
 	bool mousePressLeft();
 	bool mousePressRight();
 	glm::vec2 getMousePosition();
- 
-	//glm::vec2 getMouseOrigin();
-	
 
-	//Need a mouse function!!!!
+	//NEW chloe 22/06/2018
+	std::vector<const char*> pollInputs();
+ 
+	
 private:
 	glm::vec2 mousePos;
 
 	std::map<std::string, unsigned int> keyMap;
 	bool pressed;
-	//glm::vec2 mousePos;
+
 };

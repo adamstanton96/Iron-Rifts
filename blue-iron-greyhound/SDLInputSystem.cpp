@@ -62,66 +62,62 @@ bool SDLInputSystem::keyPressed(std::string key)
 
 bool SDLInputSystem::mousePressLeft() {
 
-	SDL_Event sdlEvent;
 
-	while (SDL_PollEvent(&sdlEvent))
+	//SDL_PumpEvents();
+	if (SDL_GetMouseState(NULL, NULL) && SDL_BUTTON(SDL_BUTTON_LEFT))
 	{
-		if (sdlEvent.button.button == SDL_BUTTON_LEFT)
-		{
-			cout << "Mouse Left " << endl;
-			return true;
-		}
-		return false;
+		return true;
 	}
+	else
+		return false;
 }
 
 bool SDLInputSystem::mousePressRight() {
 	
-	SDL_Event sdlEvent;
-
-	while (SDL_PollEvent(&sdlEvent))
+	if (SDL_GetMouseState(NULL, NULL) && SDL_BUTTON(SDL_BUTTON_RIGHT))
 	{
-		if (sdlEvent.type == SDL_MOUSEMOTION && sdlEvent.button.button == SDL_BUTTON_RIGHT)
-		{
-			cout << "Mouse Right" << endl;
-			return true;
-		}
-		return false;
+		return true;
 	}
+	else
+		return false;
 }
 
 
 
 glm::vec2 SDLInputSystem::getMousePosition() {
-	//pressed = false;
 	
+	int x;
+	int y;
 
-	int i = 1;
-	SDL_Event sdlEvent;
-	//while (SDL_PollEvent(&sdlEvent))
-	//{
-	
-		//if (sdlEvent.type == SDL_QUIT)	//If the user quits:
-		//	i = 0;			//End the loop.
+	SDL_GetMouseState(&x, &y);
 
-		//if (sdlEvent.type == SDL_MOUSEMOTION)
-		//{
-		
-			//mousePos.x = sdlEvent.motion.x;
-			//mousePos.y = sdlEvent.motion.y;
-			
-			int x;
-			int y;
+	mousePos.x = x;
+	mousePos.y = y;
 
-			SDL_GetMouseState(&x, &y);
-
-			mousePos.x = x;
-			mousePos.y = y;
-
-			//cout << "PosX: " << mousePos.x << "," << "PosY: " << mousePos.y << endl;
-	   //}
-		
-	//}
 	return mousePos;
 }
-//glm::vec2 getMouseOrigin(){}
+
+
+//Returns a vector of char representations of inputs made
+std::vector<const char*> SDLInputSystem::pollInputs()
+{
+	SDL_Event sdlEvent;
+
+	std::vector<const char*> keysPressed;
+	
+	while (SDL_PollEvent(&sdlEvent))
+	{
+
+		const char* key = SDL_GetScancodeName(sdlEvent.key.keysym.scancode);
+	
+		if (key != "" && key != " ")
+		{
+			///std::cout << key << std::endl;
+			keysPressed.push_back(key);
+
+		}		
+	}
+
+	return keysPressed;
+}
+

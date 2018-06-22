@@ -235,9 +235,6 @@
     <ClInclude Include="HudComponent.h">
       <Filter>Graphics\UI\HUD</Filter>
     </ClInclude>
-    <ClInclude Include="GameMenu.h">
-      <Filter>Graphics\UI\Menus</Filter>
-    </ClInclude>
     <ClInclude Include="PlayerMechanicsComponent.h">
       <Filter>Mechanics</Filter>
     </ClInclude>
@@ -254,6 +251,9 @@
       <Filter>State Machine</Filter>
     </ClInclude>
     <ClInclude Include="IronRifts.h" />
+    <ClInclude Include="MenuComponent.h">
+      <Filter>Graphics\UI\Menus</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Utils">

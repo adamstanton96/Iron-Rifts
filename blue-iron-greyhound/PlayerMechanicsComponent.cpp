@@ -35,31 +35,15 @@ void PlayerMechanicsComponent::update(double dt)
 	}
 	
 
-	//SHOOTING INPUT IS NOW BEING DONE IN MAIN BY THE LEFT MOUSE
-	//The
-	///Check for input... Change input to mouse click once inputsystem is updated.
-	///if (this->input->keyPressed("R"))
-	///{
-	///	if (cooldownTimer > rateOfFire)
-	///	{
-	///		fireWeapon(dt);
-	///		cooldownTimer = 0;
-	///	}	
-	///}	
-
-	//Check for input... Change input to mouse click once inputsystem is updated.
-	///if (this->input->mousePressLeft())
-	///{
-	///	if (cooldownTimer > rateOfFire)
-	///	{
-	///		fireWeapon(dt);
-	///		cooldownTimer = 0;
-	///	}
-	///}
-
-
-
-	
+	//Left mouse down then fire weapon
+	if (this->input->mousePressLeft())
+	{
+		if (cooldownTimer > rateOfFire)
+		{
+			fireWeapon(dt);
+			cooldownTimer = 0;
+		}	
+	}	
 }
 
 

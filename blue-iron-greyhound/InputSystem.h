@@ -8,6 +8,7 @@
 #include "System.h"
 #include <string>
 #include <glm/glm.hpp>
+#include <vector>
 
 class InputSystem : public System
 {
@@ -20,5 +21,7 @@ public:
 	virtual bool mousePressLeft()=0;
 	virtual bool mousePressRight()= 0;
 	virtual glm::vec2 getMousePosition() = 0;
-	//Need a mouse function!!!!
+
+	virtual std::vector<const char*> pollInputs() = 0;
+	
 };

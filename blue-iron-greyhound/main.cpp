@@ -14,7 +14,6 @@
 #include "HudComponent.h"
 #include "HUD_Health.h"
 
-#include "SDL.h"
 #include <glm/glm.hpp>
 
 //MD2
@@ -650,17 +649,21 @@ int main(int argc, char *argv[])
 	///game->addPlayers(objectList);
 	///game->init();
 
+	//Creates game state
 	InfiniteDeathmatchState* playState = new InfiniteDeathmatchState(sceneObjects, objectList);
-	//playState->addPlayers(objectList);
 	playState->init();
 
+	//Game Manager
 	IronRifts game;
+	game.activeState = playState;
 	game.addState(playState);
+	game.input = inputSystem;
 	
+
+
 	int frameRate = 0;
 	float timeSoFar = 0;
 	bool running = true;
-
 
 
 	////HUD/////////
@@ -669,29 +672,12 @@ int main(int argc, char *argv[])
 	Player->addComponent(HelathBar);
 	//////////////
 
-	SDL_Event sdlEvent;
+
 	do
 	{
 		frameRate++;
 		timeSoFar += dt;
 		start = std::clock();
-
-		while (SDL_PollEvent(&sdlEvent)) //This poll event should not be here since it couples the main to SDL. 
-		{
-
-			if (sdlEvent.type == SDL_QUIT)
-			{
-				running = false;
-			}
-
-			if (sdlEvent.button.button == SDL_BUTTON_LEFT)
-			{
-				playerMechanicsComponent->fireWeapon(dt);
-			}
-		}
-
-
-
 
 		
 		renderer->clearScreen();
