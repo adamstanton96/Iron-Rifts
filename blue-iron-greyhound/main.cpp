@@ -9,6 +9,7 @@
 
 //Asset pathway:
 /// ../../assets/
+#include "SDL.h"
 
 //HUD
 #include "HudComponent.h"
@@ -672,12 +673,18 @@ int main(int argc, char *argv[])
 	Player->addComponent(HelathBar);
 	//////////////
 
+	SDL_Event sdlEvent;
 
 	do
 	{
 		frameRate++;
 		timeSoFar += dt;
 		start = std::clock();
+
+		while (SDL_PollEvent(&sdlEvent)) //This poll event should not be here since it couples the main to SDL. 
+		{
+
+		}
 
 		
 		renderer->clearScreen();
