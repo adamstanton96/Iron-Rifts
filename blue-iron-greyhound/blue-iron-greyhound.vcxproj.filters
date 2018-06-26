@@ -100,6 +100,12 @@
       <Filter>State Machine</Filter>
     </ClCompile>
     <ClCompile Include="IronRifts.cpp" />
+    <ClCompile Include="InGameMenuState.cpp">
+      <Filter>State Machine</Filter>
+    </ClCompile>
+    <ClCompile Include="MenuUI.cpp">
+      <Filter>Graphics\UI\Menu</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="OpenglUtils.h">
@@ -251,9 +257,13 @@
       <Filter>State Machine</Filter>
     </ClInclude>
     <ClInclude Include="IronRifts.h" />
-    <ClInclude Include="MenuComponent.h">
-      <Filter>Graphics\UI\Menus</Filter>
+    <ClInclude Include="InGameMenuState.h">
+      <Filter>State Machine</Filter>
     </ClInclude>
+    <ClInclude Include="MenuUI.h">
+      <Filter>Graphics\UI\Menu</Filter>
+    </ClInclude>
+    <ClInclude Include="FirstLevel.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Utils">
@@ -301,14 +311,14 @@
     <Filter Include="Graphics\UI\HUD\Unique HUD Logic">
       <UniqueIdentifier>{c3e2aa53-c74c-41d1-b746-e0b1896bc621}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Graphics\UI\Menus">
-      <UniqueIdentifier>{db604399-4777-40d7-9f62-899dff6e0b64}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Mechanics">
       <UniqueIdentifier>{b17544fc-b6a0-43da-92fd-077e62cb6374}</UniqueIdentifier>
     </Filter>
     <Filter Include="State Machine">
       <UniqueIdentifier>{81a0eead-b424-4857-92f3-6968b7c591b4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\UI\Menu">
+      <UniqueIdentifier>{49e84c80-baa3-4dfd-8287-5ea95942d6c8}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

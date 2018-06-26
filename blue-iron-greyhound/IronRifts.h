@@ -18,11 +18,15 @@ public:
 
 	void update(double dt); //Check Input for a state change, possibly change state and then call update on the current state.
 
-	void addState(AbstractState*);
+	void pushState(AbstractState*);
+	void changeState(AbstractState* newState);
+
+	void popState();
+	void cleanupStates();
 
 
 	AbstractState* activeState;
-	InputSystem* input;
+	//InputSystem input;
 private:
 
 

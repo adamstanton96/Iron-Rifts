@@ -148,14 +148,16 @@
     <ClInclude Include="CollisionSystem.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="EnemyAIComponent.h" />
+    <ClInclude Include="FirstLevel.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="HudLogic.h" />
     <ClInclude Include="HUD_Health.h" />
     <ClInclude Include="InfiniteDeathmatchState.h" />
+    <ClInclude Include="InGameMenuState.h" />
     <ClInclude Include="IronRifts.h" />
-    <ClInclude Include="MenuComponent.h" />
+    <ClInclude Include="MenuUI.h" />
     <ClInclude Include="OrthoRenderer.h" />
     <ClInclude Include="HudComponent.h" />
     <ClInclude Include="InputSystem.h" />
@@ -199,7 +201,9 @@
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="HUD_Health.cpp" />
     <ClCompile Include="InfiniteDeathmatchState.cpp" />
+    <ClCompile Include="InGameMenuState.cpp" />
     <ClCompile Include="IronRifts.cpp" />
+    <ClCompile Include="MenuUI.cpp" />
     <ClCompile Include="OrthoRenderer.cpp" />
     <ClCompile Include="HudComponent.cpp" />
     <ClCompile Include="InteractiveTestComponent.cpp" />

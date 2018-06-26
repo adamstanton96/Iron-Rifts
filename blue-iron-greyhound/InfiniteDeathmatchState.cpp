@@ -17,11 +17,21 @@ InfiniteDeathmatchState::InfiniteDeathmatchState(std::vector<GameObject*> scene,
 
 void InfiniteDeathmatchState::init()
 {
-
+	inputs.init();		// Not good because every state will call init on the Input object and its not needed.
 }
 
 void InfiniteDeathmatchState::update(double dt)
 {
+
+	if (this->inputs.keyPressed("P"))
+	{
+		std::cout << "Game Paused" << std::endl;
+		///isPaused = true;
+		///push the IngameMenu State
+	}
+
+
+
 	cooldownTimer += dt;
 
 	//Update character objects
@@ -116,4 +126,34 @@ void InfiniteDeathmatchState::sortLeaderboard()
 			}
 		}
 	}
+}
+
+
+
+InfiniteDeathmatchState::~InfiniteDeathmatchState()
+{
+	for (int i = 0; i < players.size() - 1; i++)
+		delete players[i];
+
+	for (int i = 0; i < scene.size() - 1; i++)
+		delete scene[i];
+
+	
+}
+
+void InfiniteDeathmatchState::Cleanup()
+{
+	delete this;
+}
+
+
+void InfiniteDeathmatchState::Resume()
+{
+	isPaused = false;
+}
+
+
+void InfiniteDeathmatchState::Pause()
+{
+	isPaused = true;
 }
