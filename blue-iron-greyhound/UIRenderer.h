@@ -7,9 +7,6 @@ This class simply renders Hud Components. All hud Items have an OrthoRenderer
 of their own to use and upon update they just send themselves into the renderer
 to display on screen.
 ============================================================================ =*/
-class HudComponent;
-#include "HudComponent.h"
-
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
@@ -17,26 +14,23 @@ class HudComponent;
 #include<stack>
 #include<vector>
 
+#include "RenderableUI.h"
+
 #include "System.h"
 #include "OpenglUtils.h"
 #include "AssimpLoader.h"
 
 
-
-
-
-
-
 //Render HUD items 
-class OrthoRenderer : public System
+class UIRenderer : public System
 {
 public:
-	OrthoRenderer(){}
+	UIRenderer(){}
 	 
-	~OrthoRenderer() {};
+	~UIRenderer() {};
 
 	void init();
-	void render(HudComponent* item);
+	void render(RenderableUI* item);
 
 private:
 

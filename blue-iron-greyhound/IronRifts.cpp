@@ -1,17 +1,18 @@
 #include "IronRifts.h"
 
+
+void IronRifts::init()
+{
+	for (int i = 0; i <= states.size() - 1; i++)
+		states[i]->init();
+}
+
 void IronRifts::update(double dt)
 {
-	//Poll Inputs
-	///
-	
-
-	//Check Inputs for a State Change
-	///
-	
-
 	//Update ActiveState
-	activeState->update(dt);
+	//activeState->update(dt, this);
+
+	states.back()->update(dt, this);;
 
 }
 

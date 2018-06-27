@@ -13,14 +13,15 @@ textures and will have set conditions which will select the correct texture and 
 class OrthoRenderer;
 #include <glm/glm.hpp>
 #include<vector>
-#include "OrthoRenderer.h"
+#include "UIRenderer.h"
 #include "Component.h"
 
 #include "HudLogic.h"
+#include "RenderableUI.h"
 
 
 
-class HudComponent : public Component
+class HudComponent : public Component, public RenderableUI
 {
 public:
 	HudComponent(glm::vec3 pos, glm::vec3 scale, HudLogic* _logic);
@@ -29,6 +30,10 @@ public:
 	void update(double dt);
 
 	void init(){}
+
+	int getTexture();
+	glm::vec3  getPosition();
+	glm::vec3  getScale();
 
 	GLuint texture;
 	glm::vec3 position;

@@ -40,6 +40,8 @@ public:
 	void setScaling(glm::vec3 scale) { scaling = scale; }	
 	glm::vec3 getScaling() { return scaling; }
 
+
+
 	bool isAlive;
 
 protected:

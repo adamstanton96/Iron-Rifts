@@ -209,7 +209,8 @@ namespace SDLGLTextureLoader {
 
 		glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, tmpSurface->w, tmpSurface->h, 0,
 			externalFormat, GL_UNSIGNED_BYTE, tmpSurface->pixels);
-		glGenerateMipmap(GL_TEXTURE_2D);
+
+		///glGenerateMipmap(GL_TEXTURE_2D);	// was causing an error in loading ne ingame menu texture
 
 		SDL_FreeSurface(tmpSurface); // texture loaded, free the temporary buffer
 

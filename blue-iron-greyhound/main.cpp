@@ -22,6 +22,11 @@
 #include "IronRifts.h"
 #include "FirstLevel.h"
 
+#include "GameObject.h"
+
+#include "MenuUI.h"
+#include "InGameMenuState.h"
+
 
 
 // The number of clock ticks per second
@@ -32,25 +37,36 @@ double dt;
 
 int main(int argc, char *argv[])
 {
-	
-
-
 	FirstLevel Level1;
 	Level1.init();
 	Level1.setup();
 	Level1.loadPlayers();
 	Level1.loadMap();
 
-
-
-	//Creates game state
+	//Creates Play state
 	InfiniteDeathmatchState* playState = new InfiniteDeathmatchState(Level1.sceneObjects, Level1.objectList);
-	playState->init();
+	
+
+	//Menu State
+	GameObject* inGameMenu = new GameObject("Ingamemenu");
+	MenuUI* pauseMenu = new MenuUI(glm::vec3(0.0, 0.0f, -1.0f), glm::vec3(1.0, 0.5, 0.0001), "../../assets/tex/PausedMenu.png");
+	inGameMenu->addComponent(pauseMenu);
+
+	InGameMenuState* gameMenuState = new InGameMenuState(inGameMenu);
+
+
 
 	//Game Manager
 	IronRifts game;
-	game.activeState = playState;
+	///game.activeState = playState;
+	game.pauseState = gameMenuState;
+
 	game.pushState(playState);
+
+
+
+	//after adding states call init
+	game.init();
 
 	
 	int frameRate = 0;

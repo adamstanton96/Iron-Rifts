@@ -1,7 +1,7 @@
 
-
 #include "InfiniteDeathmatchState.h"
 #include "MechanicsComponent.h"
+
 
 InfiniteDeathmatchState::InfiniteDeathmatchState(std::vector<GameObject*> scene, std::vector<GameObject*> players)
 {
@@ -11,6 +11,9 @@ InfiniteDeathmatchState::InfiniteDeathmatchState(std::vector<GameObject*> scene,
 	this->cooldownTimer = 21;
 
 	this->GameWinningScore = 10;
+
+	timer = 0;
+	timeThreshold = 0.2;
 }
 
 
@@ -20,16 +23,21 @@ void InfiniteDeathmatchState::init()
 	inputs.init();		// Not good because every state will call init on the Input object and its not needed.
 }
 
-void InfiniteDeathmatchState::update(double dt)
+void InfiniteDeathmatchState::update(double dt, IronRifts* game)
 {
 
-	if (this->inputs.keyPressed("P"))
-	{
-		std::cout << "Game Paused" << std::endl;
-		///isPaused = true;
-		///push the IngameMenu State
-	}
+	timer += dt;
 
+	if (timer >= timeThreshold)
+	{
+		if (this->inputs.keyPressed("P"))
+		{
+			std::cout << "Game Paused" << std::endl;
+			game->pushState(game->pauseState);
+
+			timer = 0;
+		}
+	}
 
 
 	cooldownTimer += dt;

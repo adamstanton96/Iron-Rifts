@@ -22,7 +22,7 @@ public:
 	void Pause();
 
 	void init();
-	void update(double dt);
+	void update(double dt, IronRifts* game);
 	void addPlayers(std::vector<GameObject*> players);
 
 private:

@@ -2,7 +2,7 @@
 #include "GameObject.h"
 #include "PlayerMechanicsComponent.h"
 
-OrthoRenderer renderer;
+UIRenderer renderer;
 
 HudComponent::HudComponent(glm::vec3 pos, glm::vec3 _scale, HudLogic* _logic)
 {
@@ -27,4 +27,23 @@ void HudComponent::update(double dt)
 	
 	//Render it
 	renderer.render(this);
+}
+
+
+
+int HudComponent::getTexture()
+{
+	return texture;
+}
+
+
+glm::vec3  HudComponent::getPosition()
+{
+	return position;
+}
+
+
+glm::vec3  HudComponent::getScale()
+{
+	return scale;
 }

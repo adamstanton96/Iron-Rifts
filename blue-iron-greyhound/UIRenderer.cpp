@@ -1,8 +1,8 @@
-#include "OrthoRenderer.h"
+#include "UIRenderer.h"
 
 #define DEG_TO_RADIAN 0.017453293
 
-void OrthoRenderer::init()
+void UIRenderer::init()
 {
 	//Load shader
 	shaderProgram = OpenglUtils::initShaders(HUDvert, HUDfrag);
@@ -32,7 +32,7 @@ void OrthoRenderer::init()
 }
 
 
-void OrthoRenderer::render(HudComponent* item)
+void UIRenderer::render(RenderableUI* item)
 {
 
 	//glDepthMask(GL_FALSE);
@@ -43,13 +43,13 @@ void OrthoRenderer::render(HudComponent* item)
 
 
 		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, item->texture);
+		glBindTexture(GL_TEXTURE_2D, item->getTexture());
 
 	
 		mvStack.push(mvStack.top());
 
-		mvStack.top() = glm::translate(mvStack.top(), item->position);
-		mvStack.top() = glm::scale(mvStack.top(), item->scale);
+		mvStack.top() = glm::translate(mvStack.top(), item->getPosition());
+		mvStack.top() = glm::scale(mvStack.top(), item->getScale());
 		OpenglUtils::setUniformMatrix4fv(shaderProgram, "modelview", glm::value_ptr(mvStack.top()));
 		OpenglUtils::drawIndexedMesh(meshBlock, blockIndexCount, GL_TRIANGLES);
 
