@@ -3,24 +3,24 @@
 
 void IronRifts::init()
 {
-	for (int i = 0; i <= states.size() - 1; i++)
-		states[i]->init();
+	//for (int i = 0; i <= states.size() - 1; i++)
+	//	states[i]->init();
+
+	
 }
 
 void IronRifts::update(double dt)
 {
-	//Update ActiveState
-	//activeState->update(dt, this);
 
-	states.back()->update(dt, this);;
+	states.back()->update(dt, this);
 
 }
 
 void IronRifts::pushState(AbstractState* newState)
 {
-	if (!states.empty()) {						// pause current state
-		states.back()->Pause();
-	}
+	///if (!states.empty()) {						// pause current state
+	///	states.back()->Pause();
+	///}
 
 
 	states.push_back(newState);					//store and init the new state
@@ -52,7 +52,7 @@ void IronRifts::changeState(AbstractState* newState)
 
 
 	states.push_back(newState);					// store and init the new state
-	states.back()->init();
+	///states.back()->init();
 }
 
 

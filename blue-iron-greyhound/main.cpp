@@ -26,6 +26,7 @@
 
 #include "MenuUI.h"
 #include "InGameMenuState.h"
+#include "MainMenuState.h"
 
 
 
@@ -43,30 +44,47 @@ int main(int argc, char *argv[])
 	Level1.loadPlayers();
 	Level1.loadMap();
 
-	//Creates Play state
-	InfiniteDeathmatchState* playState = new InfiniteDeathmatchState(Level1.sceneObjects, Level1.objectList);
+	////HUD/////////
+	///HudLogic* healthLogic2 = new HUD_Health();
+	///HudComponent* HelathBar2 = new HudComponent(glm::vec3(-0.5, 0.5f, -1.0f), glm::vec3(0.2, 0.03, 0.0001), healthLogic2);
+	///Player->addComponent(HelathBar2);
+	//////////////
 	
 
-	//Menu State
-	GameObject* inGameMenu = new GameObject("Ingamemenu");
+	//in game Menu State
+	GameObject* pauseObject = new GameObject("In-game Menu");
 	MenuUI* pauseMenu = new MenuUI(glm::vec3(0.0, 0.0f, -1.0f), glm::vec3(1.0, 0.5, 0.0001), "../../assets/tex/PausedMenu.png");
-	inGameMenu->addComponent(pauseMenu);
+	pauseObject->addComponent(pauseMenu);
+	InGameMenuState* gameMenuState = new InGameMenuState(pauseObject);
 
-	InGameMenuState* gameMenuState = new InGameMenuState(inGameMenu);
 
+
+	//Creates Play state
+	InfiniteDeathmatchState* playState = new InfiniteDeathmatchState(Level1.sceneObjects, Level1.objectList);
+
+	//Menu State
+	GameObject* startMenu = new GameObject("Start Menu");
+	MenuUI* startMenuUI = new MenuUI(glm::vec3(0.0, 0.0f, -1.0f), glm::vec3(1.0, 0.5, 0.0001), "../../assets/tex/MainMenuIronRifts.png");
+	startMenu->addComponent(startMenuUI);
+	MainMenuState* startMenuState = new MainMenuState(startMenu);
+
+	//playState->init();
 
 
 	//Game Manager
 	IronRifts game;
-	///game.activeState = playState;
+	
+	game.playState = playState;
 	game.pauseState = gameMenuState;
 
-	game.pushState(playState);
+
+	game.pushState(startMenuState);
 
 
 
 	//after adding states call init
-	game.init();
+	///game.init();
+	
 
 	
 	int frameRate = 0;

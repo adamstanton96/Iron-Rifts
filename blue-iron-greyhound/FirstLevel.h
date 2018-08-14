@@ -316,6 +316,8 @@ public:
 		Player->addComponent(HelathBar);
 		//////////////
 
+	
+
 	}
 	
 

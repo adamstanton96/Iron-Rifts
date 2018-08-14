@@ -25,11 +25,9 @@ public:
 	glm::vec3  getScale();
 
 
-
+	UIRenderer* renderer;
 private:
 	std::vector<MenuUI> subMenus;
-
-	UIRenderer renderer;
 
 
 	GLuint texture;

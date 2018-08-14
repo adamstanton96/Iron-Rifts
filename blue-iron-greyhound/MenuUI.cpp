@@ -6,11 +6,14 @@ MenuUI::MenuUI(glm::vec3 pos, glm::vec3 scale, char *fileName)
 
 	this->position = pos;
 	this->scale = scale;
+	renderer = new UIRenderer();
+
+	init();
 }
 
 void MenuUI::init()
 {
-	renderer.init();
+	///renderer->init();
 }
 
 void MenuUI::update(double dt)
@@ -20,11 +23,8 @@ void MenuUI::update(double dt)
 
 void MenuUI::render()
 {
-	renderer.render(this);
+	renderer->render(this);
 }
-
-
-
 
 
 

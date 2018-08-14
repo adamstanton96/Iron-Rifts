@@ -9,8 +9,6 @@ class AbstractState : public System
 {
 public:
 
-	///virtual ~AbstractState() = 0;
-
 	virtual void init() = 0;
 	virtual void update(double dt, IronRifts* game) = 0;
 
@@ -22,7 +20,7 @@ public:
 	bool isPaused;
 	SDLInputSystem inputs;
 
-	double timer;
-	double timeThreshold;
+	double inputTimer;
+	double inputTimerThreshold;
 private:
 };

@@ -2,14 +2,14 @@
 #include "GameObject.h"
 #include "PlayerMechanicsComponent.h"
 
-UIRenderer renderer;
+UIRenderer* renderer;
 
 HudComponent::HudComponent(glm::vec3 pos, glm::vec3 _scale, HudLogic* _logic)
 {
 	position = pos;
 	scale = _scale;
 
-	renderer.init();
+	renderer = new UIRenderer();
 
 	logic = _logic;
 }
@@ -26,7 +26,7 @@ void HudComponent::update(double dt)
 	///scale = logic->scaleUpdate();
 	
 	//Render it
-	renderer.render(this);
+	renderer->render(this);
 }
 
 

@@ -12,30 +12,30 @@ InfiniteDeathmatchState::InfiniteDeathmatchState(std::vector<GameObject*> scene,
 
 	this->GameWinningScore = 10;
 
-	timer = 0;
-	timeThreshold = 0.2;
+	inputTimer = 0;
+	inputTimerThreshold = 0.2;
 }
 
 
 
 void InfiniteDeathmatchState::init()
 {
-	inputs.init();		// Not good because every state will call init on the Input object and its not needed.
+	inputs.init();		
 }
 
 void InfiniteDeathmatchState::update(double dt, IronRifts* game)
 {
 
-	timer += dt;
+	inputTimer += dt;
 
-	if (timer >= timeThreshold)
+	if (inputTimer >= inputTimerThreshold)
 	{
 		if (this->inputs.keyPressed("P"))
 		{
 			std::cout << "Game Paused" << std::endl;
 			game->pushState(game->pauseState);
 
-			timer = 0;
+			inputTimer = 0;
 		}
 	}
 

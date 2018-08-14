@@ -3,8 +3,8 @@
 InGameMenuState::InGameMenuState(GameObject* menuObject)
 {
 	menu = menuObject;
-	timer = 0;
-	timeThreshold = 0.2;
+	inputTimer = 0;
+	inputTimerThreshold = 0.2;
 }
 
 
@@ -23,9 +23,9 @@ void InGameMenuState::init()
 
 void InGameMenuState::update(double dt, IronRifts* game)
 {
-	timer += dt;
+	inputTimer += dt;
 
-	if (timer >= timeThreshold)
+	if (inputTimer >= inputTimerThreshold)
 	{
 		if (this->inputs.keyPressed("P"))
 		{
@@ -33,7 +33,7 @@ void InGameMenuState::update(double dt, IronRifts* game)
 			game->popState();
 
 
-			timer = 0;
+			inputTimer = 0;
 		}
 
 

@@ -5,7 +5,7 @@
 void UIRenderer::init()
 {
 	//Load shader
-	shaderProgram = OpenglUtils::initShaders(HUDvert, HUDfrag);
+	shaderProgram = OpenglUtils::initUIShaders(HUDvert, HUDfrag);
 
 	//Load cube mesh which will be used to display HUD textures ons
 	vector<int> meshIDs;
@@ -15,6 +15,7 @@ void UIRenderer::init()
 	AssimpLoader::loadObjectData("../../assets/cube_with_2UVs.DAE", meshIDs, indexCounts, minmax);
 
 	meshBlock = meshIDs[0];
+
 	blockIndexCount = indexCounts[0];
 
 	
@@ -28,13 +29,14 @@ void UIRenderer::init()
 	///projection = glm::ortho(0.0f, 1200.0f, 0.0f, 600.0f, 0.1f, 100.0f);
 	projection = glm::perspective(float(60.0f*DEG_TO_RADIAN), 1200.0f / 600.0f, 0.5f, 2000.0f);
 	
-
+	///isInit = true;
 }
 
 
 void UIRenderer::render(RenderableUI* item)
 {
-
+	///if (isInit == false)
+	///	init();
 	//glDepthMask(GL_FALSE);
 
 		glUseProgram(shaderProgram);

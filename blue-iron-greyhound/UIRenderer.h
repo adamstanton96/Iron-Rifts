@@ -25,7 +25,10 @@ to display on screen.
 class UIRenderer : public System
 {
 public:
-	UIRenderer(){}
+	UIRenderer()
+	{
+		init();
+	}
 	 
 	~UIRenderer() {};
 
@@ -44,7 +47,7 @@ private:
 	GLuint meshBlock;
 	int blockIndexCount;
 	
-
+	bool isInit = false;
 
 	char* HUDvert
 	{
@@ -77,6 +80,7 @@ private:
 		"//HUD Frag													\n"
 		"#version 330												\n"
 		"															\n"
+		"layout(location = 0) out vec4 out_Color;					\n"
 		"// Some drivers require the following						\n"
 		"precision highp float;										\n"
 		"															\n"
@@ -85,16 +89,17 @@ private:
 		"															\n"
 		"	in vec2 ex_TexCoord;									\n"
 		"															\n"
-		"	void main(void) {		\n"
+		"	void main(void) {										\n"
 		
-		"	vec4 colour =	texture(textureUnit0, ex_TexCoord);		/n"
+		"	vec4 colour =	texture(textureUnit0, ex_TexCoord);		\n"
 		
 		"	if(	colour.a == 0.2)									\n"
 		"		{	discard;	}									\n"
 		"															\n"
 		"															\n"
 		"	// Fragment colour										\n"
-		"	out_Color = colour;		\n"
+		"	out_Color = colour;										\n"
+		"	//out_Color = vec4(1,1,1,1);							\n"
 		"															\n"	
 		"}															\n"
 	};

@@ -93,18 +93,21 @@
     <ClCompile Include="AIMechanicsComponent.cpp">
       <Filter>Mechanics</Filter>
     </ClCompile>
-    <ClCompile Include="InfiniteDeathmatchState.cpp">
-      <Filter>State Machine</Filter>
-    </ClCompile>
     <ClCompile Include="IronRifts.cpp" />
-    <ClCompile Include="InGameMenuState.cpp">
-      <Filter>State Machine</Filter>
-    </ClCompile>
     <ClCompile Include="MenuUI.cpp">
       <Filter>Graphics\UI\Menu</Filter>
     </ClCompile>
     <ClCompile Include="UIRenderer.cpp">
       <Filter>Graphics\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="InGameMenuState.cpp">
+      <Filter>State Machine\States</Filter>
+    </ClCompile>
+    <ClCompile Include="InfiniteDeathmatchState.cpp">
+      <Filter>State Machine\States</Filter>
+    </ClCompile>
+    <ClCompile Include="MainMenuState.cpp">
+      <Filter>State Machine\States</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -250,13 +253,7 @@
     <ClInclude Include="AbstractState.h">
       <Filter>State Machine</Filter>
     </ClInclude>
-    <ClInclude Include="InfiniteDeathmatchState.h">
-      <Filter>State Machine</Filter>
-    </ClInclude>
     <ClInclude Include="IronRifts.h" />
-    <ClInclude Include="InGameMenuState.h">
-      <Filter>State Machine</Filter>
-    </ClInclude>
     <ClInclude Include="MenuUI.h">
       <Filter>Graphics\UI\Menu</Filter>
     </ClInclude>
@@ -266,6 +263,15 @@
     </ClInclude>
     <ClInclude Include="UIRenderer.h">
       <Filter>Graphics\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="InGameMenuState.h">
+      <Filter>State Machine\States</Filter>
+    </ClInclude>
+    <ClInclude Include="InfiniteDeathmatchState.h">
+      <Filter>State Machine\States</Filter>
+    </ClInclude>
+    <ClInclude Include="MainMenuState.h">
+      <Filter>State Machine\States</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -322,6 +328,9 @@
     </Filter>
     <Filter Include="Graphics\UI\Menu">
       <UniqueIdentifier>{49e84c80-baa3-4dfd-8287-5ea95942d6c8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="State Machine\States">
+      <UniqueIdentifier>{4becf907-482e-499c-bae6-ac3b937db14b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

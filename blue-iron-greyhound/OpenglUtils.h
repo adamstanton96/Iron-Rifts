@@ -32,6 +32,7 @@ namespace OpenglUtils
 	char* loadFile(const char *fname, GLint &fSize);
 
 	GLuint initShaders(const char *vertFile, const char *fragFile);
+	GLuint initUIShaders( char *vertFile,  char *fragFile);
 	GLuint initParticleShaders( char *vertFile,  char *fragFile);
 
 	GLuint createMesh(const GLuint numVerts, const GLfloat* vertices, const GLfloat* colours, const GLfloat* normals,
