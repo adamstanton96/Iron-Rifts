@@ -44,14 +44,13 @@ int main(int argc, char *argv[])
 	Level1.loadPlayers();
 	Level1.loadMap();
 
-	////HUD/////////
-	///HudLogic* healthLogic2 = new HUD_Health();
-	///HudComponent* HelathBar2 = new HudComponent(glm::vec3(-0.5, 0.5f, -1.0f), glm::vec3(0.2, 0.03, 0.0001), healthLogic2);
-	///Player->addComponent(HelathBar2);
-	//////////////
-	
 
-	//in game Menu State
+	
+	//Creates Play state
+	InfiniteDeathmatchState* playState = new InfiniteDeathmatchState(Level1.sceneObjects, Level1.objectList);
+
+
+	//Creates in-game Menu State
 	GameObject* pauseObject = new GameObject("In-game Menu");
 	MenuUI* pauseMenu = new MenuUI(glm::vec3(0.0, 0.0f, -1.0f), glm::vec3(1.0, 0.5, 0.0001), "../../assets/tex/PausedMenu.png");
 	pauseObject->addComponent(pauseMenu);
@@ -59,31 +58,24 @@ int main(int argc, char *argv[])
 
 
 
-	//Creates Play state
-	InfiniteDeathmatchState* playState = new InfiniteDeathmatchState(Level1.sceneObjects, Level1.objectList);
-
-	//Menu State
+	
+	//Creates Menu State
 	GameObject* startMenu = new GameObject("Start Menu");
 	MenuUI* startMenuUI = new MenuUI(glm::vec3(0.0, 0.0f, -1.0f), glm::vec3(1.0, 0.5, 0.0001), "../../assets/tex/MainMenuIronRifts.png");
 	startMenu->addComponent(startMenuUI);
 	MainMenuState* startMenuState = new MainMenuState(startMenu);
 
-	//playState->init();
-
-
 	//Game Manager
 	IronRifts game;
 	
+	//Give base states. State machine currently relies on these being pre defined
 	game.playState = playState;
 	game.pauseState = gameMenuState;
+	game.StartState = startMenuState;
 
-
+	//Push the state you want to start with
 	game.pushState(startMenuState);
 
-
-
-	//after adding states call init
-	///game.init();
 	
 
 	

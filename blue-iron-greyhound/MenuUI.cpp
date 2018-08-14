@@ -13,7 +13,7 @@ MenuUI::MenuUI(glm::vec3 pos, glm::vec3 scale, char *fileName)
 
 void MenuUI::init()
 {
-	///renderer->init();
+	
 }
 
 void MenuUI::update(double dt)

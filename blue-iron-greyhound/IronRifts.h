@@ -29,6 +29,7 @@ public:
 	///AbstractState* activeState;
 	AbstractState* pauseState;
 	AbstractState* playState;
+	AbstractState* StartState;
 	//InputSystem input;
 private:
 	
